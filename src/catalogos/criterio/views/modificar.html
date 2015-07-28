@@ -1,0 +1,92 @@
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
+<div layout="column" class="relative" layout-fill role="main" >
+	<md-button class="md-fab md-fab-bottom-right" ng-click="nuevo()" aria-label="{{ 'NUEVA' | translate }}" >
+		<md-icon md-svg-icon="add"></md-icon>
+  	</md-button>
+	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
+	<md-toolbar  >
+		<div class="md-toolbar-tools" ng-init="opciones('Indicador','indicadores');opciones('Cone','cones');opciones('LugarVerificacion','lugares');ver('Criterio');">    
+			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
+		  <md-icon md-svg-icon="menu" ></md-icon>
+		    </md-button>   
+			<h2>
+			  <span>{{ 'CRITERIO' | translate }} <md-icon md-svg-icon="chevron-right"></md-icon>  {{ 'LISTA' | translate }}</span>
+			</h2>
+			<span flex></span>	
+            
+            <md-button hide-md hide-sm  aria-label="{{ 'GUARDAR' | translate }}" ng-click="modificar(id)" ng-disabled="forma.$invalid">
+              <md-icon md-svg-icon="save"></md-icon>
+    			{{ 'GUARDAR' | translate }}
+            </md-button>
+            
+            <md-button hide-md hide-sm  aria-label="{{ 'ELIMINAR' | translate }}" ng-click="borrar()">
+                <md-icon md-svg-icon="delete"></md-icon>
+                {{ 'ELIMINAR' | translate }}
+            </md-button>
+            	
+			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+		</div>
+	</md-toolbar>
+	<md-content>
+	<ol class="breadcrumb top-breadcrumb" >
+	  <li><a href="/#/">Home</a></li>
+  <li><a url-modulo="--" id="lista">Criterio</a></li>
+  <li class="active">{{ 'EDITAR' | translate }}</li>
+</ol>
+
+<form name="forma" >
+<md-content layout="column"  layour-align="center center"  >
+    <md-list layout-margin class="md-whiteframe-z2" layout-align="center center"  >	
+		<md-list-item >					
+            <md-input-container flex >     
+                <label>{{ 'NOMBRE' | translate }}</label>
+                <input required  name="nombre" ng-model="dato.nombre" md-minlength="3" md-maxlength="255">
+                <div ng-messages="forma.nombre.$error">
+                  <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>
+                  <div ng-message="md-minlength">{{ 'CAMPO_MIN_L' | translate }} 3</div>
+                  <div ng-message="md-maxlength">{{ 'CAMPO_MAX_L' | translate }} 255</div>
+                </div>
+            </md-input-container>
+        </md-list-item>
+		<md-list-item >					
+            <md-container > 
+                <label>
+                <h3>{{ 'INDICADOR' | translate }} <md-icon md-svg-icon="chevron-right"></md-icon> Cone <md-icon md-svg-icon="chevron-right"></md-icon> {{ 'LUGAR_VERIFICACION' | translate }}</h3>
+                </label>
+            			
+				<div class="tree">
+
+                    <ul>
+                        <li ng-repeat="i in options['indicadores']" class="parent_li" title="Abrir">
+                        	<span ng-click="treeClick('indicador'+criterio.id+''+i.id);" class="principal" id="indicador{{ criterio.id }}{{i.id }}" >
+                        		<md-icon md-svg-src="add"></md-icon> 
+                        
+                        		<strong>Indicador: </strong> {{ i.codigo }} | {{ i.nombre }}
+                        	</span>
+                        	<ul>			   
+                        		<li ng-repeat="c in options['cones']" class="parent_li" title="Abrir" style="display: none;">
+                        			<span ng-click="treeClick(criterio.id+''+i.id+''+c.id);">
+                        				<md-icon md-svg-src="airline-seat-flat"></md-icon>   
+                        				<input checklist-model="criterio.indicador[i.id].cone" checklist-value="i.id+','+c.id" ng-checked="che[i.id+','+c.id]" id="che{{i.id+'-'+c.id}}" type="checkbox" ng-click="treeClickCheck(i.id,0,'indicador'+criterio.id+''+i.id);" > 
+                        				<strong>CONE: </strong> {{ c.nombre }}                                                                                
+                                                
+                        			</span> 			  
+                        		</li>
+                        		<li class="parent_li" style="display: none;">				
+                        		<span>
+                        		<select ng-options="item.id as item.nombre for item in options['lugares']" ng-model="criterio.indicador[i.id].lugar" ng-change="treeClickCheck(i.id,0,'indicador'+criterio.id+''+i.id);" name="LugarVerificacion[{{ i.id }}]" id="LugarVerificacion{{ i.id }}" style="border:none; background-color:transparent">                        			
+                        		</select>
+                                </span>
+                        </li>
+                        </ul>
+                        </li>    
+                    </ul>
+
+                </div>
+            </md-container>
+        </md-list-item>
+    </md-list>
+</md-content>	
+</form>
+
+ 

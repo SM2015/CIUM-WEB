@@ -1,0 +1,79 @@
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
+<div layout="column" class="relative" layout-fill role="main">
+	<md-button class="md-fab md-fab-bottom-right" ng-click="nuevo()" aria-label="{{ 'NUEVA' | translate }}" >
+		<md-icon md-svg-icon="add"></md-icon>
+  	</md-button>
+	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
+	<md-toolbar  >
+		<div class="md-toolbar-tools" ng-init="ver('PlazoAccion')">    
+			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
+		  <md-icon md-svg-icon="menu" ></md-icon>
+		    </md-button>   
+			<h2>
+			  <span>{{ 'PLAZO_ACCION' | translate }} <md-icon md-svg-icon="chevron-right"></md-icon>  {{ 'VER' | translate }}</span>
+			</h2>
+			<span flex></span>	
+            
+            <md-button hide-md hide-sm  aria-label="{{ 'PDF' | translate }}" imprimir-div=".imprimir">
+              <md-icon md-svg-icon="print"></md-icon>
+    			{{ 'PDF' | translate }}
+            </md-button>
+            
+            <md-button hide-md hide-sm  aria-label="{{ 'ELIMINAR' | translate }}" ng-click="borrar()">
+                <md-icon md-svg-icon="delete"></md-icon>
+                {{ 'ELIMINAR' | translate }}
+            </md-button>
+            	
+			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+		</div>
+	</md-toolbar>
+	<md-content>
+	<ol class="breadcrumb top-breadcrumb" >
+	  <li><a href="/#/">Home</a></li>
+  <li><a url-modulo="--" id="lista">{{ 'PLAZO_ACCION' | translate }}</a></li>
+  <li class="active">{{ 'VER' | translate }}</li>
+</ol>
+<md-content layout="column" class="imprimir"  layour-align="center center"  >
+	<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >					
+		<md-list-item >	
+        	<md-input-container flex >                                    
+            	<label>ID</label>
+                <input readonly  name="id" ng-model="dato.id" >
+                    
+            </md-input-container>					
+            <md-input-container flex >                                    
+            	<label>{{ 'NOMBRE' | translate }}</label>
+                <input readonly  name="nombre" ng-model="dato.nombre" >
+                    
+            </md-input-container>
+        </md-list-item>
+        
+        <md-list-item >	
+        	<md-input-container flex >                                    
+            	<label>{{ 'TIPO' | translate }}</label>
+                <input readonly  name="tipo" ng-model="dato.tipo" >
+                    
+            </md-input-container>					
+            <md-input-container flex >                                    
+            	<label>{{ 'VALOR' | translate }}</label>
+                <input readonly  name="valor" ng-model="dato.valor" >
+                    
+            </md-input-container>
+        </md-list-item>
+            
+         <md-list-item >						
+            <md-input-container flex >                                    
+            	<label>{{ 'CREADO' | translate }}</label>
+                <input readonly  name="creadoAl" ng-model="dato.creadoAl" >
+                    
+            </md-input-container>
+        						
+            <md-input-container flex >                                    
+            	<label>{{ 'MODIFICADO' | translate }}</label>
+                <input readonly  name="modificadoAL" ng-model="dato.modificadoAl" >
+                    
+            </md-input-container>
+        </md-list-item>
+	</md-list>				
+</md-content> 
+ 

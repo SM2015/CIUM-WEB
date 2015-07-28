@@ -1,0 +1,174 @@
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
+<div layout="column" class="relative" layout-fill role="main">
+	
+	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
+	<md-toolbar  >
+		<div class="md-toolbar-tools" ng-init="index('EvaluacionCalidad')">    
+			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
+		  <md-icon md-svg-icon="menu" ></md-icon>
+		    </md-button>   
+			<h2>
+			  <span>{{ 'EVALUACION' | translate }} {{ 'CALIDAD' | translate }} <md-icon md-svg-icon="chevron-right"></md-icon>  {{ 'AGREGAR' | translate }}</span>
+			</h2>
+			<span flex></span>
+            
+            <md-button hide-md hide-sm  aria-label="{{ 'AGRERGAR' | translate }}" ng-click="guardar(forma)" ng-disabled="forma.$invalid">
+              <md-icon md-svg-icon="save"></md-icon>
+    			{{ 'AGREGAR' | translate }}
+            </md-button>
+            		
+			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+		</div>
+	</md-toolbar>
+	<md-content>
+	<ol class="breadcrumb top-breadcrumb" >
+	  <li><a href="/#/">Home</a></li>
+  <li><a url-modulo="--" id="lista">{{ 'EVALUACION' | translate }} {{ 'CALIDAD' | translate }}</a></li>
+  <li class="active">{{ 'AGREGAR' | translate }}</li>
+</ol>
+
+<form role="form" name="forma">
+	<md-content layout="column" class="imprimir"  layour-align="center center"  >
+		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
+        		
+            <md-content class="md-padding">
+             
+             <!-- <md-list-item layout-wrap >
+              	<md-input-container flex >	                                                             
+                    <p>{{ 'FECHA_EVALUACION' | translate}}</p>
+                    <mb-datepicker element-id='fecha'
+                       input-name="fecha"
+                       arrows="arrows"
+                       calendar-header="header"
+                       date="dato.fechaEvaluacion"
+                       date-format="YYYY-MM-DD" required>
+                    </mb-datepicker>
+                    <md-icon md-svg-icon="today" style="margin-top:30px; margin-left:200px;"></md-icon>
+                </md-input-container> 
+              </md-list-item>
+              <md-list-item style="margin-top:-35px;">                   
+                <md-input-container flex >
+				    <input type="hidden" aria-label="fechaEvaluacion" ng-model="dato.fechaEvaluacion" name="fechaEvaluacion" required>
+                    <div ng-messages="forma.fechaEvaluacion.$error" >
+                        <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>                                    
+                    </div>
+                </md-container>
+              </md-list-item>-->
+              <md-list-item> 
+                    <md-input-container flex >                 
+                        <p >{{ 'UM' | translate }}</p> 
+                            <section layout="row" layout-sm="column" layout-align="center center"  >                      
+                            <div flex="100" ng-init="getClues();">
+                                <md-autocomplete
+                                  ng-disabled="isDisabled"
+                                  md-no-cache="noCache"
+                                  md-selected-item="selectedItem"
+                                  md-search-text-change="searchTextChange(searchText)"
+                                  md-search-text="searchText"
+                                  md-selected-item-change="selectedItemChange(item)"
+                                  md-items="item in querySearch(searchText)"
+                                  md-item-text="item.nombre"
+                                  md-min-length="0"
+                                  ng-model="dato.idClues" 
+                                  md-menu-class="autocomplete-custom-template">
+                                  
+                                    <md-item-template >
+                                      <span class="item-title">
+                                        <md-icon md-svg-icon="business"></md-icon>
+                                        <span> {{item.nombre}} </span>
+                                        <md-icon md-svg-icon="star"></md-icon>
+                                        <span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong style="font-size:.8em;">{{item.clues}}</strong> </span>
+                                      </span>
+                                      <span class="item-metadata" style="font-size:.8em">
+                                        <span class="item-metastat" >
+                                          <strong>JS: </strong> {{item.jurisdiccion}}
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="item-metastat">
+                                          <strong>M: </strong>{{item.municipio}} 
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="item-metastat">
+                                          <strong>L: </strong> {{item.localidad}}
+                                        </span>
+                                      </span>
+                                      <span class="item-metadata" style="font-size:.6em">
+                                      	<md-icon md-svg-icon="place"></md-icon>
+                                        <span class="item-metastat">
+                                          {{item.domicilio}} 
+                                        </span>
+                                      </span>
+                                      <span class="item-metadata" style="font-size:.7em">
+                                      	<md-icon md-svg-icon="style"></md-icon>
+                                        <span class="item-metastat">
+                                          <strong>{{item.tipoUnidad}}</strong> 
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="item-metastat">
+                                          <md-icon md-svg-icon="airline-seat-flat"></md-icon>
+                                          <strong>{{item.tipologia}}</strong> 
+                                        </span>
+                                      </span>
+                                     </md-item-template>                                 
+                                    
+                              	</md-autocomplete>
+                            </div>
+                         </section>
+                    </md-input-container>
+                </md-list-item>
+              	<md-list-item style="margin-top:-35px;"> 
+                    <md-input-container flex >
+                         <input type="hidden" aria-label="idCone" ng-model="dato.idCone" name="idCone" required>
+                         <div ng-messages="forma.idCone.$error" >
+                            <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>                                    
+                        </div>
+                    </md-input-container>
+                 </md-list-item>
+                 
+                 <md-content layout="column"  layour-align="center center" >
+					<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
+                    	<md-input-container flex >
+                            <div style="text-align:center" flex>                            
+                            	<h4 style="font-size:1.5em">{{ dato.nombre }}</h4>
+                                <h5 style="font-size:1em"><md-icon md-svg-icon="star"></md-icon> {{ dato.clues }}</h5>
+                                <p style="font-size:.5em; margin-bottom:20px;">
+                                {{ dato.domicilio }}  <strong>CP: </strong> {{ dato.codigoPostal }}
+                                </p>
+                                <md-divider ></md-divider>
+                                
+                                <div  style="font-size:.7em; margin:20px;">
+                                    <span flex="33.33">
+                                    	<strong>JS:</strong> {{ dato.jurisdiccion }}
+                                    </span>
+                                    <span flex="33.33">
+                                    	<strong>Municipio:</strong> {{ dato.municipio }}
+                                    </span>
+                                    <span flex="33.33">
+                                		<strong>Localidad:</strong> {{ dato.localidad }}
+                                    </span>
+                                </div>                               
+                                <md-divider ></md-divider>
+                                
+                                <div  style="font-size:.6em; margin:20px;">
+                                    <span flex="50">
+                                    	<md-icon md-svg-icon="business"></md-icon></md-icon> {{ dato.tipologia }}
+                                    </span>
+                                    <span flex="50">
+                                    	<md-icon md-svg-icon="style"></md-icon> {{ dato.tipoUnidad }}
+                                    </span>
+                                </div>
+                                <md-divider ></md-divider>
+                                
+                                <div  style="font-size:.7em; margin-top:20px">
+                                	<span class="col-xs-12">
+                                		<md-icon md-svg-icon="airline-seat-flat"></md-icon> Nivel CONE:</strong> {{ dato.nivelCone }}
+                                    </span>
+                                </div>
+                            </div>
+						</md-input-container>
+
+                	</md-list>
+				</md-content>
+			  
+		</md-list>
+	</md-content>
+    
+</form>
+<span ng-init="cargando = false;"></span> 

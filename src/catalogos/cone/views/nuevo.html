@@ -1,0 +1,50 @@
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
+<div layout="column" class="relative" layout-fill role="main">
+	
+	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
+	<md-toolbar  >
+		<div class="md-toolbar-tools" ng-init="index('Cone')">    
+			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
+		  <md-icon md-svg-icon="menu" ></md-icon>
+		    </md-button>   
+			<h2>
+			  <span>Cone <md-icon md-svg-icon="chevron-right"></md-icon>  {{ 'AGREGAR' | translate }}</span>
+			</h2>
+			<span flex></span>	
+            
+            <md-button hide-md hide-sm  aria-label="{{ 'AGRERGAR' | translate }}" ng-click="guardar(forma)" ng-disabled="forma.$invalid">
+              <md-icon md-svg-icon="save"></md-icon>
+    			{{ 'AGREGAR' | translate }}
+            </md-button>
+            	
+			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+		</div>
+	</md-toolbar>
+	<md-content>
+	<ol class="breadcrumb top-breadcrumb" >
+	  <li><a href="/#/">Home</a></li>
+  <li><a url-modulo="--" id="lista">Cone</a></li>
+  <li class="active">{{ 'AGREGAR' | translate }}</li>
+</ol>
+<form role="form" name="forma">
+
+<md-content layout="column" class="imprimir"  layour-align="center center"  >
+	<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >					
+		
+        	<md-list-item >						
+                <md-input-container flex >     <label>{{ 'NOMBRE' | translate }}</label>
+                        <input required  name="nombre" ng-model="dato.nombre" md-minlength="3" md-maxlength="255">
+                        <div ng-messages="forma.nombre.$error">
+                          <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>
+                          <div ng-message="md-minlength">{{ 'CAMPO_MIN_L' | translate }} 3</div>
+                          <div ng-message="md-maxlength">{{ 'CAMPO_MAX_L' | translate }} 255</div>
+                        </div>
+                </md-input-container>
+            </md-list-item>
+
+			
+        
+    </md-list>
+</md-content>
+</form>
+<span ng-init="cargando = false;"></span> 

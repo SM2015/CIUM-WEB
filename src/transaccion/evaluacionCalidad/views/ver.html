@@ -1,0 +1,217 @@
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
+<div layout="column" class="relative" layout-fill role="main">
+	<md-button class="md-fab md-fab-bottom-right" ng-click="nuevo()" aria-label="{{ 'NUEVA' | translate }}" >
+		<md-icon md-svg-icon="add"></md-icon>
+  	</md-button>
+	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
+	<md-toolbar  >
+		<div class="md-toolbar-tools" ng-init="ver('EvaluacionCalidad')">    
+			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
+		  <md-icon md-svg-icon="menu" ></md-icon>
+		    </md-button>   
+			<h2>
+			  <span>{{ 'EVALUACION' | translate }} {{ 'CALIDAD' | translate }} <md-icon md-svg-icon="chevron-right"></md-icon>  {{ 'LISTA' | translate }}</span>
+			</h2>
+			<span flex></span>
+            
+            <md-button hide-md hide-sm  aria-label="{{ 'PDF' | translate }}" imprimir-div=".imprimir">
+              <md-icon md-svg-icon="print"></md-icon>
+    			{{ 'PDF' | translate }}
+            </md-button>
+                                                           
+            <span ng-include="'src/app/views/menu-opciones.html'"></span>		
+			
+		</div>
+	</md-toolbar>
+	<md-content>
+	<ol class="breadcrumb top-breadcrumb" >
+	  <li><a href="/#/">Home</a></li>
+  <li><a url-modulo="--" id="lista">{{ 'EVALUACION' | translate }} {{ 'CALIDAD' | translate }}</a></li>
+  <li class="active">{{ 'VER' | translate }}</li>
+</ol>
+<md-content  layout="column"  layour-align="center center"  >
+		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
+        		
+            <md-content class="md-padding">
+              <md-list-item layout-wrap ng-if="!update">
+              	<div  align="center" style="width:100%">
+                    <md-icon md-svg-icon="today"></md-icon>
+                    <span> {{dato.fechaEvaluacion}} </span>
+           			<br />
+                    <span> <strong style="font-size:.8em;">{{ dato.cerrado == 1 ? 'Cerrado' : 'Abierto' }}</strong> </span>
+                  </div>
+              	
+              </md-list-item>
+              
+              
+              	<md-list-item style="margin-top:-35px;"> 
+                    <md-input-container flex >
+                         <input type="hidden" aria-label="idCone" ng-model="dato.idCone" name="idCone" required>
+                         <div ng-messages="forma.idCone.$error" >
+                            <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>                                    
+                        </div>
+                    </md-input-container>
+                 </md-list-item>
+                 
+                 <md-content layout="column"  layour-align="center center" >
+					<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
+                    	<md-input-container flex >
+                            <div style="text-align:center" flex>                            
+                            	<h4 style="font-size:1.3em">{{ dato.nombre }}</h4>
+                                <h5 style="font-size:1em"><md-icon md-svg-icon="star"></md-icon> {{ dato.clues }}</h5>
+                                <p style="font-size:.5em; margin-bottom:20px;">
+                                {{ dato.domicilio }}  <strong>CP: </strong> {{ dato.codigoPostal }}
+                                </p>
+                                <md-divider ></md-divider>
+                                
+                                <div  style="font-size:.7em; margin:20px;">
+                                    <span flex="33.33">
+                                    	<strong>JS:</strong> {{ dato.jurisdiccion }}
+                                    </span>
+                                    <span flex="33.33">
+                                    	<strong>Municipio:</strong> {{ dato.municipio }}
+                                    </span>
+                                    <span flex="33.33">
+                                		<strong>Localidad:</strong> {{ dato.localidad }}
+                                    </span>
+                                </div>                               
+                                <md-divider ></md-divider>
+                                
+                                <div  style="font-size:.6em; margin:20px;">
+                                    <span flex="50">
+                                    	<md-icon md-svg-icon="business"></md-icon></md-icon> {{ dato.tipologia }}
+                                    </span>
+                                    <span flex="50">
+                                    	<md-icon md-svg-icon="style"></md-icon> {{ dato.tipoUnidad }}
+                                    </span>
+                                </div>
+                                <md-divider ></md-divider>
+                                
+                                <div  style="font-size:.7em; margin-top:20px">
+                                	<span class="col-xs-12">
+                                		<md-icon md-svg-icon="airline-seat-flat"></md-icon> Nivel CONE:</strong> {{ dato.nivelCone }}
+                                    </span>
+                                </div>
+                            </div>
+						</md-input-container>
+
+                	</md-list>
+				</md-content>
+			  
+		</md-list>
+	</md-content>
+    
+    
+    <md-content  layout="column"  layour-align="center center"  ng-init="cargarCriteriosVer()">
+		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
+        	<md-toolbar class="md-theme-light">
+              <h2 class="md-toolbar-tools">
+                <span flex>{{ 'INDICADOR' | translate}}</span>                                 
+              </h2> 
+            </md-toolbar>
+            <md-content>
+            	
+                <md-data-table
+                  table-card="{visible: false, title: ''}"
+                  selectable-rows="false"
+                  alternate-headers="'contextual'"
+                  sortable-columns="true"
+                  delete-row-callback="deleteRowCallback(rows)">
+                
+                    <md-data-table-header-row>
+                        <md-data-table-column align-rule="left" width="40%">No Expediente:</md-data-table-column>
+                        <md-data-table-column align-rule="left" ng-repeat="v in columnas" >
+                        	<span class="texto-vertical"  width="1%">{{ v }}</span>
+                        </md-data-table-column>
+                        <md-data-table-column align-rule="left" colspan="4"> </md-data-table-column>
+                    </md-data-table-header-row>
+					
+                    <md-data-table-header-row>
+                        <md-data-table-column align-rule="left" width="50%">{{ 'INDICADOR' | translate}}</md-data-table-column>
+						<md-data-table-column align-rule="left" ng-repeat="v in columnas"  ng="'animate'"  width="1%">{{ $index+1 }}</md-data-table-column>
+                        <md-data-table-column align-rule="left">{{ 'CRITERIO' | translate}}</md-data-table-column>
+                        <md-data-table-column align-rule="left">{{ 'APROBADO' | translate}}</md-data-table-column>
+                        <md-data-table-column align-rule="left">{{ 'CUMPLE' | translate}}</md-data-table-column>
+						<md-data-table-column align-rule="left" width="30%">{{ 'PORCENTAJE' | translate}}</md-data-table-column>
+					</md-data-table-header-row>
+                    
+					<md-data-table-row table-row-id="value.codigo" ng-repeat="value in indicadores">
+                                
+ 
+                        <md-data-table-cell html-content="htmlContent">{{ value.codigo }} | {{ value.indicador }}</md-data-table-cell>
+                        <md-data-table-cell html-content="htmlContent" ng-repeat="a in columnas"  style="background-color:{{ indicadorColumna[value.codigo][$index].color }};color:white; font-weight:bold;">
+                        	{{ indicadorColumna[value.codigo][$index].total }}
+                        </md-data-table-cell>
+                        
+                        <md-data-table-cell html-content="htmlContent">
+                        	{{ value.totalCriterio }}/{{ value.totalColumnas }}={{ value.totalCriterio / value.totalColumnas }}
+                        </md-data-table-cell>
+                        <md-data-table-cell html-content="htmlContent">
+                        	{{ value.sumaCriterio }}
+                        </md-data-table-cell>
+                        <md-data-table-cell html-content="htmlContent">
+                        	{{ value.totalCriterio==value.sumaCriterio ? 'Si' : 'No' }}
+                        </md-data-table-cell>
+                        <md-data-table-cell html-content="htmlContent">
+                            <div class="progress" >
+                              <div class="progress-bar progress-bar-striped active progress-bar-default" role="progressbar"
+                              aria-valuenow="{{ value.porciento }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ value.porciento }}%; background:{{ value.color }}">
+                                {{ value.porciento }}%
+                            </div></div>
+						</md-data-table-cell>					
+					</md-data-table-row>
+                </md-data-table>
+                
+            </md-content>
+        </md-list>
+	</md-content>
+    
+    
+    <md-content  layout="column"  layour-align="center center"  >
+		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
+        	<md-toolbar style="background-color:#F27900">
+              <h2 class="md-toolbar-tools">
+                <span flex>{{ 'CRITERIO' | translate}}</span>                                 
+              </h2> 
+            </md-toolbar>
+            
+            <md-content  ng-repeat="(key, value) in criterios" ng-if="key != 'undefined'">
+            
+                <md-toolbar class="md-theme-light">
+                  <h2 class="md-toolbar-tools">
+                    <span flex>{{ key }} | {{ value[0].lugar }}</span>                                 
+                  </h2> 
+                </md-toolbar>
+                <md-content>
+                
+                <md-data-table
+                  table-card="{visible: false, title: ''}"
+                  selectable-rows="false"
+                  alternate-headers="'contextual'"
+                  sortable-columns="true"
+                  delete-row-callback="deleteRowCallback(rows)" ng-init="tieneHallazgo = (hallazgos[value[0].idlugarVerificacion]) ? true : false">
+                  
+                  	<md-data-table-header-row>
+							<md-data-table-column align-rule="left" width="40%">No Expediente:</md-data-table-column>
+							<md-data-table-column align-rule="left" ng-repeat="v in columnas"  width="1%"><span class="texto-vertical">{{ v }}</span></md-data-table-column>
+						</md-data-table-header-row>
+						<md-data-table-row table-row-id="dato.id" ng-repeat="c in value" ng-init="x=$index">
+                   
+                        	<md-data-table-cell html-content="htmlContent" width="40%">{{ c.nombre  }}</md-data-table-cell>
+			 				<md-data-table-cell html-content="htmlContent" ng-repeat="a in columnas"   ng-init="y=$index+1">
+			 					
+                                <md-button class="md-raised"  style="width:100%; background-color: {{ marcados[key][y][x].aprobado == 1 ? '#7BE15E' : marcados[key][y][x].aprobado == 0 ? '#FF3C3C' : '#3198FF' }}; color:#FFF; font-weight:bold;">
+                            {{ marcados[key][y][x].aprobado == 1 ? 'Si' : marcados[key][y][x].aprobado == 0 ? 'No' : 'N/A' }} 
+                        		</md-button>
+			 				</md-data-table-cell>
+							
+							
+						</md-data-table-row>        
+              		</md-data-table>                                        
+                
+              </md-data-table>
+            
+                
+            </md-content>
+        </md-list>
+	</md-content>          

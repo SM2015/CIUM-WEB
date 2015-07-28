@@ -1,0 +1,314 @@
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
+<div layout="column" class="relative" layout-fill role="main">
+	
+	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
+	<md-toolbar  >
+		<div class="md-toolbar-tools" ng-init="index('Usuario')">    
+			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
+		  <md-icon md-svg-icon="menu" ></md-icon>
+		    </md-button>   
+			<h2>
+			  <span>{{ 'USUARIO' | translate }} <md-icon md-svg-icon="chevron-right"></md-icon>  {{ 'AGREGAR' | translate }}</span>
+			</h2>
+			<span flex></span>
+            
+            <md-button hide-md hide-sm  aria-label="{{ 'AGRERGAR' | translate }}" ng-click="guardar(forma)" ng-disabled="forma.$invalid">
+              <md-icon md-svg-icon="save"></md-icon>
+    			{{ 'AGREGAR' | translate }}
+            </md-button>
+            		
+			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+		</div>
+	</md-toolbar>
+	<md-content>
+	<ol class="breadcrumb top-breadcrumb" >
+	  <li><a href="/#/">Home</a></li>
+  <li><a url-modulo="--" id="lista">{{ 'USUARIO' | translate }}</a></li>
+  <li class="active">{{ 'AGREGAR' | translate }}</li>
+</ol>
+<form role="form" name="forma">
+	<md-content layout="column" class="imprimir"  layour-align="center center"  >
+		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
+    		<md-content class="md-padding">
+                <md-tabs md-dynamic-height md-border-bottom>
+                  
+                  <md-tab label="{{ 'DATOS_GENERALES' | translate }}">
+                    <md-content class="md-padding">
+                     
+                      <md-list-item layout-wrap >	                                        
+                        <md-input-container flex >     
+                            <label>{{ 'NOMBRE' | translate }}</label>
+                                <input required  name="nombre" ng-model="dato.nombres" md-minlength="3" md-maxlength="255">
+                                <div ng-messages="forma.nombre.$error">
+                                  <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>
+                                  <div ng-message="md-minlength">{{ 'CAMPO_MIN_L' | translate }} 3</div>
+                                  <div ng-message="md-maxlength">{{ 'CAMPO_MAX_L' | translate }} 255</div>
+                                </div>
+                        </md-input-container>
+                      </md-list-item>
+                      
+                      <md-list-item layout-wrap >						
+                        <md-input-container flex >     
+                            <label>{{ 'APELLIDO_PATERNO' | translate }}</label>
+                                <input   name="apellidoPaterno" ng-model="dato.apellidoPaterno" md-minlength="3" md-maxlength="25">
+                                
+                        </md-input-container>
+                                        
+                        <md-input-container flex >     
+                            <label>{{ 'APELLIDO_MATERNO' | translate }}</label>
+                                <input  name="apellidoMaterno" ng-model="dato.apellidoMaterno" >
+                                
+                        </md-input-container>
+                      </md-list-item>
+                      
+                      <md-list-item>
+                      	<md-input-container flex >     
+                            <label>{{ 'CARGO' | translate }}</label>
+                                <input  name="cargo" ng-model="dato.cargo" >
+                                
+                        </md-input-container>
+                      </md-list-item>
+                      
+                      <md-list-item>
+                      	<md-input-container flex >     
+                            <label>{{ 'EMAIL' | translate }}</label>
+                                <input name="email"  type="email" ng-model="dato.email" required>				
+                                <div ng-messages="forma.email.$error" >
+                                    <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>
+                                    <div ng-message="email">{{ 'EMAIL_INVALIDO' | translate }}</div>
+                                    <div ng-message="unique">{{ 'CORREO_YA_EXISTE' | translate }}</div>
+                                </div>
+                                
+                        </md-input-container>
+                      </md-list-item>
+                      
+                      <md-list-item>
+                      	<md-input-container flex >     
+                            <label>{{ 'TELEFONO' | translate }}</label>
+                                <input type="tel"  name="telefono" ng-model="dato.telefono" >
+                                
+                        </md-input-container>
+                      </md-list-item>
+                      
+                      <md-divider ></md-divider>
+                      <p>{{ 'DATOS_ACCESO' | translate }}</p>
+                      <md-list-item>
+                      	<md-input-container flex >     
+                            <label>{{ 'USUARIO' | translate }}</label>
+                                <input name="username"   ng-model="dato.username" >	
+                                
+                        </md-input-container>
+                        
+                        
+                        <md-input-container flex >							
+                            <label translate="PASSWORD"></label>
+                            <input name="password" type="password" ng-model="dato.password" >
+                        </md-input-container>
+                        <md-input-container flex >							
+                            <label translate="REPETIR_PASSWORD"></label>
+                            <input name="password_confirmation" type="password" ng-model="dato.password_confirm" >
+                        </md-input-container>
+                        
+                      </md-list-item>
+                      
+                    </md-content>
+                  </md-tab>
+                  
+                  <md-tab label="{{ 'PERMISO' | translate }}">
+                    <md-content class="md-padding"  >
+                    	 
+                    
+                    	<md-list-item ng-init="opciones('Grupo')">
+                            <md-input-container flex >
+                            	<section layout="row" layout-sm="column" layout-align="center center" style="width: 97.5%;  margin-left: 22px;">                    
+                            	<p flex="5">{{ 'GRUPO' | translate }}:</p>
+                                <md-select flex="20" ng-model="dato.grupos" placeholder="{{ 'GRUPO' | translate }} " multiple="true" ng-change="permisoGrupo()">
+                                	<md-option ng-value="item.id" ng-repeat="item in options">{{ item.name }}</md-option>
+                            	</md-select>
+                                <p flex="75">{{ 'TEXTO_1_USUARIO' | translate }}  {{ 'TEXTO_2_USUARIO' | translate }}</p>
+                                </section>
+                         	</md-input-container>
+                            
+                      	</md-list-item>
+                      
+                      	<md-list-item>
+                      	<md-input-container flex >
+                      	
+                        
+                        <section layout="row" layout-sm="column" >
+                        	<p flex="94">{{ 'DENEGAR_PERMISO' | translate }}</p>
+                            <md-button flex="5" class="md-raised md-primary" type="button" id="btn-limpiar-permisos" ng-click="permisoGrupoDelete()">
+                              <md-icon md-svg-icon="delete"></md-icon>
+                              <md-tooltip>
+                                {{ 'LIMPIAR_PERMISO' | translate }}
+                              </md-tooltip>
+                            </md-button>
+                         </section>
+                         
+                         <md-tabs md-dynamic-height md-border-bottom ng-if="grupos.length">                  
+                  			<md-tab label="{{g.name}}" ng-repeat="g in grupos">
+                            
+                            	
+                                <md-data-table
+                                  table-card="{visible: tableCardIsEnabled, title: 'Lista Clues'}"
+                                  selectable-rows="tableIsSelectable"
+                                  alternate-headers="'contextual'"
+                                  sortable-columns="false"
+                                  delete-row-callback="deleteRowCallback(rows)">
+                                
+                                    <md-data-table-header-row>
+                                        <md-data-table-column align-rule="left">Modulo</md-data-table-column>
+                                        <md-data-table-column align-rule="left">Acciones</md-data-table-column>
+                                    </md-data-table-header-row>
+                                    <md-data-table-row table-row-id="" ng-repeat="m in modulos[g.id]">
+										<md-data-table-cell html-content="htmlContent">
+                                        	<section layout="row" layout-sm="column" >
+                                            <md-button flex="100" ng-disabled="true" class="md-raised md-primary">{{ m.replace("Controller",'') }}</md-button>
+                                            
+                                            </section>
+                                        </md-data-table-cell>
+										<md-data-table-cell html-content="htmlContent">											 
+                                            <section layout="row" layout-sm="column">
+                                            	<md-checkbox model="dato.permissions" ng-true-value="'{{ m+'.'+a }}'"
+            ng-false-value="''" aria-label="'{{ m+'.'+a }}'" ng-repeat="a in acciones[m+g.id]"  >
+                                                  {{ a }} 
+                                                </md-checkbox>
+                                            </section>
+										</md-data-table-cell>
+									</md-data-table-row>
+								</md-data-table>
+                                
+                                
+                  			</md-tab>
+                         </md-tabs>
+                    
+                         </md-input-container>
+                      </md-list-item
+                      
+                    ></md-content>
+                  </md-tab>
+                  
+                  <md-tab label="{{ 'EQUIPO_ZONAL' | translate }}">
+                    <md-content class="md-padding">
+                      
+                      <md-list-item>
+                        <md-input-container flex>
+                          <p>{{ 'TIPO_PERMISO' | translate}}</p>
+                          <md-radio-group layout="row" layout-wrap ng-model="dato.nivel" ng-click="limpiarZona()">
+                           
+                            <div flex="33"><md-radio-button value="1">{{ 'ESTATAL' | translate}}</md-radio-button></div>
+                            <div flex="33"><md-radio-button value="2" >{{ 'JURISDICCIONAL' | translate}}</md-radio-button></div>
+                            <div flex="33"><md-radio-button value="3">{{ 'ZONAL' | translate}}</md-radio-button></div> 
+                              
+                              
+                          </md-radio-group>
+                          </md-input-container>
+                        </md-list-item>
+                        <div class="row" ng-if="dato.nivel==3">
+                        <md-list-item >
+                        <md-input-container flex ng-init="getJurisdiccion()" >
+
+                          <md-select placeholder="{{ 'JURISDICCION' | translate }}" ng-model="dato.jurisdiccion" ng-change="getEquipos(dato.jurisdiccion)">
+                            <md-option ng-repeat="item in Jurisdiccion" value="{{item.jurisdiccion}}">{{item.jurisdiccion}}</md-option>
+                          </md-select>
+                          </md-input-container>
+                         
+                        <md-input-container flex  >
+
+                          <md-select placeholder="{{ 'EQUIPO_ZONAL' | translate }}" ng-model="equipo" ng-change="addEquipo(equipo)">
+                            <md-option ng-repeat="item in equipos" value="{{item.id}}">{{item.nombre}}</md-option>
+                          </md-select>
+                          </md-input-container>
+                         </md-list-item>
+                         <md-list-item>
+                        <md-input-container flex > 
+                              <div class="alert alert-info"></div>
+                                    <md-data-table
+                                  table-card="{visible: tableCardIsEnabled, title: 'Lista Clues'}"
+                                  selectable-rows="tableIsSelectable"
+                                  alternate-headers="'contextual'"
+                                  sortable-columns="true"
+                                  delete-row-callback="deleteRowCallback(rows)">
+                                
+                                    <md-data-table-header-row>
+                        <md-data-table-column align-rule="left">ID</md-data-table-column>
+                        <md-data-table-column align-rule="left">{{ 'EQUIPO_ZONAL' | translate }}</md-data-table-column>
+                        <md-data-table-column align-rule="left"></md-data-table-column>
+                      </md-data-table-header-row>
+                      <md-data-table-row table-row-id="" ng-repeat="u in dato.usuariozona" >
+                        <md-data-table-cell html-content="htmlContent"> {{ u.id }}</md-data-table-cell>
+                        <md-data-table-cell html-content="htmlContent"> {{ u.nombre }}
+                        <span ng-model="dato.clues[$index]" ng-init="dato.clues[$index]=u.id;existeUM[$index]=u.id;"></span>
+                        </md-data-table-cell>
+                        
+                                               
+                        <md-data-table-cell html-content="htmlContent">
+                            <md-button type="button" aria-label="Quitar" ng-click="equipoBorrar($index)"><md-icon md-svg-icon="delete"></md-icon></md-button>
+                        </md-data-table-cell>
+                      </md-data-table-cell>
+                  </md-data-table-row>
+                </md-data-table>
+                
+              
+                            </md-input-container>
+                         </md-list-item>
+                         </div>
+
+
+                         <div class="row" ng-if="dato.nivel==2">
+                        <md-list-item >
+                        <md-input-container flex ng-init="getJurisdiccion()" >
+
+                          <md-select placeholder="{{ 'JURISDICCION' | translate }}" ng-model="dato.jurisdiccion" ng-change="addJurisdiccion(dato.jurisdiccion)">
+                            <md-option ng-repeat="item in Jurisdiccion" value="{{item.jurisdiccion}}">{{item.jurisdiccion}}</md-option>
+                          </md-select>
+                          </md-input-container>
+                         </md-list-item>
+                         <md-list-item>
+                        <md-input-container flex > 
+                              <div class="alert alert-info"></div>
+                                    <md-data-table
+                                  table-card="{visible: tableCardIsEnabled, title: 'Lista Clues'}"
+                                  selectable-rows="tableIsSelectable"
+                                  alternate-headers="'contextual'"
+                                  sortable-columns="true"
+                                  delete-row-callback="deleteRowCallback(rows)">
+                                
+                                    <md-data-table-header-row>
+                        <md-data-table-column align-rule="left">ID</md-data-table-column>
+                        <md-data-table-column align-rule="left">{{ 'JURISDICCION' | translate }}</md-data-table-column>
+                        <md-data-table-column align-rule="left"></md-data-table-column>
+                      </md-data-table-header-row>
+                      <md-data-table-row table-row-id="" ng-repeat="u in dato.usuariozona" >
+                        <md-data-table-cell html-content="htmlContent"> {{ u.id }}</md-data-table-cell>
+                        <md-data-table-cell html-content="htmlContent"> {{ u.nombre }}
+                        <span ng-model="dato.clues[$index]" ng-init="dato.clues[$index]=u.id;existeUM[$index]=u.id;"></span>
+                        </md-data-table-cell>
+                        
+                                               
+                        <md-data-table-cell html-content="htmlContent">
+                            <md-button type="button" aria-label="Quitar" ng-click="equipoBorrar($index)"><md-icon md-svg-icon="delete"></md-icon></md-button>
+                        </md-data-table-cell>
+                      </md-data-table-cell>
+                  </md-data-table-row>
+                </md-data-table>
+                
+              
+                            </md-input-container>
+                         </md-list-item>
+                         </div>
+
+
+                    </md-content>
+                  </md-tab>
+                  <input ng-model="dato.nombre" type="hidden" id="id" name="id">
+                </md-tabs>
+                  <input ng-model="dato.nombre" type="hidden" id="id" name="id">
+                </md-tabs>
+              </md-content> 
+									
+			
+		</md-list>
+	</md-content>
+</form>
+<span ng-init="cargando = false;"></span> 

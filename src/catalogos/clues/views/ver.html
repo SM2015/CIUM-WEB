@@ -1,0 +1,73 @@
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
+<div layout="column" class="relative" layout-fill role="main">
+	<md-button class="md-fab md-fab-bottom-right" ng-click="nuevo()" aria-label="{{ 'NUEVA' | translate }}" >
+		<md-icon md-svg-icon="add"></md-icon>
+  	</md-button>
+	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
+	<md-toolbar  >
+		<div class="md-toolbar-tools" ng-init="ver('Clues')">    
+			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
+		  <md-icon md-svg-icon="menu" ></md-icon>
+		    </md-button>   
+			<h2>
+			  <span>Clues <md-icon md-svg-icon="chevron-right"></md-icon>  {{ 'VER' | translate }}</span>
+			</h2>
+			<span flex></span>	
+            
+            <md-button hide-md hide-sm  aria-label="{{ 'PDF' | translate }}" imprimir-div=".imprimir">
+              <md-icon md-svg-icon="print"></md-icon>
+    			{{ 'PDF' | translate }}
+            </md-button>
+            
+            	
+			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+		</div>
+		
+	</md-toolbar>
+	<md-content>
+<ol class="breadcrumb top-breadcrumb" >
+  <li><a href="/#/">Home</a></li>
+  <li><a url-modulo="--" id="lista">CLUES</a></li>
+  <li class="active">{{ 'VER' | translate }}</li>
+</ol>
+
+<md-content layout="column"  layour-align="center center"  >
+    <md-list layout-margin class="md-whiteframe-z2" layout-align="center center"  >		
+
+<h4 style="text-align : center">
+Estatus: <span class="label label-{{ dato.estado == 1 ? 'success' : dato.estado == 2 ? 'danger' : 'warning' }}"><i class="fa fa-check"></i> {{ dato.estatus  }}</span></h4>
+			<br>
+  <div class="thumbnail" style="padding : 0; font-size : 1em; width: 97%; margin-left: 1.5%;">
+    <div class="caption" style="text-align : center">
+
+<h4>{{ dato.nombre }}</h4>
+<h5><i class="fa fa-asterisk text-info"></i> {{ dato.clues }}</h5>
+<p>
+  {{ dato.domicilio }}  <strong>CP :  </strong> {{ dato.codigoPostal }}
+</p>
+     
+<div class="row">
+  <div class="col-xs-4">
+    <strong>JS : </strong><br> {{ dato.jurisdiccion }}
+  </div>
+  <div class="col-xs-4">
+    <strong>Municipio : </strong><br> {{ dato.municipio }}
+  </div>
+  <div class="col-xs-4">
+    <strong>Localidad : </strong><br> {{ dato.localidad }}
+  <hr>
+<div class="row">
+  <div class="col-xs-6">
+    <i class="fa fa-hospital-o"></i> {{ dato.tipologia }}
+  </div>
+  <div class="col-xs-6">
+    <i class="fa fa-tags"></i> {{ dato.tipoUnidad }}
+  <hr>
+<div class="row">
+  <div class="col-xs-12">
+    <strong><i class="fa fa-medkit"></i> Institución : </strong> {{ dato.institucion }}
+  </div>
+
+	</md-list>
+</md-content>
+  

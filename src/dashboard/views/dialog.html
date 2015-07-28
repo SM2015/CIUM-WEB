@@ -1,0 +1,123 @@
+<md-content style="margin-top:-10px">
+  <md-toolbar class="md-warn">
+    <div class="md-toolbar-tools ">
+      <h2>{{ 'OPCIONES' | translate }}</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="hide()">
+        <md-icon md-svg-src="close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-content  >
+  	
+  	<md-list-item ng-show="catVisible">	                                        
+        <md-input-container flex >     
+            <p style="margin:0px">{{ 'CATEGORIA' | translate }}</p>
+                <md-radio-group layout="row" layout-wrap ng-model="tipo" ng-init="tipo='Abasto'" ng-click="getTipo(tipo)">                                         
+                  <div flex="33"><md-radio-button value="Abasto" >{{ 'ABASTO' | translate}}</md-radio-button></div>
+                  <div flex="33"><md-radio-button value="Calidad" >{{ 'CALIDAD' | translate}}</md-radio-button></div>                                    
+                </md-radio-group>
+                
+        </md-input-container><md-divider ></md-divider>
+    </md-list-item>
+    
+    <md-list-item >	                                       
+        <md-input-container flex >     
+                <md-select placeholder="{{ 'ANIO' | translate }}" ng-model="dimension[0]" ng-change="getDimension('mes','month',1)">
+                	<md-option ng-repeat="item in datos[0]" value="{{item.anio}}">{{item.anio}}</md-option>                        
+                </md-input-container>
+                                          
+        <!--<md-input-container flex ng-show="!biVisible">     
+                <md-select placeholder="{{ 'MES' | translate }}" ng-model="dimension[1]" >
+                	<md-option ng-repeat="item in datos[1]" value="{{item.month}}">{{item.month}}</md-option>                        
+                </md-input-container>
+                
+        </md-input-container>-->
+        <md-input-container flex  >     
+                <md-select placeholder="{{ 'BIMESTRE' | translate }}" ng-model="dimension[1]" ng-change="getDimension('jurisdiccion','jurisdiccion',2)">
+                	<md-option ng-repeat="item in datos[1]" value="{{item.id}}">{{item.nombre}}</md-option>                         
+                </md-input-container>
+                
+        </md-input-container>
+        <md-divider ></md-divider>
+    </md-list-item>
+    
+    <md-list-item >	                                       
+        <md-input-container flex >     
+                <md-select placeholder="{{ 'JURISDICCION' | translate }}" ng-model="dimension[2]" ng-change="getDimension('zona','zona',3)">
+                	<md-option ng-repeat="item in datos[2]" value="{{item.jurisdiccion}}">{{item.jurisdiccion}}</md-option>                        
+                </md-input-container>
+                                          
+        <md-input-container flex >     
+                <md-select placeholder="{{ 'EQUIPO_ZONAL' | translate }}" ng-model="dimension[3]" ng-change="getDimension('clues','clues',4)">
+                	<md-option ng-repeat="item in datos[3]" value="{{item.id}}">{{item.nombre}}</md-option>                        
+                </md-input-container>
+                
+        </md-input-container>
+        <md-divider></md-divider>
+    </md-list-item>
+    
+    
+    <md-list-item ng-show="umVisible">	                                        
+        <md-input-container flex >    
+            <p >{{ 'UM' | translate }}</p> 
+                            <section layout="row" layout-sm="column" layout-align="center center"  >                      
+                            <div flex="100" ng-show="dimension[1]">
+                                <md-autocomplete
+                                  ng-disabled="isDisabled"
+                                  md-no-cache="noCache"
+                                  md-selected-item="selectedItem"
+                                  md-search-text-change="searchTextChange(searchText)"
+                                  md-search-text="searchText"
+                                  md-selected-item-change="selectedItemChange(item)"
+                                  md-items="item in querySearch(searchText)"
+                                  md-item-text="item.nombre"
+                                  md-min-length="0"
+                                  ng-model="dimension[4]" 
+                                  md-menu-class="autocomplete-custom-template">
+                                  
+                                    <md-item-template >
+                                      <span class="item-title">
+                                        <md-icon md-svg-icon="business"></md-icon>
+                                        <span> {{item.nombre}} </span>
+                                        <md-icon md-svg-icon="star"></md-icon>
+                                        <span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong style="font-size:.8em;">{{item.clues}}</strong> </span>
+                                      </span>
+                                      <span class="item-metadata" style="font-size:.8em">
+                                        <span class="item-metastat" >
+                                          <strong>JS: </strong> {{item.jurisdiccion}}
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="item-metastat">
+                                          <strong>M: </strong>{{item.municipio}} 
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="item-metastat">
+                                          <strong>L: </strong> {{item.localidad}}
+                                        </span>
+                                      </span>
+                                      <span class="item-metadata" style="font-size:.6em">
+                                      	<md-icon md-svg-icon="place"></md-icon>
+                                        <span class="item-metastat">
+                                          {{item.domicilio}} 
+                                        </span>
+                                      </span>
+                                      <span class="item-metadata" style="font-size:.7em">
+                                      	<md-icon md-svg-icon="style"></md-icon>
+                                        <span class="item-metastat">
+                                          <strong>{{item.tipoUnidad}}</strong> 
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="item-metastat">
+                                          <md-icon md-svg-icon="airline-seat-flat"></md-icon>
+                                          <strong>{{item.tipologia}}</strong> 
+                                        </span>
+                                      </span>
+                                     </md-item-template>                                 
+                                    
+                              	</md-autocomplete>
+                            </div>
+                         </section>
+                
+        </md-input-container>
+    </md-list-item>
+    
+  </md-content>
+</md-content>

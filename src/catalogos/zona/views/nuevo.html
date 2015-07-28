@@ -1,0 +1,156 @@
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
+<div layout="column" class="relative" layout-fill role="main">
+	
+	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
+	<md-toolbar  >
+		<div class="md-toolbar-tools" ng-init="index('Zona')">    
+			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
+		  <md-icon md-svg-icon="menu" ></md-icon>
+		    </md-button>   
+			<h2>
+			  <span>{{ 'EQUIPO_ZONAL' | translate}} <md-icon md-svg-icon="chevron-right"></md-icon>  {{ 'AGREGAR' | translate }}</span>
+			</h2>
+			<span flex></span>	
+            
+            <md-button hide-md hide-sm  aria-label="{{ 'AGRERGAR' | translate }}" ng-click="guardar(forma)" ng-disabled="forma.$invalid">
+              <md-icon md-svg-icon="save"></md-icon>
+    			{{ 'AGREGAR' | translate }}
+            </md-button>
+            	
+			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+		</div>
+	</md-toolbar>
+	<md-content>
+	<ol class="breadcrumb top-breadcrumb" >
+	  <li><a href="/#/">Home</a></li>
+  <li><a url-modulo="--" id="lista">{{ 'EQUIPO_ZONAL' | translate}}</a></li>
+  <li class="active">{{ 'AGREGAR' | translate }}</li>
+</ol>
+<form role="form" name="forma">
+
+<md-content layout="column" class="imprimir"  layour-align="center center"  >
+	<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >					
+		
+        	<md-list-item >						
+                <md-input-container flex >     <label>{{ 'NOMBRE' | translate }}</label>
+                        <input required  name="nombre" ng-model="dato.nombre" md-minlength="3" md-maxlength="255">
+                        <div ng-messages="forma.nombre.$error">
+                          <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>
+                          <div ng-message="md-minlength">{{ 'CAMPO_MIN_L' | translate }} 3</div>
+                          <div ng-message="md-maxlength">{{ 'CAMPO_MAX_L' | translate }} 255</div>
+                        </div>
+                </md-input-container>
+            </md-list-item>
+			
+           
+                    <md-content class="md-padding" ng-init="existeUM=[]" flex>
+                    	
+                        <md-list-item>
+                      	<md-input-container flex >
+                        
+                            <section layout="row" layout-sm="column" layout-align="center center" ng-init="tipo=true;" style="  width: 99.5%;  margin-left: 12px;">                      
+                            <div flex ng-init="getJurisdiccion();">
+                            
+                                <md-select placeholder="{{ 'JURISDICCION' | translate }}" ng-model="dato.jurisdiccion" ng-change="cargarClues(dato.jurisdiccion)">
+                                  <md-option ng-repeat="item in Jurisdiccion" value="{{item.jurisdiccion}}">{{item.jurisdiccion}}</md-option>
+                                </md-select>
+                            </div>
+                          </section>
+                          <section layout="row" layout-sm="column" layout-align="center center" ng-init="tipo=true;" style="  width: 99.5%;  margin-left: 12px;">
+                            <div flex ng-init="getJurisdiccion();">
+                              <p>Clues</p>
+                                <md-autocomplete
+                                  ng-disabled="isDisabled"
+                                  md-no-cache="noCache"
+                                  md-selected-item="selectedItem"
+                                  md-search-text-change="searchTextChange(searchText)"
+                                  md-search-text="searchText"
+                                  md-selected-item-change="selectedItemChange(item)"
+                                  md-items="item in querySearch(searchText)"
+                                  md-item-text="item.nombre"
+                                  md-min-length="0"
+                                  ng-model="dato.idClues" 
+                                  md-menu-class="autocomplete-custom-template">
+                                  
+                                    <md-item-template >
+                                      <span class="item-title">
+                                        <md-icon md-svg-icon="business"></md-icon>
+                                        <span> {{item.nombre}} </span>
+                                        <md-icon md-svg-icon="star"></md-icon>
+                                        <span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong style="font-size:.8em;">{{item.clues}}</strong> </span>
+                                      </span>
+                                      <span class="item-metadata" style="font-size:.8em">
+                                        <span class="item-metastat" >
+                                          <strong>JS: </strong> {{item.jurisdiccion}}
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="item-metastat">
+                                          <strong>M: </strong>{{item.municipio}} 
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="item-metastat">
+                                          <strong>L: </strong> {{item.localidad}}
+                                        </span>
+                                      </span>
+                                      <span class="item-metadata" style="font-size:.6em">
+                                      	<md-icon md-svg-icon="place"></md-icon>
+                                        <span class="item-metastat">
+                                          {{item.domicilio}} 
+                                        </span>
+                                      </span>
+                                      <span class="item-metadata" style="font-size:.7em">
+                                      	<md-icon md-svg-icon="style"></md-icon>
+                                        <span class="item-metastat">
+                                          <strong>{{item.tipoUnidad}}</strong> 
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="item-metastat">
+                                          <md-icon md-svg-icon="airline-seat-flat"></md-icon>
+                                          <strong>{{item.tipologia}}</strong> 
+                                        </span>
+                                      </span>
+                                     </md-item-template>                                 
+                                    
+                              	</md-autocomplete> 
+                                </div>                           
+                        </section>
+                        	</md-input-container>
+                         </md-list-item>
+                         <md-list-item>
+                      	<md-input-container flex > 
+                            	<div class="alert alert-info"></div>
+                                    <md-data-table
+                                  table-card="{visible: tableCardIsEnabled, title: 'Lista Clues'}"
+                                  selectable-rows="tableIsSelectable"
+                                  alternate-headers="'contextual'"
+                                  sortable-columns="true"
+                                  delete-row-callback="deleteRowCallback(rows)">
+                                
+                                    <md-data-table-header-row>
+												<md-data-table-column align-rule="left">CLUES</md-data-table-column>
+												<md-data-table-column align-rule="left">nombre</md-data-table-column>
+												<md-data-table-column align-rule="left">Jurisdicción</md-data-table-column>
+												
+												<md-data-table-column align-rule="left"></md-data-table-column>
+											</md-data-table-header-row>
+                                    		<md-data-table-row table-row-id="" ng-repeat="u in dato.usuarioclues" ng-if="u.clues!=null">
+												<md-data-table-cell html-content="htmlContent"> {{ u.clues }}
+												<span ng-model="dato.clues[$index]" ng-init="dato.clues[$index]=u.clues;existeUM[$index]=u.clues;"></span>
+                                                </md-data-table-cell>
+												<md-data-table-cell html-content="htmlContent"> {{ u.nombre }}</md-data-table-cell>
+												<md-data-table-cell html-content="htmlContent"> {{ u.jurisdiccion }}</md-data-table-cell>
+												
+												<md-data-table-cell html-content="htmlContent">
+                                                <md-button type="button" aria-label="Quitar" ng-click="CluesUsuarioBorrar($index)"><md-icon md-svg-icon="delete"></md-icon></md-button>
+                                                </md-data-table-cell>
+											</md-data-table-cell>
+									</md-data-table-row>
+								</md-data-table>
+								
+							
+                            </md-input-container>
+                         </md-list-item>
+                    </md-content>
+			
+        
+    </md-list>
+</md-content>
+</form>
+<span ng-init="cargando = false;"></span> 

@@ -1,0 +1,153 @@
+(function(){
+	'use strict';
+	angular.module('PendienteModule')
+	.controller('PendienteCtrl',
+	       ['$rootScope', '$scope', '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash',  'Pendientes', 'CrudDataApi', 'URLS', 
+	function($rootScope,   $scope,   $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,    Pendientes,   CrudDataApi,   URLS){
+	
+		Pendientes.preparar();
+	
+		$scope.$on('pendientesInicio', function() {
+			$scope.pendientes = Pendientes.pendientes.data;
+			$scope.total = Pendientes.pendientes.total;
+		});
+		
+		$scope.visto = function(id)
+		{
+			var json={};
+			json.visto=1;
+			$http.put(URLS.BASE_API+'Pendiente'+'/'+id,json)
+			.success(function(data, status, headers, config) 
+			{	
+				Pendientes.preparar();			
+			})
+		}
+		
+		$scope.menuSelected = $location.path();
+	    $scope.menu = Menu.getMenu();
+	    $scope.fecha_actual = new Date();
+	    
+	    $scope.cargando = true;
+
+	    $scope.ruta="";
+	    $scope.url=$location.url();
+
+	    $scope.tableCardIsEnabled = false;
+	    $scope.tableIsSelectable = false;
+	    $scope.tableIsSortable = true;
+	    $scope.htmlContent = true;
+
+	    $scope.deleteRowCallback = function(rows){
+	        $mdToast.show(
+	      		$mdToast.simple()
+	    		.content('Deleted row id(s): '+rows)
+	    		.hideDelay(3000)
+	        );
+	    };
+	    $scope.paginacion = 
+	    {
+	        pag: 1,
+	        lim: 10,
+	        paginas:0
+	    };
+	    $scope.datos = [];
+	    $scope.ruta="";
+	    $scope.url=$location.url();
+
+	    $scope.toggleMenu  = function  () {
+	        $mdSidenav('left').toggle();
+	    };
+	    
+	    $scope.mostrarIdiomas = function($event){  
+	                      
+	        $mdBottomSheet.show({
+	          templateUrl: 'src/app/views/idiomas.html',
+	          controller: 'ListaIdiomasCtrl',
+	          targetEvent: $event	
+	        });
+	    };
+	    
+	    $scope.logout = function () {
+	       Auth.logout(function () {
+	           $location.path("signin");
+	       });
+	    };
+	    
+	    $scope.ir = function(path){
+	        $scope.menuSelected = path;
+	       $location.path(path).search({id: null});
+	    };
+
+	    //Lista
+	    $scope.index = function(ruta) 
+	    {
+	        $scope.ruta=ruta;  
+	        var uri=$scope.url;
+	     
+	        if(uri.search("nuevo")==-1)
+	        $scope.init();     
+	    };
+
+	    $scope.init = function() 
+	    {
+	        var url=$scope.ruta;
+	      
+	        var pagina=$scope.paginacion.pag;
+	        var limite=$scope.paginacion.lim;
+
+	        CrudDataApi.lista(url+'?pagina=' + pagina + '&limite=' + limite, function (data) {
+	        if(data.status  == '407')
+	        	$window.location="acceso";
+
+	      		if(data.status==200)
+	      		{
+	    			$scope.datos = data.data;
+	    			$scope.paginacion.paginas = data.total;
+	      		}
+	      		else
+	      		{
+	    			flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
+	      		}
+	      		$scope.cargando = false;
+	        },function (e) {
+	      		errorFlash.error(e);
+	      		$scope.cargando = false;
+	        });
+	    };  
+
+	    $scope.siguiente = function() 
+	    {
+	        if ($scope.paginacion.pag < $scope.paginacion.paginas) 
+	        {
+		    	$scope.paginacion.pag=$scope.paginacion.pag+$scope.paginacion.lim;
+		      	$scope.init();
+	        }
+	    };
+	    $scope.anterior = function() 
+	    {
+	        if ($scope.paginacion.pag > 1) 
+	        {
+	      		$scope.paginacion.pag=$scope.paginacion.pag-$scope.paginacion.lim;
+	      		$scope.init();
+	        }
+	    };
+
+	    $scope.primero = function() 
+	    {
+	        
+	        $scope.paginacion.pag=1;
+	        $scope.init();	        
+	    };
+	    $scope.ultimo = function() 
+	    {
+	        
+	        $scope.paginacion.pag=$scope.paginacion.paginas-$scope.paginacion.lim+1;
+	        $scope.init();
+	        
+	    };
+	    $scope.buscarL = function(buscar) 
+	    {
+	        console.log(buscar);
+	    };	
+	}])
+})();

@@ -1,0 +1,172 @@
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
+<div layout="column" class="relative" layout-fill role="main">
+	<md-button class="md-fab md-fab-bottom-right" ng-click="nuevo()" aria-label="{{ 'NUEVA' | translate }}" >
+		<md-icon md-svg-icon="add"></md-icon>
+  	</md-button>
+	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
+	<md-toolbar  >
+		<div class="md-toolbar-tools" ng-init="index('Seguimiento')">    
+			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
+		  <md-icon md-svg-icon="menu" ></md-icon>
+		    </md-button>   
+			<h2>
+			  <span>Seguimiento <md-icon md-svg-icon="chevron-right"></md-icon>  {{ 'LISTA' | translate }}</span>
+			</h2>
+			<span flex></span>		
+			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+		</div>
+	</md-toolbar>
+	<md-content>
+	<ol class="breadcrumb top-breadcrumb" >
+	  <li><a href="/#/">Home</a></li>
+  <li class="active">Seguimiento</li>
+</ol>
+<div layout="row" >  
+  <div layout-padding flex>
+			<div layout="column" layout-fill style="padding-bottom: 2px;">
+			  <md-whiteframe class="md-whiteframe-z1" layout layout-align="center center">
+				<span style="width:60%">
+				<md-content layout-padding class="autoScroll" style="width:100%">
+					<md-input-container class="md-icon-float" >
+						  
+					  <label>Buscar</label>
+					  <md-icon md-svg-src="search" class="name"></md-icon>
+					  <input ng-model="buscar.nombre" type="text">
+					  
+					</md-container>
+					
+					
+				</md-content>
+				</span>
+				<span style="width:20%">
+  <md-button class="md-raised" ng-click="buscarL(buscar)">
+<md-icon md-svg-src="search"></md-icon>
+<md-tooltip>
+    {{ 'BUSCAR' | translate }}
+</md-tooltip>
+  </md-button>
+				</span>
+    
+				<span style="width:20%">			
+  <md-button class="md-raised md-primary" ng-click="exportar()">
+<md-icon md-svg-src="picture-as-pdf"></md-icon>
+<md-tooltip>
+    {{ 'PDF' | translate }}
+</md-tooltip>
+  </md-button>
+  <md-button class="md-raised md-primary" ng-click="excel()">
+  	<md-icon md-svg-src="explicit"></md-icon>
+<md-tooltip>
+    {{ 'EXCEL' | translate }}
+</md-tooltip>
+  </md-button>										
+				</span>
+			  </md-whiteframe>
+			</div>
+<md-data-table
+  table-card="{visible: tableCardIsEnabled, title: 'Lista Clues'}"
+  selectable-rows="tableIsSelectable"
+  alternate-headers="'contextual'"
+  sortable-columns="true"
+  delete-row-callback="deleteRowCallback(rows)">
+
+    <md-data-table-header-row>
+		
+		    <md-data-table-column align-rule="left">Usuario</md-data-table-column>
+		    <md-data-table-column align-rule="left">Clues</md-data-table-column>	
+		    <md-data-table-column align-rule="left">Evaluación</md-data-table-column>	
+		    <md-data-table-column align-rule="left">Criterio</md-data-table-column>			
+			<md-data-table-column align-rule="left">Hallazgo</md-data-table-column>
+			<md-data-table-column align-rule="left">Acción</md-data-table-column>	
+			<md-data-table-column align-rule="left">Plazo</md-data-table-column>	
+			<md-data-table-column align-rule="left">Resuelto</md-data-table-column>				
+			<md-data-table-column align-rule="left">{{ 'CREADO' | translate }}</md-data-table-column>
+			<md-data-table-column align-rule="left">{{ 'MODIFICADO' | translate }}</md-data-table-column>
+			<md-data-table-column align-rule="left"></md-data-table-column>
+		  </md-data-table-header-row>
+	
+    <md-data-table-row table-row-id="dato.id" ng-repeat="dato in datos  ">
+				 
+				 <md-data-table-cell html-content="htmlContent">{{ dato.usuario.nombres+' '+dato.usuario.apellidoPaterno+' '+dato.usuario.apellidoMaterno | uppercase }}</md-data-table-cell>
+				 <md-data-table-cell html-content="htmlContent">{{ dato.evaluacion.clues | uppercase }}</md-data-table-cell>
+				 <md-data-table-cell html-content="htmlContent">{{ dato.evaluacion.id | uppercase }}</md-data-table-cell>
+				 <md-data-table-cell html-content="htmlContent">{{ dato.criterio.nombre | uppercase }}</md-data-table-cell>
+				 <md-data-table-cell html-content="htmlContent">{{ dato.descripcion | uppercase }}</md-data-table-cell>				
+				 <md-data-table-cell html-content="htmlContent">{{ dato.accion.nombre | uppercase }}</md-data-table-cell>
+				 <md-data-table-cell html-content="htmlContent">{{ dato.plazo.valor+' '+dato.plazo.nombre | uppercase }}</md-data-table-cell>	
+				 <md-data-table-cell html-content="htmlContent">{{ dato.resuelto == 1 ? 'SI' : 'NO' }}</md-data-table-cell>			 
+				 <md-data-table-cell html-content="htmlContent">{{ dato.creadoAl }}</md-data-table-cell>
+				 <md-data-table-cell html-content="htmlContent">{{ dato.modificadoAl }}</md-data-table-cell>
+				 <md-data-table-cell html-content="htmlContent">
+					
+					<section layout="row" layout-sm="column" layout-align="center center">
+						
+						<a url-modulo="ver?id={{ dato.id }}"><md-button class="md-fab md-mini  md-primary" aria-label="Ver">
+							<md-icon md-svg-src="remove-red-eye"></md-icon>
+    <md-tooltip>
+    {{ 'VER' | translate }}
+  </md-tooltip>
+						</md-button></a>
+						
+						<a url-modulo="modificar?id={{ dato.id }}"><md-button class="md-fab md-mini md-primary" aria-label="Editar">
+						  <md-icon md-svg-src="mode-edit" ></md-icon>
+  <md-tooltip>
+    {{ 'EDITAR' | translate }}
+  </md-tooltip>
+						</md-button></a>
+						
+						<md-button ng-click="borrar(dato.id, $index)" class="md-fab md-mini" aria-label="Eliminar">
+						  <md-icon md-svg-src="delete" ></md-icon>
+  <md-tooltip>
+    {{ 'ELIMINAR' | translate }}
+  </md-tooltip>
+						</md-button>
+						
+					</section>
+				 </md-data-table-cell>
+				 
+			 </md-data-table-row>
+</md-data-table>
+	 
+	 <div layout="column" layout-fill >
+			  <md-whiteframe class="md-whiteframe-z1" layout layout-align="center center">
+				<span>
+					<p>
+					  <small><strong>{{ paginacion.pag }}</strong> - <strong>{{ (paginacion.pag+paginacion.lim)-1 }}</strong> de <strong>{{ paginacion.paginas }}</strong> resultados.</small>
+					</p>
+				</span>
+				<span>
+  <md-button class="md-raised md-primary" ng-click="primero()">
+<md-icon md-svg-src="arrow-back"></md-icon>
+<md-tooltip>
+    {{ 'PRIMERA' | translate }}
+</md-tooltip>
+  </md-button>
+  
+  <md-button class="md-raised" ng-click="anterior()">
+<md-icon md-svg-src="chevron-left"></md-icon>
+<md-tooltip>
+    {{ 'REGRESAR' | translate }}
+</md-tooltip>
+  </md-button>
+  
+  <md-button class="md-raised" ng-click="siguiente()">
+<md-icon md-svg-src="chevron-right"></md-icon>
+<md-tooltip>
+    {{ 'SIGUIENTE' | translate }}
+</md-tooltip>
+  </md-button>
+  
+  <md-button class="md-raised md-primary" ng-click="ultimo()">
+<md-icon md-svg-src="arrow-forward"></md-icon>
+<md-tooltip>
+    {{ 'ULTIMA' | translate }}
+</md-tooltip>
+  </md-button>					
+				</span>
+			  </md-whiteframe>
+			</div>
+        </div>
+    </div>
+	</md-content>
+</div>

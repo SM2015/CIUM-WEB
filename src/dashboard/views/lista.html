@@ -1,0 +1,424 @@
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
+<div layout="column" class="relative" layout-fill role="main">
+	
+	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
+	<md-toolbar  >
+		<div class="md-toolbar-tools">    
+			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
+		  <md-icon md-svg-icon="menu" ></md-icon>
+		    </md-button>   
+			<h2>
+			  <span>Dashboard <md-icon md-svg-icon="chevron-right"></md-icon>  </span>
+			</h2>
+			<span flex></span>		
+			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+		</div>
+	</md-toolbar>
+	<md-content>
+	<ol class="breadcrumb top-breadcrumb" >
+	  <li><a href="/#/">Home</a></li>
+  <li class="active">Dashboard</li>
+</ol>
+<md-content  layout="column"  layour-align="center center"  >
+	<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
+    
+        <div layout="row" layout-sm="column" layout-align="space-around">
+        	<!-- inicio grafico -->
+            <md-content  layout="column"  layour-align="center center" flex="33.33" style="margin: 5px;" fullscreen="isFullscreen" ng-controller="abastoController" id="abastoDialog">
+                <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="min-height:508px">
+                
+                    <md-toolbar class="md-theme-light">
+                      <h2 class="md-toolbar-tools">
+                        <span flex>{{ 'RU_ABASTO' | translate}}</span>                                 
+                      </h2> 
+                    </md-toolbar>
+                    
+                    <md-content>
+                        <div cg-busy="{promise:abasto,templateUrl:templateUrl,message:message,backdrop:backdrop,delay:delay,minDuration:minDuration}">
+                            <md-content flex>
+                                
+                                    <span flex style="width:100%; height:48px; display:block; background-color:#FFD7AE">
+                                        
+                                                                                
+                                        <md-menu>
+                                          <md-button aria-label="toggle" class="md-icon-button" ng-click="$mdOpenMenu();toggleModal($event);">
+                                            <md-icon md-menu-origin md-svg-icon="insert-chart"></md-icon>
+                                          </md-button>
+                                          <md-menu-content width="7">                                            
+                                          	<md-menu-item cg-busy="{promise:abastoOpcion,templateUrl:templateUrl, message:message, backdrop:backdrop, delay:delay, minDuration:minDuration}" >
+                                               <div style="margin-top:2px;" 
+                                                ng-include="'src/dashboard/views/dialog.html'">
+                                               </div>
+                                            </md-menu-item>
+                                          </md-menu-content>
+                                        </md-menu>
+                                        
+                                        <md-button class="md-icon-button" aria-label="Recargar" ng-click="recargar()">
+                                            <md-icon md-svg-src="replay"></md-icon>
+                                        </md-button>
+                                        
+                                        <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-abasto')" id="max-abasto">
+                                            <md-icon md-svg-src="zoom-in"></md-icon>
+                                        </md-button>
+                                        
+                                        <md-button class="md-icon-button" aria-label="Regresar" id="regresar-abasto" ng-click="regresar()" ng-if="contador>0">
+                                            <md-icon md-svg-src="arrow-back"></md-icon>
+                                        </md-button>
+                                    </span>
+                                
+                                
+                                <ol class="breadcrumb" style="margin-top: 0px;" ><li>Abastos </li><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
+	
+    
+					<canvas tc-chartjs-bar chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart"></canvas>
+                                
+                            </md-content>
+                        </div>
+                    </md-content>
+                 </md-list>
+            </md-content>
+            <!-- fin grafico -->
+            
+            <!-- inicio grafico -->
+            <md-content  layout="column"  layour-align="center center" flex="33.33" style="margin: 5px;" fullscreen="isFullscreen" ng-controller="calidadController">
+                <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="min-height: 508px;">
+                
+                    <md-toolbar class="md-theme-light">
+                      <h2 class="md-toolbar-tools">
+                        <span flex>{{ 'RU_CALIDAD' | translate}}</span>                                 
+                      </h2> 
+                    </md-toolbar>
+                    
+                    <md-content>
+                        <div cg-busy="{promise:calidad,templateUrl:templateUrl,message:message,backdrop:backdrop,delay:delay,minDuration:minDuration}">
+                            <md-content flex>
+                                
+                                    <span flex style="width:100%; height:48px; display:block; background-color:#FFD7AE">
+                                                                            
+                                        <md-menu>
+                                          <md-button aria-label="toggle" class="md-icon-button" ng-click="$mdOpenMenu();toggleModal($event);">
+                                            <md-icon md-menu-origin md-svg-icon="insert-chart"></md-icon>
+                                          </md-button>
+                                          <md-menu-content width="7">                                            
+                                          	<md-menu-item cg-busy="{promise:calidadOpcion,templateUrl:templateUrl, message:message, backdrop:backdrop, delay:delay, minDuration:minDuration}" >
+                                              <div style="margin-top:2px;" 
+                                                ng-include="'src/dashboard/views/dialog.html'">
+                                              </div>
+                                            </md-menu-item>
+                                          </md-menu-content>
+                                        </md-menu>
+                                        
+                                        <md-button class="md-icon-button" aria-label="Recargar" ng-click="recargar()">
+                                            <md-icon md-svg-src="replay"></md-icon>
+                                        </md-button>
+                                        
+                                        <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-calidad')" id="max-calidad">
+                                            <md-icon md-svg-src="zoom-in"></md-icon>
+                                        </md-button>
+                                        
+                                        <md-button class="md-icon-button" aria-label="Regresar" id="regresar-calidad" ng-click="regresar()" ng-if="contador>1">
+                                            <md-icon md-svg-src="arrow-back"></md-icon>
+                                        </md-button>
+                                    </span>
+                                
+                                
+                                <ol class="breadcrumb" style="margin-top: 0px;" ><li>Calidad </li><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
+								
+					<canvas tc-chartjs-line chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart"></canvas>
+                                
+						
+                            </md-content>
+                        </div>
+                    </md-content>
+                 </md-list>
+            </md-content>
+            <!-- fin grafico -->
+            
+            <!-- inicio grafico -->
+            <md-content  layout="column"  layour-align="center center" flex="33.33" style="margin: 5px;" fullscreen="isFullscreen" ng-controller="pieController">
+                <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="min-height:508px">
+                
+                    <md-toolbar class="md-theme-light">
+                      <h2 class="md-toolbar-tools">
+                        <span flex>{{ 'REPORTE_X_EQUIPO' | translate}}</span>                                 
+                      </h2> 
+                    </md-toolbar>
+                    
+                    <md-content>
+                        <div cg-busy="{promise:pie,templateUrl:templateUrl,message:message,backdrop:backdrop,delay:delay,minDuration:minDuration}">
+                            <md-content flex>
+                                
+                                    <span flex style="width:100%; height:48px; display:block; background-color:#FFD7AE">
+                                        <md-menu>
+                                          <md-button aria-label="toggle" class="md-icon-button" ng-click="$mdOpenMenu();toggleModal($event);">
+                                            <md-icon md-menu-origin md-svg-icon="insert-chart"></md-icon>
+                                          </md-button>
+                                          <md-menu-content width="7">                                            
+                                          	<md-menu-item cg-busy="{promise:pieOpcion,templateUrl:templateUrl, message:message, backdrop:backdrop, delay:delay, minDuration:minDuration}" >
+                                             <div style="margin-top:2px;" 
+                                                ng-include="'src/dashboard/views/dialog.html'">
+                                                </div>
+                                             </md-menu-item>
+                                          </md-menu-content>
+                                        </md-menu>
+                                        
+                                        <md-button class="md-icon-button" aria-label="Recargar" ng-click="recargar()">
+                                            <md-icon md-svg-src="replay"></md-icon>
+                                        </md-button>
+                                        
+                                        <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-equipo')" id="max-equipo">
+                                            <md-icon md-svg-src="zoom-in"></md-icon>
+                                        </md-button>
+                                        
+                                        <md-button class="md-icon-button" aria-label="Regresar" id="regresar-equipo" ng-click="regresar()" ng-if="contador>1">
+                                            <md-icon md-svg-src="arrow-back"></md-icon>
+                                        </md-button>
+                                    </span>
+                                
+                                
+                                <ol class="breadcrumb" style="margin-top: 0px;" ><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
+								
+								<canvas tc-chartjs-pie chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart"></canvas>
+                                
+                            </md-content>
+                        </div>
+                    </md-content>
+                 </md-list>
+            </md-content>
+            <!-- fin grafico -->
+         </div>
+         
+            
+         <div layout="row" layout-sm="column" layout-align="space-around">
+         	
+            <!-- inicio grafico -->
+            <md-content  layout="column"  layour-align="center center" flex="33.33" style="margin: 5px;" fullscreen="isFullscreen" ng-controller="alertaController">
+                <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="min-height:508px; {{ isFullscreen ? '' : 'max-height:760px' }} ; overflow:auto;">
+                
+                    <md-toolbar class="md-theme-light">
+                      <h2 class="md-toolbar-tools">
+                        <span flex>{{ 'INDICADOR_ALERTA' | translate}}</span>                                 
+                      </h2> 
+                    </md-toolbar>
+                    
+                    <md-content>
+                        <div cg-busy="{promise:alerta,templateUrl:templateUrl,message:message,backdrop:backdrop,delay:delay,minDuration:minDuration}">
+                            <md-content flex>
+                                
+                                    <span flex style="width:100%; height:48px; display:block; background-color:#FFD7AE">
+                                         <md-menu>
+                                          <md-button aria-label="toggle" class="md-icon-button" ng-click="$mdOpenMenu();toggleModal($event);">
+                                            <md-icon md-menu-origin md-svg-icon="insert-chart"></md-icon>
+                                          </md-button>
+                                          <md-menu-content width="7">                                            
+                                          	<md-menu-item cg-busy="{promise:alertaOpcion,templateUrl:templateUrl, message:message, backdrop:backdrop, delay:delay, minDuration:minDuration}" >
+                                              <div style="margin-top:2px;" 
+                                                ng-include="'src/dashboard/views/dialog.html'">
+                                                </div>
+                                             </md-menu-item>
+                                          </md-menu-content>
+                                        </md-menu>
+                                        
+                                        <md-button class="md-icon-button" aria-label="Recargar" ng-click="recargar()">
+                                            <md-icon md-svg-src="replay"></md-icon>
+                                        </md-button>
+                                        
+                                        <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-alerta')" id="max-alerta">
+                                            <md-icon md-svg-src="zoom-in"></md-icon>
+                                        </md-button>
+                                        
+                                        <md-button class="md-icon-button" aria-label="Regresar" id="regresar-alerta" ng-click="regresar()" ng-if="contador>1">
+                                            <md-icon md-svg-src="arrow-back"></md-icon>
+                                        </md-button>
+                                    </span>
+                                
+                                
+                                <ol class="breadcrumb" style="margin-top: 0px;" ><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
+					<md-content  class="md-whiteframe-z1" style="width:98%; max-height:50%; overflow:auto; margin-left:1%; ">		
+					<md-data-table
+                  table-card="{visible: false, title: ''}"
+                  selectable-rows="false"
+                  alternate-headers="'contextual'"
+                  sortable-columns="true"
+                  delete-row-callback="deleteRowCallback(rows)">
+                
+                    <md-data-table-header-row>
+                        <md-data-table-column align-rule="left">{{ 'INDICADOR' | translate }}</md-data-table-column>
+                        <md-data-table-column align-rule="left">{{ 'VALOR' | translate }}</md-data-table-column>
+                    </md-data-table-header-row>
+                    
+                    <md-data-table-row table-row-id="value.codigo" ng-repeat="value in dato">							
+                        <md-data-table-cell html-content="htmlContent">{{ value.codigo }} | {{ value.nombre }}</md-data-table-cell>
+                        <md-data-table-cell html-content="htmlContent">
+                        	<div class="progress" >
+                              <div class="progress-bar progress-bar-striped active progress-bar-default" role="progressbar"
+                              aria-valuenow="{{ value.porcentaje }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ value.porcentaje }}%; background:{{ value.color }}">
+                                {{ value.porcentaje }}%
+                              </div></div>
+                        </md-data-table-cell>		             
+                     </md-data-table-row>
+                    </md-data-table>
+                       </md-content>         
+                            </md-content>
+                        </div>
+                    </md-content>
+                 </md-list>
+            </md-content>
+            <!-- fin grafico -->
+            
+            
+            
+            <!-- inicio grafico -->
+            <md-content  layout="column"  layour-align="center center" flex="33.33" style="margin: 5px;" fullscreen="isFullscreen" ng-controller="globalController">
+                <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="min-height:508px; {{ isFullscreen ? '' : 'max-height:760px' }} ; overflow:auto;">
+                
+                    <md-toolbar class="md-theme-light">
+                      <h2 class="md-toolbar-tools">
+                        <span flex>{{ 'REPORTE_GLOBAL' | translate}}</span>                                 
+                      </h2> 
+                    </md-toolbar>
+                    
+                    <md-content>
+                        <div cg-busy="{promise:global,templateUrl:templateUrl,message:message,backdrop:backdrop,delay:delay,minDuration:minDuration}">
+                            <md-content flex>
+                                
+                                    <span flex style="width:100%; height:48px; display:block; background-color:#FFD7AE">
+                                        <md-menu>
+                                          <md-button aria-label="toggle" class="md-icon-button" ng-click="$mdOpenMenu();toggleModal($event);">
+                                            <md-icon md-menu-origin md-svg-icon="insert-chart"></md-icon>
+                                          </md-button>
+                                          <md-menu-content width="7">                                            
+                                          	<md-menu-item cg-busy="{promise:globalOpcion,templateUrl:templateUrl, message:message, backdrop:backdrop, delay:delay, minDuration:minDuration}" >
+                                          
+                                               <div style="margin-top:2px;" 
+                                                ng-include="'src/dashboard/views/dialog.html'">
+                                                </div>
+                                             </md-menu-item>
+                                          </md-menu-content>
+                                        </md-menu>
+                                        
+                                        <md-button class="md-icon-button" aria-label="Recargar" ng-click="recargar()">
+                                            <md-icon md-svg-src="replay"></md-icon>
+                                        </md-button>
+                                        
+                                        <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-global')" id="max-global">
+                                            <md-icon md-svg-src="zoom-in"></md-icon>
+                                        </md-button>
+                                        
+                                        <md-button class="md-icon-button" aria-label="Regresar" id="regresar-global" ng-click="regresar()" ng-if="contador>1">
+                                            <md-icon md-svg-src="arrow-back"></md-icon>
+                                        </md-button>
+                                    </span>
+                                
+                                
+                                <ol class="breadcrumb" style="margin-top: 0px;" ><li>Calidad </li><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
+					<md-content  class="md-whiteframe-z1" style="width:98%; max-height:50%; overflow:auto; margin-left:1%; ">			
+					<md-data-table
+                  table-card="{visible: false, title: ''}"
+                  selectable-rows="false"
+                  alternate-headers="'contextual'"
+                  sortable-columns="true"
+                  delete-row-callback="deleteRowCallback(rows)">
+                
+                    <md-data-table-header-row>
+                        <md-data-table-column align-rule="left">Unidad</md-data-table-column>
+						<md-data-table-column align-rule="left" ng-repeat="v in indicadores" width="10%" ng-title="v.nombre">{{ v.codigo }}</md-data-table-column>
+                    </md-data-table-header-row>
+					<md-data-table-row table-row-id="value.codigo" ng-repeat="(key, value) in dato">							
+                        <md-data-table-cell html-content="htmlContent">{{ key }}</md-data-table-cell>	
+						<md-data-table-cell html-content="htmlContent" ng-repeat="v in value" style="background-color:{{ v.color }}">{{ v.porcentaje }}
+                        </md-data-table-cell>		             
+                 </md-data-table-row>
+                </md-data-table>
+                    </md-content>
+                            </md-content>
+                        </div>
+                    </md-content>
+                 </md-list>
+            </md-content>
+            <!-- fin grafico -->
+            
+            <!-- inicio grafico -->
+            <md-content  layout="column"  layour-align="center center" flex="33.33" style="margin: 5px;" fullscreen="isFullscreen" ng-controller="gaugeController">
+                <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="min-height:508px">
+                
+                    <md-toolbar class="md-theme-light">
+                      <h2 class="md-toolbar-tools">
+                        <span flex>{{ 'REPORTE_SEGUIMIENTO' | translate}}</span>                                 
+                      </h2> 
+                    </md-toolbar>
+                    
+                    <md-content>
+                        <div cg-busy="{promise:gauge,templateUrl:templateUrl,message:message,backdrop:backdrop,delay:delay,minDuration:minDuration}">
+                            <md-content flex>
+                                
+                                    <span flex style="width:100%; height:48px; display:block; background-color:#FFD7AE">
+                                        <md-menu>
+                                          <md-button aria-label="toggle" class="md-icon-button" ng-click="$mdOpenMenu();toggleModal($event);">
+                                            <md-icon md-menu-origin md-svg-icon="insert-chart"></md-icon>
+                                          </md-button>
+                                          <md-menu-content width="7">                                            
+                                          	<md-menu-item cg-busy="{promise:gaugeOpcion,templateUrl:templateUrl, message:message, backdrop:backdrop, delay:delay, minDuration:minDuration}" >
+                                                <div style="margin-top:2px;" 
+                                                	ng-include="'src/dashboard/views/dialog.html'">
+                                                </div>
+                                            </md-menu-item>
+                                          </md-menu-content>
+                                        </md-menu>
+                                        
+                                        <md-button class="md-icon-button" aria-label="Recargar" ng-click="recargar()">
+                                            <md-icon md-svg-src="replay"></md-icon>
+                                        </md-button>
+                                        
+                                        <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-gauge')" id="max-gauge">
+                                            <md-icon md-svg-src="zoom-in"></md-icon>
+                                        </md-button>
+                                        
+                                        <md-button class="md-icon-button" aria-label="Regresar" id="regresar-gauge" ng-click="regresar()" ng-if="contador>1">
+                                            <md-icon md-svg-src="arrow-back"></md-icon>
+                                        </md-button>
+                                    </span>
+                                
+                                
+                                <ol class="breadcrumb" style="margin-top: 0px;" ><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
+						<md-content  class="md-whiteframe-z1" style="width:98%; {{ isFullscreen ? '' : 'max-height:250px' }} ; overflow:auto; margin-left:1%; ">		
+					<md-data-table
+                  table-card="{visible: false, title: ''}"
+                  selectable-rows="false"
+                  alternate-headers="'contextual'"
+                  sortable-columns="true"
+                  delete-row-callback="deleteRowCallback(rows)">
+                
+                    <md-data-table-header-row>
+                        <md-data-table-column align-rule="left">{{ 'INDICADOR' | translate }}</md-data-table-column>
+						<md-data-table-column align-rule="left">{{ 'DESCRIPCION' | translate }}</md-data-table-column>
+						<md-data-table-column align-rule="left">{{ 'TOTAL_EXP' | translate }}</md-data-table-column>
+					
+                    </md-data-table-header-row>
+                    <md-data-table-row table-row-id="value.codigo" ng-repeat="value in dato">							
+                        <md-data-table-cell html-content="htmlContent">{{ value.codigo }} | {{ value.nombre }}</md-data-table-cell>	
+						<md-data-table-cell html-content="htmlContent">{{ tipo }}</md-data-table-cell>	
+						<md-data-table-cell html-content="htmlContent">{{ value.total }}</md-data-table-cell>	
+					</md-data-table-row>
+                </md-data-table>
+                		</md-content>
+					
+                    <md-toolbar class="md-theme-light md-warn">
+                      <h2 class="md-toolbar-tools">
+                        <span flex>{{ 'SEGUIMIENTO_HALLAZGO' | translate}}</span>                                 
+                      </h2> 
+                    </md-toolbar>
+                    
+					<div width="240" class="gauge" ng-radial-gauge ranges="ranges" value="value" value-unit="unit" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit"></div>
+                                
+                            </md-content>
+                        </div>
+                    </md-content>
+                 </md-list>
+            </md-content>
+            <!-- fin grafico -->
+            
+         </div>
+      
+  </md-list>
+</md-content>

@@ -1,0 +1,232 @@
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
+<div layout="column" class="relative" layout-fill role="main">
+	<md-button class="md-fab md-fab-bottom-right" ng-click="nuevo()" aria-label="{{ 'NUEVA' | translate }}" >
+		<md-icon md-svg-icon="add"></md-icon>
+  	</md-button>
+	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
+	<md-toolbar  >
+		<div class="md-toolbar-tools" ng-init="ver('Usuario')">    
+			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
+		  <md-icon md-svg-icon="menu" ></md-icon>
+		    </md-button>   
+			<h2>
+			  <span>{{ 'USUARIO' | translate }} <md-icon md-svg-icon="chevron-right"></md-icon>  {{ 'VER' | translate }}</span>
+			</h2>
+			<span flex></span>
+            
+            <md-button hide-md hide-sm  aria-label="{{ 'PDF' | translate }}" imprimir-div=".imprimir">
+              <md-icon md-svg-icon="print"></md-icon>
+    			{{ 'PDF' | translate }}
+            </md-button>
+            
+            <md-button hide-md hide-sm  aria-label="{{ 'ELIMINAR' | translate }}" ng-click="borrar()">
+                <md-icon md-svg-icon="delete"></md-icon>
+                {{ 'ELIMINAR' | translate }}
+            </md-button>
+            		
+			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+		</div>
+	</md-toolbar>
+	<md-content>
+	<ol class="breadcrumb top-breadcrumb" >
+	  <li><a href="/#/">Home</a></li>
+  <li><a url-modulo="--" id="lista">{{ 'USUARIO' | translate }}</a></li>
+  <li class="active">{{ 'VER' | translate }}</li>
+</ol>
+	<md-content layout="column" class="imprimir"  layour-align="center center"  >
+		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
+    		<md-content class="md-padding">
+                <md-tabs md-dynamic-height md-border-bottom>
+                  
+                  <md-tab label="{{ 'DATOS_GENERALES' | translate }}">
+                    <md-content class="md-padding">
+                     
+                      <md-list-item layout-wrap >	                                        
+                        <md-input-container flex >     
+                            <label>{{ 'NOMBRE' | translate }}</label>
+                                <input readonly  name="nombre" ng-model="dato.nombres" md-minlength="3" md-maxlength="255">
+                                <div ng-messages="forma.nombre.$error">
+                                  <div ng-message="readonly">{{ 'CAMPO_REQUERIDO' | translate }}</div>
+                                  <div ng-message="md-minlength">{{ 'CAMPO_MIN_L' | translate }} 3</div>
+                                  <div ng-message="md-maxlength">{{ 'CAMPO_MAX_L' | translate }} 255</div>
+                                </div>
+                        </md-input-container>
+                      </md-list-item>
+                      
+                      <md-list-item layout-wrap >						
+                        <md-input-container flex >     
+                            <label>{{ 'APELLIDO_PATERNO' | translate }}</label>
+                                <input readonly  name="apellidoPaterno" ng-model="dato.apellidoPaterno" md-minlength="3" md-maxlength="25" >
+                                <div ng-messages="forma.apellidoPaterno.$error">
+                                  <div ng-message="readonly">{{ 'CAMPO_REQUERIDO' | translate }}</div>
+                                  <div ng-message="md-minlength">{{ 'CAMPO_MIN_L' | translate }} 3</div>
+                                  <div ng-message="md-maxlength">{{ 'CAMPO_MAX_L' | translate }} 255</div>
+                                </div>
+                        </md-input-container>
+                                        
+                        <md-input-container flex >     
+                            <label>{{ 'APELLIDO_MATERNO' | translate }}</label>
+                                <input  name="apellidoMaterno" ng-model="dato.apellidoMaterno" readonly>
+                                
+                        </md-input-container>
+                      </md-list-item>
+                      
+                      <md-list-item>
+                      	<md-input-container flex >     
+                            <label>{{ 'CARGO' | translate }}</label>
+                                <input  name="cargo" ng-model="dato.cargo" readonly>
+                                
+                        </md-input-container>
+                      </md-list-item>
+                      
+                      <md-list-item>
+                      	<md-input-container flex >     
+                            <label>{{ 'EMAIL' | translate }}</label>
+                                <input name="email"  type="email" ng-model="dato.email" readonly>				
+                                <div ng-messages="forma.email.$error" >
+                                    <div ng-message="readonly">{{ 'CAMPO_REQUERIDO' | translate }}</div>
+                                    <div ng-message="email">{{ 'EMAIL_INVALIDO' | translate }}</div>
+                                    <div ng-message="unique">{{ 'CORREO_YA_EXISTE' | translate }}</div>
+                                </div>
+                                
+                        </md-input-container>
+                      </md-list-item>
+                      
+                      <md-list-item>
+                      	<md-input-container flex >     
+                            <label>{{ 'TELEFONO' | translate }}</label>
+                                <input type="tel"  name="telefono" ng-model="dato.telefono" readonly>
+                                
+                        </md-input-container>
+                      </md-list-item>
+                      
+                      <md-divider ></md-divider>
+                      <p>{{ 'DATOS_ACCESO' | translate }}</p>
+                      <md-list-item>
+                      	<md-input-container flex >     
+                            <label>{{ 'USUARIO' | translate }}</label>
+                                <input name="username"   ng-model="dato.username" readonly>				
+                                <div ng-messages="forma.username.$error" >
+                                    <div ng-message="readonly">{{ 'CAMPO_REQUERIDO' | translate }}</div>                                    
+                                </div>
+                                
+                        </md-input-container>
+                        
+                      </md-list-item>
+                      
+                    </md-content>
+                  </md-tab>
+                  
+                  <md-tab label="{{ 'PERMISO' | translate }}">
+                    <md-content class="md-padding"  ng-init="permisoEditGrupo(); ">
+                    	 
+                    
+                    	<md-list-item ng-init="opciones('Grupo')">
+                            <md-input-container flex >
+                            	<section layout="row" layout-sm="column" layout-align="center center" style="width: 97.5%;  margin-left: 22px;">                    
+                            	<p flex="5">{{ 'GRUPO' | translate }}:</p>
+                                <md-select flex="95" ng-model="dato.grupos" placeholder="{{ 'GRUPO' | translate }} " multiple="true" >
+                                	<md-option ng-value="item.id" ng-repeat="item in options">{{ item.name }}</md-option>
+                            	</md-select>
+                                
+                                </section>
+                         	</md-input-container>
+                            
+                      	</md-list-item>
+                      
+                      	<md-list-item>
+                      	<md-input-container flex >
+                      	
+                        
+                        <section layout="row" layout-sm="column" >
+                        	<p flex="94">{{ 'DENEGAR_PERMISO' | translate }}</p>
+                            
+                         </section>
+                         
+                         <md-tabs md-dynamic-height md-border-bottom ng-if="grupos.length">                  
+                  			<md-tab label="{{g.name}}" ng-repeat="g in grupos">
+                            
+                            	
+                                <md-data-table
+                                  table-card="{visible: tableCardIsEnabled, title: 'Lista Clues'}"
+                                  selectable-rows="tableIsSelectable"
+                                  alternate-headers="'contextual'"
+                                  sortable-columns="false"
+                                  delete-row-callback="deleteRowCallback(rows)">
+                                
+                                    <md-data-table-header-row>
+                                        <md-data-table-column align-rule="left">Modulo</md-data-table-column>
+                                        <md-data-table-column align-rule="left">Acciones</md-data-table-column>
+                                    </md-data-table-header-row>
+                                    <md-data-table-row table-row-id="" ng-repeat="m in modulos[g.id]">
+										<md-data-table-cell html-content="htmlContent" width="20%">
+                                        	<section layout="row" layout-sm="column" >
+                                            <md-button flex="100" ng-disabled="true" class="md-raised md-primary">{{ m.replace("Controller",'') }}</md-button>
+                                            
+                                            </section>
+                                        </md-data-table-cell>
+										<md-data-table-cell html-content="htmlContent">											 
+                                            <section layout="row" layout-sm="column">
+                                            	<div  ng-repeat="a in acciones[m+g.id]">
+                                            	<md-checkbox aria-label="'{{ m+'.'+a }}'"
+                                                	ng-model="dato.permissions[m+'.'+a]" 
+                                                    ng-true-value="-1"
+            										ng-false-value="1"   
+                                                    ng-init="verificar[m+'.'+a]=(datos.indexOf(m+'.'+a)>-1 ) ? true : false" 
+                                                    ng-checked="verificar[m+'.'+a]" >
+                                                  {{ a }} 
+                                                </md-checkbox>
+                                                </div>
+                                            </section>
+										</md-data-table-cell>
+									</md-data-table-row>
+								</md-data-table>
+                                
+                                
+                  			</md-tab>
+                         </md-tabs>
+                    
+                         </md-input-container>
+                      </md-list-item
+                      
+                    ></md-content>
+                  </md-tab>
+                  
+                  <md-tab label="{{ 'EQUIPO_ZONAL' | translate }}">
+                    <md-content class="md-padding">
+                      
+                        
+                         <md-list-item>
+                        <md-input-container flex > 
+                              <div class="alert alert-info"></div>
+                                    <md-data-table
+                                  table-card="{visible: tableCardIsEnabled, title: 'Lista Clues'}"
+                                  selectable-rows="tableIsSelectable"
+                                  alternate-headers="'contextual'"
+                                  sortable-columns="true"
+                                  delete-row-callback="deleteRowCallback(rows)">
+                                
+                                    <md-data-table-header-row>
+                        <md-data-table-column align-rule="left">ID</md-data-table-column>
+                        <md-data-table-column align-rule="left">{{ 'EQUIPO_ZONAL' | translate }}</md-data-table-column>
+                        
+                      </md-data-table-header-row>
+                      <md-data-table-row table-row-id="" ng-repeat="u in dato.usuariozona" >
+                        <md-data-table-cell html-content="htmlContent"> {{ u.id }}</md-data-table-cell>
+                        <md-data-table-cell html-content="htmlContent"> {{ u.nombre }} </md-data-table-cell>
+                      </md-data-table-cell>
+                  </md-data-table-row>
+                </md-data-table>
+                
+              
+                            </md-input-container>
+                         </md-list-item>
+                    </md-content>
+                  </md-tab>
+                  <input ng-model="dato.nombre" type="hidden" id="id" name="id">
+                </md-tabs>
+              </md-content> 
+									
+			
+		</md-list>
+	</md-content>

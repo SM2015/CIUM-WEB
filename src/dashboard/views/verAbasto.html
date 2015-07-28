@@ -1,0 +1,221 @@
+<md-dialog aria-label="{{'ABASTO' | translate}}" >
+<md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>{{'EVALUACION' | translate}} {{'ABASTO' | translate}} <md-icon md-svg-icon="chevron-right"></md-icon> # {{dato.id}}</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="hide()">
+        <md-icon md-svg-src="close" aria-label="Close"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+<div class="row" style="overflow:auto">
+		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
+        		
+            <md-content class="md-padding">
+              <md-list-item layout-wrap ng-if="!update">
+              	<div  align="center" style="width:100%">
+                    <md-icon md-svg-icon="today"></md-icon>
+                    <span> {{dato.fechaEvaluacion}} </span>
+           			<br />
+                    <span> <strong style="font-size:.8em;">{{ dato.cerrado == 1 ? 'Cerrado' : 'Abierto' }}</strong> </span>
+                  </div>
+              	
+              </md-list-item>
+              
+              
+              	<md-list-item style="margin-top:-35px;"> 
+                    <md-input-container flex >
+                         <input type="hidden" aria-label="idCone" ng-model="dato.idCone" name="idCone" required>
+                         <div ng-messages="forma.idCone.$error" >
+                            <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>                                    
+                        </div>
+                    </md-input-container>
+                 </md-list-item>
+                 
+                
+					<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
+
+                    	<md-input-container flex >
+                            <div style="text-align:center" flex>                            
+                            	<h4 style="font-size:1.3em">{{ dato.nombre }}</h4>
+                                <h5 style="font-size:1em"><md-icon md-svg-icon="star"></md-icon> {{ dato.clues }}</h5>
+                                <p style="font-size:.5em; margin-bottom:20px;">
+                                {{ dato.domicilio }}  <strong>CP: </strong> {{ dato.codigoPostal }}
+                                </p>
+                                <md-divider ></md-divider>
+                                
+                                <div  style="font-size:.7em; margin:20px;">
+                                    <span flex="33.33">
+                                    	<strong>JS:</strong> {{ dato.jurisdiccion }}
+                                    </span>
+                                    <span flex="33.33">
+                                    	<strong>Municipio:</strong> {{ dato.municipio }}
+                                    </span>
+                                    <span flex="33.33">
+                                		<strong>Localidad:</strong> {{ dato.localidad }}
+                                    </span>
+                                </div>                               
+                                <md-divider ></md-divider>
+                                
+                                <div  style="font-size:.6em; margin:20px;">
+                                    <span flex="50">
+                                    	<md-icon md-svg-icon="business"></md-icon> {{ dato.tipologia }}
+                                    </span>
+                                    <span flex="50">
+                                    	<md-icon md-svg-icon="style"></md-icon> {{ dato.tipoUnidad }}
+                                    </span>
+                                </div>
+                                <md-divider ></md-divider>
+                                
+                                <div  style="font-size:.7em; margin-top:20px">
+                                	<span class="col-xs-12">
+                                		<md-icon md-svg-icon="airline-seat-flat"></md-icon><strong> Nivel CONE:</strong> {{ dato.nivelCone }}
+                                    </span>
+                                </div>
+                            </div>
+						</md-input-container>
+
+                	</md-list>
+				</md-content>
+	
+		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
+        	<md-toolbar class="md-theme-light">
+              <h2 class="md-toolbar-tools">
+                <span flex>{{ 'INDICADOR' | translate}}</span>                                 
+              </h2> 
+            </md-toolbar>
+            <md-content>
+            	
+                <md-data-table
+                  table-card="{visible: false, title: ''}"
+                  selectable-rows="false"
+                  alternate-headers="'contextual'"
+                  sortable-columns="true"
+                  delete-row-callback="deleteRowCallback(rows)">
+                
+                    <md-data-table-header-row>
+                        <md-data-table-column align-rule="left">{{ 'INDICADOR' | translate}}</md-data-table-column>
+                        <md-data-table-column align-rule="left">{{ 'CRITERIO' | translate}}</md-data-table-column>
+                        <md-data-table-column align-rule="left">{{ 'APROBADO' | translate}}</md-data-table-column>
+                        <md-data-table-column align-rule="left">{{ 'PORCENTAJE' | translate}}</md-data-table-column>
+                    </md-data-table-header-row>
+                    
+                    <md-data-table-row table-row-id="value.codigo" ng-repeat="value in criterios.indicadores">
+                                
+                        <md-data-table-cell html-content="htmlContent">{{ value.codigo }} | {{ value.nombre }}</md-data-table-cell>
+                        <md-data-table-cell html-content="htmlContent">{{ value.indicadores.totalCriterios }}</md-data-table-cell>
+                        <md-data-table-cell html-content="htmlContent">{{ value.indicadores.totalAprobados }}</md-data-table-cell>
+                        <md-data-table-cell html-content="htmlContent">
+                        	<div class="progress" >
+                              <div class="progress-bar progress-bar-striped active progress-bar-default" role="progressbar"
+                              aria-valuenow="{{ value.indicadores.totalPorciento }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ value.indicadores.totalPorciento }}%; background:{{ value.indicadores.totalColor }}">
+                                {{ value.indicadores.totalPorciento }}%
+                              </div></div>			
+                    	</md-data-table-cell>
+                     
+                 	</md-data-table-row>
+                </md-data-table>
+
+            </md-content>
+        </md-list>
+	
+		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
+        	<md-toolbar style="background-color:#F27900">
+              <h2 class="md-toolbar-tools">
+                <span flex>{{ 'CRITERIO' | translate}}</span>                                 
+              </h2> 
+            </md-toolbar>
+            <md-content  ng-repeat="(key, value) in criterios | groupBy : 'lugarVerificacion'"  ng="'animate'" ng-if="key != 'undefined'">
+            
+                <md-toolbar class="md-theme-light">
+                  <h2 class="md-toolbar-tools">
+                    <span flex>{{ value[0].codigo }} | {{ key }}</span>                                 
+                  </h2> 
+                </md-toolbar>
+                <md-content>
+                
+                <md-data-table
+                  table-card="{visible: false, title: ''}"
+                  selectable-rows="false"
+                  alternate-headers="'contextual'"
+                  sortable-columns="true"
+                  delete-row-callback="deleteRowCallback(rows)" ng-init="tieneHallazgo = (hallazgos[value[0].idlugarVerificacion]) ? true : false">
+                  
+                  	<md-data-table-header-row>
+                        <md-data-table-column align-rule="left" width="90%">{{ 'CRITERIO' | translate}}</md-data-table-column>
+                        <md-data-table-column align-rule="left">{{ 'APROBADO' | translate}}</md-data-table-column>
+                    </md-data-table-header-row>
+            
+                    <md-data-table-row table-row-id="dato.id" ng-repeat="c in value">
+                
+
+                    <md-data-table-cell html-content="htmlContent" width="90%">{{ c.criterio  }}</md-data-table-cell>
+                    
+                    <md-data-table-cell html-content="htmlContent">																						
+                        <md-button class="md-raised"  style="width:100%; background-color: {{ c.aprobado == 1 ? '#7BE15E' : c.aprobado == 0 ? '#FF3C3C' : '#3198FF' }}; color:#FFF; font-weight:bold;">
+                            {{ c.aprobado == 1 ? 'Si' : c.aprobado == 0 ? 'No' : 'N/A' }} 
+                        </md-button>
+                    </md-data-table-cell>
+                </md-data-table-row>
+                
+              </md-data-table>
+            
+                
+            </md-content>
+        </md-list>
+    
+    <md-list-item ng-if="tieneHallazgo">                               
+	<md-list-item  style="width:100%">
+   	  <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="width:100%">
+   		<span ng-init="acciones();accionesPlazo()"></span>
+          	
+          <md-toolbar class="md-accent md-warn" >
+              <h2 class="md-toolbar-tools">
+                <span flex>{{ 'HALLAZGO' | translate }}</span>                                 
+              </h2>
+          </md-toolbar>
+
+        	<md-list-item>
+                    	
+            <md-input-container flex >     
+                <label>{{ 'HALLAZGO' | translate }}</label>
+                    <textarea ng-model="dato.hallazgo" name="hallazgo" columns="1" md-maxlength="500" readonly></textarea>			
+                    
+            </md-input-container>
+
+          </md-list-item>
+          <md-list-item >
+
+            <md-input-container flex >     
+              <p>{{ 'ACCION' | translate }}</p>
+                <select ng-options="item.id as item.nombre group by item.tipo=='R' ? 'Resolutiva' : 'Seguimiento' for item in acciones" ng-model="dato.accion"   disabled>
+      					<option value="">Seleccione</option>
+      				</select>
+              
+            </md-input-container>
+
+	   		    <md-input-container flex ng-if="esSeguimiento">
+		          <p>{{ 'PLAZO_ACCION' | translate }}</p>
+		          <select ng-options="item.id as item.nombre for item in plazos" ng-model="dato.plazoAccion" disabled >
+					     <option value="">Seleccione</option>
+				      </select>
+              	
+		        </md-input-container>
+
+          </md-list-item>
+                       
+          <md-list-item>
+
+            <md-input-container flex>
+            	<md-button class="md-raised" ng-disabled="form.$invalid">
+                
+              </md-button>
+            </md-input-container>
+                          
+          </md-list-item>  
+
+  			</md-list>
+  		</md-list-item>   
+      </md-list-item>	
+   </div>   		
+</md-dialog>

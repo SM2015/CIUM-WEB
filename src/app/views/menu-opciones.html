@@ -1,0 +1,86 @@
+<md-menu ng-controller="NotificacionCtrl">
+  <md-button class="md-icon-button" ng-click="$mdOpenMenu()" aria-label="{{ 'NOTIFICACION' | translate }}">
+    <md-icon md-menu-origin md-svg-icon="add-alert"></md-icon>
+    <span class="badge"><span>{{total}}</span></span>
+    <md-tooltip>
+    {{ 'NOTIFICACION' | translate }} 
+    
+  </md-tooltip>
+  </md-button>
+  <md-menu-content width="4"  >
+
+    
+    <md-menu-item >
+      <md-button >
+        <md-icon md-svg-icon="notifications-on" md-menu-align-target></md-icon>
+        {{total}} {{ 'NOTIFICACION' | translate}}         
+      </md-button>                  
+    </md-menu-item>
+    <md-menu-divider></md-menu-divider>
+
+    <md-menu-item ng-repeat="notificacion in notificaciones" ng-if="notificaciones.length>0">
+      <md-button ng-click="ir('/{{ notificacion.recurso }}{{ notificacion.parametro}}');visto(notificacion.id)">
+        <md-icon md-svg-icon="notifications" md-menu-align-target></md-icon>
+        {{notificacion.nombre}}
+      </md-button>                  
+    </md-menu-item> 
+
+    <md-menu-divider></md-menu-divider>
+    <md-menu-item >
+      <md-button ng-click="ir('notificacion')">
+        <md-icon md-svg-icon="arrow-forward" md-menu-align-target></md-icon>
+        {{ 'ALL' | translate}}
+      </md-button>                  
+    </md-menu-item>
+
+  </md-menu-content>
+ </md-menu>
+  
+  <md-menu ng-controller="PendienteCtrl">
+  <md-button class="md-icon-button" ng-click="$mdOpenMenu()" aria-label="{{ 'PENDIENTE' | translate }}">
+    <md-icon md-menu-origin md-svg-icon="storage"></md-icon>
+    <span class="badge"><span>{{total}}</span></span>
+    <md-tooltip>
+    {{ 'PENDIENTE' | translate }}
+  </md-tooltip>
+  </md-button>
+  <md-menu-content width="4"  >
+
+  <md-menu-item >
+      <md-button >
+        <md-icon md-svg-icon="storage" md-menu-align-target></md-icon>
+        {{total}} {{ 'PENDIENTE' | translate}}         
+      </md-button>                  
+    </md-menu-item>
+    <md-menu-divider></md-menu-divider>
+
+
+    <md-menu-item ng-repeat="pendiente in pendientes" ng-if="pendientes.length>0">
+      <md-button ng-click="ir('/{{ pendiente.recurso }}{{ pendiente.parametro}}');visto(pendiente.id)">
+        <md-icon md-svg-icon="playlist-add" md-menu-align-target></md-icon>
+        {{pendiente.nombre}}
+      </md-button>
+    </md-menu-item>
+
+    <md-menu-divider></md-menu-divider>
+    <md-menu-item >
+      <md-button ng-click="ir('pendiente')">
+        <md-icon md-svg-icon="arrow-forward" md-menu-align-target></md-icon>
+        {{ 'ALL' | translate}}
+      </md-button>                  
+    </md-menu-item>
+
+  </md-menu-content>              
+</md-menu> 
+
+<md-button hide-sm class="md-icon-button" aria-label="{{ 'CAMBIAR_IDIOMA' | translate }}" ng-click="mostrarIdiomas($event)">
+  <md-icon md-svg-icon="language"></md-icon>
+        <md-tooltip>
+          {{ 'CAMBIAR_IDIOMA' | translate }}
+        </md-tooltip>
+</md-button>
+      
+<md-button hide-sm ng-click="logout()"  aria-label="{{ 'CERRAR_SESION' | translate }}">
+  <md-icon md-svg-icon="exit-to-app"></md-icon>
+  {{ 'CERRAR_SESION' | translate }}
+</md-button>

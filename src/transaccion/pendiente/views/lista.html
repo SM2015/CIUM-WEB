@@ -1,0 +1,131 @@
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
+<div layout="column" class="relative" layout-fill role="main">
+	<md-button class="md-fab md-fab-bottom-right" ng-click="nuevo()" aria-label="{{ 'NUEVA' | translate }}" >
+		<md-icon md-svg-icon="add"></md-icon>
+  	</md-button>
+	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
+	<md-toolbar  >
+		<div class="md-toolbar-tools" ng-init="index('Pendiente')">    
+			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
+		  <md-icon md-svg-icon="menu" ></md-icon>
+		    </md-button>   
+			<h2>
+			  <span>{{ 'PENDIENTE' | translate }} <md-icon md-svg-icon="chevron-right"></md-icon>  {{ 'LISTA' | translate }}</span>
+			</h2>
+			<span flex></span>		
+			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+		</div>
+	</md-toolbar>
+	<md-content>
+	<ol class="breadcrumb top-breadcrumb" >
+	  <li><a href="/#/">Home</a></li>
+  <li class="active">{{ 'PENDIENTE' | translate }}</li>
+</ol>
+<div layout="row" >  
+  <div layout-padding flex>
+			<div layout="column" layout-fill style="padding-bottom: 2px;">
+			  <md-whiteframe class="md-whiteframe-z1" layout layout-align="center center">
+				<span style="width:60%">
+				<md-content layout-padding class="autoScroll" style="width:100%">
+					<md-input-container class="md-icon-float" >
+						  
+					  <label>Buscar</label>
+					  <md-icon md-svg-src="search" class="name"></md-icon>
+					  <input ng-model="buscar.nombre" type="text">
+					  
+					</md-container>
+					
+					
+				</md-content>
+				</span>
+				<span style="width:20%">
+  <md-button class="md-raised" ng-click="buscarL(buscar)">
+<md-icon md-svg-src="search"></md-icon>
+<md-tooltip>
+    {{ 'BUSCAR' | translate }}
+</md-tooltip>
+  </md-button>
+				</span>
+    
+				<span style="width:20%">			
+  <md-button class="md-raised md-primary" ng-click="exportar()">
+<md-icon md-svg-src="picture-as-pdf"></md-icon>
+<md-tooltip>
+    {{ 'PDF' | translate }}
+</md-tooltip>
+  </md-button>
+  <md-button class="md-raised md-primary" ng-click="excel()">
+  	<md-icon md-svg-src="explicit"></md-icon>
+<md-tooltip>
+    {{ 'EXCEL' | translate }}
+</md-tooltip>
+  </md-button>										
+	</span>
+  
+  </md-whiteframe>
+</div>
+
+<md-content layout-padding>
+<md-grid-list
+        md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6"
+        md-row-height-gt-md="1:1" md-row-height="4:3"
+        md-gutter="8px" md-gutter-gt-sm="4px" >
+    <md-grid-tile ng-repeat="dato in datos | filter:buscar"
+                  md-rowspan="{{ 2 | randomize }}"
+                  md-colspan="{{ 2 | randomize }}"
+                  md-colspan-sm="1"
+                  ng-class="dato.visto == 1 ? 'green' : dato.dias>5 ? 'red' : 'darkBlue'" >
+      <md-icon class="principal" md-svg-icon="{{ dato.visto == 1 ? 'brightness-5' : dato.dias>5 ? 'warning' : 'brightness-3' }}"></md-icon>
+      <md-grid-tile-footer style="height:60px"><h3>
+      <md-icon md-svg-icon="{{ dato.visto == 1 ? 'visibility' :  'visibility-off' }}" style="padding-bottom: 0px;"></md-icon>
+      <a href="#/{{ dato.recurso }}{{ dato.parametro }}" ng-click="visto(dato.id)">
+       {{ dato.nombre }}</a></h3></md-grid-tile-footer>
+    </md-grid-tile>
+  </md-grid-list>
+</md-content>
+
+  
+
+<div layout="column" layout-fill >
+			  <md-whiteframe class="md-whiteframe-z1" layout layout-align="center center">
+				<span>
+					<p>
+					  <small><strong>{{ paginacion.pag }}</strong> - <strong>{{ (paginacion.pag+paginacion.lim)-1 }}</strong> de <strong>{{ paginacion.paginas }}</strong> resultados.</small>
+					</p>
+				</span>
+				<span>
+  <md-button class="md-raised md-primary" ng-click="primero()">
+<md-icon md-svg-src="arrow-back"></md-icon>
+<md-tooltip>
+    {{ 'PRIMERA' | translate }}
+</md-tooltip>
+  </md-button>
+  
+  <md-button class="md-raised" ng-click="anterior()">
+<md-icon md-svg-src="chevron-left"></md-icon>
+<md-tooltip>
+    {{ 'REGRESAR' | translate }}
+</md-tooltip>
+  </md-button>
+  
+  <md-button class="md-raised" ng-click="siguiente()">
+<md-icon md-svg-src="chevron-right"></md-icon>
+<md-tooltip>
+    {{ 'SIGUIENTE' | translate }}
+</md-tooltip>
+  </md-button>
+  
+  <md-button class="md-raised md-primary" ng-click="ultimo()">
+<md-icon md-svg-src="arrow-forward"></md-icon>
+<md-tooltip>
+    {{ 'ULTIMA' | translate }}
+</md-tooltip>
+  </md-button>					
+				</span>
+			  </md-whiteframe>
+			</div>
+        </div>
+    </div>
+	</md-content>
+</div>
+					
