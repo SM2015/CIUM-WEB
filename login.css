@@ -203,7 +203,7 @@ keyframes progress-bar-stripes {
   border-radius:5px;
 }
 
-md-grid-list .principal {
+md-grid-list .principal, .principal {
   width: 50%;
   height: 50%; }
 md-grid-list .principal svg {
@@ -221,25 +221,25 @@ md-grid-list md-icon.s32 span {
   padding-left: 8px; }
 md-grid-list md-grid-list {
   margin: 8px; }
-md-grid-list .gray {
+md-grid-list .gray, .gray {
   background: #f5f5f5; }
-md-grid-list .green {
+md-grid-list .green, .green {
   background: #b9f6ca; }
-md-grid-list .yellow {
+md-grid-list .yellow, .yellow {
   background: #ffff8d; }
-md-grid-list .blue {
+md-grid-list .blue, .blue {
   background: #84ffff; }
-md-grid-list .darkBlue {
+md-grid-list .darkBlue, .darkBlue {
   background: #80d8ff; }
-md-grid-list .deepBlue {
+md-grid-list .deepBlue, .deepBlue {
   background: #448aff; }
-md-grid-list .purple {
+md-grid-list .purple, .purple {
   background: #b388ff; }
-md-grid-list .lightPurple {
+md-grid-list .lightPurple, .lightPurple {
   background: #8c9eff; }
-md-grid-list .red {
+md-grid-list .red, .red {
   background: #ff8a80; }
-md-grid-list .pink {
+md-grid-list .pink, .pink {
   background: #ff80ab; }
 md-grid-list md-grid-tile {
   transition: all 300ms ease-out 50ms; }

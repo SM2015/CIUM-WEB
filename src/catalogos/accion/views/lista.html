@@ -65,8 +65,8 @@
 			  </md-whiteframe>
   
 	<md-data-table
-  table-card="{visible: true, title: 'ACCION'}"
-  selectable-rows="true"
+  table-card="{visible: tableCardIsEnabled, title: 'Lista Clues'}"
+  selectable-rows="tableIsSelectable"
   alternate-headers="'contextual'"
   sortable-columns="true"
   delete-row-callback="deleteRowCallback(rows)">
@@ -74,7 +74,7 @@
     <md-data-table-header-row>
 		 <md-data-table-column align-rule="left">ID</md-data-table-column>
 			<md-data-table-column align-rule="left">{{ 'NOMBRE' | translate }}</md-data-table-column>
-			<md-data-table-column align-rule="left">Tipo</md-data-table-column>
+			<md-data-table-column align-rule="left">{{ 'TIPO' | translate }}</md-data-table-column>
 			<md-data-table-column align-rule="left">{{ 'CREADO' | translate }}</md-data-table-column>
 			<md-data-table-column align-rule="left">{{ 'MODIFICADO' | translate }}</md-data-table-column>
 			<md-data-table-column align-rule="left"></md-data-table-column>

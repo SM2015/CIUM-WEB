@@ -139,6 +139,8 @@
 	"JURISDICCIONAL":"Jurisdiccional",
 	"ZONAL":"Zonal",
 	"TIPO_PERMISO":"Nivel permiso",
+	"TIPO": "Tipo",
+	"ESTATUS":"Estatus",
 
 	"MANUAL_USUARIO": "Manual de usuario",
 	"ACERCA_DE": "Acerca de... ",

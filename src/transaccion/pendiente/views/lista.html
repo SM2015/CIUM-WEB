@@ -1,8 +1,6 @@
 <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
 <div layout="column" class="relative" layout-fill role="main">
-	<md-button class="md-fab md-fab-bottom-right" ng-click="nuevo()" aria-label="{{ 'NUEVA' | translate }}" >
-		<md-icon md-svg-icon="add"></md-icon>
-  	</md-button>
+	
 	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
 	<md-toolbar  >
 		<div class="md-toolbar-tools" ng-init="index('Pendiente')">    
@@ -65,7 +63,7 @@
   </md-whiteframe>
 </div>
 
-<md-content layout-padding>
+<!--<md-content layout-padding>
 <md-grid-list
         md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6"
         md-row-height-gt-md="1:1" md-row-height="4:3"
@@ -82,7 +80,59 @@
        {{ dato.nombre }}</a></h3></md-grid-tile-footer>
     </md-grid-tile>
   </md-grid-list>
-</md-content>
+</md-content>-->
+<md-data-table
+  table-card="{visible: tableCardIsEnabled, title: 'Lista Clues'}"
+  selectable-rows="tableIsSelectable"
+  alternate-headers="'contextual'"
+  sortable-columns="true"
+  delete-row-callback="deleteRowCallback(rows)">
+
+    <md-data-table-header-row>
+		 <md-data-table-column align-rule="left">ID</md-data-table-column>
+			<md-data-table-column align-rule="left">{{ 'NOMBRE' | translate }}</md-data-table-column>
+			<md-data-table-column align-rule="left">{{ 'VISTO' | translate }}</md-data-table-column>
+			<md-data-table-column align-rule="left">{{ 'ESTATUS' | translate }}</md-data-table-column>
+			<md-data-table-column align-rule="left">{{ 'CREADO' | translate }}</md-data-table-column>
+			<md-data-table-column align-rule="left">{{ 'MODIFICADO' | translate }}</md-data-table-column>
+			<md-data-table-column align-rule="left"></md-data-table-column>
+		  </md-data-table-header-row>
+	
+    <md-data-table-row table-row-id="dato.id" ng-repeat="dato in datos  | orderBy:ordenSeleccionado | filter:buscar">
+				 <md-data-table-cell html-content="htmlContent">{{ dato.id  }}</md-data-table-cell>
+				 <md-data-table-cell html-content="htmlContent">{{ dato.nombre | uppercase }}</md-data-table-cell>
+				 <md-data-table-cell html-content="htmlContent"><md-icon md-svg-icon="{{ dato.visto == 1 ? 'visibility' :  'visibility-off' }}" style="padding-bottom: 0px;"></md-icon>
+
+				 {{ dato.visto == 1 ? 'Si' :  'No' }}
+				 </md-data-table-cell>
+				 <md-data-table-cell html-content="htmlContent">
+				 <span class="{{dato.visto == 1 ? 'green' : dato.dias>5 ? 'red' : 'darkBlue'}}" style="display:block;">
+				 <md-icon  md-svg-icon="{{ dato.visto == 1 ? 'brightness-5' : dato.dias>5 ? 'warning' : 'brightness-3' }}"></md-icon>
+				 </span>
+				 </md-data-table-cell>
+
+				 <md-data-table-cell html-content="htmlContent">{{ dato.creadoAl }}</md-data-table-cell>
+				 <md-data-table-cell html-content="htmlContent">{{ dato.modificadoAl }}</md-data-table-cell>
+				 <md-data-table-cell html-content="htmlContent">
+					
+					<section layout="row" layout-sm="column" layout-align="center center">
+						
+						<a href="#/{{ dato.recurso }}{{ dato.parametro }}" ng-click="visto(dato.id)">
+       <md-button class="md-fab md-mini  md-primary" aria-label="Ver">
+							<md-icon md-svg-src="remove-red-eye"></md-icon>
+    <md-tooltip>
+    {{ 'VER' | translate }}
+  </md-tooltip>
+						</md-button></a>
+						
+					
+						
+					</section>
+					
+					</md-data-table-cell>
+				 
+			 </md-data-table-row>
+</md-data-table>
 
   
 
