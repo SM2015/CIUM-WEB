@@ -31,11 +31,7 @@
 		</div>
 	</md-toolbar>
 	<md-content>
-	<ol class="breadcrumb top-breadcrumb" >
-	  <li><a href="/#/">Home</a></li>
-  <li><a url-modulo="--" id="lista">{{ 'EVALUACION' | translate }} {{ 'ABASTO' | translate }}</a></li>
-  <li class="active">{{ 'EDITAR' | translate }}</li>
-</ol>
+	
 
 
 <div style="margin-top:10px; margin-left:10px; position:absolute; z-index:999999">
@@ -175,7 +171,7 @@
                                 
                                 <div  style="font-size:.6em; margin:20px;">
                                     <span flex="50">
-                                    	<md-icon md-svg-icon="business"></md-icon></md-icon> {{ dato.tipologia }}
+                                    	<md-icon md-svg-icon="business"></md-icon> {{ dato.tipologia }}
                                     </span>
                                     <span flex="50">
                                     	<md-icon md-svg-icon="style"></md-icon> {{ dato.tipoUnidad }}
@@ -185,7 +181,7 @@
                                 
                                 <div  style="font-size:.7em; margin-top:20px">
                                 	<span class="col-xs-12">
-                                		<md-icon md-svg-icon="airline-seat-flat"></md-icon> Nivel CONE:</strong> {{ dato.nivelCone }}
+                                		<md-icon md-svg-icon="airline-seat-flat"></md-icon><strong> Nivel CONE:</strong> {{ dato.nivelCone }}
                                     </span>
                                 </div>
                             </div>
@@ -212,7 +208,7 @@
                             <md-select placeholder="{{ 'INDICADOR_SEL' | translate }}" ng-model="dato.idIndicador" ng-change="cargarCriterios()" >
                                 <md-option ng-repeat="item in options" value="{{item.id}}">{{item.codigo+' - '+item.nombre}}</md-option>
                             </md-select>
-                        </md-container>
+                        </md-input-container>
                     </div>
                     <div flex="30">
                         <md-content style="overflow:hidden; float:right; margin-top:10px">
@@ -332,10 +328,10 @@
                                  	</md-list-item>
                                     <md-list-item >
                                         <md-input-container>
-                                        	<md-button class="md-raised md-primary" ng-click="completar()" ng-disabled="formx.$invalid">{{ 'COMPLETAR' | translate }}</md-butto>
+                                        	<md-button class="md-raised md-primary" ng-click="completar()" ng-disabled="formx.$invalid">{{ 'COMPLETAR' | translate }}</md-button>
                                         </md-input-container>
                                         
-                            		<md-list-item>
+                            		</md-list-item>
                                              					
 						</md-list>
                         

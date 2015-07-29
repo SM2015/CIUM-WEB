@@ -36,7 +36,7 @@
         <md-input-container flex  >     
                 <md-select placeholder="{{ 'BIMESTRE' | translate }}" ng-model="dimension[1]" ng-change="getDimension('jurisdiccion','jurisdiccion',2)">
                 	<md-option ng-repeat="item in datos[1]" value="{{item.id}}">{{item.nombre}}</md-option>                         
-                </md-input-container>
+               
                 
         </md-input-container>
         <md-divider ></md-divider>
@@ -51,7 +51,7 @@
         <md-input-container flex >     
                 <md-select placeholder="{{ 'EQUIPO_ZONAL' | translate }}" ng-model="dimension[3]" ng-change="getDimension('clues','clues',4)">
                 	<md-option ng-repeat="item in datos[3]" value="{{item.id}}">{{item.nombre}}</md-option>                        
-                </md-input-container>
+               
                 
         </md-input-container>
         <md-divider></md-divider>

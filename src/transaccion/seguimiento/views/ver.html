@@ -17,11 +17,7 @@
 		</div>
 	</md-toolbar>
 	<md-content>
-	<ol class="breadcrumb top-breadcrumb" >
-	  <li><a href="/#/">Home</a></li>
-  <li><a url-modulo="--" id="lista">{{ 'SEGUIMIENTO' | translate }}</a></li>
-  <li class="active">{{ 'VER' | translate }}</li>
-</ol>
+	
 
 <md-content  layout="column"  layour-align="center center"  >
 		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
@@ -76,7 +72,7 @@
                                 
                                 <div  style="font-size:.6em; margin:20px;">
                                     <span flex="50">
-                                    	<md-icon md-svg-icon="business"></md-icon></md-icon> {{ dato.evaluacion.tipologia }}
+                                    	<md-icon md-svg-icon="business"></md-icon> {{ dato.evaluacion.tipologia }}
                                     </span>
                                     <span flex="50">
                                     	<md-icon md-svg-icon="style"></md-icon> {{ dato.evaluacion.tipoUnidad }}
@@ -86,7 +82,7 @@
                                 
                                 <div  style="font-size:.7em; margin-top:20px">
                                 	<span class="col-xs-12">
-                                		<md-icon md-svg-icon="airline-seat-flat"></md-icon> Nivel CONE:</strong> {{ dato.evaluacion.nivelCone }}
+                                		<md-icon md-svg-icon="airline-seat-flat"></md-icon><strong> Nivel CONE:</strong> {{ dato.evaluacion.nivelCone }}
                                     </span>
                                 </div>
                             </div>
@@ -127,8 +123,7 @@
                          <md-data-table-cell html-content="htmlContent">{{ dato.usuario.nombres+' '+dato.usuario.apellidoPaterno+' '+dato.usuario.apellidoMaterno | uppercase }}</md-data-table-cell>
                          <md-data-table-cell html-content="htmlContent">{{ dato.descripcion }}</md-data-table-cell>
                          <md-data-table-cell html-content="htmlContent">{{ dato.creadoAl }}</md-data-table-cell>
-                    </md-data-table-cell>
-             
+                    
                  </md-data-table-row>
                 </md-data-table>
             </md-list>

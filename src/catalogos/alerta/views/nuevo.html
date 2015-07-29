@@ -21,11 +21,7 @@
 		</div>
 	</md-toolbar>
 	<md-content>
-	<ol class="breadcrumb top-breadcrumb" >
-	  <li><a href="/#/">Home</a></li>
-  <li><a url-modulo="--" id="lista">{{ 'ALERTA' | translate }}</a></li>
-  <li class="active">{{ 'AGREGAR' | translate }}</li>
-</ol>
+	
 
 <form role="form" name="forma">
 <md-content layout="column" class="imprimir"  layour-align="center center"  >
@@ -45,9 +41,9 @@
     
         <md-list-item >           
             <md-input-container flex >     
-              <label>{{ 'COLOR' | translate }}</label>
-                <color-picker required ng-model="dato.color" color-picker-format="HEX" name="color" ></color-picker>
-                <div ng-messages="forma.color.$error">
+              <label style="margin-top:-45px">{{ 'COLOR' | translate }}</label>
+                <color-picker required ng-model="dato.color" color-picker-format="HEX" name="color" style="position:relative"></color-picker>
+                <div ng-messages="forma.color.$error" style="margin-top:30px">
                   <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>
                 </div>
             </md-input-container>

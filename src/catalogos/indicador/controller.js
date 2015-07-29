@@ -74,7 +74,7 @@
 		$scope.Alertas = function() 
 		{
 			$scope.options=[];   
-			listaOpcion.options("alerta").success(function(data)
+			listaOpcion.options("Alerta").success(function(data)
 			{
 				if(data.status  == '407')
 					$window.location="acceso";

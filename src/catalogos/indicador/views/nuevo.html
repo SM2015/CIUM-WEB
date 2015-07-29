@@ -21,11 +21,7 @@
 		</div>
 	</md-toolbar>
 	<md-content>
-	<ol class="breadcrumb top-breadcrumb" >
-	  <li><a href="/#/">Home</a></li>
-  <li><a url-modulo="--" id="lista">{{ 'INDICADOR' | translate }}</a></li>
-  <li class="active">{{ 'AGREGAR' | translate }}</li>
-</ol>
+	
 <form role="form" name="forma"  ng-init="Alertas();ruta='Indicador'">
 <md-content layout="column" class="imprimir"  layour-align="center center"  >
 	<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >	
@@ -61,6 +57,15 @@
                 </md-radio-group>
                         
                 </md-input-container>
+
+                <md-input-container flex >     
+                  <label style="margin-top:-45px">{{ 'COLOR' | translate }}</label>
+                    <color-picker required ng-model="dato.color" color-picker-format="HEX" name="color" style="position:relative"></color-picker>
+                    <div ng-messages="forma.color.$error" style="margin-top:30px">
+                      <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>
+                    </div>
+                </md-input-container>
+                
             </md-list-item>
 			<md-divider ></md-divider>
               
@@ -94,7 +99,7 @@
 			 		</md-data-table-row>
 </md-data-table>
 			  
-				  	<md-button class="md-raised md-primary" type="button" ng-click="agregarAlerta()"><md-icon md-svg-src="check"></md-icon> {{ 'AGREAGAR' | translate}}</button> 
+				  	<md-button class="md-raised md-primary" type="button" ng-click="agregarAlerta()"><md-icon md-svg-src="check"></md-icon> {{ 'AGREAGAR' | translate}}</md-button> 
 				  
             
      </md-list>

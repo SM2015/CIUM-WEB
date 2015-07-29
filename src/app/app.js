@@ -5,7 +5,6 @@
 								[
 									'ngMaterial',
 									'mdDataTable',
-									'materialDatePicker',
 									'ngRoute',
 									'ngStorage',
 									'ngCookies',
@@ -42,7 +41,7 @@
 		$mdIconProvider
 	.defaultIconSet("assets/svg/avatars.svg", 128)		  
 		  
-		  .icon("logo", "assets/svg/salud_chiapas_icon_alt.svg", 48)
+		  .icon("logo", "assets/svg/cium.svg", 48)
 		  .icon("salud-id", "assets/svg/salud_id_white.svg", 48)
 		  .icon("ssa", "assets/svg/secretaria_salud.svg", 128)
 		  .icon("marca", "assets/svg/chiapas_nos_une.svg", 128)
@@ -165,7 +164,7 @@
 		
 		// Configuramos tema de material design
 		$mdThemingProvider.theme('default')
-	    .primaryPalette('blue-grey')
+	    .primaryPalette('green')
 	    .accentPalette('red');	
 			  
 		// Configuramos las rutas

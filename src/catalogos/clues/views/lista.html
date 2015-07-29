@@ -17,10 +17,7 @@
 		</div>
 	</md-toolbar>
 	<md-content>
-	<ol class="breadcrumb top-breadcrumb" >
-	  <li><a href="/#/">Home</a></li>
-	  <li class="active">Clues</li>
-	</ol>
+	
 	<div layout="row" >  
   <div layout-padding flex>
 			<div layout="column" layout-fill style="padding-bottom: 2px;">
@@ -33,7 +30,7 @@
 					  <md-icon md-svg-src="search" class="name"></md-icon>
 					  <input ng-model="buscar.nombre" type="text">
 					  
-					</md-container>
+					</md-input-container>
 					
 					
 				</md-content>
@@ -100,7 +97,6 @@
                           </md-tooltip>
 						</md-button></a>
  
-						</md-button>
 						
 					</section>
 					
@@ -141,11 +137,10 @@
 <md-tooltip>
     {{ 'ULTIMA' | translate }}
 </md-tooltip>
-  </md-button>					
-				</span>
-			  </md-whiteframe>
-			</div>
-        </div>
+  </md-button
+  					
+			</span>
+		  </md-whiteframe>
+		</div>
     </div>
-	</md-content>
 </div>
