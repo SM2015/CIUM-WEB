@@ -193,11 +193,12 @@
 		.otherwise({ redirectTo: '/dashboard' });
 		
 		$httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
+			$localStorage.cium = {};
 		   return {
 		 'request': function (config) {
 		     config.headers = config.headers || {};
-		     if ($localStorage.access_token) {					   
-		   config.headers.Authorization = 'Bearer ' + $localStorage.access_token;
+		     if ($localStorage.cium.access_token) {					   
+		   config.headers.Authorization = 'Bearer ' + $localStorage.cium.access_token;
 		     }
 		     return config;
 		 },
@@ -222,16 +223,16 @@
 	
 	app.run(['$rootScope','$location','$localStorage','$injector','authService','Menu',function($rootScope,$location, $localStorage,$injector, authService,Menu){
 
-	
+			
 			$rootScope.$on('event:auth-loginRequired', function() {
 				
-				if($localStorage.access_token){
+				if($localStorage.cium.access_token){
 					var Auth = $injector.get('Auth');
 				
-						Auth.refreshToken({ refresh_token: $localStorage.refresh_token, user_email: $localStorage.user_email },
+						Auth.refreshToken({ refresh_token: $localStorage.cium.refresh_token, user_email: $localStorage.cium.refresh_token },
 						   function(res){
-								$localStorage.access_token = res.access_token;
-						  		$localStorage.refresh_token = res.refresh_token;
+								$localStorage.cium.access_token = res.access_token;
+						  		$localStorage.cium.refresh_token = res.refresh_token;
 								authService.loginConfirmed();
 						   }, function (e) {
 						 
@@ -250,7 +251,7 @@
 		    });
 		
 		$rootScope.$on('$routeChangeStart',function(event, next, current){
-			if($localStorage.access_token){
+			if($localStorage.cium.access_token){
 				if(typeof next.$$route !== 'undefined'){					
 					var path =  next.$$route.originalPath.split('/');
 					// Aquí deberiamos comprobar permisos para acciones de "subrutas"

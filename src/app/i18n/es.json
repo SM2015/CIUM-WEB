@@ -1,6 +1,7 @@
 {
 	"APP_NOMBRE": "CIUM",
 	"APP_DESCRIPCION_BREVE": "Accede a todas las aplicaciones y servicios en línea del Instituto de Salud del Estado de Chiapas con una sola cuenta",
+
 	"CREAR_CUENTA": "Crear una cuenta ahora",
 	"BIENVENIDO": "Bienvenido",
 	"USUARIO": "Usuario",
@@ -92,7 +93,7 @@
 	"USUARIO": "Usuario",
 	"DATOS_ACCESO": "Datos de acceso",
 	"TEXTO_1_USUARIO": "Para seleccionar multiples grupos de usuario ",
-	"TEXTO_2_USUARIO": "hacer click sobre un rol y depues selccionar otro",
+	"TEXTO_2_USUARIO": "hacer click sobre un rol y deSpues selEccionar otro",
 	"DENEGAR_PERMISO":"Denegar permisos individual al usuario",
 	"LIMPIAR_PERMISO":"Limpiar permisos",
 	"TODAS_UM":"Todas las unidades médicas",
@@ -100,6 +101,9 @@
 	"REPRESENTANTE_UM_TEX":"Marque la casilla es representante si y solo si la persona es la encargada de la unidad médica, ya que a ella le llegarán las notificaciones y pendientes de las evaluaciones",
 	"UM":"Unidad médica",
 	"JURISDICCION":"Jurisdicción",
+	"INSTIUCION":"Institución",
+	"LOCALIDAD":"Localidad",
+	"ENTIDAD":"Entidad",
 	"LUGAR_SELECT":"Seleccione el lugar de verificación",
 	"CARGO":"Cargo",
 	"CAMBIAR_UM":"Cambiar UM",
@@ -141,6 +145,10 @@
 	"TIPO_PERMISO":"Nivel permiso",
 	"TIPO": "Tipo",
 	"ESTATUS":"Estatus",
+	"PLAZO":"Plazo",
+	"VALOR":"Valor",
+	"CONE":"Cone´s",
+	"ZONA":"Zona",
 
 	"MANUAL_USUARIO": "Manual de usuario",
 	"ACERCA_DE": "Acerca de... ",
@@ -157,7 +165,9 @@
 	"SI": "Si",
 	"NO": "No",
 	"NA": "N/A",
-	
+	"VISTA":"Vista",
+	"ACTIVO":"Activo",
+
 	"NUEVO": "Nuevo",
 	"NUEVA": "Nueva",
 	"AGREGAR": "Agregar",

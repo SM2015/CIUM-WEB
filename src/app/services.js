@@ -11,7 +11,7 @@
 					return $http.post(URLS.BASE_API + 'validacion-cuenta');
 				},
 				getPermisos: function() {
-					return $http.post(URLS.BASE_API + 'permisos-autorizados',{user_email: $localStorage.user_email});
+					return $http.post(URLS.BASE_API + 'permisos-autorizados',{user_email: $localStorage.cium.refresh_token});
 				}
 			}
 		}]);
@@ -26,8 +26,8 @@
 							
 		  return AuthService.autenticar(data)   
 		    			.then(function(res){
-										$localStorage.access_token = res.data.access_token;
-   							$localStorage.refresh_token = res.data.refresh_token;
+										$localStorage.cium.access_token = res.data.access_token;
+   							$localStorage.cium.refresh_token = res.data.refresh_token;
 		  return true;
 		    });
 		    },
@@ -42,10 +42,10 @@
 						},
 						error = function (error) {
 							
-							delete $localStorage.access_token;
-							delete $localStorage.refresh_token;
-							delete $localStorage.user_email;
-							delete $localStorage.menu;
+							delete $localStorage.cium.access_token;
+							delete $localStorage.cium.refresh_token;
+							delete $localStorage.cium.refresh_token;
+							delete $localStorage.cium.menu;
 							var error_code = '';
 							if(typeof error !== 'undefined'){
 								error_code = "CONNECTION_REFUSED";
@@ -81,10 +81,10 @@
 				},
 				logout: function (success) {
 					
-					delete $localStorage.access_token;
-					delete $localStorage.refresh_token;
-					delete $localStorage.user_email;
-					delete $localStorage.menu;
+					delete $localStorage.cium.access_token;
+					delete $localStorage.cium.refresh_token;
+					delete $localStorage.cium.refresh_token;
+					delete $localStorage.cium.menu;
 					
 					success();
 				}
@@ -125,7 +125,7 @@
 					}
 				}
 			}
-			if($localStorage.access_token){
+			if($localStorage.cium.access_token){
 				updateMenu();
 			}
 			

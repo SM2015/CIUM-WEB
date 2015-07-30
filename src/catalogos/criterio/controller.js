@@ -2,10 +2,10 @@
 	'use strict';
 	angular.module('CriterioModule')
 	.controller('CriterioCtrl',
-	       ['$rootScope', '$scope', '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash', 'listaOpcion', 'Criterios', 'CrudDataApi', 
-	function($rootScope,   $scope,   $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,   listaOpcion,   Criterios,   CrudDataApi){
+	       ['$rootScope', '$translate', '$scope', '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash', 'listaOpcion', 'Criterios', 'CrudDataApi', 
+	function($rootScope,   $translate,   $scope,   $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,   listaOpcion,   Criterios,   CrudDataApi){
 	
-		$scope.menuSelected = $location.path();
+		 $scope.menuSelected = "/"+$location.path().split('/')[1];
 	    $scope.menu = Menu.getMenu();
 	    $scope.fecha_actual = new Date();
 	    
@@ -18,6 +18,12 @@
 	    $scope.tableIsSelectable = false;
 	    $scope.tableIsSortable = true;
 	    $scope.htmlContent = true;
+
+	    $scope.BuscarPor=[
+                      {id:"nombre", nombre:$translate.instant('NOMBRE')},
+                      {id:'creadoAl', nombre:$translate.instant('CREADO')},
+                      {id:'modificadoAl', nombre:$translate.instant('MODIFICADO')}
+                     ];
 
 	    $scope.deleteRowCallback = function(rows){
 	        $mdToast.show(
@@ -194,12 +200,16 @@
 	        $scope.init();     
 	    };
 
-	    $scope.init = function() 
-	    {
-	        var url=$scope.ruta;
-	      
-	        var pagina=$scope.paginacion.pag;
-	        var limite=$scope.paginacion.lim;
+	    $scope.init = function(buscar) 
+		{
+			var url=$scope.ruta;
+			
+			var pagina=$scope.paginacion.pag;
+			var limite=$scope.paginacion.lim;
+		
+			if(!angular.isUndefined(buscar))
+				limite=limite+"&columna="+$scope.columna+"&valor="+$scope.buscar+"&buscar=true";
+
 
 	        CrudDataApi.lista(url+'?pagina=' + pagina + '&limite=' + limite, function (data) {
 	        if(data.status  == '407')
@@ -252,9 +262,9 @@
 	        
 	    };
 	    $scope.buscarL = function(buscar) 
-	    {
-	        console.log(buscar);
-	    };	
+		{
+		  	$scope.init(buscar);
+		};	
 		//Ver
 		$scope.ver = function(ruta) 
 		{

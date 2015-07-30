@@ -5,7 +5,7 @@
 	       ['$rootScope', '$scope', '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash', 'listaOpcion', 'Criterios', 'CrudDataApi', 'URLS', 
 	function($rootScope,   $scope,   $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,   listaOpcion,   Criterios,   CrudDataApi, URLS){
 	
-		$scope.menuSelected = $location.path();
+		 $scope.menuSelected = "/"+$location.path().split('/')[1];
 	    $scope.menu = Menu.getMenu();
 	    $scope.fecha_actual = new Date();
 	    
@@ -1412,7 +1412,7 @@
 			$scope.dimension={};
 			$scope.parDimension={};
 			$scope.parametro = [];
-			
+
 	  		$scope.dibujarGrafico('CalidadGlobal?campo=&valor=&nivel=anio');   
 		};
 	
@@ -1463,115 +1463,133 @@
 			$scope.dibujarGrafico('hallazgoGauge?tipo='+$scope.tipo);
 			$scope.bread.push({label:tipo});
 		};
-		$scope.dimensiones = function(campo,valor,nivel,c)
+
+		$scope.irDibujar = function(campo,valor,nivel,c,ultimo)
 		{
-			var url="";
+			$scope.dibujarGrafico('alertaDash?tipo='+$scope.tipo);
+		};
+
+		$scope.dimensiones = function(campo,valor,nivel,c,ultimo)
+		{
+			var url="calidadDimension";
 			if($scope.tipo=="Abasto")
 				url="abastoDimension";
-			if($scope.tipo=="Calidad")
-				url="calidadDimension";
-			$scope.gauge = $http.get(URLS.BASE_API+url+'?campo='+campo+'&valor='+valor+'&nivel='+nivel+'&tipo='+$scope.tipo)     
-			.success(function(data, status, headers, config) 
-			{   
-			$scope.datos[c] = data.data; 
-			if(c==2)
+	  		$scope.gaugeOpcion = $http.get(URLS.BASE_API+url+'?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo+"&tipo="+$scope.tipo)     
+	  		.success(function(data, status, headers, config) 
+	  		{   
+				$scope.datos[c] = data.data;  
+				if(c==4)
 				{
 					$scope.repos = data.data.map( function (repo) {
 							repo.value = repo.nombre.toLowerCase();
 							return repo;
 						}); 
-				} 
-			$scope.completar();  
+				}  
+	  			$scope.dibujarGrafico('hallazgoGauge?tipo='+$scope.tipo+'&campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo);
+		  	})
+		  	.error(function(data, status, headers, config) 
+			{
+				$scope.datos[c]={};
+				$scope.dimension[c]={};
 			});
 		};
-	
+		
 		$scope.parDimension={};
 		$scope.getDimension = function(campo,nivel,c)
 		{
-	  $scope.bread=[];
-	  if(c==1)
-	  {
-		$scope.bread.push({label:$scope.tipo});
-		$scope.bread.push({label:"Año: "+$scope.dimension[0]});
-		$scope.parDimension[0]=" and anio = '"+$scope.dimension[0]+"'";
-	  }
-	  if(c==2)
-	  {
-		$scope.bread.push({label:$scope.tipo});
-		$scope.bread.push({label:"Año: "+$scope.dimension[0]});
-		$scope.bread.push({label:"Mes: "+$scope.dimension[1]});
-		$scope.parDimension[1]=$scope.parDimension[0]+" and month='"+$scope.dimension[1]+"'";
-	  }
+		  	if(c==1)
+				$scope.parDimension[0]=" and anio = '"+$scope.dimension[0]+"'";
+		  	if(c==2)
+				$scope.parDimension[1]=$scope.parDimension[0]+" and mes between "+$scope.dimension[1];
+		  	if(c==3)
+				$scope.parDimension[2]=$scope.parDimension[1]+" and jurisdiccion = '"+$scope.dimension[2]+"'";
+		  	if(c==4)
+				$scope.parDimension[3]=$scope.parDimension[2];
+		
+		  	$scope.dimensiones(campo,$scope.parDimension[c-1],nivel,c,$scope.dimension[c-1]);
+		}
 	
-	  $scope.dimensiones(campo,$scope.parDimension[c-1],nivel,c);
-		};
 		$scope.completar = function()
-		{    
-	  var year=""; var mes=""; var clues="";
-	  if(!angular.isUndefined($scope.dimension[0])&&$scope.dimension[0]!=null)
-	  {
-	year=$scope.dimension[0];
-	  }
-	  if(!angular.isUndefined($scope.dimension[1])&&$scope.dimension[1]!=null)
-	  {
-	mes=$scope.dimension[1];
-	  }
-	  if(!angular.isUndefined($scope.dimension[2])&&$scope.dimension[2]!=null)
-	  {
-	$scope.bread=[];
-	clues=$scope.dimension[2];
-	$scope.bread.push({label:$scope.tipo});
-	$scope.bread.push({label:"Año: "+$scope.dimension[0]});
-	$scope.bread.push({label:"Mes: "+$scope.dimension[1]});
-	$scope.bread.push({label:"Clues: "+clues});
-	  }
-	  $scope.dibujarGrafico('hallazgoGauge?anio='+year+'&mes='+mes+'&clues='+clues+'&tipo='+$scope.tipo);
+		{    	  
+	  		$scope.dibujarGrafico('hallazgoGauge?campo=fin&valor='+$scope.parDimension[3]+'&nivel=fin&tipo='+$scope.tipo);
 		};
 		$scope.dibujarGrafico = function (url)
 		{
-	  $scope.gauge = $http.get(URLS.BASE_API+url)     
-	  .success(function(data, status, headers, config) 
-	  {   
-	$scope.value = data.valor;
-	$scope.upperLimit = data.total;
-	$scope.lowerLimit = 0;
-	$scope.unit = "";
-	$scope.precision = 1;
-	$scope.ranges = data.rangos;
-	
-	$scope.dato = data.data;
-	
-	var total=data.total;
-	if(total==0) total = "No hay datos"; 
-	$scope.bread.push({label:"Total: "+total});
-	  
-	  })
-	  .error(function(data, status, headers, config) 
-	  {
-	errorFlash.error(data);
-	  });
+			var anio="";var mes=""; var clues="";
+			if(!angular.isUndefined($scope.dimension[0]))
+				anio=$scope.dimension[0];
+			if(!angular.isUndefined($scope.dimension[1]))
+				mes=$scope.dimension[1];
+			if(!angular.isUndefined($scope.dimension[4]))
+				clues=$scope.dimension[4];
+
+			url=url+"&anio="+anio+"&mes="+mes+"&clues="+clues;
+			$scope.gauge = $http.get(URLS.BASE_API+url)     
+			.success(function(data, status, headers, config) 
+			{   
+				$scope.value = data.valor;
+				$scope.upperLimit = data.total;
+				$scope.lowerLimit = 0;
+				$scope.unit = "";
+				$scope.precision = 1;
+				$scope.ranges = data.rangos;
+
+				$scope.dato = data.data;
+
+				$scope.bread = [];
+						
+				$scope.bread.push({label:$scope.tipo});
+
+				if(!angular.isUndefined($scope.dimension[0]))
+					$scope.bread.push({label:"Año: "+$scope.dimension[0]});
+				if(!angular.isUndefined($scope.dimension[1]))
+					$scope.bread.push({label:"Bimestre: "+$scope.dimension[1]});
+				if(!angular.isUndefined($scope.dimension[2]))
+					$scope.bread.push({label:"Jurisdiccion: "+$scope.dimension[2]});
+				if(!angular.isUndefined($scope.dimension[3]))
+					$scope.bread.push({label:"Zona: "+$scope.dimension[3]});
+				if(!angular.isUndefined($scope.dimension[4]))
+					$scope.bread.push({label:"Clues: "+$scope.dimension[4]});
+
+				var total=data.total;
+					if(total==0) total = "No hay datos"; 
+				$scope.bread.push({label:"Total: "+total});
+
+			})
+			.error(function(data, status, headers, config) 
+			{
+			errorFlash.error(data);
+			});
 		};
 	
 		$scope.isFullscreen = false;
 	
 		$scope.toggleFullScreen = function(e) {
-	  $scope.isFullscreen = !$scope.isFullscreen;
+	  		$scope.isFullscreen = !$scope.isFullscreen;
 	
-	  if($scope.isFullscreen)
-	  {
-	$("#"+e).find('> md-icon').attr('md-svg-src','add').find("> svg >path").attr('d','M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM7 9h5v1H7z');}
-	  else
-	  {
-	$("#"+e).find('> md-icon').attr('md-svg-src','add').find("> svg >path").attr('d','M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z');
-	  }
+			if($scope.isFullscreen)
+		  	{
+				$("#"+e).find('> md-icon').attr('md-svg-src','add').find("> svg >path").attr('d','M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM7 9h5v1H7z');
+			}
+		  	else
+		  	{
+				$("#"+e).find('> md-icon').attr('md-svg-src','add').find("> svg >path").attr('d','M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z');
+		  	}
 		};
 	
 		$scope.recargar = function()
 		{  
-	  $scope.tipo="Abasto"; 
-	  $scope.bread=[];
-	  $scope.bread.push({label:$scope.tipo}); 
-	  $scope.dibujarGrafico('hallazgoGauge?tipo='+$scope.tipo);    
+	  		$scope.tipo="Abasto"; 
+	  		$scope.contador=0;
+			$scope.parametro={};
+			$scope.bread=[];
+			$scope.datos={};
+			$scope.dimension={};
+			$scope.parDimension={};
+			$scope.parametro = [];
+	  		
+	  		$scope.bread.push({label:$scope.tipo}); 
+	  		$scope.dibujarGrafico('hallazgoGauge?campo=&valor=&nivel=anio&tipo='+$scope.tipo);    
 		};
 		
 		//autocomplete
@@ -1606,7 +1624,7 @@
 		function selectedItemChange(item) {
 			if(!angular.isUndefined(item))
 			{
-				$scope.dimension[2]=item.clues;
+				$scope.dimension[4]=item.clues;
 				$scope.completar();
 			}
 		}
@@ -1622,14 +1640,14 @@
 		
 		$scope.toggleModal = function()
 		{ 
-	  $scope.catVisible=true;
-	  $scope.umVisible=true;
-	  $scope.showModal = !$scope.showModal;
-	
-	  $scope.dimensiones('anio','','anio',0);
+			$scope.catVisible=true;
+			$scope.umVisible=true;
+			$scope.showModal = !$scope.showModal;
+
+			$scope.dimensiones('anio','','anio',0);
 		};
 		
-		$scope.dibujarGrafico('hallazgoGauge?tipo='+$scope.tipo);
+		$scope.dibujarGrafico('hallazgoGauge?campo=&valor=&nivel=anio&tipo='+$scope.tipo);
 		$scope.bread.push({label:$scope.tipo});
 	
 		

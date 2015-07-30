@@ -5,7 +5,7 @@
 	       ['$rootScope', '$scope', '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash',   'CrudDataApi', 'URLS', 
 	function($rootScope,   $scope,   $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,    CrudDataApi, URLS){
 		
-		$scope.menuSelected = $location.path();
+		 $scope.menuSelected = "/"+$location.path().split('/')[1];
 	    $scope.menu = Menu.getMenu();
 	    $scope.fecha_actual = new Date();
 	    

@@ -16,21 +16,21 @@
 
 	</header>
 	<div ng-repeat="grupo in menu">
-		<md-subheader class="md-primary" ng-hide="!grupo.grupo">{{ grupo.grupo }}</md-subheader>
+		<md-subheader class="md-primary" ng-hide="!grupo.grupo">{{ grupo.grupo | translate }}</md-subheader>
 		<md-list-item ng-repeat="item in grupo.lista" ng-class="{'md-primary': menuSelected== item.path}" ng-click="ir(item.path)">
-		  	<md-icon md-svg-icon="{{ item.icono }}"></md-icon>
-		    <p>{{ item.titulo }}</p>			    
+		  	<md-icon ng-class="{'md-primary': menuSelected == item.path}" md-svg-icon="{{ item.icono }}"></md-icon>
+		    <p ng-style="menuSelected == item.path ? { 'font-weight':'bold' }: { 'font-weight': 'inherit' }" > {{ item.titulo | translate }} </p>			    
 		</md-list-item>
 	</div>
 	<md-subheader>Ayuda</md-subheader>
 	<md-list-item ng-click="ir('acerca-de')" aria-label=" 'ACERCA_DE' | translate">
-	  	<md-icon md-svg-icon="info"></md-icon>
-	    <p translate="ACERCA_DE"></p>
+	  	<md-icon ng-class="{'md-primary': menuSelected == '/acerca-de'}" md-svg-icon="info"></md-icon>
+	    <p ng-style="menuSelected == '/acerca-de' ? { 'font-weight':'bold' }: { 'font-weight': 'inherit' }" translate="ACERCA_DE"></p>
 	</md-list-item>
 
 	<md-list-item ng-click="ir('manual-usuario')" aria-label=" 'MANUAL_USUARIO' | translate">
-	  	<md-icon md-svg-icon="local-library"></md-icon>
-	    <p translate="MANUAL_USUARIO"></p>
+	  	<md-icon ng-class="{'md-primary': menuSelected == '/manual-usuario'}" md-svg-icon="local-library"></md-icon>
+	    <p ng-style="menuSelected == '/manual-usuario' ? { 'font-weight':'bold' }: { 'font-weight': 'inherit' }" translate="MANUAL_USUARIO"></p>
 	</md-list-item>
 	
 	<md-list-item hide-gt-sm  ng-click="mostrarIdiomas($event)" aria-label=" 'CAMBIAR_IDIOMA' | translate">

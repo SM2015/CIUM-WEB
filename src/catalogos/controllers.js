@@ -2,10 +2,10 @@
 	'use strict';
     angular.module('CrudModule')
     .controller('CrudCtrl',
-           ['$rootScope', '$window', '$http', '$scope', 'CrudDataApi', '$mdSidenav','$location','$mdBottomSheet', 'Auth','Menu','errorFlash', 'flash', '$mdToast', 'URLS', 
-    function($rootScope,   $window,   $http,   $scope,   CrudDataApi,   $mdSidenav,  $location,  $mdBottomSheet,   Auth,  Menu,  errorFlash,   flash,   $mdToast,   URLS){
+           ['$rootScope', '$translate', '$window', '$http', '$scope', 'CrudDataApi', '$mdSidenav','$location','$mdBottomSheet', 'Auth','Menu','errorFlash', 'flash', '$mdToast', 'URLS', 
+    function($rootScope,   $translate,   $window,   $http,   $scope,   CrudDataApi,   $mdSidenav,  $location,  $mdBottomSheet,   Auth,  Menu,  errorFlash,   flash,   $mdToast,   URLS){
 
-    $scope.menuSelected = $location.path();
+    $scope.menuSelected = "/"+$location.path().split('/')[1];
     $scope.menu = Menu.getMenu();
     $scope.fecha_actual = new Date();
 
@@ -18,6 +18,12 @@
     $scope.tableIsSelectable = false;
     $scope.tableIsSortable = true;
     $scope.htmlContent = true;
+
+    $scope.BuscarPor=[
+                      {id:"nombre", nombre:$translate.instant('NOMBRE')},
+                      {id:'creadoAl', nombre:$translate.instant('CREADO')},
+                      {id:'modificadoAl', nombre:$translate.instant('MODIFICADO')}
+                     ];
 
     $scope.deleteRowCallback = function(rows){
         $mdToast.show(
@@ -70,12 +76,16 @@
           $scope.init();     
       };
 
-      $scope.init = function() 
-      {
-          var url=$scope.ruta;
-        
-          var pagina=$scope.paginacion.pag;
-          var limite=$scope.paginacion.lim;
+      $scope.init = function(buscar) 
+		{
+			var url=$scope.ruta;
+			
+			var pagina=$scope.paginacion.pag;
+			var limite=$scope.paginacion.lim;
+		
+			if(!angular.isUndefined(buscar))
+				limite=limite+"&columna="+$scope.columna+"&valor="+$scope.buscar+"&buscar=true";
+
 
           CrudDataApi.lista(url+'?pagina=' + pagina + '&limite=' + limite, function (data) {
           if(data.status  == '407')
@@ -83,8 +93,8 @@
 
             if(data.status==200)
             {
-            $scope.datos = data.data;
-            $scope.paginacion.paginas = data.total;
+              $scope.datos = data.data;
+              $scope.paginacion.paginas = data.total;
             }
             else
             {
@@ -101,7 +111,7 @@
       {
           if ($scope.paginacion.pag < $scope.paginacion.paginas) 
           {
-          $scope.paginacion.pag=$scope.paginacion.pag+$scope.paginacion.lim;
+            $scope.paginacion.pag=$scope.paginacion.pag+$scope.paginacion.lim;
             $scope.init();
           }
       };
@@ -128,9 +138,9 @@
           
       };
       $scope.buscarL = function(buscar) 
-      {
-          console.log(buscar);
-      };
+		{
+		  	$scope.init(buscar);
+		};
        
     //Ver
     $scope.ver = function(ruta) 

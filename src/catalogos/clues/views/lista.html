@@ -26,38 +26,53 @@
 				<md-content layout-padding class="autoScroll" style="width:100%">
 					<md-input-container class="md-icon-float" >
 						  
-					  <label>Buscar</label>
+					  <label>{{ 'BUSCAR' | translate }}</label>
 					  <md-icon md-svg-src="search" class="name"></md-icon>
-					  <input ng-model="buscar.nombre" type="text">
+					  <input ng-model="buscar" type="text">
 					  
 					</md-input-container>
 					
 					
 				</md-content>
 				</span>
-				<span style="width:20%">
+				<span style="width: 10%; margin-top: -16px; margin-left: 10px;">
+				 <md-select ng-model="columna" aria-label="Por" ng-init="columna='nombre'">
+			        <md-option ng-repeat="item in BuscarPor" value="{{item.id}}">{{item.nombre}}</md-option>
+			        <md-option value="clues">Clues</md-option>
+			        <md-option value="entidad">{{ 'ENTIDAD' | translate }}</md-option>
+			        <md-option value="municipio">{{ 'MUNICIPIO' | translate }}</md-option>
+			        <md-option value="jurisdiccion">{{ 'JURISDICCION' | translate }}</md-option>
+			        <md-option value="localidad">{{ 'LOCALIDAD' | translate }}</md-option>
+			      </md-select>
+				</span>
+				<span style="width:10%; margin-top: -10px; margin-left: -20px;">
   <md-button class="md-raised" ng-click="buscarL(buscar)">
 <md-icon md-svg-src="search"></md-icon>
 <md-tooltip>
     {{ 'BUSCAR' | translate }}
 </md-tooltip>
   </md-button>
+
+
+
 				</span>
     
 				<span style="width:20%">			
-  <md-button class="md-raised md-primary" ng-click="exportar()">
+  <md-button class="md-raised md-primary" ng-click="exportar()" style="float:right">
 <md-icon md-svg-src="picture-as-pdf"></md-icon>
 <md-tooltip>
     {{ 'PDF' | translate }}
 </md-tooltip>
   </md-button>
-  <md-button class="md-raised md-primary" ng-click="excel()">
+
+  <md-button class="md-raised md-primary" ng-click="excel()" style="float:right">
   	<md-icon md-svg-src="explicit"></md-icon>
 <md-tooltip>
     {{ 'EXCEL' | translate }}
 </md-tooltip>
   </md-button>										
 				</span>
+
 			  </md-whiteframe>
 			</div>
 <md-data-table
@@ -70,15 +85,15 @@
     <md-data-table-header-row>
   <md-data-table-column align-rule="left">Clues</md-data-table-column>
   <md-data-table-column align-rule="left">{{ 'NOMBRE' | translate }}</md-data-table-column>
-  <md-data-table-column align-rule="left">Entidad</md-data-table-column>
-  <md-data-table-column align-rule="left">Municipio</md-data-table-column>
-  <md-data-table-column align-rule="left">Localidad</md-data-table-column>
-  <md-data-table-column align-rule="left">Jurisdicción</md-data-table-column>
-  <md-data-table-column align-rule="left">Intitución</md-data-table-column>
+  <md-data-table-column align-rule="left">{{ 'ENTIDAD' | translate }}</md-data-table-column>
+  <md-data-table-column align-rule="left">{{ 'MUNICIPIO' | translate }}</md-data-table-column>
+  <md-data-table-column align-rule="left">{{ 'LOCALIDAD' | translate }}</md-data-table-column>
+  <md-data-table-column align-rule="left">{{ 'JURISDICCION' | translate }}</md-data-table-column>
+  <md-data-table-column align-rule="left">{{ 'INSTIUCION' | translate }}</md-data-table-column>
   <md-data-table-column align-rule="left"></md-data-table-column>
     </md-data-table-header-row>
 	
-    <md-data-table-row table-row-id="dato.id" ng-repeat="dato in datos  ">
+    <md-data-table-row table-row-id="dato.id" ng-repeat="dato in datos">
   <md-data-table-cell html-content="htmlContent">{{dato.clues}}</md-data-table-cell>
   <md-data-table-cell html-content="htmlContent">{{dato.nombre }}</md-data-table-cell>
   <md-data-table-cell html-content="htmlContent">{{dato.entidad }}</md-data-table-cell>  

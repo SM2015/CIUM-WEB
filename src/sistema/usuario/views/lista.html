@@ -26,9 +26,9 @@
 				<md-content layout-padding class="autoScroll" style="width:100%">
 					<md-input-container class="md-icon-float" >
 						  
-					  <label>Buscar</label>
+					  <label>{{ 'BUSCAR' | translate }}</label>
 					  <md-icon md-svg-src="search" class="name"></md-icon>
-					  <input ng-model="buscar.nombre" type="text">
+					  <input ng-model="buscar" type="text">
 					  
 					</md-input-container>
 					
@@ -36,29 +36,39 @@
 				</md-content>
 				</span>
     
-				<span style="width:20%">
+				<span style="width: 10%; margin-top: -16px; margin-left: 10px;">
+				 <md-select ng-model="columna" aria-label="Por" ng-init="columna='nombres'">
+			        <md-option ng-repeat="item in BuscarPor" value="{{item.id}}">{{item.nombre}}</md-option>
+			      </md-select>
+				</span>
+				<span style="width:10%; margin-top: -10px; margin-left: -20px;">
   <md-button class="md-raised" ng-click="buscarL(buscar)">
 <md-icon md-svg-src="search"></md-icon>
 <md-tooltip>
     {{ 'BUSCAR' | translate }}
 </md-tooltip>
   </md-button>
+
+
+
 				</span>
     
 				<span style="width:20%">			
-  <md-button class="md-raised md-primary" ng-click="exportar()">
+  <md-button class="md-raised md-primary" ng-click="exportar()" style="float:right">
 <md-icon md-svg-src="picture-as-pdf"></md-icon>
 <md-tooltip>
     {{ 'PDF' | translate }}
 </md-tooltip>
   </md-button>
-  <md-button class="md-raised md-primary" ng-click="excel()">
+
+  <md-button class="md-raised md-primary" ng-click="excel()" style="float:right">
   	<md-icon md-svg-src="explicit"></md-icon>
 <md-tooltip>
     {{ 'EXCEL' | translate }}
 </md-tooltip>
   </md-button>										
 				</span>
+
 			  </md-whiteframe>
 			</div> 
 	<md-data-table
@@ -71,17 +81,17 @@
     <md-data-table-header-row>
 					<md-data-table-column align-rule="left">id</md-data-table-column>
 					<md-data-table-column align-rule="left">{{ 'NOMBRE' | translate }}/s</md-data-table-column>
-					<md-data-table-column align-rule="left">A. Paterno</md-data-table-column>
-					<md-data-table-column align-rule="left">A. Materno</md-data-table-column>
-					<md-data-table-column align-rule="left">Cargo</md-data-table-column>
-					<md-data-table-column align-rule="left">Telefono</md-data-table-column>
-					<md-data-table-column align-rule="left">Email</md-data-table-column>
-					<md-data-table-column align-rule="left">Activo</md-data-table-column>										
+					<md-data-table-column align-rule="left">{{ 'APELLIDO_PATERNO' | translate }}</md-data-table-column>
+					<md-data-table-column align-rule="left">{{ 'APELLIDO_MATERNO' | translate }}</md-data-table-column>
+					<md-data-table-column align-rule="left">{{ 'CARGO' | translate }}</md-data-table-column>
+					<md-data-table-column align-rule="left">{{ 'TELEFONO' | translate }}</md-data-table-column>
+					<md-data-table-column align-rule="left">{{ 'EMAIL' | translate }}</md-data-table-column>
+					<md-data-table-column align-rule="left">{{ 'ACTIVO' | translate }}</md-data-table-column>										
 					<md-data-table-column align-rule="left">{{ 'CREADO' | translate }}</md-data-table-column>
 					<md-data-table-column align-rule="left"></md-data-table-column>
 				</md-data-table-header-row>
 	
-    <md-data-table-row table-row-id="dato.id" ng-repeat="dato in datos  ">
+    <md-data-table-row table-row-id="dato.id" ng-repeat="dato in datos">
 				 <md-data-table-cell html-content="htmlContent">{{ id = dato.id }}</md-data-table-cell>				 
 				 <md-data-table-cell html-content="htmlContent">{{ dato.nombres | uppercase }}</md-data-table-cell>
 				 <md-data-table-cell html-content="htmlContent">{{ dato.apellidoPaterno | uppercase }}</md-data-table-cell>

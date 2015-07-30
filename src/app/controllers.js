@@ -20,7 +20,7 @@ $scope.signin = function () {
   
     Auth.signin(formData, successAuth, function(){
       $scope.cargando = false;
-      $localStorage.user_email=email;
+      $localStorage.cium.refresh_token=email;
     });
 };
 
@@ -31,9 +31,9 @@ $scope.logout = function () {
     });
 };
 
-$scope.access_token = $localStorage.access_token;
-$scope.refresh_token = $localStorage.refresh_token;
-$scope.user_email = $localStorage.user_email;
+$scope.access_token = $localStorage.cium.access_token;
+$scope.refresh_token = $localStorage.cium.refresh_token;
+$scope.user_email = $localStorage.cium.refresh_token;
 
 $scope.urlOlvidePassword= URLS.OAUTH_SERVER + "/#/recuperar-password";
 $scope.urlOAuthInfo= URLS.OAUTH_SERVER + "/#/que-es";
@@ -122,7 +122,7 @@ $scope.items = [
   }])
   .controller('DashboardCtrl', ['$rootScope', '$scope', 'Data', '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', function($rootScope, $scope, Data,$mdSidenav,$location,$mdBottomSheet,Auth, Menu){
 
-$scope.menuSelected = $location.path();
+ $scope.menuSelected = "/"+$location.path().split('/')[1];
 $scope.menu = Menu.getMenu();
 
 Data.getApiData(function (res) {

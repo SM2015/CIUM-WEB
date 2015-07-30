@@ -13,16 +13,16 @@ icono: 'dashboard'
     ]
 },
 { 
-    grupo:'Evaluación' ,
+    grupo:'EVALUACION' ,
     lista: [
   { 
-titulo: 'Abasto', 
+titulo: 'ABASTO', 
 key: 'EvaluacionController.index', 
 path: '/evaluacion-abasto', 
 icono: 'event-available' 
   },
   { 
-titulo: 'Calidad', 
+titulo: 'CALIDAD', 
 key: 'EvaluacionCalidadController.index', 
 path: '/evaluacion-calidad', 
 icono: 'event-note' 
@@ -30,16 +30,16 @@ icono: 'event-note'
     ]
 }, 
 {
-    grupo: "Catálogos",
+    grupo: "CATALOGO",
     lista: [
 {
-  titulo: "Acciones",
+  titulo: "ACCION",
   key: "AccionController.index",
   path: "/accion",
   icono: "spellcheck"
 },
 {
-  titulo: "Alerta",
+  titulo: "ALERTA",
   key: "AlertaController.index",
   path: "/alerta",
   icono: "warning"
@@ -51,37 +51,37 @@ icono: 'event-note'
   icono: "business"
 },
 {
-  titulo: "CONE´s",
+  titulo: "CONE",
   key: "ConeController.index",
   path: "/cone",
   icono: "airline-seat-flat"
 },
 {
-  titulo: "Zona",
+  titulo: "ZONA",
   key: "ZonaController.index",
   path: "/zona",
   icono: "supervisor-accoun"
 },
 {
-  titulo: "Criterios",
+  titulo: "CRITERIO",
   key: "CriterioController.index",
   path: "/criterio",
   icono: "content-paste"
 },
 {
-  titulo: "Indicadores",
+  titulo: "INDICADOR",
   key: "IndicadorController.index",
   path: "/indicador",
   icono: "perm-scan-wifi"
 },
 {
-  titulo: "Lugares de verificación",
+  titulo: "LUGAR_VERIFICACION",
   key: "LugarVerificacionController.index",
   path: "/lugar-verificacion",
   icono: "place"
 },
 {
-  titulo: "Plazo Acciones",
+  titulo: "PLAZO_ACCION",
   key: "PlazoAccionController.index",
   path: "/plazo-accion",
   icono: "perm-contact-calendar"
@@ -89,28 +89,28 @@ icono: 'event-note'
     ]
   },
   {
-    grupo: "Sistema",
+    grupo: "SISTEMA",
     lista: [
 {
-  titulo: "Grupos",
+  titulo: "GRUPO",
   key: "GrupoController.index",
   path: "/grupo",
   icono: "group-work"
 },
 {
-  titulo: "Modulos",
+  titulo: "MODULO",
   key: "SysModuloController.index",
   path: "/modulo",
   icono: "view-module"
 },
 {
-  titulo: "Permisos",
+  titulo: "PERMISO",
   key: "SysModuloAccionController.index",
   path: "/permiso",
   icono: "verified-user"
 },
 {
-  titulo: "Usuarios",
+  titulo: "USUARIO",
   key: "UsuarioController.index",
   path: "/usuario",
   icono: "perm-identity"
@@ -118,10 +118,10 @@ icono: 'event-note'
     ]
   },
   {
-    grupo: "Transacción",
+    grupo: "TRANSACCION",
     lista: [
 {
-  titulo: "Seguimiento",
+  titulo: "SEGUIMIENTO",
   key: "SeguimientoController.index",
   path: "/seguimiento",
   icono: "check-box"

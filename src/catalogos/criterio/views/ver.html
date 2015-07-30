@@ -32,7 +32,7 @@
 <md-content layout="column" class="imprimir"  layour-align="center center"  >
 	<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >					
 		<md-list-item >	
-        	<md-input-container flex >                                    
+        	<md-input-container flex="30" >                                    
             	<label>ID</label>
                 <input readonly  name="id" ng-model="dato.id" >
                     
@@ -50,7 +50,7 @@
                     <li ng-repeat="i in dato.indicadores" class="parent_li" title="Abrir" >
                     	<span ng-click="treeClick(dato.id+''+i.id)" id="{{ dato.id }}{{i.id }}">
                     	<md-icon md-svg-src="add"></md-icon>
-                    	<strong>Indicador: </strong> {{ i.codigo }} | {{ i.nombre }}</span>
+                    	<strong>{{ 'INDICADOR' | translate }}: </strong> {{ i.codigo }} | {{ i.nombre }}</span>
                     	<ul>			   
                             <li ng-repeat="c in i.cones" class="parent_li" title="Abrir" >
                             	<span ng-click="treeClick(dato.id+''+i.id+''+c.id)" id="{{ dato.id }}{{i.id }}{{c.id }}" >

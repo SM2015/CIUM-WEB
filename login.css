@@ -13,7 +13,7 @@
 }
 
 .breadcrumb{padding:8px 15px;margin-bottom:20px;margin-top:0px;list-style:none;background-color:#f5f5f5;border-radius:4px}
-.breadcrumb>li{display:inline-block}
+.breadcrumb>li{display:inline-block; text-transform: uppercase; font-size: .5em;}
 .breadcrumb>li+li:before{padding:0 5px;color:#ccc;content:"/\00a0"}
 .breadcrumb>.active{color:#777}
 .breadcrumb a{text-decoration:none}
@@ -40,7 +40,10 @@
 .menudemoBasicUsage .menu-demo-container {
   min-height: 200px; }
 
-
+.tree li span
+{
+  width: 99%;
+}
 .pn:hover {
   box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.3);
 }
@@ -275,7 +278,7 @@ md-grid-list md-grid-tile-footer figcaption h3 {
    
 .badge
 {
-    background-color:rgb(255,82,82);
+    background:#FFF;
     border-radius: 50%;
     margin-left: -10px;
     margin-top: 6px;
@@ -285,12 +288,18 @@ md-grid-list md-grid-tile-footer figcaption h3 {
 }
 .badge span
 {
-    color: #fff;
-    margin-top: -12px;
+    color: #000;
+    margin-top: -13px;
     position: absolute;
     margin-left: -4px;
 }
-
+.nav-barra-grafica
+{
+  width:100%; 
+  height:48px; 
+  display:block; 
+  background-color:#CCC;
+}
 .color-picker-wrapper input
 {
   width: 100%;

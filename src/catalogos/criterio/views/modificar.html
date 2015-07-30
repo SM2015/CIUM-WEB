@@ -57,7 +57,7 @@
                         	<span ng-click="treeClick('indicador'+criterio.id+''+i.id);" class="principal" id="indicador{{ criterio.id }}{{i.id }}" >
                         		<md-icon md-svg-src="add"></md-icon> 
                         
-                        		<strong>Indicador: </strong> {{ i.codigo }} | {{ i.nombre }}
+                        		<strong>{{ 'INDICADOR' | translate }}: </strong> {{ i.codigo }} | {{ i.nombre }}
                         	</span>
                         	<ul>			   
                         		<li ng-repeat="c in options['cones']" class="parent_li" title="Abrir" style="display: none;">
