@@ -20,7 +20,7 @@ $scope.signin = function () {
   
     Auth.signin(formData, successAuth, function(){
       $scope.cargando = false;
-      $localStorage.cium.refresh_token=email;
+      $localStorage.cium.user_email=email;
     });
 };
 
@@ -33,7 +33,7 @@ $scope.logout = function () {
 
 $scope.access_token = $localStorage.cium.access_token;
 $scope.refresh_token = $localStorage.cium.refresh_token;
-$scope.user_email = $localStorage.cium.refresh_token;
+$scope.user_email = $localStorage.cium.user_email;
 
 $scope.urlOlvidePassword= URLS.OAUTH_SERVER + "/#/recuperar-password";
 $scope.urlOAuthInfo= URLS.OAUTH_SERVER + "/#/que-es";
