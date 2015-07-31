@@ -52,19 +52,34 @@
         uri="/"+uri[1]+"/nuevo";
         $location.path(uri).search({id: null});
     }
-
-    //export
-    $scope.excel = function()
+    //export PDF
+    $scope.exportar = function()
     {
+        $scope.generarExport("pdf");              
+    }
+
+    //export EXCEL
+    $scope.excel = function()
+    {        
+         $scope.generarExport("xlsx");     
+    }
+    $scope.generarExport =  function(tipo)
+    {
+        $scope.btexcel=true;
+        $scope.btexportar=true;
+
         var url = $scope.ruta;
-        var json={tabla:url,tipo:'xlsx'};
+        var json={tabla:url,tipo:tipo};
         CrudDataApi.crear('Export', json, function (data) {
-            $window.open(URLS.BASE_API+"ExportOpen")
+            $scope.btexcel=false;
+            $scope.btexportar=false;
+            $window.open(URLS.BASE+"export."+tipo)
           },function (e) {
             errorFlash.error(e);
             $scope.cargando = false;
+            $scope.btexcel=false;
+            $scope.btexportar=false;
           }); 
-              
     }
     //Lista
       $scope.index = function(ruta) 

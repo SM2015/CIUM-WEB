@@ -24,7 +24,7 @@
 		</div>
 	</md-toolbar>
 	<md-content>
-	
+<div class="imprimir">  
 <md-content  layout="column"  layour-align="center center"  >
 		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
         		
@@ -62,13 +62,13 @@
                                 
                                 <div  style="font-size:.7em; margin:20px;">
                                     <span flex="33.33">
-                                    	<strong>JS:</strong> {{ dato.jurisdiccion }}
+                                    	<strong>{{ 'JURISDICCION' | translate }}:</strong> {{ dato.jurisdiccion }}
                                     </span>
                                     <span flex="33.33">
-                                    	<strong>Municipio:</strong> {{ dato.municipio }}
+                                    	<strong>{{ 'MUNICIPIO' | translate }}:</strong> {{ dato.municipio }}
                                     </span>
                                     <span flex="33.33">
-                                		<strong>Localidad:</strong> {{ dato.localidad }}
+                                		<strong>{{ 'LOCALIDAD' | translate }}:</strong> {{ dato.localidad }}
                                     </span>
                                 </div>                               
                                 <md-divider ></md-divider>
@@ -97,7 +97,7 @@
 		</md-list>
 	</md-content>
     
-    
+    <div style="margin-top:40px"></div>
     <md-content  layout="column"  layour-align="center center"  ng-init="cargarCriteriosVer()">
 		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
         	<md-toolbar class="md-theme-light">
@@ -211,3 +211,4 @@
             </md-content>
         </md-list>
 	</md-content>          
+  </div>

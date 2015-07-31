@@ -193,6 +193,7 @@
 		.otherwise({ redirectTo: '/dashboard' });
 		
 		$httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
+			if(angular.isUndefined($localStorage.cium))
 			$localStorage.cium = {};
 		   return {
 		 'request': function (config) {
