@@ -199,7 +199,10 @@
 		 'request': function (config) {
 		     config.headers = config.headers || {};
 		     if ($localStorage.cium.access_token) {					   
-		   config.headers.Authorization = 'Bearer ' + $localStorage.cium.access_token;
+		   		config.headers = {
+		   				Authorization: 'Bearer ' + $localStorage.cium.access_token,
+		   				"X-Usuario": $localStorage.cium.user_email
+		   			};
 		     }
 		     return config;
 		 },
