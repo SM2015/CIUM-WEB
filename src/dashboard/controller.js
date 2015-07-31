@@ -815,7 +815,7 @@
 		$scope.verCalidad="";
 		$scope.dato = {};
 		$scope.datos = [];
-		$scope.dimension = [];
+		$scope.dimension = {};
 	
 		$scope.tipo="Abasto";
 		
