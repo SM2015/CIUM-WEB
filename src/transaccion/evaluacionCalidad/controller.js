@@ -688,7 +688,7 @@
 		//cerrar
 		$scope.cerrar = function(id) 
 		{
-			var json={'idClues':$scope.dato.clues, 'cerrado':1};
+			var json={'clues':$scope.dato.clues, 'cerrado':1};
 			
 			$scope.calidad = $http.put(URLS.BASE_API+'EvaluacionCalidad/' + id, json)
 			.success(function(data, status, headers, config) 

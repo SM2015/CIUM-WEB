@@ -7,7 +7,7 @@
 
 		usuario.preparar = function() 
 		{ 
-			var t = this;			
+			/*var t = this;			
 			$http.get(URLS.OAUTH_SERVER+'/v1/perfil')
 			.success(function(data, status, headers, config) 
 			{	
@@ -17,7 +17,7 @@
 			.error(function(data, status, headers, config) 
 			{
 				
-			});		  
+			});		*/  
 		}
 		
 		return usuario;
