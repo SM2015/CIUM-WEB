@@ -23,7 +23,7 @@
 		.when('/cone/modificar', {templateUrl: 'src/catalogos/cone/views/modificar.html',	controller: 'CrudCtrl'})
 		.when('/cone/ver', {templateUrl: 'src/catalogos/cone/views/ver.html',	controller: 'CrudCtrl'})
 
-		.when('/zona', { templateUrl: 'src/catalogos/zona/views/lista.html',	controller: 'UsuarioCtrl'})
+		.when('/zona', { templateUrl: 'src/catalogos/zona/views/lista.html',	controller: 'CrudCtrl'})
 		.when('/zona/nuevo', {templateUrl: 'src/catalogos/zona/views/nuevo.html',	controller: 'UsuarioCtrl'})
 		.when('/zona/modificar', {templateUrl: 'src/catalogos/zona/views/modificar.html',	controller: 'UsuarioCtrl'})
 		.when('/zona/ver', {templateUrl: 'src/catalogos/zona/views/ver.html',	controller: 'UsuarioCtrl'})

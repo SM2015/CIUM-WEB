@@ -12,12 +12,7 @@
 			</h2>
 			<span flex></span>	
             
-            <md-button hide-md hide-sm  aria-label="{{ 'AGRERGAR' | translate }}" ng-click="guardar(forma)" ng-disabled="forma.$invalid">
-              <md-icon md-svg-icon="save"></md-icon>
-    			{{ 'AGREGAR' | translate }}
-            </md-button>
-            	
-			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+            <span ng-include="'src/app/views/menu-opciones.html'"></span>
 		</div>
 	</md-toolbar>
 	<md-content>
@@ -101,3 +96,4 @@
 </md-content>
 </form>
 <span ng-init="cargando = false;"></span> 
+</md-content></div>

@@ -120,7 +120,7 @@
 		};
 		$scope.CluesChange = function(value) 
 		{ 			
-			CrudDataApi.ver('clues', value, function (data) {
+			CrudDataApi.ver('Clues', value, function (data) {
 			  if(data.status  == '407')
 				$window.location="acceso";
 	
@@ -256,7 +256,7 @@
 		$scope.acciones = function() 
 		{
 			$scope.acciones=[];
-			listaOpcion.options('accion').success(function(data)
+			listaOpcion.options('Accion').success(function(data)
 			{
 				if(data.status  == '407')
 					$window.location="acceso";
@@ -275,7 +275,7 @@
 		$scope.accionesPlazo = function() 
 		{
 			$scope.plazos=[];
-			listaOpcion.options('plazoAccion').success(function(data)
+			listaOpcion.options('PlazoAccion').success(function(data)
 			{
 				if(data.status  == '407')
 					$window.location="acceso";
@@ -593,7 +593,7 @@
           $scope.init();     
       };
 
-	    $scope.init = function(buscar) 
+	    $scope.init = function(buscar,columna) 
 		{
 			var url=$scope.ruta;
 			
@@ -601,7 +601,7 @@
 			var limite=$scope.paginacion.lim;
 		
 			if(!angular.isUndefined(buscar))
-				limite=limite+"&columna="+$scope.columna+"&valor="+$scope.buscar+"&buscar=true";
+				limite=limite+"&columna="+columna+"&valor="+buscar+"&buscar=true";
 
 
 	        CrudDataApi.lista(url+'?pagina=' + pagina + '&limite=' + limite, function (data) {
@@ -654,10 +654,10 @@
 	        $scope.init();
 	        
 	    };
-	    $scope.buscarL = function(buscar) 
-		{
-		  	$scope.init(buscar);
-		};	
+	    $scope.buscarL = function(buscar,columna) 
+	  {
+		  	$scope.init(buscar,columna);
+	  };	
 		//Ver
 		$scope.ver = function(ruta) 
 		{

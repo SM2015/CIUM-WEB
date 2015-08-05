@@ -8,7 +8,7 @@
 		usuario.preparar = function() 
 		{ 
 			var t = this;			
-			$http.get(URLS.BASE_API+'UsuarioInfo')
+			$http.get(URLS.OAUTH_SERVER+'/v1/perfil')
 			.success(function(data, status, headers, config) 
 			{	
 				t.usuario = data.data;	
@@ -16,7 +16,7 @@
 			})
 			.error(function(data, status, headers, config) 
 			{
-				errorFlash.error(data);
+				
 			});		  
 		}
 		

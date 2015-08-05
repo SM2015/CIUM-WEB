@@ -98,6 +98,11 @@
 		$scope.verAbasto="";
 		$scope.dato = {};
 		$scope.dimension = [];
+
+		$scope.hide = function() {
+			$mdDialog.hide();
+		};
+
 		$scope.chartClick  = function (event) 
 		{ 
 	  var points = $scope.chart.getBarsAtEvent( event ) ;	

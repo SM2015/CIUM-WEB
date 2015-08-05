@@ -13,14 +13,8 @@
 			  <span>Clues <md-icon md-svg-icon="chevron-right"></md-icon>  {{ 'VER' | translate }}</span>
 			</h2>
 			<span flex></span>	
-            
-            <md-button hide-md hide-sm  aria-label="{{ 'PDF' | translate }}" imprimir-div=".imprimir">
-              <md-icon md-svg-icon="print"></md-icon>
-    			{{ 'PDF' | translate }}
-            </md-button>
-            
             	
-			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+			<span ng-include="'src/app/views/menu-opciones.html'" ng-init="verEliminar=true"></span>
 		</div>
 		
 	</md-toolbar>
@@ -81,3 +75,4 @@
     </md-list>
   </md-content>
   </div>
+  </md-content></div>

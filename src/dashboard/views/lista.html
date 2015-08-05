@@ -1,5 +1,5 @@
 <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
-<div layout="column" class="relative" layout-fill role="main">
+<div layout="column" class="relative" layout-fill role="main" style="overflow:hidden">
 	
 	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
 	<md-toolbar  >
@@ -14,14 +14,13 @@
 			<span ng-include="'src/app/views/menu-opciones.html'"></span>
 		</div>
 	</md-toolbar>
-	<md-content>
 	
-<md-content  layout="column"  layour-align="center center"  >
-	<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
+<md-content flex>
+	<md-list layout="row" layout-wrap class="md-whiteframe-z1">
     
-        <div layout="row" layout-sm="column" layout-align="space-around">
+        
         	<!-- inicio grafico -->
-            <md-content  layout="column"  layour-align="center center" flex="33.33" style="margin: 5px;" fullscreen="isFullscreen" ng-controller="abastoController" id="abastoDialog">
+            <md-content  layout="column"  layour-align="center center" flex-md="50" flex-sm="100" flex-lg="50" flex="{{isFullscreen ? 100 : 33}}" fullscreen="isFullscreen" ng-controller="abastoController" id="abastoDialog">
                 <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="min-height:508px">
                 
                     <md-toolbar class="md-theme-light">
@@ -42,20 +41,19 @@
                                             <md-icon md-menu-origin md-svg-icon="insert-chart"></md-icon>
                                           </md-button>
                                           <md-menu-content width="7">                                            
-                                          	<md-menu-item cg-busy="{promise:abastoOpcion,templateUrl:templateUrl, message:message, backdrop:backdrop, delay:delay, minDuration:minDuration}" >
-                                               <div style="margin-top:2px;" 
-                                                ng-include="'src/dashboard/views/dialog.html'">
-                                               </div>
+                                          	<md-menu-item >
+                                               <div ng-include="'src/dashboard/views/dialog.html'"></div>
                                             </md-menu-item>
                                           </md-menu-content>
                                         </md-menu>
+
                                         
                                         <md-button class="md-icon-button" aria-label="Recargar" ng-click="recargar()">
                                             <md-icon md-svg-src="replay"></md-icon>
                                         </md-button>
                                         
                                         <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-abasto')" id="max-abasto">
-                                            <md-icon md-svg-src="zoom-in"></md-icon>
+                                            <md-icon md-svg-src="{{!isFullscreen ? 'zoom-in' : 'zoom-out'}}"></md-icon>
                                         </md-button>
                                         
                                         <md-button class="md-icon-button" aria-label="Regresar" id="regresar-abasto" ng-click="regresar()" ng-if="contador>0">
@@ -77,7 +75,7 @@
             <!-- fin grafico -->
             
             <!-- inicio grafico -->
-            <md-content  layout="column"  layour-align="center center" flex="33.33" style="margin: 5px;" fullscreen="isFullscreen" ng-controller="calidadController">
+            <md-content  layout="column"  layour-align="center center" flex-md="50" flex-sm="100" flex-lg="50" flex="{{isFullscreen ? 100 : 33}}" fullscreen="isFullscreen" ng-controller="calidadController">
                 <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="min-height: 508px;">
                 
                     <md-toolbar class="md-theme-light">
@@ -110,7 +108,7 @@
                                         </md-button>
                                         
                                         <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-calidad')" id="max-calidad">
-                                            <md-icon md-svg-src="zoom-in"></md-icon>
+                                            <md-icon md-svg-src="{{!isFullscreen ? 'zoom-in' : 'zoom-out'}}"></md-icon>
                                         </md-button>
                                         
                                         <md-button class="md-icon-button" aria-label="Regresar" id="regresar-calidad" ng-click="regresar()" ng-if="contador>1">
@@ -121,7 +119,7 @@
                                 
                                 <ol class="breadcrumb" style="margin-top: 0px;" ><li>Calidad </li><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
 								
-					<canvas tc-chartjs-line chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart"></canvas>
+					<canvas tc-chartjs-line chart-options="options" style="height:100%" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart"></canvas>
                                 
 						
                             </md-content>
@@ -132,7 +130,7 @@
             <!-- fin grafico -->
             
             <!-- inicio grafico -->
-            <md-content  layout="column"  layour-align="center center" flex="33.33" style="margin: 5px;" fullscreen="isFullscreen" ng-controller="pieController">
+            <md-content  layout="column"  layour-align="center center" flex-md="50" flex-sm="100" flex-lg="50" flex="{{isFullscreen ? 100 : 33}}" fullscreen="isFullscreen" ng-controller="pieController">
                 <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="min-height:508px">
                 
                     <md-toolbar class="md-theme-light">
@@ -164,7 +162,7 @@
                                         </md-button>
                                         
                                         <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-equipo')" id="max-equipo">
-                                            <md-icon md-svg-src="zoom-in"></md-icon>
+                                            <md-icon md-svg-src="{{!isFullscreen ? 'zoom-in' : 'zoom-out'}}"></md-icon>
                                         </md-button>
                                         
                                         <md-button class="md-icon-button" aria-label="Regresar" id="regresar-equipo" ng-click="regresar()" ng-if="contador>1">
@@ -183,13 +181,10 @@
                  </md-list>
             </md-content>
             <!-- fin grafico -->
-         </div>
-         
-            
-         <div layout="row" layout-sm="column" layout-align="space-around">
+        
          	
             <!-- inicio grafico -->
-            <md-content  layout="column"  layour-align="center center" flex="33.33" style="margin: 5px;" fullscreen="isFullscreen" ng-controller="alertaController">
+            <md-content  layout="column"  layour-align="center center" flex-md="50" flex-sm="100" flex-lg="50" flex="{{isFullscreen ? 100 : 33}}" fullscreen="isFullscreen" ng-controller="alertaController">
                 <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="min-height:508px; {{ isFullscreen ? '' : 'max-height:760px' }} ; overflow:auto;">
                 
                     <md-toolbar class="md-theme-light">
@@ -221,7 +216,7 @@
                                         </md-button>
                                         
                                         <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-alerta')" id="max-alerta">
-                                            <md-icon md-svg-src="zoom-in"></md-icon>
+                                            <md-icon md-svg-src="{{!isFullscreen ? 'zoom-in' : 'zoom-out'}}"></md-icon>
                                         </md-button>
                                         
                                         <md-button class="md-icon-button" aria-label="Regresar" id="regresar-alerta" ng-click="regresar()" ng-if="contador>1">
@@ -236,7 +231,7 @@
                   table-card="{visible: false, title: ''}"
                   selectable-rows="false"
                   alternate-headers="'contextual'"
-                  sortable-columns="true"
+                  sortable-columns="false"
                   delete-row-callback="deleteRowCallback(rows)">
                 
                     <md-data-table-header-row>
@@ -266,7 +261,7 @@
             
             
             <!-- inicio grafico -->
-            <md-content  layout="column"  layour-align="center center" flex="33.33" style="margin: 5px;" fullscreen="isFullscreen" ng-controller="globalController">
+            <md-content  layout="column"  layour-align="center center" flex-md="50" flex-sm="100" flex-lg="50" flex="{{isFullscreen ? 100 : 33}}" fullscreen="isFullscreen" ng-controller="globalController">
                 <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="min-height:508px; {{ isFullscreen ? '' : 'max-height:760px' }} ; overflow:auto;">
                 
                     <md-toolbar class="md-theme-light">
@@ -299,7 +294,7 @@
                                         </md-button>
                                         
                                         <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-global')" id="max-global">
-                                            <md-icon md-svg-src="zoom-in"></md-icon>
+                                            <md-icon md-svg-src="{{!isFullscreen ? 'zoom-in' : 'zoom-out'}}"></md-icon>
                                         </md-button>
                                         
                                         <md-button class="md-icon-button" aria-label="Regresar" id="regresar-global" ng-click="regresar()" ng-if="contador>1">
@@ -314,7 +309,7 @@
                   table-card="{visible: false, title: ''}"
                   selectable-rows="false"
                   alternate-headers="'contextual'"
-                  sortable-columns="true"
+                  sortable-columns="false"
                   delete-row-callback="deleteRowCallback(rows)">
                 
                     <md-data-table-header-row>
@@ -336,7 +331,7 @@
             <!-- fin grafico -->
             
             <!-- inicio grafico -->
-            <md-content  layout="column"  layour-align="center center" flex="33.33" style="margin: 5px;" fullscreen="isFullscreen" ng-controller="gaugeController">
+            <md-content  layout="column"  layour-align="center center" flex-md="50" flex-sm="100" flex-lg="50" flex="{{isFullscreen ? 100 : 33}}" fullscreen="isFullscreen" ng-controller="gaugeController">
                 <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="min-height:508px">
                 
                     <md-toolbar class="md-theme-light">
@@ -368,7 +363,7 @@
                                         </md-button>
                                         
                                         <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-gauge')" id="max-gauge">
-                                            <md-icon md-svg-src="zoom-in"></md-icon>
+                                            <md-icon md-svg-src="{{!isFullscreen ? 'zoom-in' : 'zoom-out'}}"></md-icon>
                                         </md-button>
                                         
                                         <md-button class="md-icon-button" aria-label="Regresar" id="regresar-gauge" ng-click="regresar()" ng-if="contador>1">
@@ -383,7 +378,7 @@
                   table-card="{visible: false, title: ''}"
                   selectable-rows="false"
                   alternate-headers="'contextual'"
-                  sortable-columns="true"
+                  sortable-columns="false"
                   delete-row-callback="deleteRowCallback(rows)">
                 
                     <md-data-table-header-row>
@@ -415,7 +410,8 @@
             </md-content>
             <!-- fin grafico -->
             
-         </div>
+         
       
   </md-list>
 </md-content>
+</div>

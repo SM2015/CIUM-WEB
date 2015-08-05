@@ -123,7 +123,7 @@
           $scope.init();     
       };
 
-	    $scope.init = function(buscar) 
+	    $scope.init = function(buscar,columna) 
 		{
 			var url=$scope.ruta;
 			
@@ -131,7 +131,7 @@
 			var limite=$scope.paginacion.lim;
 		
 			if(!angular.isUndefined(buscar))
-				limite=limite+"&columna="+$scope.columna+"&valor="+$scope.buscar+"&buscar=true";
+				limite=limite+"&columna="+columna+"&valor="+buscar+"&buscar=true";
 
 
 	        CrudDataApi.lista(url+'?pagina=' + pagina + '&limite=' + limite, function (data) {
@@ -184,9 +184,9 @@
 	        $scope.init();
 	        
 	    };
-	    $scope.buscarL = function(buscar) 
-		{
-		  	$scope.init(buscar);
-		};	
+	    $scope.buscarL = function(buscar,columna) 
+	  {
+		  	$scope.init(buscar,columna);
+	  };	
 	}])
 })();

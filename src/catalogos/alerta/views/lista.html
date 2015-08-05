@@ -20,79 +20,33 @@
 	
 <div layout="row" >  
   <div layout-padding flex>
-			<div layout="column" layout-fill style="padding-bottom: 2px;">
-			  <md-whiteframe class="md-whiteframe-z1" layout layout-align="center center">
-				<span style="width:60%">
-				<md-content layout-padding class="autoScroll" style="width:100%">
-					<md-input-container class="md-icon-float" >
-						  
-					  <label>{{ 'BUSCAR' | translate }}</label>
-					  <md-icon md-svg-src="search" class="name"></md-icon>
-					  <input ng-model="buscar" type="text">
-					  
-					</md-input-container>
-					
-					
-				</md-content>
-				</span>
-				<span style="width: 10%; margin-top: -16px; margin-left: 10px;">
-				 <md-select ng-model="columna" aria-label="Por" ng-init="columna='nombre'">
-			        <md-option ng-repeat="item in BuscarPor" value="{{item.id}}">{{item.nombre}}</md-option>
-			      </md-select>
-				</span>
-				<span style="width:10%; margin-top: -10px; margin-left: -20px;">
-  <md-button class="md-raised" ng-click="buscarL(buscar)">
-<md-icon md-svg-src="search"></md-icon>
-<md-tooltip>
-    {{ 'BUSCAR' | translate }}
-</md-tooltip>
-  </md-button>
-
-
-
-				</span>
-    
-				<span style="width:20%">			
-  <md-button ng-disabled="btexportar" class="md-raised md-primary" ng-click="exportar()" style="float:right">
-<md-icon md-svg-src="picture-as-pdf"></md-icon>
-<md-tooltip>
-    {{ 'PDF' | translate }}
-</md-tooltip>
-  </md-button>
-
-  <md-button ng-disabled="btexcel" class="md-raised md-primary" ng-click="excel()" style="float:right">
-  	<md-icon md-svg-src="explicit"></md-icon>
-<md-tooltip>
-    {{ 'EXCEL' | translate }}
-</md-tooltip>
-  </md-button>										
-				</span>
-
-			  </md-whiteframe>
+			<div layout="column" layout-fill style="padding-bottom: 2px;" ng-include="'src/app/views/busqueda-list.html'">
+	 
+			</div>
 	<md-data-table
   table-card="{visible: tableCardIsEnabled, title: 'Lista Clues'}"
   selectable-rows="tableIsSelectable"
   alternate-headers="'contextual'"
-  sortable-columns="true"
+  sortable-columns="false"
   delete-row-callback="deleteRowCallback(rows)">
 
     <md-data-table-header-row>
-		 <md-data-table-column align-rule="left">ID</md-data-table-column>
+		 <md-data-table-column align-rule="left" hide-sm>ID</md-data-table-column>
 			<md-data-table-column align-rule="left">{{ 'NOMBRE' | translate }}</md-data-table-column>
-			<md-data-table-column align-rule="left">{{ 'COLOR' | translate }}<</md-data-table-column>
+			<md-data-table-column align-rule="left" hide-sm>{{ 'COLOR' | translate }}</md-data-table-column>
 			<md-data-table-column align-rule="left"></md-data-table-column>
-			<md-data-table-column align-rule="left">{{ 'CREADO' | translate }}</md-data-table-column>
-			<md-data-table-column align-rule="left">{{ 'MODIFICADO' | translate }}</md-data-table-column>
+			<md-data-table-column align-rule="left" hide-sm hide-md>{{ 'CREADO' | translate }}</md-data-table-column>
+			<md-data-table-column align-rule="left" hide-sm hide-md hide-lg>{{ 'MODIFICADO' | translate }}</md-data-table-column>
 			<md-data-table-column align-rule="left"></md-data-table-column>
 		  </md-data-table-header-row>
 	
     <md-data-table-row table-row-id="dato.id" ng-repeat="dato in datos">
-				 <md-data-table-cell html-content="htmlContent">{{ dato.id  }}</md-data-table-cell>
+				 <md-data-table-cell html-content="htmlContent" hide-sm>{{ dato.id  }}</md-data-table-cell>
 				 <md-data-table-cell html-content="htmlContent">{{ dato.nombre | uppercase }}</md-data-table-cell>
-				 <md-data-table-cell html-content="htmlContent">{{ dato.color }} </md-data-table-cell>
-				 <md-data-table-cell html-content="htmlContent"><span class="img-circle" style="background: {{ dato.color }}; display:block; height:25px; width:25px;"></md-data-table-cell>
-				 <md-data-table-cell html-content="htmlContent">{{ dato.creadoAl }}</md-data-table-cell>
-				 <md-data-table-cell html-content="htmlContent">{{ dato.modificadoAl }}</md-data-table-cell>
+				 <md-data-table-cell html-content="htmlContent" hide-sm>{{ dato.color }} </md-data-table-cell>
+				 <md-data-table-cell html-content="htmlContent"><span class="img-circle" style="background: {{ dato.color }}; display:block; height:25px; width:25px;"></span></md-data-table-cell>
+				 <md-data-table-cell html-content="htmlContent" hide-sm hide-md>{{ dato.creadoAl }}</md-data-table-cell>
+				 <md-data-table-cell html-content="htmlContent" hide-sm hide-md hide-lg>{{ dato.modificadoAl }}</md-data-table-cell>
 				 <md-data-table-cell html-content="htmlContent">
 					
 					<section layout="row" layout-sm="column" layout-align="center center">
@@ -125,44 +79,9 @@
 			 </md-data-table-row>
 </md-data-table>
 	 
-	 <div layout="column" layout-fill >
-			  <md-whiteframe class="md-whiteframe-z1" layout layout-align="center center">
-				<span>
-					<p>
-					  <small><strong>{{ paginacion.pag }}</strong> - <strong>{{ (paginacion.pag+paginacion.lim)-1 }}</strong> de <strong>{{ paginacion.paginas }}</strong> resultados.</small>
-					</p>
-				</span>
-				<span>
-  <md-button class="md-raised md-primary" ng-click="primero()">
-<md-icon md-svg-src="arrow-back"></md-icon>
-<md-tooltip>
-    {{ 'PRIMERA' | translate }}
-</md-tooltip>
-  </md-button>
-  
-  <md-button class="md-raised" ng-click="anterior()">
-<md-icon md-svg-src="chevron-left"></md-icon>
-<md-tooltip>
-    {{ 'REGRESAR' | translate }}
-</md-tooltip>
-  </md-button>
-  
-  <md-button class="md-raised" ng-click="siguiente()">
-<md-icon md-svg-src="chevron-right"></md-icon>
-<md-tooltip>
-    {{ 'SIGUIENTE' | translate }}
-</md-tooltip>
-  </md-button>
-  
-  <md-button class="md-raised md-primary" ng-click="ultimo()">
-<md-icon md-svg-src="arrow-forward"></md-icon>
-<md-tooltip>
-    {{ 'ULTIMA' | translate }}
-</md-tooltip>
-  </md-button>					
-				</span>
-			  </md-whiteframe>
-			</div>
+	<div layout="column" layout-fill ng-include="'src/app/views/paginado-list.html'">
+                      
         </div>
     </div>
 </div>
+</md-content></div>

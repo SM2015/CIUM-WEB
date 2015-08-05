@@ -12,12 +12,7 @@
 			</h2>
 			<span flex></span>	
             
-            <md-button hide-md hide-sm  aria-label="{{ 'AGRERGAR' | translate }}" ng-click="guardar(forma)" ng-disabled="forma.$invalid">
-              <md-icon md-svg-icon="save"></md-icon>
-    			{{ 'AGREGAR' | translate }}
-            </md-button>
-            	
-			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+            <span ng-include="'src/app/views/menu-opciones.html'"></span>
 		</div>
 	</md-toolbar>
 	<md-content>
@@ -77,13 +72,13 @@
                                       </span>
                                       <span class="item-metadata" style="font-size:.8em">
                                         <span class="item-metastat" >
-                                          <strong>JS: </strong> {{item.jurisdiccion}}
+                                          <strong>{{ 'JURISDICCION' | translate }}: </strong> {{item.jurisdiccion}}
                                         </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <span class="item-metastat">
-                                          <strong>M: </strong>{{item.municipio}} 
+                                          <strong>{{ 'MUNICIPIO' | translate }}: </strong>{{item.municipio}} 
                                         </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <span class="item-metastat">
-                                          <strong>L: </strong> {{item.localidad}}
+                                          <strong>{{ 'LOCALIDAD' | translate }}: </strong> {{item.localidad}}
                                         </span>
                                       </span>
                                       <span class="item-metadata" style="font-size:.6em">
@@ -117,7 +112,7 @@
                         </div>
                     </md-input-container>
                  </md-list-item>
-                 
+              </md-content> 
                  <md-content layout="column"  layour-align="center center" >
 					<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
                     	<md-input-container flex >
@@ -131,13 +126,13 @@
                                 
                                 <div  style="font-size:.7em; margin:20px;">
                                     <span flex="33.33">
-                                    	<strong>JS:</strong> {{ dato.jurisdiccion }}
+                                    	<strong>{{ 'JURISDICCION' | translate }}:</strong> {{ dato.jurisdiccion }}
                                     </span>
                                     <span flex="33.33">
-                                    	<strong>Municipio:</strong> {{ dato.municipio }}
+                                    	<strong>{{ 'MUNICIPIO' | translate }}:</strong> {{ dato.municipio }}
                                     </span>
                                     <span flex="33.33">
-                                		<strong>Localidad:</strong> {{ dato.localidad }}
+                                		<strong>{{ 'LOCALIDAD' | translate }}:</strong> {{ dato.localidad }}
                                     </span>
                                 </div>                               
                                 <md-divider ></md-divider>
@@ -168,3 +163,4 @@
     
 </form>
 <span ng-init="cargando = false;"></span> 
+</md-content></div>

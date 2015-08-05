@@ -14,17 +14,7 @@
 			</h2>
 			<span flex></span>
             
-            <md-button hide-md hide-sm  aria-label="{{ 'PDF' | translate }}" imprimir-div=".imprimir">
-              <md-icon md-svg-icon="print"></md-icon>
-    			{{ 'PDF' | translate }}
-            </md-button>
-            
-            <md-button hide-md hide-sm  aria-label="{{ 'ELIMINAR' | translate }}" ng-click="borrar()">
-                <md-icon md-svg-icon="delete"></md-icon>
-                {{ 'ELIMINAR' | translate }}
-            </md-button>
-            		
-			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+            <span ng-include="'src/app/views/menu-opciones.html'"></span>
 		</div>
 	</md-toolbar>
 	<md-content>
@@ -199,7 +189,7 @@
                                   table-card="{visible: tableCardIsEnabled, title: 'Lista Clues'}"
                                   selectable-rows="tableIsSelectable"
                                   alternate-headers="'contextual'"
-                                  sortable-columns="true"
+                                  sortable-columns="false"
                                   delete-row-callback="deleteRowCallback(rows)">
                                 
                                     <md-data-table-header-row>
@@ -226,3 +216,4 @@
 			
 		</md-list>
 	</md-content>
+  </md-content></div>

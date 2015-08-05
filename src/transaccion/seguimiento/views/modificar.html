@@ -1,8 +1,6 @@
 <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
-<div layout="column" class="relative" layout-fill role="main">
-	<md-button class="md-fab md-fab-bottom-right" ng-click="nuevo()" aria-label="{{ 'NUEVA' | translate }}" >
-		<md-icon md-svg-icon="add"></md-icon>
-  	</md-button>
+<div layout="column" class="relative" layout-fill role="main" flex>
+	
 	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
 	<md-toolbar  >
 		<div class="md-toolbar-tools" ng-init="ver('Seguimiento')">    
@@ -14,24 +12,30 @@
 			</h2>
 			<span flex></span>	
             
-            <md-button hide-md hide-sm   aria-label="{{ 'RESUELTO' | translate }}" ng-click="cerrar(dato.id)" >
+            <md-button hide-md hide-sm hide-lg   aria-label="{{ 'RESUELTO' | translate }}" ng-click="cerrar(dato.id)" >
               <md-icon md-svg-icon="check"></md-icon>
-    			{{ 'RESUELTO' | translate }}
+    			     {{ 'RESUELTO' | translate }}
             </md-button>
+
+            <md-button class="md-icon-button"  hide show-sm show-md show-lg  aria-label="{{ 'RESUELTO' | translate }}" ng-click="cerrar(dato.id)">
+              <md-icon md-svg-icon="check"></md-icon>
+              <md-tooltip>
+                    {{ 'RESUELTO' | translate }}
+                  </md-tooltip>
+            </md-button> 
             	
 			<span ng-include="'src/app/views/menu-opciones.html'"></span>
 		</div>
 	</md-toolbar>
 	<md-content>
-	
 
 <div style="margin-top:10px; margin-left:10px; position:absolute; z-index:999999">
       <md-icon md-svg-src="menu" ng-click="verTarjeta=!verTarjeta"></md-icon>
   </div>
 
-  <div layout="row" ng-init="verTarjeta=true">
+  <div  ng-init="verTarjeta=true"  layout="row" layout-wrap>
 
-    <div flex="35" flex-md="100" layout="column" ng-show="verTarjeta" >
+    <div flex="35" flex-md="100" flex-lg="100" flex-sm="100" layout="column" ng-show="verTarjeta" >
   	
     	<md-content  layout="column"  layour-align="center center"  >
 		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
@@ -59,7 +63,7 @@
                         </div>
                     </md-input-container>
                  </md-list-item>
-                 
+            </md-content>    
                  <md-content layout="column"  layour-align="center center" >
 					<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
                     	<md-input-container flex >
@@ -73,13 +77,13 @@
                                 
                                 <div  style="font-size:.7em; margin:20px;">
                                     <span flex="33.33">
-                                    	<strong>JS:</strong> {{ dato.evaluacion.jurisdiccion }}
+                                    	<strong>{{ 'JURISDICCION' | translate }}:</strong> {{ dato.evaluacion.jurisdiccion }}
                                     </span>
                                     <span flex="33.33">
-                                    	<strong>Municipio:</strong> {{ dato.evaluacion.municipio }}
+                                    	<strong>{{ 'MUNICIPIO' | translate }}:</strong> {{ dato.evaluacion.municipio }}
                                     </span>
                                     <span flex="33.33">
-                                		<strong>Localidad:</strong> {{ dato.evaluacion.localidad }}
+                                		<strong>{{ 'LOCALIDAD' | translate }}:</strong> {{ dato.evaluacion.localidad }}
                                     </span>
                                 </div>                               
                                 <md-divider ></md-divider>
@@ -110,7 +114,7 @@
     
     </div>
 
-    <div  flex-md="100" layout="column" style="width:100%">
+    <div flex="verTarjeta ? 65 : 100" flex-md="100" flex-lg="100" flex-sm="100" layout="column" style="width:100%">
       <md-content layout="column"  layour-align="center center"   >
   		  <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
           	
@@ -149,11 +153,11 @@
                           table-card="{visible: false, title: ''}"
                           selectable-rows="false"
                           alternate-headers="'contextual'"
-                          sortable-columns="true"
+                          sortable-columns="false"
                           delete-row-callback="deleteRowCallback(rows)">
                         
                             <md-data-table-header-row>
-                                <md-data-table-column align-rule="left">ID</md-data-table-column>
+                                <md-data-table-column align-rule="left" hide-sm>ID</md-data-table-column>
                                 <md-data-table-column align-rule="left">{{ 'USUARIO' | translate }}</md-data-table-column>
                                 <md-data-table-column align-rule="left">{{ 'DESCRIPCION' | translate }}</md-data-table-column>				
                                 <md-data-table-column align-rule="left">{{ 'CREADO' | translate }}</md-data-table-column>								
@@ -161,7 +165,7 @@
                             
                             <md-data-table-row table-row-id="value.codigo" ng-repeat='dato in dato.seguimiento  '>
                                     
-                                 <md-data-table-cell html-content="htmlContent">{{ dato.id  }}</md-data-table-cell>
+                                 <md-data-table-cell html-content="htmlContent" hide-sm>{{ dato.id  }}</md-data-table-cell>
                                  <md-data-table-cell html-content="htmlContent">{{ dato.usuario.nombres+' '+dato.usuario.apellidoPaterno+' '+dato.usuario.apellidoMaterno | uppercase }}</md-data-table-cell>
                                  <md-data-table-cell html-content="htmlContent">{{ dato.descripcion }}</md-data-table-cell>
                                  <md-data-table-cell html-content="htmlContent">{{ dato.creadoAl }}</md-data-table-cell>
@@ -169,15 +173,12 @@
                      
                          </md-data-table-row>
                         </md-data-table>
+                        </md-content>
                     </md-list>
             </md-content>
           </div>
+          </md-list>
       </md-content>
     </div>
  </div>
-
-
- 
-			
-			
-					
+ </md-content></div>

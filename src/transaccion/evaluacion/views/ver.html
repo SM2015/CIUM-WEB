@@ -14,10 +14,6 @@
 			</h2>
 			<span flex></span>	
             
-            <md-button hide-md hide-sm  aria-label="{{ 'PDF' | translate }}" imprimir-div=".imprimir">
-              <md-icon md-svg-icon="print"></md-icon>
-    			{{ 'PDF' | translate }}
-            </md-button>
             	
 			<span ng-include="'src/app/views/menu-opciones.html'"></span>
 		</div>
@@ -47,7 +43,7 @@
                         </div>
                     </md-input-container>
                  </md-list-item>
-                 
+            </md-content> 
                  <md-content layout="column"  layour-align="center center" >
 					<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
                     	<md-input-container flex >
@@ -109,7 +105,7 @@
                   table-card="{visible: false, title: ''}"
                   selectable-rows="false"
                   alternate-headers="'contextual'"
-                  sortable-columns="true"
+                  sortable-columns="false"
                   delete-row-callback="deleteRowCallback(rows)">
                 
                     <md-data-table-header-row>
@@ -162,7 +158,7 @@
                   table-card="{visible: false, title: ''}"
                   selectable-rows="false"
                   alternate-headers="'contextual'"
-                  sortable-columns="true"
+                  sortable-columns="false"
                   delete-row-callback="deleteRowCallback(rows)" ng-init="tieneHallazgo = (hallazgos[value[0].idlugarVerificacion]) ? true : false">
                   
                   	<md-data-table-header-row>

@@ -69,7 +69,7 @@
 	"INDICADOR": "Indicator",
 	"CRITERIO": "Criterion",
 	"LUGAR_VERIFICACION": "Place of verification",
-	"PLAZO_ACCION": "action period",
+	"PLAZO_ACCION": "Action period",
 
 	"SISTEMA": "System",
 	"GRUPO": "Group",
@@ -167,6 +167,7 @@
 	"NA": "N/A",
 	"VISTA":"View",
 	"ACTIVO":"Active",
+	"VISTO":"Viewed",
 	
 	"NUEVO": "New",
 	"NUEVA": "New",

@@ -1,5 +1,5 @@
 <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
-<div layout="column" class="relative" layout-fill role="main">
+<div layout="column" class="relative" layout-fill role="main" flex>
 	
 	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
 	<md-toolbar  ng-init="ver('EvaluacionCalidad')"><span ng-if="dato.cerrado" ng-init="redirect(dato.id)"></span>
@@ -10,24 +10,68 @@
 			<h2>
 			  <span>{{ 'EVALUACION' | translate }} {{ 'CALIDAD' | translate }} <md-icon md-svg-icon="chevron-right"></md-icon>  {{ 'EDITAR' | translate }}</span>
 			</h2>
-			<span flex></span>				 
-            
-            <md-button hide-md hide-sm ng-show="terminado"  aria-label="{{ 'CAMBIAR_UM' | translate }}" ng-click="cerrar(dato.id)" >
-              <md-icon md-svg-icon="check"></md-icon>
-    			{{ 'CERRAR_EV' | translate }}
-            </md-button>
-            
-            <md-button hide-md hide-sm ng-show="!update"  aria-label="{{ 'CAMBIAR_UM' | translate }}" ng-click="update=true" >
-              <md-icon md-svg-icon="save"></md-icon>
-    			{{ 'CAMBIAR_UM' | translate }}
-            </md-button>
-            
-            <md-button hide-md hide-sm ng-show="update"  aria-label="{{ 'GUARDAR' | translate }}" ng-click="modificar(id)" ng-disabled="forma.$invalid">
-              <md-icon md-svg-icon="save"></md-icon>
-    			{{ 'GUARDAR' | translate }}
-            </md-button>
+			<span flex ></span>		
             		
-			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+			<a url-modulo="--" id="lista">
+  <md-button hide-md hide-sm hide-lg  aria-label="{{ 'REGRESAR' | translate }}" ng-if="url.split('/').length>2">
+    <md-icon md-svg-icon="arrow-back"></md-icon>
+    {{ 'REGRESAR' | translate }}
+  </md-button>
+
+  <md-button class="md-icon-button"  hide show-sm show-md show-lg  aria-label="{{ 'REGRESAR' | translate }}" ng-if="url.split('/').length>2">
+    <md-icon md-svg-icon="arrow-back"></md-icon>
+    <md-tooltip>
+      {{ 'REGRESAR' | translate }}
+    </md-tooltip>
+  </md-button> 
+
+</a>
+
+<md-button hide-md hide-sm hide-lg ng-show="terminado"  aria-label="{{ 'CERRAR_EV' | translate }}" ng-click="cerrar(dato.id)" >
+    <md-icon md-svg-icon="check"></md-icon>
+  {{ 'CERRAR_EV' | translate }}
+</md-button>
+<md-button class="md-icon-button"  ng-show="terminado" hide show-sm show-md show-lg show-sm ng-click="cerrar(dato.id)" ng-disabled="forma.$invalid" aria-label="{{ 'CERRAR_EV' | translate }}">
+  <md-icon md-svg-icon="save"></md-icon>
+  <md-tooltip>
+      {{ 'CERRAR_EV' | translate }}
+    </md-tooltip>
+</md-button>
+  
+<md-button hide-md hide-sm hide-lg ng-show="!update"  aria-label="{{ 'CAMBIAR_UM' | translate }}" ng-click="update=true" >
+    <md-icon md-svg-icon="autorenew"></md-icon>
+  {{ 'CAMBIAR_UM' | translate }}
+</md-button>
+<md-button class="md-icon-button"  ng-show="!update" hide show-sm show-md show-lg show-sm ng-click="update=true" aria-label="{{ 'CAMBIAR_UM' | translate }}" >
+  <md-icon md-svg-icon="autorenew"></md-icon>
+  <md-tooltip>
+      {{ 'CAMBIAR_UM' | translate }}
+    </md-tooltip>
+</md-button>
+  
+<md-button hide-md hide-sm hide-lg ng-show="update"  aria-label="{{ 'GUARDAR' | translate }}" ng-click="modificar(id)" ng-disabled="forma.$invalid">
+    <md-icon md-svg-icon="save"></md-icon>
+    {{ 'GUARDAR' | translate }}
+</md-button>
+<md-button class="md-icon-button"  ng-show="update" hide show-sm show-md show-lg show-sm ng-click="modificar(id)" ng-disabled="forma.$invalid" aria-label="{{ 'GUARDAR' | translate }}" >
+  <md-icon md-svg-icon="save"></md-icon>
+  <md-tooltip>
+      {{ 'GUARDAR' | translate }}
+    </md-tooltip>
+</md-button>
+
+
+<md-button hide-sm class="md-icon-button" aria-label="{{ 'CAMBIAR_IDIOMA' | translate }}" ng-click="mostrarIdiomas($event)">
+  <md-icon md-svg-icon="language"></md-icon>
+        <md-tooltip>
+          {{ 'CAMBIAR_IDIOMA' | translate }}
+        </md-tooltip>
+</md-button>
+      
+<md-button hide-sm ng-click="logout()"  aria-label="{{ 'CERRAR_SESION' | translate }}">
+  <md-icon md-svg-icon="exit-to-app"></md-icon>
+  {{ 'CERRAR_SESION' | translate }}
+</md-button>
 		</div>
 	</md-toolbar>
 	<md-content>
@@ -38,9 +82,9 @@
       <md-icon md-svg-src="menu" ng-click="verTarjeta=!verTarjeta"></md-icon>
   </div>
 
-  <div layout="row" ng-init="verTarjeta=true">
+  <div ng-init="verTarjeta=true"  layout="row" layout-wrap flex >
 
-    <div flex="35" flex-md="100" layout="column" ng-show="verTarjeta" >
+    <div flex="35" flex-md="100" flex-lg="100" flex-sm="100" layout="column" ng-show="verTarjeta" >
   	<form role="form" name="forma">
   		<input type="hidden" ng-model="dato.id" />
     	<md-content  layout="column"  layour-align="center center"  >
@@ -113,13 +157,13 @@
 
                         <span class="item-metadata" style="font-size:.8em">
                           <span class="item-metastat" >
-                            <strong>JS: </strong> {{item.jurisdiccion}}
+                            <strong>{{ 'JURISDICCION' | translate }}: </strong> {{item.jurisdiccion}}
                           </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           <span class="item-metastat">
-                            <strong>M: </strong>{{item.municipio}} 
+                            <strong>{{ 'MUNICIPIO' | translate }}: </strong>{{item.municipio}} 
                           </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           <span class="item-metastat">
-                            <strong>L: </strong> {{item.localidad}}
+                            <strong>{{ 'LOCALIDAD' | translate }}: </strong> {{item.localidad}}
                           </span>
                         </span>
 
@@ -170,13 +214,13 @@
                                   
                     <div  style="font-size:.7em; margin:20px;">
                       <span flex="33.33">
-                      	<strong>JS:</strong> {{ dato.jurisdiccion }}
+                      	<strong>{{ 'JURISDICCION' | translate }}:</strong> {{ dato.jurisdiccion }}
                       </span>
                       <span flex="33.33">
-                      	<strong>Municipio:</strong> {{ dato.municipio }}
+                      	<strong>{{ 'MUNICIPIO' | translate }}:</strong> {{ dato.municipio }}
                       </span>
                       <span flex="33.33">
-                  		<strong>Localidad:</strong> {{ dato.localidad }}
+                  		<strong>{{ 'LOCALIDAD' | translate }}:</strong> {{ dato.localidad }}
                       </span>
                     </div>                               
                     <md-divider ></md-divider>
@@ -207,15 +251,14 @@
         </form>  
     </div>
 
-    <div  flex-md="100" layout="column" style="width:100%">
-      <md-content layout="column"  layour-align="center center"  ng-init="opciones('indicador?categoria=CALIDAD')" >
-  		  <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
+    <div flex="verTarjeta ? 65 : 100" flex-md="100" flex-lg="100" flex-sm="100" layout="column" layout-wrap >
+      <md-content  ng-init="opciones('Indicador?categoria=CALIDAD')" flex>
+  		  <md-list layout-margin class="md-whiteframe-z1" layour-align="center center" flex>
           	
-          <div cg-busy="{promise:calidad,templateUrl:templateUrl,message:message,backdrop:backdrop,delay:delay,minDuration:minDuration}" style="margin-top:-10px">
-  				<md-list-item >
-            <div layout="row" layout-wrap style="width:100%; margin-left:10px">
-              <div flex="55"> 
-                <md-list-item>              
+          <div cg-busy="{promise:calidad,templateUrl:templateUrl,message:message,backdrop:backdrop,delay:delay,minDuration:minDuration}" style="margin-top:-10px" >
+  				<md-list-item layout-wrap flex>
+             
+                <md-list-item flex="55">              
                   <md-input-container flex >
                   	<span>
                       <md-select placeholder="{{ 'INDICADOR_SEL' | translate }}" ng-model="dato.idIndicador" ng-change="cargarCriterios()" >
@@ -226,10 +269,10 @@
                     </span>
                   </md-input-container>
                 </md-list-item>
-              </div>
+              
 
-              <div flex="45">
-                <md-list-item>
+             
+                <md-list-item  flex="45" >
                 	<input ng-model="dato.totalExpediente" type="hidden">
                     <md-button type="button" class="md-raised md-primary" ng-click="agregarColumna()">
                         <md-icon md-svg-icon="add"></md-icon> {{ 'AGREGAR_EXP' | translate }}
@@ -239,18 +282,16 @@
                         {{ 'TOTAL_EXP' | translate }}: <strong>{{ dato.totalExpediente }}</strong>
                     </md-button>
                 </md-list-item>                      
-              </div>
-
-            </div>
+              
           </md-list-item>
           
-          <md-list-item>
+          <md-list-item layout-wrap flex>
           	<md-content flex>
-<form name="form" style="width:100%">            
+<form name="form">            
 <md-tabs md-dynamic-height md-border-bottom ng-if="dato.totalExpediente>0">
 	<md-tab  ng-repeat="a in columnas"  label="{{a.id}}">
     
-    <md-list-item ng-init="exp=a.id">
+    <md-list-item ng-init="exp=a.id" layout="row" layout-wrap >
       <input ng-model="dato.columna[exp]" ng-init="dato.columna[exp]=exp" aria-label="columna" type="hidden">
         <md-input-container flex >    
           <label>{{ 'NUMERO_EXP' | translate }}: <strong>{{ exp }}</strong></label>
@@ -261,11 +302,11 @@
                 
         </md-input-container>
 
-        <md-input-container flex style="float:right;">
-          <md-content style="overflow:hidden; float:right; margin-top:10px">
-            <md-menu flex="100">
+        <md-input-container flex>
+          <md-content >
+            <md-menu flex="100" style="float:right;">
               
-              <md-button aria-label="estadisticas" style="width:192px; " type="button" class="md-raised" ng-click="$mdOpenMenu()">
+              <md-button aria-label="estadisticas" style="width:192px;" type="button" class="md-raised" ng-click="$mdOpenMenu()">
                       	
                 <md-chips>
                   <md-chip  style="background : #090; color:white;">
@@ -405,7 +446,7 @@
           
 
 		
-            <md-list-item> 
+            <md-list-item layout-wrap flex> 
             <form name="formx" style="width:100%">                               
 <md-list-item ng-if="tieneHallazgo" style="width:100%">
    <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="width:100%">
@@ -474,4 +515,4 @@
 </div>
 
 <span ng-init="estadistica()"></span>
-
+</md-content></div>

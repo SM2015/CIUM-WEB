@@ -14,17 +14,7 @@
 			</h2>
 			<span flex></span>	
             
-            <md-button hide-md hide-sm  aria-label="{{ 'PDF' | translate }}" imprimir-div=".imprimir">
-              <md-icon md-svg-icon="print"></md-icon>
-    			{{ 'PDF' | translate }}
-            </md-button>
-            
-            <md-button hide-md hide-sm  aria-label="{{ 'ELIMINAR' | translate }}" ng-click="borrar()">
-                <md-icon md-svg-icon="delete"></md-icon>
-                {{ 'ELIMINAR' | translate }}
-            </md-button>
-            	
-			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+            <span ng-include="'src/app/views/menu-opciones.html'"></span>
 		</div>
 	</md-toolbar>
 	<md-content>
@@ -102,7 +92,7 @@
                             </md-select>
 			 			</md-data-table-cell>
 			 			<md-data-table-cell html-content="htmlContent">
-                        <span class="img-circle" style="background: {{ colorColor[$index] }}; display:block; height:25px; width:25px;"></md-data-table-cell>
+                        <span class="img-circle" style="background: {{ colorColor[$index] }}; display:block; height:25px; width:25px;"></span></md-data-table-cell>
 			 		</md-data-table-row>
 				</md-data-table>
 			  
@@ -110,5 +100,4 @@
         </md-list-item>
       </md-list>				
 </md-content> 
-			
-		
+</md-content></div>					

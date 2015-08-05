@@ -2,7 +2,7 @@
 <div layout="column" class="relative" layout-fill role="main">
 	
 	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
-	<md-toolbar  >
+	<md-toolbar  layout="column" >
 		<div class="md-toolbar-tools" ng-init="index('EvaluacionCalidad')">    
 			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
 		  <md-icon md-svg-icon="menu" ></md-icon>
@@ -10,12 +10,7 @@
 			<h2>
 			  <span>{{ 'EVALUACION' | translate }} {{ 'CALIDAD' | translate }} <md-icon md-svg-icon="chevron-right"></md-icon>  {{ 'AGREGAR' | translate }}</span>
 			</h2>
-			<span flex></span>
-            
-            <md-button hide-md hide-sm  aria-label="{{ 'AGRERGAR' | translate }}" ng-click="guardar(forma)" ng-disabled="forma.$invalid">
-              <md-icon md-svg-icon="save"></md-icon>
-    			{{ 'AGREGAR' | translate }}
-            </md-button>
+			<span flex></span>            
             		
 			<span ng-include="'src/app/views/menu-opciones.html'"></span>
 		</div>
@@ -77,23 +72,23 @@
                                       </span>
                                       <span class="item-metadata" style="font-size:.8em">
                                         <span class="item-metastat" >
-                                          <strong>JS: </strong> {{item.jurisdiccion}}
+                                          <strong>{{ 'JURISDICCION' | translate }}: </strong> {{item.jurisdiccion}}
                                         </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <span class="item-metastat">
-                                          <strong>M: </strong>{{item.municipio}} 
+                                          <strong>{{ 'MUNICIPIO' | translate }}: </strong>{{item.municipio}} 
                                         </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <span class="item-metastat">
-                                          <strong>L: </strong> {{item.localidad}}
+                                          <strong>{{ 'LOCALIDAD' | translate }}: </strong> {{item.localidad}}
                                         </span>
                                       </span>
                                       <span class="item-metadata" style="font-size:.6em">
-                                      	<md-icon md-svg-icon="place"></md-icon>
+                                        <md-icon md-svg-icon="place"></md-icon>
                                         <span class="item-metastat">
                                           {{item.domicilio}} 
                                         </span>
                                       </span>
                                       <span class="item-metadata" style="font-size:.7em">
-                                      	<md-icon md-svg-icon="style"></md-icon>
+                                        <md-icon md-svg-icon="style"></md-icon>
                                         <span class="item-metastat">
                                           <strong>{{item.tipoUnidad}}</strong> 
                                         </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -104,7 +99,7 @@
                                       </span>
                                      </md-item-template>                                 
                                     
-                              	</md-autocomplete>
+                                </md-autocomplete>
                             </div>
                          </section>
                     </md-input-container>
@@ -117,7 +112,7 @@
                         </div>
                     </md-input-container>
                  </md-list-item>
-                 
+            </md-content>    
                  <md-content layout="column"  layour-align="center center" >
 					<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
                     	<md-input-container flex >
@@ -168,3 +163,4 @@
     
 </form>
 <span ng-init="cargando = false;"></span> 
+</md-content></div>

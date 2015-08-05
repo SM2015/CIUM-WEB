@@ -12,12 +12,7 @@
 			</h2>
 			<span flex></span>
             
-            <md-button hide-md hide-sm  aria-label="{{ 'AGRERGAR' | translate }}" ng-click="guardar(forma)" ng-disabled="forma.$invalid">
-              <md-icon md-svg-icon="save"></md-icon>
-    			{{ 'AGREGAR' | translate }}
-            </md-button>
-            		
-			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+            <span ng-include="'src/app/views/menu-opciones.html'"></span>
 		</div>
 	</md-toolbar>
 	<md-content>
@@ -62,7 +57,7 @@
                         		<li class="parent_li" style="display: none;">				
                         
                         		<span>
-                        		<select ng-options="item.id as item.nombre for item in options['lugares']" ng-model="criterio.indicador[i.id].lugar" ng-change="treeClickCheck(i.id,0,'indicador'+criterio.id+''+i.id);" name="LugarVerificacion[{{ i.id }}]" id="LugarVerificacion{{ i.id }}" style="border:none; background-color:transparent">                        			
+                        		<select ng-options="item.id as item.nombre for item in options['lugares']" ng-model="criterio.indicador[i.id].lugar" ng-change="treeClickCheck(i.id,0,'indicador'+criterio.id+''+i.id);" name="LugarVerificacion[{{ i.id }}]" id="LugarVerificacion{{ i.id }}" style="border:none; background-color:transparent: width:100%">                        			
                         		</select>
                                 </span>
                         </li>
@@ -77,3 +72,4 @@
 </md-content>				
 </form>
 <span ng-init="cargando = false;"></span> 
+</md-content></div>

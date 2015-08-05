@@ -24,7 +24,8 @@
     <md-list-item >	                                       
         <md-input-container flex >     
                 <md-select placeholder="{{ 'ANIO' | translate }}" ng-model="dimension[0]" ng-change="getDimension('mes','month',1)">
-                	<md-option ng-repeat="item in datos[0]" value="{{item.anio}}">{{item.anio}}</md-option>                        
+                	<md-option ng-repeat="item in datos[0]" value="{{item.anio}}">{{item.anio}}</md-option>  
+                </md-select>                      
                 </md-input-container>
                                           
         <!--<md-input-container flex ng-show="!biVisible">     
@@ -37,7 +38,7 @@
                 <md-select placeholder="{{ 'BIMESTRE' | translate }}" ng-model="dimension[1]" ng-change="getDimension('jurisdiccion','jurisdiccion',2)">
                 	<md-option ng-repeat="item in datos[1]" value="{{item.id}}">{{item.nombre}}</md-option>                         
                
-                
+                </md-select>
         </md-input-container>
         <md-divider ></md-divider>
     </md-list-item>
@@ -45,12 +46,14 @@
     <md-list-item >	                                       
         <md-input-container flex >     
                 <md-select placeholder="{{ 'JURISDICCION' | translate }}" ng-model="dimension[2]" ng-change="getDimension('zona','zona',3)">
-                	<md-option ng-repeat="item in datos[2]" value="{{item.jurisdiccion}}">{{item.jurisdiccion}}</md-option>                        
+                	<md-option ng-repeat="item in datos[2]" value="{{item.jurisdiccion}}">{{item.jurisdiccion}}</md-option>   
+                </md-select>                     
                 </md-input-container>
                                           
         <md-input-container flex >     
                 <md-select placeholder="{{ 'EQUIPO_ZONAL' | translate }}" ng-model="dimension[3]" ng-change="getDimension('clues','clues',4)">
-                	<md-option ng-repeat="item in datos[3]" value="{{item.id}}">{{item.nombre}}</md-option>                        
+                	<md-option ng-repeat="item in datos[3]" value="{{item.id}}">{{item.nombre}}</md-option>   
+                </md-select>                     
                
                 
         </md-input-container>

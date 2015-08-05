@@ -81,6 +81,7 @@
 		  .icon("zoom-in", "bower_components/material-design-icons/action/svg/production/ic_zoom_in_24px.svg", 48)
 		  .icon("zoom-out", "bower_components/material-design-icons/action/svg/production/ic_zoom_out_24px.svg", 48)
 		  .icon("supervisor-accoun", "bower_components/material-design-icons/action/svg/production/ic_supervisor_account_24px.svg", 48)
+		  .icon("autorenew", "bower_components/material-design-icons/action/svg/production/ic_autorenew_24px.svg", 48)
 		  
 		  // Content
 		  .icon("save", "bower_components/material-design-icons/content/svg/production/ic_save_48px.svg", 48)

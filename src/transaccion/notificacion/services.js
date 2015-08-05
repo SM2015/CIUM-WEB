@@ -20,7 +20,7 @@
 			})
 			.error(function(data, status, headers, config) 
 			{
-				errorFlash.error(data);
+				
 			});		  
 		}
 		

@@ -14,17 +14,7 @@
 			</h2>
 			<span flex></span>	
             
-            <md-button hide-md hide-sm  aria-label="{{ 'GUARDAR' | translate }}" ng-click="modificar(id)" ng-disabled="forma.$invalid">
-              <md-icon md-svg-icon="save"></md-icon>
-    			{{ 'GUARDAR' | translate }}
-            </md-button>
-            
-            <md-button hide-md hide-sm  aria-label="{{ 'ELIMINAR' | translate }}" ng-click="borrar()">
-                <md-icon md-svg-icon="delete"></md-icon>
-                {{ 'ELIMINAR' | translate }}
-            </md-button>
-            	
-			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+            <span ng-include="'src/app/views/menu-opciones.html'"></span>
 		</div>
 	</md-toolbar>
 	<md-content>
@@ -245,7 +235,7 @@
                                   table-card="{visible: tableCardIsEnabled, title: 'Lista Clues'}"
                                   selectable-rows="tableIsSelectable"
                                   alternate-headers="'contextual'"
-                                  sortable-columns="true"
+                                  sortable-columns="false"
                                   delete-row-callback="deleteRowCallback(rows)">
                                 
                                     <md-data-table-header-row>
@@ -289,7 +279,7 @@
                                   table-card="{visible: tableCardIsEnabled, title: 'Lista Clues'}"
                                   selectable-rows="tableIsSelectable"
                                   alternate-headers="'contextual'"
-                                  sortable-columns="true"
+                                  sortable-columns="false"
                                   delete-row-callback="deleteRowCallback(rows)">
                                 
                                     <md-data-table-header-row>
@@ -326,3 +316,4 @@
 		</md-list>
 	</md-content>
 </form>
+</md-content></div>

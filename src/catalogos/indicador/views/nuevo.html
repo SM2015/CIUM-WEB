@@ -12,12 +12,7 @@
 			</h2>
 			<span flex></span>	
             
-            <md-button hide-md hide-sm  aria-label="{{ 'AGRERGAR' | translate }}" ng-click="guardar(forma)" ng-disabled="forma.$invalid">
-              <md-icon md-svg-icon="save"></md-icon>
-    			{{ 'AGREGAR' | translate }}
-            </md-button>
-            	
-			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+            <span ng-include="'src/app/views/menu-opciones.html'"></span>
 		</div>
 	</md-toolbar>
 	<md-content>
@@ -73,7 +68,7 @@
   table-card="{visible: true, title: 'Alerta'}"
   selectable-rows="true"
   alternate-headers="'contextual'"
-  sortable-columns="true"
+  sortable-columns="false"
   delete-row-callback="deleteRowCallback(rows)" ng-init="dato.indicador_alertas=[]">
 
     <md-data-table-header-row>
@@ -95,7 +90,7 @@
                             </md-select>
 			 			</md-data-table-cell>
                         
-			 			<md-data-table-cell html-content="htmlContent"><span class="img-circle" style="background: {{ colorColor[$index] }}; display:block; height:25px; width:25px;"></md-data-table-cell>
+			 			<md-data-table-cell html-content="htmlContent"><span class="img-circle" style="background: {{ colorColor[$index] }}; display:block; height:25px; width:25px;"></span></md-data-table-cell>
 			 		</md-data-table-row>
 </md-data-table>
 			  
@@ -106,3 +101,4 @@
 </md-content>
 </form>
 <span ng-init="cargando = false;"></span> 
+</md-content></div>

@@ -446,7 +446,7 @@
 		}
 		$scope.addEquipo = function(id)
 		{
-			var url="equipo";
+			var url="Zona";
 			if($scope.existeUM.indexOf(parseInt(id))<0 )
 			{
 				CrudDataApi.ver(url, id, function (data) {
@@ -475,7 +475,7 @@
 		//getEquipos
 		$scope.getEquipos = function(juris) 
 		{			
-			var url="equipo";
+			var url="Zona";
 
 			CrudDataApi.lista(url+"?jurisdiccion="+juris, function (data) {
 				if(data.status  == '407')
@@ -536,7 +536,7 @@
           $scope.init();     
       };
 
-	    $scope.init = function(buscar) 
+	    $scope.init = function(buscar,columna) 
 		{
 			var url=$scope.ruta;
 			
@@ -544,7 +544,7 @@
 			var limite=$scope.paginacion.lim;
 		
 			if(!angular.isUndefined(buscar))
-				limite=limite+"&columna="+$scope.columna+"&valor="+$scope.buscar+"&buscar=true";
+				limite=limite+"&columna="+columna+"&valor="+buscar+"&buscar=true";
 
 
 	        CrudDataApi.lista(url+'?pagina=' + pagina + '&limite=' + limite, function (data) {
@@ -597,10 +597,10 @@
 	        $scope.init();
 	        
 	    };
-	    $scope.buscarL = function(buscar) 
-		{
-		  	$scope.init(buscar);
-		};	
+	    $scope.buscarL = function(buscar,columna) 
+	  {
+		  	$scope.init(buscar,columna);
+	  };	
 		//Ver
 		$scope.ver = function(ruta) 
 		{

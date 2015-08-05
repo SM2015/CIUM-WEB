@@ -1,19 +1,95 @@
 <md-toolbar>
 	<div class="md-toolbar-tools">    
 		<md-icon md-svg-icon="logo"></md-icon>  
-		<h2> <a ng-href="#/">&nbsp;{{ 'APP_NOMBRE' | translate }}</a></h2>
-		<span flex></span>	
+		<span flex > <a ng-href="#/">&nbsp;{{ 'APP_NOMBRE' | translate }}</a></span>
+		<span flex="60">
+			<md-menu ng-controller="NotificacionCtrl" flex style="float:right">
+  <md-button class="md-icon-button" ng-click="$mdOpenMenu()" aria-label="{{ 'NOTIFICACION' | translate }}">
+    <md-icon md-menu-origin md-svg-icon="add-alert"></md-icon>
+    <span class="badge" ng-if="total"><span>{{total}}</span></span>
+    <md-tooltip>
+    {{ 'NOTIFICACION' | translate }} 
+    
+  </md-tooltip>
+  </md-button>
+  <md-menu-content width="4"  >
+
+    
+    <md-menu-item >
+      <md-button ng-click="$event.stopPropagation()">
+        <md-icon md-svg-icon="notifications-on" md-menu-align-target></md-icon>
+        {{total}} {{ 'NOTIFICACION' | translate}}         
+      </md-button>                  
+    </md-menu-item>
+    <md-menu-divider></md-menu-divider>
+
+    <md-menu-item ng-repeat="notificacion in notificaciones" ng-if="notificaciones.length>0">
+      <a href="#/{{ notificacion.recurso }}{{ notificacion.parametro}}" ng-click="visto(notificacion.id)"><md-button >
+        <md-icon md-svg-icon="notifications" md-menu-align-target></md-icon>
+        {{notificacion.nombre}}
+      </md-button> </a>                 
+    </md-menu-item> 
+
+    <md-menu-divider></md-menu-divider>
+    <md-menu-item >
+      <md-button ng-click="ir('notificacion')">
+        <md-icon md-svg-icon="arrow-forward" md-menu-align-target></md-icon>
+        {{ 'ALL' | translate}}
+      </md-button>                  
+    </md-menu-item>
+
+  </md-menu-content>
+ </md-menu>
+  
+  <md-menu ng-controller="PendienteCtrl" flex style="float:right">
+  <md-button class="md-icon-button" ng-click="$mdOpenMenu()" aria-label="{{ 'PENDIENTE' | translate }}">
+    <md-icon md-menu-origin md-svg-icon="storage"></md-icon>
+    <span class="badge" ng-if="total"><span>{{total}}</span></span>
+    <md-tooltip>
+    {{ 'PENDIENTE' | translate }}
+  </md-tooltip>
+  </md-button>
+  <md-menu-content width="4"  >
+
+  <md-menu-item >
+      <md-button ng-click="$event.stopPropagation()">
+        <md-icon md-svg-icon="storage" md-menu-align-target></md-icon>
+        {{total}} {{ 'PENDIENTE' | translate}}         
+      </md-button>                  
+    </md-menu-item>
+    <md-menu-divider></md-menu-divider>
+
+
+    <md-menu-item ng-repeat="pendiente in pendientes" ng-if="pendientes.length>0">
+      <a href="#/{{ pendiente.recurso }}{{ pendiente.parametro}}" ng-click="visto(pendiente.id)"><md-button >
+        <md-icon md-svg-icon="playlist-add" md-menu-align-target></md-icon>
+        {{pendiente.nombre}}
+      </md-button></a>
+    </md-menu-item>
+
+    <md-menu-divider></md-menu-divider>
+    <md-menu-item >
+      <md-button ng-click="ir('pendiente')">
+        <md-icon md-svg-icon="arrow-forward" md-menu-align-target></md-icon>
+        {{ 'ALL' | translate}}
+      </md-button>                  
+    </md-menu-item>
+
+  </md-menu-content>              
+</md-menu> 
+		</span>	
 	</div>
 </md-toolbar>
 
-<md-list>	
+<md-content flex>
+<md-list >	
 	
 	<header class="nav-header" ng-controller="DatoCtrl">
-	<a ng-href="{{ '#/datos/ver?id='+usuarioInfo.id; }}" class="docs-logo" href="#/">
+	<a ng-href="{{ '#/datos/ver?id='+usuarioInfo.id; }}" class="docs-logo" style="text-decoration:none;color:#999">
 		<img ng-src="{{usuarioInfo.avatar}}" style="width:85px; heigth:90px;border-radius:50%; margin-left:36%; margin-top:5px;">
-		<h5 class="docs-logotype md-heading" style="text-align: center;">{{usuarioInfo.nombres + " " +usuarioInfo.apellidoPaterno + " " +usuarioInfo.apellidoMaterno}}</h5>
+		<h5 class="docs-logotype md-heading" style="text-align: center;">{{usuarioInfo.nombre + " " +usuarioInfo.apellido_paterno + " " +usuarioInfo.apellido_materno}}</h5>
 	</a>
-
+	<md-divider></md-divider>
 	</header>
 	<div ng-repeat="grupo in menu">
 		<md-subheader class="md-primary" ng-hide="!grupo.grupo">{{ grupo.grupo | translate }}</md-subheader>
@@ -43,3 +119,4 @@
 	    <p translate="CERRAR_SESION"></p>		    
 	</md-list-item>
 </md-list>
+</md-content>
