@@ -7,7 +7,7 @@
 	
 		notificacion.preparar = function() 
 		{ 
-			/*var t = this;	
+			var t = this;	
 			var pagina=1;
 			var limite=5;
 			var url = 'Notificacion';
@@ -21,7 +21,7 @@
 			.error(function(data, status, headers, config) 
 			{
 				
-			});		*/  
+			});		 
 		}
 		
 		return notificacion;

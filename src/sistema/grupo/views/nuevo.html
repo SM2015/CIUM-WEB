@@ -1,5 +1,5 @@
 <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
-<div layout="column" class="relative" layout-fill role="main" >
+<div layout="column" class="relative" layout-fill role="main" flex>
 	
 	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
 	<md-toolbar  >
@@ -35,8 +35,8 @@
 		    <md-list-item>
         	<md-input-container flex >                                    
                  <p>{{ 'PERMISO' | translate }}</p>
-                 <md-content layout="column"  layour-align="center center"  >
-    			 <md-list layout-margin class="md-whiteframe-z2" layout-align="center center"  >	  
+                 <md-content layout="column"   >
+    			 <md-list layout-margin class="md-whiteframe-z2"  >	  
                  <md-content class="md-padding">
                     <md-tabs md-dynamic-height md-border-bottom ng-if="permissions.length">
                       <md-tab label="{{ m.nombre }}" ng-repeat="m in permissions" ng-if="m.idPadre==0" >

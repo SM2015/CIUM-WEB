@@ -1,5 +1,5 @@
 <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
-<div layout="column" class="relative" layout-fill role="main">
+<div layout="column" class="relative" layout-fill role="main" flex>
 	<md-button class="md-fab md-fab-bottom-right" ng-click="nuevo()" aria-label="{{ 'NUEVA' | translate }}" >
 		<md-icon md-svg-icon="add"></md-icon>
   	</md-button>
@@ -61,29 +61,30 @@
                          <md-list-item>
                       	<md-input-container flex > 
                             	<div class="alert alert-info"></div>
-                                    <md-data-table
-                                  table-card="{visible: tableCardIsEnabled, title: 'Lista Clues'}"
-                                  selectable-rows="tableIsSelectable"
-                                  alternate-headers="'contextual'"
-                                  sortable-columns="false"
-                                  delete-row-callback="deleteRowCallback(rows)">
-                                
-                                    <md-data-table-header-row>
-												<md-data-table-column align-rule="left">CLUES</md-data-table-column>
-												<md-data-table-column align-rule="left">nombre</md-data-table-column>
-												<md-data-table-column align-rule="left">Jurisdicción</md-data-table-column>
+                                    <div class="md-sidenav-left md-whiteframe-z2">
+<md-data-table-container>
+  <table md-data-table md-progress="datos">
+    <thead md-order="query.order" md-trigger="onOrderChange">
+      <tr>
+												<th name="CLUES"></th>
+												<th name="{{ 'NOMBRE' | translate}}"></th>
+												<th name="{{ 'JURISDICCION' | translate}}"></th>
 												
-											</md-data-table-header-row>
-                                    		<md-data-table-row table-row-id="" ng-repeat="u in dato.usuarioclues" ng-if="u.clues!=null">
-												<md-data-table-cell html-content="htmlContent"> {{ u.clues }}
+											</tr>
+    </thead>
+    <tbody>
+      <tr md-auto-select ng-repeat="u in dato.usuarioclues">
+												<td> {{ u.clues }}
 												<span ng-model="dato.clues[$index]" ng-init="dato.clues[$index]=u.clues;existeUM[$index]=u.clues;"></span>
-                                                </md-data-table-cell>
-												<md-data-table-cell html-content="htmlContent"> {{ u.nombre }}</md-data-table-cell>
-												<md-data-table-cell html-content="htmlContent"> {{ u.jurisdiccion }}</md-data-table-cell>
+                                                </td>
+												<td> {{ u.nombre }}</td>
+												<td> {{ u.jurisdiccion }}</td>
 												
 											
-									</md-data-table-row>
-								</md-data-table>
+									</tr>
+    </tbody>
+  </table>
+</md-data-table-container>
 								
 							
                             </md-input-container>

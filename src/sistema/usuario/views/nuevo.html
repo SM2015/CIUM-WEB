@@ -1,5 +1,5 @@
 <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
-<div layout="column" class="relative" layout-fill role="main">
+<div layout="column" class="relative" layout-fill role="main" flex>
 	
 	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
 	<md-toolbar  >
@@ -140,43 +140,43 @@
                   			<md-tab label="{{g.name}}" ng-repeat="g in grupos">
                             
                             	
-                                <md-data-table
-                                  table-card="{visible: tableCardIsEnabled, title: 'Lista Clues'}"
-                                  selectable-rows="tableIsSelectable"
-                                  alternate-headers="'contextual'"
-                                  sortable-columns="false"
-                                  delete-row-callback="deleteRowCallback(rows)">
-                                
-                                    <md-data-table-header-row>
-                                        <md-data-table-column align-rule="left">Modulo</md-data-table-column>
-                                        <md-data-table-column align-rule="left">Acciones</md-data-table-column>
-                                    </md-data-table-header-row>
-                                    <md-data-table-row table-row-id="" ng-repeat="m in modulos[g.id]">
-										<md-data-table-cell html-content="htmlContent">
+                                <div class="md-sidenav-left md-whiteframe-z2">
+<md-data-table-container>
+  <table md-data-table md-progress="datos">
+    <thead md-order="query.order" md-trigger="onOrderChange">
+      <tr>
+                                        <th name="{{ 'MODULO' | translate}}"> </th>
+                            <th name="{{ 'ACCION' | translate}}"></th>
+                                    </tr>
+    </thead>
+    <tbody>
+      <tr md-auto-select ng-repeat="m in modulos[g.id]">
+										<td>
                                         	<section layout="row" layout-sm="column" >
                                             <md-button flex="100" ng-disabled="true" class="md-raised md-primary">{{ m.replace("Controller",'') }}</md-button>
                                             
                                             </section>
-                                        </md-data-table-cell>
-										<md-data-table-cell html-content="htmlContent">											 
+                                        </td>
+										<td>											 
                                             <section layout="row" layout-sm="column">
                                             	<md-checkbox model="dato.permissions" ng-true-value="'{{ m+'.'+a }}'"
             ng-false-value="''" aria-label="'{{ m+'.'+a }}'" ng-repeat="a in acciones[m+g.id]"  >
                                                   {{ a }} 
                                                 </md-checkbox>
                                             </section>
-										</md-data-table-cell>
-									</md-data-table-row>
-								</md-data-table>
+										</td>
+									</tr>
+    </tbody>
+  </table>
+</md-data-table-container></div>
                                 
                                 
                   			</md-tab>
                          </md-tabs>
                     
                          </md-input-container>
-                      </md-list-item
-                      
-                    ></md-content>
+                      </md-list-item>
+                      </md-content>
                   </md-tab>
                   
                   <md-tab label="{{ 'EQUIPO_ZONAL' | translate }}">
@@ -214,30 +214,31 @@
                          <md-list-item>
                         <md-input-container flex > 
                               <div class="alert alert-info"></div>
-                                    <md-data-table
-                                  table-card="{visible: tableCardIsEnabled, title: 'Lista Clues'}"
-                                  selectable-rows="tableIsSelectable"
-                                  alternate-headers="'contextual'"
-                                  sortable-columns="false"
-                                  delete-row-callback="deleteRowCallback(rows)">
-                                
-                                    <md-data-table-header-row>
-                        <md-data-table-column align-rule="left">ID</md-data-table-column>
-                        <md-data-table-column align-rule="left">{{ 'EQUIPO_ZONAL' | translate }}</md-data-table-column>
-                        <md-data-table-column align-rule="left"></md-data-table-column>
-                      </md-data-table-header-row>
-                      <md-data-table-row table-row-id="" ng-repeat="u in dato.usuariozona" >
-                        <md-data-table-cell html-content="htmlContent"> {{ u.id }}</md-data-table-cell>
-                        <md-data-table-cell html-content="htmlContent"> {{ u.nombre }}
+                                    <div class="md-sidenav-left md-whiteframe-z2">
+<md-data-table-container>
+  <table md-data-table md-progress="datos">
+    <thead md-order="query.order" md-trigger="onOrderChange">
+      <tr>
+                        <th name="ID"></th>
+                        <th name="{{ 'EQUIPO_ZONAL' | translate }}"></th>
+                        <th ></th>
+                      </tr>
+    </tbody>
+                      <tbody>
+      <tr md-auto-select ng-repeat="u in dato.usuariozona">
+                        <td> {{ u.id }}</td>
+                        <td> {{ u.nombre }}
                         <span ng-model="dato.clues[$index]" ng-init="dato.clues[$index]=u.id;existeUM[$index]=u.id;"></span>
-                        </md-data-table-cell>
+                        </td>
                         
                                                
-                        <md-data-table-cell html-content="htmlContent">
+                        <td>
                             <md-button type="button" aria-label="Quitar" ng-click="equipoBorrar($index)"><md-icon md-svg-icon="delete"></md-icon></md-button>
-                      </md-data-table-cell>
-                  </md-data-table-row>
-                </md-data-table>
+                      </td>
+                  </tr>
+    </tbody>
+  </table>
+</md-data-table-container>
                 
               
                             </md-input-container>
@@ -257,30 +258,31 @@
                          <md-list-item>
                         <md-input-container flex > 
                               <div class="alert alert-info"></div>
-                                    <md-data-table
-                                  table-card="{visible: tableCardIsEnabled, title: 'Lista Clues'}"
-                                  selectable-rows="tableIsSelectable"
-                                  alternate-headers="'contextual'"
-                                  sortable-columns="false"
-                                  delete-row-callback="deleteRowCallback(rows)">
-                                
-                                    <md-data-table-header-row>
-                        <md-data-table-column align-rule="left">ID</md-data-table-column>
-                        <md-data-table-column align-rule="left">{{ 'JURISDICCION' | translate }}</md-data-table-column>
-                        <md-data-table-column align-rule="left"></md-data-table-column>
-                      </md-data-table-header-row>
-                      <md-data-table-row table-row-id="" ng-repeat="u in dato.usuariozona" >
-                        <md-data-table-cell html-content="htmlContent"> {{ u.id }}</md-data-table-cell>
-                        <md-data-table-cell html-content="htmlContent"> {{ u.nombre }}
+                                    <div class="md-sidenav-left md-whiteframe-z2">
+<md-data-table-container>
+  <table md-data-table md-progress="datos">
+    <thead md-order="query.order" md-trigger="onOrderChange">
+      <tr>
+                        <th name="ID"></th>
+                        <th name="{{ 'JURISDICCION' | translate }}"></th>
+                        <th ></th>
+                      </tr>
+    </tbody>
+                      <tbody>
+      <tr md-auto-select ng-repeat="u in dato.usuariozona">
+                        <td> {{ u.id }}</td>
+                        <td> {{ u.nombre }}
                         <span ng-model="dato.clues[$index]" ng-init="dato.clues[$index]=u.id;existeUM[$index]=u.id;"></span>
-                        </md-data-table-cell>
+                        </td>
                         
                                                
-                        <md-data-table-cell html-content="htmlContent">
+                        <td>
                             <md-button type="button" aria-label="Quitar" ng-click="equipoBorrar($index)"><md-icon md-svg-icon="delete"></md-icon></md-button>
-                      </md-data-table-cell>
-                  </md-data-table-row>
-                </md-data-table>
+                      </td>
+                  </tr>
+    </tbody>
+  </table>
+</md-data-table-container>
                 
               
                             </md-input-container>

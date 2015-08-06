@@ -1,35 +1,6 @@
 var app = angular.module('App');  
 
 
-app.factory('MenuOption', function($http, $rootScope, errorFlash, URLS) 
-{ 
-	var menu = {};
-
-    menu.preparar = function() 
-	{ 
-		var t = this;			
-		$http.get(URLS.BASE_API+'menu')
-		.success(function(data, status, headers, config) 
-		{	
-			t.menu = data;	
-			$rootScope.$broadcast('menuInicio');			
-		})
-		.error(function(data, status, headers, config) 
-		{
-			errorFlash.error(data);
-		});		  
-	}
-	return menu;
-});
-
-
-app.controller('menuController', function($scope, $http, $window, MenuOption, infoUsuario, ngProgress) 
-{	
-	MenuOption.preparar();
-	$scope.$on('menuInicio', function() {
-  		$scope.menuOptions = MenuOption.menu;
-    });
-});
 
 app.directive('showtab', function ($location) 
 {
@@ -108,23 +79,27 @@ app.directive('imprimirDiv', function ()
 		{
 			element.bind('click', function(evt)
 			{    
-		    	evt.preventDefault();    
-		    	PrintElem(attrs.imprimirDiv);
+		    	evt.preventDefault();  
+		    	var elem = document.querySelector(attrs.imprimirDiv);  
+		    	PrintElem(elem);
 			});
 
 			function PrintElem(elem)
 			{
-			    PrintWithIframe($(elem).html());
+			    PrintWithIframe(angular.element(elem).html());
 			}
 
 			function PrintWithIframe(data) 
 			{
-			    if ($('iframe#printf').size() == 0) 
+			    if (!angular.isUndefined(document.getElementById('printf'))) 
 			    {
-			    	$('html').append('<iframe id="printf" name="printf"></iframe>');  
+			    	var iframe = document.createElement('iframe');
+			    	iframe.setAttribute("id","printf"); 
+			    	iframe.setAttribute("style","display:none"); 
+			    	document.body.appendChild(iframe);  
 
-					var mywindow = window.frames["printf"];
-					mywindow.document.write('<html lang="en" ng-app="App">'
+					var mywindow =  document.getElementById('printf');
+					mywindow.contentWindow.document.write('<html lang="en" ng-app="App">'
 +' <head>'
 +' <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'
 +' <meta name="charset" content="UTF-8">'
@@ -133,7 +108,7 @@ app.directive('imprimirDiv', function ()
 +' <link rel="shortcut icon" href="assets/img/favicon-cium.ico" />'
 +' <title></title><link rel="stylesheet" href="print.css"/>'
 +' <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css"/>'
-+' <link rel="stylesheet" href="bower_components/md-data-table/dist/md-data-table-style.css"/>'
++' <link href="bower_components/angular-material-data-table/dist/md-data-table.min.css" rel="stylesheet" type="text/css"/>'
 +' <meta name="viewport" content="initial-scale=1" />'
 +' </head>'
 +' <body>'
@@ -141,22 +116,20 @@ app.directive('imprimirDiv', function ()
 +' <script src="bower_components/angular/angular.min.js"></script>'
 +' <script src="bower_components/angular-material/angular-material.min.js"></script>'
 +' <script src="assets/js/angular-material-icons.min.js"></script>'
-+' <script src="bower_components/md-data-table/dist/md-data-table-templates.js"></script>'
-+' <script src="bower_components/md-data-table/dist/md-data-table.js"></script>'
++' <script type="text/javascript" src="bower_components/angular-material-data-table/dist/md-data-table.min.js"></script>'
 +' </body>'
 +' </html>');
 
-				    $(mywindow.document).ready(function()
-				    {
+				    
 				    	setTimeout(function()
 					  	{
-							mywindow.print();
+							mywindow.contentWindow.print();
 						},500);
 					  	setTimeout(function()
 					  	{
-					    	$('iframe#printf').remove();
+					    	document.body.removeChild(iframe);
 					  	},2000);  
-				    });
+				   
 			    }
 
 			    return true;

@@ -1,5 +1,5 @@
 <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
-<div layout="column" class="relative" layout-fill role="main">
+<div layout="column" class="relative" layout-fill role="main" flex>
 	<md-button class="md-fab md-fab-bottom-right" ng-click="nuevo()" aria-label="{{ 'NUEVA' | translate }}" >
 		<md-icon md-svg-icon="add"></md-icon>
   	</md-button>
@@ -25,12 +25,12 @@
         <md-list-item >						
             <md-input-container flex >
                 <label>ID: </label> 					
-                <input readonly ng-model="dato.id" />
+                <input readonly ng-model="dato.id" value="{{dato.id}}"/>
             </md-input-container>
             
         	<md-input-container flex >     
                 <label for="name"  >{{ 'NOMBRE' | translate }}: </label> 					
-                <input readonly ng-model="dato.name" />
+                <input readonly ng-model="dato.name" value="{{dato.name}}"/>
             </md-input-container>      
         </md-list-item>
         <md-list-item>
@@ -38,33 +38,32 @@
 					
                     <p>{{ 'PERMISO' | translate }}</p>
 						
-						<div ng-repeat='g in grupos' ng-animate="'animate'">
-                        <md-data-table
-                          table-card="{visible: tableCardIsEnabled, title: ''}"
-                          selectable-rows="tableIsSelectable"
-                          alternate-headers="'contextual'"
-                          sortable-columns="false"
-                          delete-row-callback="deleteRowCallback(rows)">
-                        
-                            <md-data-table-header-row>
+						<div ng-repeat='g in grupos' ng-animate="'animate'" class="md-sidenav-left md-whiteframe-z2">
+                        <md-data-table-container>
+  <table md-data-table md-progress="datos">
+    <thead md-order="query.order" md-trigger="onOrderChange">
+      <tr>
     																			
-							<md-data-table-column align-rule="left">Modulo </md-data-table-column>
-                            <md-data-table-column align-rule="left">Acciones</md-data-table-column>
-                            </md-data-table-header-row>
+							<th name="{{ 'MODULO' | translate}}"> </th>
+                            <th name="{{ 'ACCION' | translate}}"></th>
+                            </tr>
+    </thead>
+    <tbody>
+      <tr md-auto-select ng-repeat="m in modulos[g.id]">
 	
-    						<md-data-table-row table-row-id="m.id" ng-repeat="m in modulos[g.id]">
-								
-									<md-data-table-cell html-content="htmlContent">
+									<td>
                                     	<label class="label label-success" style="font-size:1em;width:100%;display:block; text-align:left"><i class="fa fa-check"></i> {{ m }}</label>
-                                    </md-data-table-cell>
-									<md-data-table-cell html-content="htmlContent">
+                                    </td>
+									<td>
 										<label ng-repeat='a in acciones[m+g.id]' style="padding-left:20px;"> 																	
 											{{ a }} 
 										</label> 
-									</md-data-table-cell>
+									</td>
 				 
-			 					</md-data-table-row>
-							</md-data-table>								
+			 					</tr>
+    </tbody>
+  </table>
+</md-data-table-container>								
 				</md-container>
 		</md-list-item>
 	</md-list>				

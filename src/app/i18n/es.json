@@ -70,6 +70,10 @@
 	"CRITERIO": "Criterio",
 	"LUGAR_VERIFICACION": "Lugar de verificación",
 	"PLAZO_ACCION": "Plazo acción",
+	"MINIMO":"Mínimo",
+	"MAXIMO":"Máximo",
+	"ROWSPERPAGE":"Filas por página:",
+	"DE":"de",
 
 	"SISTEMA": "Sistema",
 	"GRUPO": "Grupo",
@@ -126,6 +130,7 @@
 	"DESCRIPCION":"Descripción",
 	"RESUELTO":"Resuelto",
 	"OPCIONES":"Opciones",
+	"TERMINADO":"Terminado",
 
 	"RU_ABASTO":"Reporte de unidad (Abastecimiento)",
 	"RU_CALIDAD":"Reporte de unidad (Calidad)",

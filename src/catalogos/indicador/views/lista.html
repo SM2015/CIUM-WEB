@@ -1,5 +1,5 @@
 <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
-<div layout="column" class="relative" layout-fill role="main">
+<div layout="column" class="relative" layout-fill role="main" flex>
 	<md-button class="md-fab md-fab-bottom-right" ng-click="nuevo()" aria-label="{{ 'NUEVA' | translate }}" >
 		<md-icon md-svg-icon="add"></md-icon>
   	</md-button>
@@ -75,52 +75,50 @@
 
 			  
 			</div> 
-	<md-data-table
-  table-card="{visible: tableCardIsEnabled, title: 'Lista Clues'}"
-  selectable-rows="tableIsSelectable"
-  alternate-headers="'contextual'"
-  sortable-columns="false"
-  delete-row-callback="deleteRowCallback(rows)">
-
-    <md-data-table-header-row>
-		 <md-data-table-column align-rule="left" hide-sm>ID</md-data-table-column>
-		  <md-data-table-column align-rule="left">{{ 'CODIGO' | translate }}</md-data-table-column>
-			<md-data-table-column align-rule="left" width="25%">{{ 'NOMBRE' | translate }}</md-data-table-column>
-			<md-data-table-column align-rule="left" hide-sm>{{'CATEGORIA' | translate}}</md-data-table-column>
-			<md-data-table-column align-rule="left" hide-sm>{{'COLOR' | translate}}</md-data-table-column>
-			<md-data-table-column align-rule="left" hide-sm hide-md>{{ 'CREADO' | translate }}</md-data-table-column>
-			<md-data-table-column align-rule="left" hide-sm hide-md hide-lg>{{ 'MODIFICADO' | translate }}</md-data-table-column>
-			<md-data-table-column align-rule="left"></md-data-table-column>
-		  </md-data-table-header-row>
-	
-    <md-data-table-row table-row-id="dato.id" ng-repeat="dato in datos">
-				 <md-data-table-cell html-content="htmlContent" hide-sm>{{ dato.id  }}</md-data-table-cell>
-				 <md-data-table-cell html-content="htmlContent">{{ dato.codigo | uppercase }}</md-data-table-cell>
-				 <md-data-table-cell html-content="htmlContent">{{ dato.nombre | uppercase }}</md-data-table-cell>
+	<div class="md-sidenav-left md-whiteframe-z2">
+<md-data-table-container>
+  <table md-data-table md-progress="datos">
+    <thead md-order="query.order" md-trigger="onOrderChange">
+      <tr>
+		 <th hide-sm name="ID" order-by="id"></th>
+		  <th name="{{ 'CODIGO' | translate }}"></th>
+			<th name="{{ 'NOMBRE' | translate }}"></th>
+			<th hide-sm name="{{'CATEGORIA' | translate}}"></th>
+			<th hide-sm name="{{'COLOR' | translate}}"></th>
+			<th hide-sm hide-md name="{{ 'CREADO' | translate }}" order-by="creadoAl"></th>
+        	<th hide-sm hide-md hide-lg name="{{ 'MODIFICADO' | translate }}"  order-by="modificadoAl"></th>
+			<th ></th>
+		  </tr>
+    </thead>
+    <tbody>
+      <tr md-auto-select ng-repeat="dato in datos">
+				 <td hide-sm>{{ dato.id  }}</td>
+				 <td>{{ dato.codigo | uppercase }}</td>
+				 <td>{{ dato.nombre | uppercase }}</td>
 				 
-				 <md-data-table-cell html-content="htmlContent" hide-sm>{{ dato.categoria | uppercase }}</md-data-table-cell>
-				 <md-data-table-cell html-content="htmlContent" hide-sm><span class="img-circle" style="background: {{ dato.color }}; display:block; height:25px; width:25px;"></span></md-data-table-cell>
-				 <md-data-table-cell html-content="htmlContent" hide-sm hide-md>{{ dato.creadoAl }}</md-data-table-cell>
-				 <md-data-table-cell html-content="htmlContent" hide-sm hide-md hide-lg>{{ dato.modificadoAl }}</md-data-table-cell>
-				 <md-data-table-cell html-content="htmlContent">
+				 <td hide-sm>{{ dato.categoria | uppercase }}</td>
+				 <td hide-sm><span class="img-circle" style="background: {{ dato.color }}; display:block; height:25px; width:25px;"></span></td>
+				 <td hide-sm hide-md>{{ dato.creadoAl }}</td>
+				 <td hide-sm hide-md hide-lg>{{ dato.modificadoAl }}</td>
+				 <td>
 					
 					<section layout="row" layout-sm="column" layout-align="center center">
 						
-						<a url-modulo="ver?id={{ dato.id }}"><md-button class="md-fab md-mini  md-primary" aria-label="Ver">
+						<a url-modulo="ver?id={{ dato.id }}"><md-button class="md-icon-button md-primary" aria-label="Ver">
 							<md-icon md-svg-src="remove-red-eye"></md-icon>
     <md-tooltip>
     {{ 'VER' | translate }}
   </md-tooltip>
 						</md-button></a>
 						
-						<a url-modulo="modificar?id={{ dato.id }}"><md-button class="md-fab md-mini md-primary" aria-label="Editar">
+						<a url-modulo="modificar?id={{ dato.id }}"><md-button class="md-icon-button md-primary" aria-label="Editar">
 						  <md-icon md-svg-src="mode-edit" ></md-icon>
   <md-tooltip>
     {{ 'EDITAR' | translate }}
   </md-tooltip>
 						</md-button></a>
 						
-						<md-button ng-click="borrar(dato.id, $index)" class="md-fab md-mini" aria-label="Eliminar">
+						<md-button ng-click="borrar(dato.id, $index)" class="md-icon-button md-accent" aria-label="Eliminar">
 						  <md-icon md-svg-src="delete" ></md-icon>
   <md-tooltip>
     {{ 'ELIMINAR' | translate }}
@@ -129,14 +127,17 @@
 						
 					</section>
 					
-					</md-data-table-cell>
+					</td>
 				 
-			 </md-data-table-row>
-</md-data-table>
-	 
-	 <div layout="column" layout-fill ng-include="'src/app/views/paginado-list.html'">
-				  
-		</div>
+			 </tr>
+    </tbody>
+  </table>
+</md-data-table-container>
+
+
+<md-data-table-pagination md-limit="query.limit" md-label="paginationLabel" md-row-select="[5,10,15,25,50,100,1000]" md-page="query.page" md-total="{{paginacion.paginas}}" md-trigger="onPaginationChange"></md-data-table-pagination>
+       </div> 
+
         </div>
     </div>
 </md-content></div>

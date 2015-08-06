@@ -2,8 +2,8 @@
 	'use strict';
 	angular.module('SeguimientoModule')
 	.controller('SeguimientoCtrl',
-	       ['$rootScope', '$scope', '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash',   'CrudDataApi', 'URLS', 
-	function($rootScope,   $scope,   $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,    CrudDataApi, URLS){
+	       ['$rootScope', '$scope', '$translate',  '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash',   'CrudDataApi', 'URLS', 
+	function($rootScope,   $scope, $translate,   $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,    CrudDataApi, URLS){
 		
 		 $scope.menuSelected = "/"+$location.path().split('/')[1];
 	    $scope.menu = Menu.getMenu();
@@ -12,29 +12,49 @@
 	    $scope.cargando = true;
 
 	    $scope.ruta="";
-	    $scope.url=$location.url();
+    $scope.url=$location.url();
 
-	    $scope.tableCardIsEnabled = false;
-	    $scope.tableIsSelectable = false;
-	    $scope.tableIsSortable = true;
-	    $scope.htmlContent = true;
+    $scope.paginationLabel = {
+      text: $translate.instant('ROWSPERPAGE'),
+      of: $translate.instant('DE')
+    };
 
-	    $scope.deleteRowCallback = function(rows){
-	        $mdToast.show(
-	      		$mdToast.simple()
-	    		.content('Deleted row id(s): '+rows)
-	    		.hideDelay(3000)
-	        );
-	    };
-	    $scope.paginacion = 
-	    {
-	        pag: 1,
-	        lim: 10,
-	        paginas:0
-	    };
+	    
+
+	    
+	    // data table
+    $scope.selected = [];
+
+  $scope.query = {
+    filter: '',
+    order: 'id',
+    limit: 5,
+    page: 1
+  };
+
+
+  $scope.onOrderChange = function (order) {
+    $scope.init(); 
+  };
+
+  $scope.onPaginationChange = function (page, limit) {
+    $scope.paginacion = 
+    {
+        pag: (page-1)*limit,
+        lim: limit,
+        paginas:0
+    };
+    $scope.init();
+  };
+    //fin data
+    $scope.paginacion = 
+    {
+        pag: 1,
+        lim: 5,
+        paginas:0
+    };
 	    $scope.datos = [];
-	    $scope.ruta="";
-	    $scope.url=$location.url();
+	    
 
 	    $scope.toggleMenu  = function  () {
 	        $mdSidenav('left').toggle();

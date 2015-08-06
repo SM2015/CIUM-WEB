@@ -12,6 +12,10 @@
 				},
 				getPermisos: function() {
 					return $http.post(URLS.BASE_API + 'permisos-autorizados',{user_email: $localStorage.cium.user_email});
+				},
+				getPerfil: function()
+				{
+					return $http.get(URLS.OAUTH_SERVER+'/v1/perfil');
 				}
 			}
 		}]);
@@ -22,15 +26,15 @@
 				signin: function (data, successCallback, errorCallback) {
 					
 					var obtenerToken = function(data)
-		    {
-							
-		  return AuthService.autenticar(data)   
-		    			.then(function(res){
-										$localStorage.cium.access_token = res.data.access_token;
-   							$localStorage.cium.refresh_token = res.data.refresh_token;
-		  return true;
-		    });
-		    },
+					    {
+										
+					  return AuthService.autenticar(data)   
+					    			.then(function(res){
+													$localStorage.cium.access_token = res.data.access_token;
+			   							$localStorage.cium.refresh_token = res.data.refresh_token;
+					  return true;
+					    });
+					    },
 						validarAcceso = function(e){
 							 return AuthService.validar();
 						},
@@ -40,12 +44,19 @@
 										Menu.setMenu(res.data.permisos);											
 									});
 						},
+						perfil = function(e)
+						{
+							AuthService.getPerfil().then(function(data){
+						        $localStorage.cium.perfil=data.data;                      
+						      });
+						},
 						error = function (error) {
 							
 							delete $localStorage.cium.access_token;
 							delete $localStorage.cium.refresh_token;
 							delete $localStorage.cium.user_email;
 							delete $localStorage.cium.menu;
+							delete $localStorage.cium.perfil;
 							var error_code = '';
 							if(typeof error !== 'undefined'){
 								error_code = "CONNECTION_REFUSED";
@@ -72,6 +83,7 @@
 					obtenerToken(data)
 					.then(validarAcceso)
 					.then(cargarPermisos)
+					.then(perfil)
 					.then(successCallback)
 					.catch(error);
 				},
@@ -85,7 +97,8 @@
 					delete $localStorage.cium.refresh_token;
 					delete $localStorage.cium.user_email;
 					delete $localStorage.cium.menu;
-					
+					delete $localStorage.cium.perfil;
+
 					success();
 				}
 			};
@@ -102,7 +115,7 @@
 	   ]);
 	angular.module('App')
 		.factory('Menu',['$localStorage','MENU',function($localStorage, MENU){
-			var menuAutorizado = $localStorage.menu || [ '' ];
+			var menuAutorizado = $localStorage.cium.menu || [ '' ];
 			var menu = ['']
 			function updateMenu(){
 				
@@ -137,7 +150,7 @@
 				
 				setMenu: function(nuevo_menu){
 					menuAutorizado = nuevo_menu || [ 'DASHBOARD' ];
-					$localStorage.menu = menuAutorizado;
+					$localStorage.cium.menu = menuAutorizado;
 					updateMenu();
 				},
 				

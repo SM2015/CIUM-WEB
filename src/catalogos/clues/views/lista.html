@@ -1,5 +1,5 @@
 <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
-<div layout="column" class="relative" layout-fill role="main">
+<div layout="column" class="relative" layout-fill role="main" flex>
 	<md-button class="md-fab md-fab-bottom-right" ng-click="nuevo()" aria-label="{{ 'NUEVA' | translate }}" >
 		<md-icon md-svg-icon="add"></md-icon>
   	</md-button>
@@ -80,37 +80,36 @@
 
 			
 			</div>
-<md-data-table
-  table-card="{visible: tableCardIsEnabled, title: 'Lista Clues'}"
-  selectable-rows="tableIsSelectable"
-  alternate-headers="'contextual'"
-  sortable-columns="false"
-  delete-row-callback="deleteRowCallback(rows)">
-
-    <md-data-table-header-row>
-  <md-data-table-column align-rule="left">Clues</md-data-table-column>
-  <md-data-table-column align-rule="left">{{ 'NOMBRE' | translate }}</md-data-table-column>
-  <md-data-table-column align-rule="left" hide-sm>{{ 'ENTIDAD' | translate }}</md-data-table-column>
-  <md-data-table-column align-rule="left" hide-sm>{{ 'MUNICIPIO' | translate }}</md-data-table-column>
-  <md-data-table-column align-rule="left" hide-sm>{{ 'LOCALIDAD' | translate }}</md-data-table-column>
-  <md-data-table-column align-rule="left" hide-sm>{{ 'JURISDICCION' | translate }}</md-data-table-column>
-  <md-data-table-column align-rule="left" hide-sm>{{ 'INSTIUCION' | translate }}</md-data-table-column>
-  <md-data-table-column align-rule="left" hide-sm></md-data-table-column>
-    </md-data-table-header-row>
-	
-    <md-data-table-row table-row-id="dato.id" ng-repeat="dato in datos">
-  <md-data-table-cell html-content="htmlContent">{{dato.clues}}</md-data-table-cell>
-  <md-data-table-cell html-content="htmlContent">{{dato.nombre }}</md-data-table-cell>
-  <md-data-table-cell html-content="htmlContent" hide-sm>{{dato.entidad }}</md-data-table-cell>  
-  <md-data-table-cell html-content="htmlContent" hide-sm>{{dato.municipio}}</md-data-table-cell>
-  <md-data-table-cell html-content="htmlContent" hide-sm>{{dato.localidad}}</md-data-table-cell>
-  <md-data-table-cell html-content="htmlContent" hide-sm>{{dato.jurisdiccion}}</md-data-table-cell>
-  <md-data-table-cell html-content="htmlContent" hide-sm>{{dato.institucion}}</md-data-table-cell>
-					<md-data-table-cell html-content="htmlContent">
+			
+<div class="md-sidenav-left md-whiteframe-z2">
+<md-data-table-container>
+  <table md-data-table md-progress="datos">
+    <thead md-order="query.order" md-trigger="onOrderChange">
+      <tr>
+  <th hide-sm name="Clues" order-by="clues"></th>
+ <th name="{{ 'NOMBRE' | translate }}" order-by="nombre"></th>
+ <th hide-sm name="{{ 'ENTIDAD' | translate }}" order-by="entidad"></th>
+ <th hide-sm name="{{ 'JURISDICCION' | translate }}" order-by="jurisdiccion"></th>
+ <th hide-sm name="{{ 'MUNICIPIO' | translate }}" order-by="municipio"></th>
+ <th hide-sm name="{{ 'LOCALIDAD' | translate }}" order-by="localidad"></th> 
+ <th hide-sm name="{{ 'INSTIUCION' | translate }}" order-by="intitucion"></th>
+ <th name=""></th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr md-auto-select ng-repeat="dato in datos">
+  <td>{{dato.clues}}</td>
+  <td>{{dato.nombre }}</td>
+  <td hide-sm>{{dato.entidad }}</td> 
+  <td hide-sm>{{dato.jurisdiccion}}</td> 
+  <td hide-sm>{{dato.municipio}}</td>
+  <td hide-sm>{{dato.localidad}}</td>
+  <td hide-sm>{{dato.institucion}}</td>
+					<td>
 					
 					<section layout="row" layout-sm="column" layout-align="center center">
 						
-						<a url-modulo="ver?id={{ dato.clues }}"><md-button class="md-fab md-mini  md-primary" aria-label="Ver">
+						<a url-modulo="ver?id={{ dato.clues }}"><md-button class="md-icon-button md-primary" aria-label="Ver">
 							<md-icon md-svg-src="remove-red-eye"></md-icon> 
                             <md-tooltip>
                             {{ 'VER' | translate }}
@@ -120,12 +119,16 @@
 						
 					</section>
 					
-					</md-data-table-cell>
-    </md-data-table-row>
-</md-data-table>
-			 <div layout="column" layout-fill ng-include="'src/app/views/paginado-list.html'">
-				  
-		</div>
+					</td>
+    
+      </tr>
+    </tbody>
+  </table>
+</md-data-table-container>
+
+
+<md-data-table-pagination md-limit="query.limit" md-label="paginationLabel" md-row-select="[5,10,15,25,50,100,1000]" md-page="query.page" md-total="{{paginacion.paginas}}" md-trigger="onPaginationChange"></md-data-table-pagination>
+       </div> 
     </div>
 </div>
 </md-content></div>

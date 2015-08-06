@@ -227,29 +227,29 @@
                                 
                                 <ol class="breadcrumb" style="margin-top: 0px;" ><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
 					<md-content  class="md-whiteframe-z1" style="width:98%; max-height:50%; overflow:auto; margin-left:1%; ">		
-					<md-data-table
-                  table-card="{visible: false, title: ''}"
-                  selectable-rows="false"
-                  alternate-headers="'contextual'"
-                  sortable-columns="false"
-                  delete-row-callback="deleteRowCallback(rows)">
-                
-                    <md-data-table-header-row>
-                        <md-data-table-column align-rule="left">{{ 'INDICADOR' | translate }}</md-data-table-column>
-                        <md-data-table-column align-rule="left">{{ 'VALOR' | translate }}</md-data-table-column>
-                    </md-data-table-header-row>
+					<md-data-table-container>
+  <table md-data-table md-progress="datos">
+    <thead md-order="query.order" md-trigger="onOrderChange">
+      <tr>
+                        <th name="{{ 'INDICADOR' | translate }}"></th>
+                        <th name="{{ 'VALOR' | translate }}"></th>
+                    </tr>
+                    </thead>
+    <tbody>
                     
-                    <md-data-table-row table-row-id="value.codigo" ng-repeat="value in dato">							
-                        <md-data-table-cell html-content="htmlContent">{{ value.codigo }} | {{ value.nombre }}</md-data-table-cell>
-                        <md-data-table-cell html-content="htmlContent">
+                    <tr ng-repeat="value in dato">							
+                        <td>{{ value.codigo }} | {{ value.nombre }}</td>
+                        <td>
                         	<div class="progress" >
                               <div class="progress-bar progress-bar-striped active progress-bar-default" role="progressbar"
                               aria-valuenow="{{ value.porcentaje }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ value.porcentaje }}%; background:{{ value.color }}">
                                 {{ value.porcentaje }}%
                               </div></div>
-                        </md-data-table-cell>		             
-                     </md-data-table-row>
-                    </md-data-table>
+                        </td>		             
+                     </tr>
+    </tbody>
+  </table>
+</md-data-table-container>
                        </md-content>         
                             </md-content>
                         </div>
@@ -305,23 +305,23 @@
                                 
                                 <ol class="breadcrumb" style="margin-top: 0px;" ><li>Calidad </li><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
 					<md-content  class="md-whiteframe-z1" style="width:98%; max-height:50%; overflow:auto; margin-left:1%; ">			
-					<md-data-table
-                  table-card="{visible: false, title: ''}"
-                  selectable-rows="false"
-                  alternate-headers="'contextual'"
-                  sortable-columns="false"
-                  delete-row-callback="deleteRowCallback(rows)">
-                
-                    <md-data-table-header-row>
-                        <md-data-table-column align-rule="left">Unidad</md-data-table-column>
-						<md-data-table-column align-rule="left" ng-repeat="v in indicadores" width="10%" ng-title="v.nombre">{{ v.codigo }}</md-data-table-column>
-                    </md-data-table-header-row>
-					<md-data-table-row table-row-id="value.codigo" ng-repeat="(key, value) in dato">							
-                        <md-data-table-cell html-content="htmlContent">{{ key }}</md-data-table-cell>	
-						<md-data-table-cell html-content="htmlContent" ng-repeat="v in value" style="background-color:{{ v.color }}">{{ v.porcentaje }}
-                        </md-data-table-cell>		             
-                 </md-data-table-row>
-                </md-data-table>
+					<md-data-table-container>
+  <table md-data-table md-progress="datos">
+    <thead md-order="query.order" md-trigger="onOrderChange">
+      <tr>
+                        <th name="Unidad"></th>
+						<th ng-repeat="v in indicadores" width="10%" ng-title="v.nombre" name="{{ v.codigo }}"></th>
+                    </tr>
+                    </thead>
+    <tbody>
+					<tr ng-repeat="(key, value) in dato">							
+                        <td>{{ key }}</td>	
+						<td ng-repeat="v in value" style="background-color:{{ v.color }}">{{ v.porcentaje }}
+                        </td>		             
+                 </tr>
+    </tbody>
+  </table>
+</md-data-table-container>
                     </md-content>
                             </md-content>
                         </div>
@@ -374,25 +374,25 @@
                                 
                                 <ol class="breadcrumb" style="margin-top: 0px;" ><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
 						<md-content  class="md-whiteframe-z1" style="width:98%; {{ isFullscreen ? '' : 'max-height:250px' }} ; overflow:auto; margin-left:1%; ">		
-					<md-data-table
-                  table-card="{visible: false, title: ''}"
-                  selectable-rows="false"
-                  alternate-headers="'contextual'"
-                  sortable-columns="false"
-                  delete-row-callback="deleteRowCallback(rows)">
-                
-                    <md-data-table-header-row>
-                        <md-data-table-column align-rule="left">{{ 'INDICADOR' | translate }}</md-data-table-column>
-						<md-data-table-column align-rule="left">{{ 'DESCRIPCION' | translate }}</md-data-table-column>
-						<md-data-table-column align-rule="left">{{ 'TOTAL_EXP' | translate }}</md-data-table-column>
+					<md-data-table-container>
+  <table md-data-table md-progress="datos">
+    <thead md-order="query.order" md-trigger="onOrderChange">
+      <tr>
+                        <th name="{{ 'INDICADOR' | translate }}"></th>
+						<th name="{{ 'DESCRIPCION' | translate }}"></th>
+						<th name="{{ 'TOTAL_EXP' | translate }}"></th>
 					
-                    </md-data-table-header-row>
-                    <md-data-table-row table-row-id="value.codigo" ng-repeat="value in dato">							
-                        <md-data-table-cell html-content="htmlContent">{{ value.codigo }} | {{ value.nombre }}</md-data-table-cell>	
-						<md-data-table-cell html-content="htmlContent">{{ tipo }}</md-data-table-cell>	
-						<md-data-table-cell html-content="htmlContent">{{ value.total }}</md-data-table-cell>	
-					</md-data-table-row>
-                </md-data-table>
+                    </tr>
+                    </thead>
+    <tbody>
+                    <tr ng-repeat="value in dato">							
+                        <td>{{ value.codigo }} | {{ value.nombre }}</td>	
+						<td>{{ tipo }}</td>	
+						<td>{{ value.total }}</td>	
+					</tr>
+    </tbody>
+  </table>
+</md-data-table-container>
                 		</md-content>
 					
                     <md-toolbar class="md-theme-light md-warn">

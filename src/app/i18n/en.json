@@ -70,6 +70,10 @@
 	"CRITERIO": "Criterion",
 	"LUGAR_VERIFICACION": "Place of verification",
 	"PLAZO_ACCION": "Action period",
+	"MINIMO":"Minimum",
+	"MAXIMO":"Maximun",
+	"ROWSPERPAGE":"Rows per page:",
+	"DE":"of",
 
 	"SISTEMA": "System",
 	"GRUPO": "Group",
@@ -126,6 +130,7 @@
 	"DESCRIPCION":"Description",
 	"RESUELTO":"Resolved",
 	"OPCIONES":"Options",
+	"TERMINADO":"Finish",
 
 	"RU_ABASTO":"Reporting unit (Supply)",
 	"RU_CALIDAD":"Reporting unit (Quality)",

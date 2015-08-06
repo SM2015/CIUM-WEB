@@ -4,7 +4,7 @@
 	var app = angular.module('App', 
 								[
 									'ngMaterial',
-									'mdDataTable',
+									'md.data.table',
 									'ngRoute',
 									'ngStorage',
 									'ngCookies',
