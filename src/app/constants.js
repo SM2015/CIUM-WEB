@@ -26,6 +26,12 @@ titulo: 'CALIDAD',
 key: 'EvaluacionCalidadController.index', 
 path: '/evaluacion-calidad', 
 icono: 'event-note' 
+  },
+  {
+    titulo: "SEGUIMIENTO",
+    key: "SeguimientoController.index",
+    path: "/seguimiento",
+    icono: "check-box"
   }
     ]
 }, 
@@ -104,12 +110,6 @@ icono: 'event-note'
   icono: "view-module"
 },
 {
-  titulo: "PERMISO",
-  key: "SysModuloAccionController.index",
-  path: "/permiso",
-  icono: "verified-user"
-},
-{
   titulo: "USUARIO",
   key: "UsuarioController.index",
   path: "/usuario",
@@ -117,18 +117,6 @@ icono: 'event-note'
 }
     ]
   },
-  {
-    grupo: "TRANSACCION",
-    lista: [
-{
-  titulo: "SEGUIMIENTO",
-  key: "SeguimientoController.index",
-  path: "/seguimiento",
-  icono: "check-box"
-}
-    ]
-  },
-
 			
 						 
 						 ]);

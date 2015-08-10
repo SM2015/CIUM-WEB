@@ -49,13 +49,7 @@
         
         <md-content class="md-padding" ng-init="existeUM=[]">
                     	<md-list-item>
-                      	<md-input-container flex ng-init="dato.all=false;">
-                        		<span ng-repeat="u in dato.usuarioclues" ng-init="dato.all=u.clues == null ? true : false;datoAll=u.clues == null ? true : false;" ng-if="u.clues==null"></span> 
-                                <md-checkbox ng-model="dato.all" ng-true-value="true" ng-false-value="false" aria-label="{{ 'TODAS_UM' | translate }}" ng-checked="datoAll" >
-                                    {{ 'TODAS_UM' | translate }}
-                                </md-checkbox>
-                            
-                            </md-input-container>
+                      	
                         </md-list-item>
                         
                          <md-list-item>

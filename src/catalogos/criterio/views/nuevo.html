@@ -42,7 +42,7 @@
                     <ul>
                         <li ng-repeat="i in options['indicadores']" class="parent_li" title="Abrir">
                         	<span ng-click="treeClick('indicador'+criterio.id+''+i.id);" class="principal" id="indicador{{ criterio.id }}{{i.id }}" >
-                        		<md-icon md-svg-src="add"></md-icon> 
+                        		<md-icon md-svg-src="{{ !icono['indicador'+criterio.id+''+i.id] ? 'add' : 'remove'}}"></md-icon> 
                         
                         		<strong>{{ 'INDICADOR' | translate }}: </strong> {{ i.codigo }} | {{ i.nombre }}
                         	</span>
@@ -57,7 +57,7 @@
                         		<li class="parent_li" style="display: none;">				
                         
                         		<span>
-                        		<select ng-options="item.id as item.nombre for item in options['lugares']" ng-model="criterio.indicador[i.id].lugar" ng-change="treeClickCheck(i.id,0,'indicador'+criterio.id+''+i.id);" name="LugarVerificacion[{{ i.id }}]" id="LugarVerificacion{{ i.id }}" style="border:none; background-color:transparent: width:100%">                        			
+                        		<select ng-options="item.id as item.nombre for item in options['lugares']" ng-model="criterio.indicador[i.id].lugar" ng-change="treeClickCheck(i.id,0,'indicador'+criterio.id+''+i.id);" name="LugarVerificacion[{{ i.id }}]" id="LugarVerificacion{{ i.id }}" style="border:none; background-color:transparent; width:100%">                        			
                         		</select>
                                 </span>
                         </li>

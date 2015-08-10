@@ -20,62 +20,96 @@
 	<md-content>
 	
 <md-content layout="column" class="imprimir"  layour-align="center center"  >
-    <md-list layout-margin class="md-whiteframe-z2" layout-align="center center"  >					
-        <md-list-item >					
+    <md-content layout="column"  layour-align="center center"  >
+    <md-list layout-margin class="md-whiteframe-z2" layout-align="center center"  >                 
+        <md-list-item >                 
                 <md-input-container flex >     
-                	<label>{{ 'NOMBRE' | translate }}</label>
-                        <input readonly  name="nombre" ng-model="dato.nombre" value="{{dato.nombre}}">
-                        
+                    <label>{{ 'NOMBRE' | translate }}</label>
+                        <input required  name="nombre" ng-model="dato.nombre" md-minlength="3" md-maxlength="255" value="{{dato.nombre}}"> 
+                        <div ng-messages="forma.nombre.$error">
+                          <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>
+                          <div ng-message="md-minlength">{{ 'CAMPO_MIN_L' | translate }} 3</div>
+                          <div ng-message="md-maxlength">{{ 'CAMPO_MAX_L' | translate }} 255</div>
+                        </div>
                 </md-input-container>
                 
                 <md-input-container flex ng-init="opciones('SysModulo')">     
-                	<br>
-                        <md-select placeholder="{{ 'PADRE' | translate }}" ng-model="dato.idPadre">
-                        	<md-option ng-repeat="item in options" value="{{item.id}}">{{item.nombre}}</md-option>
+                    <br>
+                        <md-select placeholder="{{ 'PADRE' | translate }}" ng-model="dato.idPadre" value="{{dato.idPadre}}">
+                            <md-option value=""></md-option>
+                            <md-option ng-repeat="item in options" value="{{item.id}}">{{item.nombre}}</md-option>
                         </md-select>
                 </md-input-container>
                 
             </md-list-item>
-			<md-list-item >					
-                <md-input-container flex > 
-                	<label>{{ 'URL' | translate }}</label>
-                        <input readonly  name="url" ng-model="dato.url" >
-                        
-                </md-input-container>
-                
-                <md-input-container flex > 
-                	<label>{{ 'ICONO' | translate }}</label>
-                        <input readonly  name="icon" ng-model="dato.icon" >
-                        
-                </md-input-container>
-                
-            </md-list-item>
             
-            <md-list-item >					
-                <md-input-container flex >
-                	<label>{{ 'CONTROLADOR' | translate }} {{ 'ANGULAR' | translate }}</label>
-                        <input readonly required  name="controladorAngular" ng-model="dato.controladorAngular" >
+            
+            <md-list-item >                 
+                
+                
+                <md-input-container flex > 
+                    <label>{{ 'CONTROLADOR' | translate }} {{ 'LARAVEL' | translate }}</label>
+                        <input   name="controladorLaravel" ng-model="dato.controladorLaravel" value="{{dato.controladorLaravel}}">
                         
                 </md-input-container>
-                
+                                
                 <md-input-container flex > 
-                	<label>{{ 'CONTROLADOR' | translate }} {{ 'LARAVEL' | translate }}</label>
-                        <input readonly  name="controladorLaravel" ng-model="dato.controladorLaravel" >
-                       
-                </md-input-container>
-                
-            </md-list-item>
-            
-            <md-list-item >					
-                <md-input-container flex > 
-                	<p>{{ 'TIENE_VISTA' | translate }}</p>
-                    <md-radio-group ng-model="dato.vista">
-                      <md-radio-button value="1">{{ 'SI' | translate }}</md-radio-button>
-                      <md-radio-button value="0"> {{ 'NO' | translate }} </md-radio-button>
+                    <p>{{ 'TIENE_VISTA' | translate }}</p>
+                    <md-radio-group ng-model="dato.vista" flex value="{{dato.vista}}">
+                      <md-radio-button flex value="1" style="float:left">{{ 'SI' | translate }}</md-radio-button>
+                      <md-radio-button flex value="0" style="float:left"> {{ 'NO' | translate }} </md-radio-button>
                     </md-radio-group>
                 </md-input-container>
                 
             </md-list-item>
-	</md-list>
+
+            <md-data-table-toolbar ng-hide="selected.length || filter.show">
+  <h2 class="md-title"><p>{{ 'METODO' | translate }}</p></h2>
+  <div flex></div>
+  
+</md-data-table-toolbar>
+<md-data-table-container>
+  <table md-data-table md-progress="datos">
+    <thead md-order="query.order" md-trigger="onOrderChange">
+      <tr>
+              <th name="{{  'NOMBRE' | translate }}"></th>
+              <th name="{{  'RECURSO' | translate }}"></th>
+              <th ></th>              
+            </tr>
+    </thead>
+    <tbody>
+      <tr md-auto-select ng-repeat="item in dato.metodos">
+          
+            
+            <td>
+              <md-input-container flex >
+                <input aria-label="nombre{{$index}}" ng-model="item.nombre" value="{{item.nombre}}">
+              </md-input-container>
+            </td>
+            <td>
+             <md-input-container flex >            
+                <md-select placeholder="{{ 'METODO' | translate }}" ng-model="item.metodo" value="{{item.metodo}}">
+                        <md-option value="delete">DELETE</md-option>
+                        <md-option value="get">GET</md-option>
+                        <md-option value="post">POST</md-option>
+                        <md-option value="put">PUT</md-option>
+                        
+                    </md-select>
+                </md-input-container>
+            </td>
+                                  
+            <td>
+              <md-button type="button" aria-label="Quitar" ng-click="quitarMetodo($index)"><md-icon md-svg-icon="delete"></md-icon></md-button>
+              </td>
+          </tr>
+    </tbody>
+  </table>
+</md-data-table-container>
+
+            
+    </md-list>
+</md-content>
+  
+
 </md-content>
 </md-content></div>

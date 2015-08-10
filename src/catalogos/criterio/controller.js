@@ -92,21 +92,21 @@
 	        uri="/"+uri[1]+"/nuevo";
 	        $location.path(uri).search({id: null});
 	    }
-
+	    $scope.icono=[];
 		$scope.criterio = [];
 		$scope.criterio.indicador = {};
 		$scope.treeClick =function(a)
 		{
-			var children = $("#"+a).parent('li.parent_li').find(' > ul > li');
-
-			if (children.is(":visible")) {
-				children.hide('fast');
-				$("#"+a).attr('title', 'Expandir');
-				$("#"+a).find('> md-icon').attr('md-svg-src','add').find("> svg >path").attr('d','M38 26H26v12h-4V26H10v-4h12V10h4v12h12v4z');
+			var children = angular.element(document.getElementById(a)).parent('li.parent_li').find('ul').find('li');
+			
+			if (children.attr("style")=="display: none;") {
+				children.attr("style","display: ;");
+				angular.element(document.getElementById(a)).attr('title', 'Expandir');
+				$scope.icono[a]=true;
 			} else {
-				children.show('fast');
-				$("#"+a).attr('title', 'Cerrar');
-				$("#"+a).find('> md-icon').attr('md-svg-src','remove').find("> svg >path").attr('d','M38 26H10v-4h28v4z');
+				children.attr("style","display: none;");
+				angular.element(document.getElementById(a)).attr('title', 'Cerrar');
+				$scope.icono[a]=false;
 			}
 		};
 		$scope.che=[];
@@ -131,7 +131,7 @@
 				cone = null;
 			}
 			
-			var children = $("#"+c);
+			var children = angular.element(document.getElementById(c));
 			if(cone==null & lugar==0)
 			{				
 				delete $scope.criterio.indicador[a];
@@ -188,8 +188,10 @@
 				angular.forEach(value.cones, function(c, k) {
 					cone.push(value.id+','+c.id);		
 				});
-				$('#LugarVerificacion'+value.id).parent("span").parent("li").parent("ul").parent("li").find(".principal").attr("style","background-color: cornflowerblue;");	
-				$scope.criterio.indicador[value.id]={lugar:value.lugarVerificacion.id,cone:cone};													
+				angular.element(document.getElementById('indicador'+value.id)).attr("style","background-color: cornflowerblue;");
+				
+				$scope.criterio.indicador[value.id]={lugar:value.lugarVerificacion.id,cone:cone};
+
 				cone=[];
 			});			
 		}
@@ -307,12 +309,13 @@
 
 					$scope.criterio=data.data;				
 					$scope.seleccionado(data.data.indicadores);	
+
 				}
 				else
 				{
 					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
 				}
-					$scope.cargando = false;
+				$scope.cargando = false;
 				},function (e) {
 					errorFlash.error(e);
 					$scope.cargando = false;

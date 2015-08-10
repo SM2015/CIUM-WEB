@@ -30,10 +30,7 @@
       <tr>
 		 <th hide-sm name="ID" order-by="id"></th>
 		    <th name="{{ 'PADRE' | translate }}"></th>
-			<th name="{{ 'NOMBRE' | translate }}" order-by="nombre"></th>
-			<th hide-sm name="{{ 'URL' | translate }}"></th>
-			<th hide-sm name="{{ 'ICONO' | translate }}"></th>
-			<th hide-sm name="{{ 'CONTROLADOR' | translate }} {{ 'ANGULAR' | translate }}"></th>
+			<th name="{{ 'NOMBRE' | translate }}" order-by="nombre"></th>			
 			<th hide-sm name="{{ 'CONTROLADOR' | translate }} {{ 'LARAVEL' | translate }}"></th>
 			<th hide-sm name="{{ 'VISTA' | translate }}"></th>
 			<th ></th>
@@ -44,9 +41,7 @@
 				 <td hide-sm>{{ dato.id  }}</td>
 				 <td>{{ dato.padres.nombre ? dato.padres.nombre:"No tiene" | uppercase }}</td>
 				 <td>{{ dato.nombre | uppercase }}</td>
-				 <td hide-sm>{{ dato.url }}</td>
-				 <td hide-sm><i class="{{ dato.icon }}"></i> {{ dato.icon }} </td>
-				 <td hide-sm>{{ dato.controladorAngular }}</td>
+				 
 				 <td hide-sm>{{ dato.controladorLaravel }}</td>
 				 <td hide-sm>{{ dato.vista==1?"Si":"No" }}</td>
 				 <td>

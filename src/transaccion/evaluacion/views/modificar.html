@@ -191,7 +191,7 @@
             </md-content>
 
           <md-content layout="column"  layour-align="center center" >
-					  <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
+					  <md-list layout-margin  layout-align="center center" >
                     	<md-input-container flex >
                             <div style="text-align:center" flex>                            
                             	<h4 style="font-size:1.3em">{{ dato.nombre }}</h4>
@@ -334,7 +334,7 @@
                         </md-content>
                  </md-list-item>
                  <md-list-item ng-if="tieneHallazgo" > 
-                 <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="width:100%">
+                 <md-list layout-margin  layout-align="center center" style="width:100%">
                  		<span ng-init="acciones();accionesPlazo()"></span>
                         	
                             <md-toolbar class="md-accent" >
@@ -353,7 +353,7 @@
                                         </md-input-container>
                                      </md-list-item>
                                      <md-list-item >
-                                        <md-input-container flex >     
+                                        <md-input-container flex ng-init="verSeguimiento()">     
                                             <p>{{ 'ACCION' | translate }}</p>
                                                 <select ng-options="item.id as item.nombre group by item.tipo=='R' ? 'Resolutiva' : 'Seguimiento' for item in acciones" ng-model="dato.accion"  ng-change="verSeguimiento()" id="accion" required>
 												<option value="">Seleccione</option>

@@ -19,11 +19,6 @@
       of: $translate.instant('DE')
     };
 
-    $scope.paginationLabel = {
-      text: $translate.instant('ROWSPERPAGE'),
-      of: $translate.instant('DE')
-    };
-
     $scope.BuscarPor=[
                       {id:"nombre", nombre:$translate.instant('NOMBRE')},
                       {id:'creadoAl', nombre:$translate.instant('CREADO')},

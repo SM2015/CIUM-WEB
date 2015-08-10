@@ -37,7 +37,22 @@
     limit: 5,
     page: 1
   };
-
+  $scope.dato={};
+  $scope.dato.metodos=[
+	  {nombre:'Guardar', metodo:'post'},
+	  {nombre:'Modificar', metodo:'put'},
+	  {nombre:'Eliminar', metodo:'delete'},
+	  {nombre:'Listar', metodo:'get'},
+	  {nombre:'Ver', metodo:'get'}
+  ];
+  $scope.quitarMetodo = function(index) 
+	{
+		$scope.dato.metodos.splice(index, 1);
+	};
+  $scope.agregarMetodo = function() 
+	{	
+		$scope.dato.metodos.push({});
+	};
 
   $scope.onOrderChange = function (order) {
     $scope.init(); 
@@ -62,7 +77,6 @@
 	    $scope.datos = [];
 	    
 		
-		$scope.dato = {};
 		$scope.colorColor = [];
 		$scope.alertas = [];
 
@@ -204,6 +218,7 @@
 			
 			var id=$location.search().id;
 
+			$scope.dato.metodos = [];
 			CrudDataApi.ver(url, id, function (data) {
 				if(data.status  == '407')
 					$window.location="acceso";
@@ -211,9 +226,12 @@
 				if(data.status==200)
 				{
 					$scope.id=data.data.id;
+					$scope.dato=data.data;
 					
+					$scope.dato.metodos = data.metodos	
+								
 					var list = data.data.permissions;	
-					$scope.dato=data.data;				
+									
 					for (var key in list) {
 						$scope.datos.push(key);
 				   	}

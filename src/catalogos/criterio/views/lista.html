@@ -44,7 +44,7 @@
                         <ul>
                             <li ng-repeat="i in dato.indicadores" class="parent_li" title="Abrir">
                                 <span ng-click="treeClick('indicador'+criterio.id+''+i.id);" class="principal" id="indicador{{ criterio.id }}{{i.id }}" >
-                                    <md-icon md-svg-src="add"></md-icon>                             
+                                    <md-icon md-svg-src="{{ !icono['indicador'+criterio.id+''+i.id] ? 'add' : 'remove'}}"></md-icon> 
                                     <strong>{{ 'INDICADOR' | translate }}: </strong> {{ i.codigo }} | {{ i.nombre }}
                                 </span>
                                 <ul>			               

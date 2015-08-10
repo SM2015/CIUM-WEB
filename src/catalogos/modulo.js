@@ -19,9 +19,9 @@
 		.when('/clues/ver', {templateUrl: 'src/catalogos/clues/views/ver.html',	controller: 'CrudCtrl'})
 		
 		.when('/cone', { templateUrl: 'src/catalogos/cone/views/lista.html',	controller: 'CrudCtrl'})
-		.when('/cone/nuevo', {templateUrl: 'src/catalogos/cone/views/nuevo.html',	controller: 'CrudCtrl'})
-		.when('/cone/modificar', {templateUrl: 'src/catalogos/cone/views/modificar.html',	controller: 'CrudCtrl'})
-		.when('/cone/ver', {templateUrl: 'src/catalogos/cone/views/ver.html',	controller: 'CrudCtrl'})
+		.when('/cone/nuevo', {templateUrl: 'src/catalogos/cone/views/nuevo.html',	controller: 'UsuarioCtrl'})
+		.when('/cone/modificar', {templateUrl: 'src/catalogos/cone/views/modificar.html',	controller: 'UsuarioCtrl'})
+		.when('/cone/ver', {templateUrl: 'src/catalogos/cone/views/ver.html',	controller: 'UsuarioCtrl'})
 
 		.when('/zona', { templateUrl: 'src/catalogos/zona/views/lista.html',	controller: 'CrudCtrl'})
 		.when('/zona/nuevo', {templateUrl: 'src/catalogos/zona/views/nuevo.html',	controller: 'UsuarioCtrl'})

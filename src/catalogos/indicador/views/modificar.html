@@ -49,8 +49,8 @@
                 <md-input-container flex >     
                 <p>{{ 'CATEGORIA' | translate }}: <span class="radioValue">{{ dato.categoria }}</span> </p>
                 <md-radio-group ng-model="dato.categoria">
-                  <md-radio-button value="ABASTO">{{ 'ABASTO' | translate }}</md-radio-button>
-                  <md-radio-button value="CALIDAD"> {{ 'CALIDAD' | translate }} </md-radio-button>
+                  <md-radio-button value="ABASTO"  style="float:left">{{ 'ABASTO' | translate }}</md-radio-button>
+                  <md-radio-button value="CALIDAD" style="float:left"> {{ 'CALIDAD' | translate }} </md-radio-button>
                 </md-radio-group>
                         
                 </md-input-container>
@@ -66,7 +66,7 @@
             </md-list-item>
 			<md-divider ></md-divider>
               
-			  <div class="md-sidenav-left md-whiteframe-z2">
+			  <div class="md-sidenav-left ">
               <md-data-table-toolbar ng-hide="selected.length || filter.show">
   <h2 class="md-title"><p>{{ 'ALERTA' | translate }}</p></h2>
   <div flex></div>
@@ -86,22 +86,33 @@
       <tr md-auto-select ng-repeat="item in dato.indicador_alertas">
 			 		
 			 			
-			 			<td><md-input-container flex ><input aria-label="min{{$index}}" string-to-number type="number" min="0" max="100" ng-model="item.minimo"></md-input-container></td>
-			 			<td><md-input-container flex ><input aria-label="max{{$index}}" string-to-number type="number" min="0" max="100" ng-model="item.maximo"></md-input-container></td>
 			 			<td>
-                            
-                            <md-select placeholder="Color" ng-model="item.idAlerta" ng-change="getIndexOf(item.idAlerta,$index)"  ng-init="getIndexOf(item.idAlerta,$index)">
-                            	<md-option ng-repeat="campo in alertas" value="{{campo.id}}">{{campo.nombre}}</md-option>
-                            </md-select>
-			 			</td>
+              <md-input-container flex >
+                <input aria-label="min{{$index}}" string-to-number type="number" min="0" max="100" ng-model="item.minimo" readonly="readonly">
+              </md-input-container>
+            </td>
+            <td>
+              <md-input-container flex >
+                <input aria-label="max{{$index}}" string-to-number type="number" min="{{dato.indicador_alertas[$index].minimo}}" max="100" ng-model="item.maximo" ng-change="calcularMinimo($index)" required>
+              </md-input-container></td>
+            <td>
+              <md-input-container flex >             
+                <md-select placeholder="Color" ng-model="item.idAlerta" ng-change="getIndexOf(item.idAlerta,$index)"  ng-init="getIndexOf(item.idAlerta,$index)">
+                  <md-option ng-repeat="campo in alertas" value="{{campo.id}}">{{campo.nombre}}</md-option>
+                </md-select>
+                </md-input-container>
+            </td>
                         
 			 			<td><span class="img-circle" style="background: {{ colorColor[$index] }}; display:block; height:25px; width:25px;"></span></td>
+            <td>
+              <md-button type="button" aria-label="Quitar" ng-click="quitarAlerta($index)"><md-icon md-svg-icon="delete"></md-icon></md-button>
+              </td>
 			 		</tr>
     </tbody>
   </table>
 </md-data-table-container>
 			  
-				  	<md-button class="md-raised md-primary" type="button" ng-click="agregarAlerta()"><md-icon md-svg-src="check"></md-icon> {{ 'AGREAGAR' | translate}}</md-button> 
+				  	<md-button class="md-raised md-primary" type="button" ng-click="agregarAlerta()"><md-icon md-svg-src="check"></md-icon> {{ 'AGREGAR' | translate}}</md-button> 
 				  
             
      </md-list>

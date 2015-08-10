@@ -43,60 +43,82 @@
                 </md-input-container>
                 
             </md-list-item>
-			<md-list-item >					
-                <md-input-container flex > 
-                	<label>{{ 'URL' | translate }}</label>
-                        <input required  name="url" ng-model="dato.url" md-minlength="3" md-maxlength="255">
-                        <div ng-messages="forma.url.$error">
-                          <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>
-                          <div ng-message="md-minlength">{{ 'CAMPO_MIN_L' | translate }} 3</div>
-                          <div ng-message="md-maxlength">{{ 'CAMPO_MAX_L' | translate }} 255</div>
-                        </div>
-                </md-input-container>
-                
-                <md-input-container flex > 
-                	<label>{{ 'ICONO' | translate }}</label>
-                        <input  name="icon" ng-model="dato.icon" >
-                        
-                </md-input-container>
-                
-            </md-list-item>
+			
             
             <md-list-item >					
-                <md-input-container flex >
-                	<label>{{ 'CONTROLADOR' | translate }} {{ 'ANGULAR' | translate }}</label>
-                        <input required  name="controladorAngular" ng-model="dato.controladorAngular" md-minlength="3" md-maxlength="255">
-                        <div ng-messages="forma.controladorAngular.$error">
-                          <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>
-                          <div ng-message="md-minlength">{{ 'CAMPO_MIN_L' | translate }} 3</div>
-                          <div ng-message="md-maxlength">{{ 'CAMPO_MAX_L' | translate }} 255</div>
-                        </div> 
-                </md-input-container>
+                
                 
                 <md-input-container flex > 
                 	<label>{{ 'CONTROLADOR' | translate }} {{ 'LARAVEL' | translate }}</label>
-                        <input required  name="controladorLaravel" ng-model="dato.controladorLaravel" md-minlength="3" md-maxlength="255">
-                        <div ng-messages="forma.controladorLaravel.$error">
-                          <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>
-                          <div ng-message="md-minlength">{{ 'CAMPO_MIN_L' | translate }} 3</div>
-                          <div ng-message="md-maxlength">{{ 'CAMPO_MAX_L' | translate }} 255</div>
-                        </div>
+                        <input   name="controladorLaravel" ng-model="dato.controladorLaravel" >
+                        
                 </md-input-container>
-                
-            </md-list-item>
-            
-            <md-list-item >					
+                          		
                 <md-input-container flex > 
                 	<p>{{ 'TIENE_VISTA' | translate }}</p>
-                    <md-radio-group ng-model="dato.vista">
-                      <md-radio-button value="1">{{ 'SI' | translate }}</md-radio-button>
-                      <md-radio-button value="0"> {{ 'NO' | translate }} </md-radio-button>
+                    <md-radio-group ng-model="dato.vista" flex>
+                      <md-radio-button flex value="1" style="float:left">{{ 'SI' | translate }}</md-radio-button>
+                      <md-radio-button flex value="0" style="float:left"> {{ 'NO' | translate }} </md-radio-button>
                     </md-radio-group>
                 </md-input-container>
                 
             </md-list-item>
+
+            <md-data-table-toolbar ng-hide="selected.length || filter.show">
+  <h2 class="md-title"><p>{{ 'METODO' | translate }}</p></h2>
+  <div flex></div>
+  
+</md-data-table-toolbar>
+<md-data-table-container>
+  <table md-data-table md-progress="datos">
+    <thead md-order="query.order" md-trigger="onOrderChange">
+      <tr>
+              <th name="{{  'NOMBRE' | translate }}"></th>
+              <th name="{{  'RECURSO' | translate }}"></th>
+              <th name="{{  'METODO' | translate }}"></th>
+              <th ></th>              
+            </tr>
+    </thead>
+    <tbody>
+      <tr md-auto-select ng-repeat="item in dato.metodos">
+          
+            
+            <td>
+              <md-input-container flex >
+                <input aria-label="nombre{{$index}}" ng-model="item.nombre" >
+              </md-input-container>
+            </td>
+            <td>
+              <md-input-container flex >
+                <input aria-label="recurso{{$index}}" ng-model="item.recurso" >
+              </md-input-container>
+            </td>
+            <td>
+             <md-input-container flex >            
+                <md-select placeholder="{{ 'METODO' | translate }}" ng-model="item.metodo">
+                        <md-option value="delete">DELETE</md-option>
+                        <md-option value="get">GET</md-option>
+                        <md-option value="post">POST</md-option>
+                        <md-option value="put">PUT</md-option>
+                        
+                    </md-select>
+                </md-input-container>
+            </td>
+                                  
+            <td>
+              <md-button type="button" aria-label="Quitar" ng-click="quitarMetodo($index)"><md-icon md-svg-icon="delete"></md-icon></md-button>
+              </td>
+          </tr>
+    </tbody>
+  </table>
+</md-data-table-container>
+
+            <md-button class="md-raised md-primary" type="button" ng-click="agregarMetodo()"><md-icon md-svg-src="check"></md-icon> {{ 'AGREGAR' | translate}}
+            </md-button>
 	</md-list>
 </md-content>
+  
+
 </form>   
     
 </md-content></div>

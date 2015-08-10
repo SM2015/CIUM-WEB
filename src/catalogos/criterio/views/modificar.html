@@ -5,7 +5,7 @@
   	</md-button>
 	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
 	<md-toolbar  >
-		<div class="md-toolbar-tools" ng-init="opciones('Indicador','indicadores');opciones('Cone','cones');opciones('LugarVerificacion','lugares');ver('Criterio');">    
+		<div class="md-toolbar-tools" ng-init="ver('Criterio');opciones('Indicador','indicadores');opciones('Cone','cones');opciones('LugarVerificacion','lugares');">    
 			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
 		  <md-icon md-svg-icon="menu" ></md-icon>
 		    </md-button>   
@@ -45,7 +45,7 @@
                     <ul>
                         <li ng-repeat="i in options['indicadores']" class="parent_li" title="Abrir">
                         	<span ng-click="treeClick('indicador'+criterio.id+''+i.id);" class="principal" id="indicador{{ criterio.id }}{{i.id }}" >
-                        		<md-icon md-svg-src="add"></md-icon> 
+                        		<md-icon md-svg-src="{{ !icono['indicador'+criterio.id+''+i.id] ? 'add' : 'remove'}}"></md-icon> 
                         
                         		<strong>{{ 'INDICADOR' | translate }}: </strong> {{ i.codigo }} | {{ i.nombre }}
                         	</span>

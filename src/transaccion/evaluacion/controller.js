@@ -482,10 +482,9 @@
 		$scope.esSeguimiento=[];
 		$scope.verSeguimiento = function()
 		{	
-			var este = angular.element('#accion');
-			var selected = $(':selected', este);		
-			var text = selected.closest('optgroup').attr('label');
-			
+			var este = angular.element(document.getElementById('accion'));
+			var text = este[0].selectedOptions[0].parentElement.label;
+						
 			if(text=='Seguimiento')
 				$scope.esSeguimiento=true;
 			else
@@ -518,7 +517,7 @@
 				$scope.json.plazoAccion = p;		
 				
 				$scope.json.aprobado = 0;
-				$scope.json.clues = $("#clues").val();
+				$scope.json.clues = angular.element(document.getElementById("clues")).val();
 				
 				$scope.guardarCriterio('EvaluacionHallazgo');		
 			}

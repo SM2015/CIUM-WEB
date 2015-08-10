@@ -46,7 +46,45 @@
                     
             </md-input-container>
         </md-list-item>
-					
+		
+		<md-content class="md-padding" ng-init="existeUM=[]">
+                    	<md-list-item>
+                      	
+                        </md-list-item>
+                        
+                         <md-list-item>
+                      	<md-input-container flex > 
+                            	<div class="alert alert-info"></div>
+                                    <div class="md-sidenav-left md-whiteframe-z2">
+<md-data-table-container>
+  <table md-data-table md-progress="datos">
+    <thead md-order="query.order" md-trigger="onOrderChange">
+      <tr>
+												<th name="CLUES"></th>
+												<th name="{{ 'NOMBRE' | translate}}"></th>
+												<th name="{{ 'JURISDICCION' | translate}}"></th>
+												
+											</tr>
+    </thead>
+    <tbody>
+      <tr md-auto-select ng-repeat="u in dato.coneclues">
+												<td> {{ u.clues }}
+												<span ng-model="dato.clues[$index]" ng-init="dato.clues[$index]=u.clues;existeUM[$index]=u.clues;"></span>
+                                                </td>
+												<td> {{ u.nombre }}</td>
+												<td> {{ u.jurisdiccion }}</td>
+												
+											
+									</tr>
+    </tbody>
+  </table>
+</md-data-table-container>
+								
+							
+                            </md-input-container>
+                         </md-list-item>
+                    </md-content>
+
 	</md-list>				
 </md-content> 
 

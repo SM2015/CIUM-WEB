@@ -33,7 +33,112 @@
                 </md-input-container>
             </md-list-item>
 
-			
+			<md-content class="md-padding" ng-init="existeUM=[]" flex>
+                    	
+                        <md-list-item>
+                      	<md-input-container flex >
+                        
+                            <section layout="row" layout-sm="column" layout-align="center center" ng-init="tipo=true;" style="  width: 99.5%;  margin-left: 12px;">                      
+                            <div flex ng-init="getJurisdiccion();">
+                            
+                                <md-select placeholder="{{ 'JURISDICCION' | translate }}" ng-model="dato.jurisdiccion" ng-change="cargarClues(dato.jurisdiccion)">
+                                  <md-option ng-repeat="item in Jurisdiccion" value="{{item.jurisdiccion}}">{{item.jurisdiccion}}</md-option>
+                                </md-select>
+                            </div>
+                          </section>
+                          <section layout="row" layout-sm="column" layout-align="center center" ng-init="tipo=true;" style="  width: 99.5%;  margin-left: 12px;">
+                            <div flex ng-init="getJurisdiccion();">
+                              <p>Clues</p>
+                                <md-autocomplete
+                                  ng-disabled="isDisabled"
+                                  md-no-cache="noCache"
+                                  md-selected-item="selectedItem"
+                                  md-search-text-change="searchTextChange(searchText)"
+                                  md-search-text="searchText"
+                                  md-selected-item-change="selectedItemChange(item)"
+                                  md-items="item in querySearch(searchText)"
+                                  md-item-text="item.nombre"
+                                  md-min-length="0"
+                                  ng-model="dato.idClues" 
+                                  md-menu-class="autocomplete-custom-template">
+                                  
+                                    <md-item-template >
+                                      <span class="item-title">
+                                        <md-icon md-svg-icon="business"></md-icon>
+                                        <span> {{item.nombre}} </span>
+                                        <md-icon md-svg-icon="star"></md-icon>
+                                        <span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong style="font-size:.8em;">{{item.clues}}</strong> </span>
+                                      </span>
+                                      <span class="item-metadata" style="font-size:.8em">
+                                        <span class="item-metastat" >
+                                          <strong>JS: </strong> {{item.jurisdiccion}}
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="item-metastat">
+                                          <strong>M: </strong>{{item.municipio}} 
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="item-metastat">
+                                          <strong>L: </strong> {{item.localidad}}
+                                        </span>
+                                      </span>
+                                      <span class="item-metadata" style="font-size:.6em">
+                                      	<md-icon md-svg-icon="place"></md-icon>
+                                        <span class="item-metastat">
+                                          {{item.domicilio}} 
+                                        </span>
+                                      </span>
+                                      <span class="item-metadata" style="font-size:.7em">
+                                      	<md-icon md-svg-icon="style"></md-icon>
+                                        <span class="item-metastat">
+                                          <strong>{{item.tipoUnidad}}</strong> 
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span class="item-metastat">
+                                          <md-icon md-svg-icon="airline-seat-flat"></md-icon>
+                                          <strong>{{item.tipologia}}</strong> 
+                                        </span>
+                                      </span>
+                                     </md-item-template>                                 
+                                    
+                              	</md-autocomplete> 
+                                </div>                           
+                        </section>
+                        	</md-input-container>
+                         </md-list-item>
+                         <md-list-item>
+                      	<md-input-container flex > 
+                            	<div class="alert alert-info"></div>
+                                    <div class="md-sidenav-left md-whiteframe-z2">
+<md-data-table-container>
+  <table md-data-table md-progress="datos">
+    <thead md-order="query.order" md-trigger="onOrderChange">
+      <tr>
+												<th name="CLUES"></th>
+												<th name="{{ 'NOMBRE' | translate}}"></th>
+												<th name="{{ 'JURISDICCION' | translate}}"></th>
+												
+												<th ></th>
+											</tr>
+    </thead>
+    <tbody>
+      <tr md-auto-select ng-repeat="u in dato.usuarioclues">
+												<td> {{ u.clues }}
+												<span ng-model="dato.clues[$index]" ng-init="dato.clues[$index]=u.clues;existeUM[$index]=u.clues;"></span>
+                                                </td>
+												<td> {{ u.nombre }}</td>
+												<td> {{ u.jurisdiccion }}</td>
+												
+												<td>
+                                                <md-button type="button" aria-label="Quitar" ng-click="CluesUsuarioBorrar($index)"><md-icon md-svg-icon="delete"></md-icon></md-button>
+                                                </td>
+										
+									</tr>
+    </tbody>
+  </table>
+</md-data-table-container>
+								
+							
+                            </md-input-container>
+                         </md-list-item>
+                    </md-content>
         
     </md-list>
 </md-content>

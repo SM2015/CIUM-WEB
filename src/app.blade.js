@@ -1,22 +1,6 @@
 var app = angular.module('App');  
 
 
-
-app.directive('showtab', function ($location) 
-{
-    return {
-		  link: function (scope, element, attrs) {
-			element.click(function(e) {
-				e.preventDefault();
-				if(attrs.showtab=='1')
-					$(element).tab('show');
-				else 
-					$location.path(attrs.href);
-			});
-  		}
-    };
-});
-
 app.directive('urlModulo', function() 
 {	
 	return{

@@ -1,6 +1,6 @@
 {
 	"APP_NOMBRE": "CIUM",
-	"APP_DESCRIPCION_BREVE": "Accede a todas las aplicaciones y servicios en línea del Instituto de Salud del Estado de Chiapas con una sola cuenta",
+	"APP_DESCRIPCION_BREVE": "La secretaria de salud (ISECH) a través de la Dirección de Informática, con el apoyo del Proyecto Salud Mesoamérica 2015 (SM2015), pone en marcha el desarrollo del proyecto Captura de indicadores de unidades medicas (CIUM), cuyo objetivo es facilitar y fortalecer la detección de la ubicación de los puntos críticos en  la medición de calidad y abastos en unidades médicas, agilizando la toma de decisiones en todos los niveles provenientes del eTAB, por medio de los cuales se logran alcanzar las metas propuestas por el sector salud.",
 
 	"CREAR_CUENTA": "Crear una cuenta ahora",
 	"BIENVENIDO": "Bienvenido",
@@ -96,8 +96,8 @@
 	"TELEFONO": "Teléfono",
 	"USUARIO": "Usuario",
 	"DATOS_ACCESO": "Datos de acceso",
-	"TEXTO_1_USUARIO": "Para seleccionar multiples grupos de usuario ",
-	"TEXTO_2_USUARIO": "hacer click sobre un rol y deSpues selEccionar otro",
+	"TEXTO_1_USUARIO": "Puede seleccionar multiples grupos de usuario haciendo click sobre cada uno. ",
+	"TEXTO_2_USUARIO": "Para quitar un grupo hacer click sobre el mismo",
 	"DENEGAR_PERMISO":"Denegar permisos individual al usuario",
 	"LIMPIAR_PERMISO":"Limpiar permisos",
 	"TODAS_UM":"Todas las unidades médicas",
@@ -198,6 +198,9 @@
 	"MODIFICADO": "Modificado",
 	"ELIMINADO": "Borrado",	
 	"FECHA_EVALUACION": "Fecha Evaluación",
+
+	"DASHBOARD_TEXTO": "Gráficos del avance de captura",
+	"DASHBOARD_DESCRIPCION": "aca un texto que describa el dash y su funcion dentro del sistema cium",
 
 	"en": "English",
 	"es": "Español",

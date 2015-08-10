@@ -58,7 +58,7 @@
 							delete $localStorage.cium.menu;
 							delete $localStorage.cium.perfil;
 							var error_code = '';
-							if(typeof error !== 'undefined'){
+							if(error.data == null){
 								error_code = "CONNECTION_REFUSED";
 								$rootScope.errorSignin = error_code;
 								errorCallback();
@@ -74,7 +74,9 @@
 								case 'ERROR_PERMISOS':
 									error_code = 'ERROR_PERMISOS';
 									break;
-							}
+								default : error_code = 'CONNECTION_REFUSED';
+															
+								}
 							$rootScope.errorSignin = error_code;
 							errorCallback();
 							

@@ -117,9 +117,24 @@
 			});		
 		};	
 		$scope.dato.indicador_alertas=[];
+		$scope.quitarAlerta = function($index) 
+		{
+			$scope.dato.indicador_alertas.splice($index, 1);		
+		}
+		$scope.calcularMinimo = function(t) 
+		{
+			$scope.dato.indicador_alertas[t+1].minimo=parseInt($scope.dato.indicador_alertas[t].maximo)+1;
+		}
 		$scope.agregarAlerta = function() 
-		{	
-			$scope.dato.indicador_alertas.push({minimo:0,maximo:0,color:0});
+		{
+			var t=$scope.dato.indicador_alertas.length;
+			if(t>0)	
+			{
+				var valor=parseInt($scope.dato.indicador_alertas[t-1].maximo)+1;
+				$scope.dato.indicador_alertas.push({minimo:valor,maximo:valor+1,color:0});
+			}
+			else
+				$scope.dato.indicador_alertas.push({minimo:0,maximo:0,color:0});
 		};
 		$scope.quitarAlerta = function(index) 
 		{
