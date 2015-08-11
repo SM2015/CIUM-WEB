@@ -42,7 +42,9 @@
 	.defaultIconSet("assets/svg/avatars.svg", 128)		  
 		  
 		  .icon("logo", "assets/svg/cium.svg", 48)
+		  .icon("logo-white", "assets/svg/cium_white.svg", 48)
 		  .icon("salud-id", "assets/svg/salud_id_white.svg", 48)
+		  .icon("salud-id-alt", "assets/svg/salud_id_alt.svg", 48)
 		  .icon("ssa", "assets/svg/secretaria_salud.svg", 128)
 		  .icon("marca", "assets/svg/chiapas_nos_une.svg", 128)
 		  .icon("escudo-chiapas-h", "assets/svg/escudo_chiapas_h.svg", 128)
@@ -161,6 +163,9 @@
 
 		  //device
 		  .icon("storage", "bower_components/material-design-icons/device/svg/production/ic_storage_24px.svg", 24)
+
+		  //hardware
+		  .icon("tablet-mac", "bower_components/material-design-icons/hardware/svg/production/ic_tablet_mac_24px.svg", 24)
 		  ;
 		
 		// Configuramos tema de material design

@@ -1,6 +1,7 @@
 {
 	"APP_NOMBRE": "CIUM",
 	"APP_DESCRIPCION_BREVE": "La secretaria de salud (ISECH) a través de la Dirección de Informática, con el apoyo del Proyecto Salud Mesoamérica 2015 (SM2015), pone en marcha el desarrollo del proyecto Captura de indicadores de unidades medicas (CIUM), cuyo objetivo es facilitar y fortalecer la detección de la ubicación de los puntos críticos en  la medición de calidad y abastos en unidades médicas, agilizando la toma de decisiones en todos los niveles provenientes del eTAB, por medio de los cuales se logran alcanzar las metas propuestas por el sector salud.",
+	"APP_DESCRIPCION_BREVE2":"El CIUM en línea es construido para monitorear en tiempo casi real el progreso de la captura de las evaluaciones a unidades médicas, se dice casi real por que los evaluadores trabajan con un dispositivo móvil IOS o Android para la evaluación de las unidades médicas que no cuenten con internet. Posteriormente el dispositivo tendrá que sincronizar toda la información que se haya recabado con la base de datos una vez el evaluador alcance la señal de internet.",
 
 	"CREAR_CUENTA": "Crear una cuenta ahora",
 	"BIENVENIDO": "Bienvenido",
@@ -199,8 +200,22 @@
 	"ELIMINADO": "Borrado",	
 	"FECHA_EVALUACION": "Fecha Evaluación",
 
-	"DASHBOARD_TEXTO": "Gráficos del avance de captura",
-	"DASHBOARD_DESCRIPCION": "aca un texto que describa el dash y su funcion dentro del sistema cium",
+	"TECNOLOGIAS":"El sistema cium se compone de...",
+	"CIUM_TEXTO": "Captura de indicadores en las unidades medicas",
+	"CIUM_DESCRIPCION": "Contiene los servicios para realizar las evaluaciones on-line. Unicamente unidades médicas que cuentan con internet",
+
+	"SALUDID": "SALUD-ID",
+	"SALUDID_TEXTO":"Servidor de credenciales del ISECH",
+	"SALUDID_DESCRIPCION":"El sistema CIUM y la APP IOS/Android utilizan el servidor de credenciales (SALUD-ID) para acceder al sistema.",
+
+	"DISPOSITIVOS": "DISPOSITIVOS",
+	"DISPOSITIVOS_TEXTO":"Tablets o telefonos con sistema operativo Android o IOS",
+	"DISPOSITIVOS_DESCRIPCION":"El sistema CIUM cuenta con un app en version Android o IOS para la captura de evaluaciones en las unidades médicas que no cuenten con internet OFF-LINE.",
+
+	"DASHBOARD": "DASHBOARD",
+	"DASHBOARD_TEXTO":"Gráficos para la ayuda de toma de desiciones",
+	"DASHBOARD_DESCRIPCION":"El dashboard muestra la información recolectada de las unidades médicas en gráficas a un nivel de detalle evaluación-indicador-criterio. que el eTAB no proporciona",
+
 
 	"en": "English",
 	"es": "Español",

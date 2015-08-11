@@ -34,8 +34,11 @@
 
 
   $scope.onOrderChange = function (order) {
+    $scope.query.order=order;
+    $scope.cargando = true;
     $scope.init(); 
   };
+
 
   $scope.onPaginationChange = function (page, limit) {
     $scope.paginacion = 
@@ -44,6 +47,7 @@
         lim: limit,
         paginas:0
     };
+    $scope.cargando = true;
     $scope.init();
   };
     //fin data
@@ -363,8 +367,24 @@
 			$scope.catVisible=false;
 			$scope.umVisible=true;
 			
-		    $scope.showModal = !$scope.showModal;
-		    $scope.datos[0]={};$scope.datos[1]={};$scope.datos[2]={};$scope.datos[3]={};
+			$scope.contador=0;
+			$scope.parametro={};
+			$scope.bread=[];
+			$scope.datos={};
+			$scope.dimension={};
+			$scope.parDimension={};
+			$scope.parametro = [];
+
+		    $scope.showModal = !$scope.showModal;		    
+		    $scope.editDialog = $mdDialog;
+		    $scope.editDialog.show({
+		    		targetEvent: ev,
+		    		
+		    		scope: $scope.$new(),
+			        templateUrl: 'src/dashboard/views/dialog.html',
+			        clickOutsideToClose: true			        			        	  
+		    });
+		    
 		    $scope.dimensiones('anio','','anio',0);		    
 		};
 		
@@ -458,6 +478,10 @@
 		$scope.verCalidad="";
 		$scope.dato = {};
 		$scope.dimension = [];
+
+		$scope.hide = function() {
+			$mdDialog.hide();
+		};
 		$scope.chartClick  = function (event) 
 		{ 
 	  var points = $scope.chart.getPointsAtEvent( event ) ;
@@ -698,13 +722,30 @@
 		  };
 		}
 		
-		$scope.toggleModal = function(title)
+		$scope.toggleModal = function(ev)
 		{ 
 			$scope.catVisible=false;
 			$scope.umVisible=true;
 			
 		    $scope.showModal = !$scope.showModal;
-		    $scope.datos[0]={};$scope.datos[1]={};$scope.datos[2]={};$scope.datos[3]={};
+		    $scope.contador=0;
+			$scope.parametro={};
+			$scope.bread=[];
+			$scope.datos={};
+			$scope.dimension={};
+			$scope.parDimension={};
+			$scope.parametro = [];
+
+		    $scope.showModal = !$scope.showModal;		    
+		    $scope.editDialog = $mdDialog;
+		    $scope.editDialog.show({
+		    		targetEvent: ev,
+		    		
+		    		scope: $scope.$new(),
+			        templateUrl: 'src/dashboard/views/dialog.html',
+			        clickOutsideToClose: true			        			        	  
+		    });
+		    
 		    $scope.dimensiones('anio','','anio',0);
 		};
 	
@@ -831,6 +872,10 @@
 	
 		$scope.tipo="Abasto";
 		
+		$scope.hide = function() {
+			$mdDialog.hide();
+		};
+
 		$scope.getTipo = function(tipo)
 		{
 			$scope.tipo=tipo;
@@ -945,13 +990,30 @@
 		  };
 		}
 		
-		$scope.toggleModal = function(title)
+		$scope.toggleModal = function(ev)
 		{ 
 			$scope.catVisible=false;
 			$scope.umVisible=true;
 			
 		    $scope.showModal = !$scope.showModal;
-		    $scope.datos[0]={};$scope.datos[1]={};$scope.datos[2]={};$scope.datos[3]={};
+		    $scope.contador=0;
+			$scope.parametro={};
+			$scope.bread=[];
+			$scope.datos={};
+			$scope.dimension={};
+			$scope.parDimension={};
+			$scope.parametro = [];
+
+		    $scope.showModal = !$scope.showModal;		    
+		    $scope.editDialog = $mdDialog;
+		    $scope.editDialog.show({
+		    		targetEvent: ev,
+		    		
+		    		scope: $scope.$new(),
+			        templateUrl: 'src/dashboard/views/dialog.html',
+			        clickOutsideToClose: true			        			        	  
+		    });
+		    
 		    $scope.dimensiones('anio','','anio',0);
 		};
 	
@@ -1043,17 +1105,35 @@
 		};
 	
 		
-		$scope.toggleModal = function()
+		$scope.toggleModal = function(ev)
 		{ 
 			$scope.catVisible=true;
 			$scope.biVisible=true;
 			$scope.umVisible=true;
 			$scope.showModal = !$scope.showModal;
 
-			$scope.dimensiones('anio','','anio',0);
+			$scope.contador=0;
+			$scope.parametro={};
+			$scope.bread=[];
+			$scope.datos={};
+			$scope.dimension={};
+			$scope.parDimension={};
+			$scope.parametro = [];
+
+		    $scope.showModal = !$scope.showModal;		    
+		    $scope.editDialog = $mdDialog;
+		    $scope.editDialog.show({
+		    		targetEvent: ev,
+		    		
+		    		scope: $scope.$new(),
+			        templateUrl: 'src/dashboard/views/dialog.html',
+			        clickOutsideToClose: true			        			        	  
+		    });
+		    
+		    $scope.dimensiones('anio','','anio',0);
 		};
 		
-		$scope.dibujarGrafico('pieVisita?tipo='+$scope.tipo+"&dimension="+$scope.dimension);
+		$scope.dibujarGrafico('pieVisita?tipo='+$scope.tipo);
 		$scope.bread.push({label:$scope.tipo});
 	
 
@@ -1112,6 +1192,10 @@
 		$scope.dato = {};
 		$scope.datos = [];
 		$scope.dimension = [];
+
+		$scope.hide = function() {
+			$mdDialog.hide();
+		};
 	
 		$scope.dibujarGrafico = function (url)
 		{
@@ -1270,13 +1354,31 @@
 			return (item.value.indexOf(lowercaseQuery) === 0);
 		  };
 		}
-		$scope.toggleModal = function(title)
+		$scope.toggleModal = function(ev)
 		{ 
 			$scope.catVisible=true;
 			$scope.umVisible=true;
 			$scope.showModal = !$scope.showModal;
 
-			$scope.dimensiones('anio','','anio',0);
+			$scope.contador=0;
+			$scope.parametro={};
+			$scope.bread=[];
+			$scope.datos={};
+			$scope.dimension={};
+			$scope.parDimension={};
+			$scope.parametro = [];
+
+		    $scope.showModal = !$scope.showModal;		    
+		    $scope.editDialog = $mdDialog;
+		    $scope.editDialog.show({
+		    		targetEvent: ev,
+		    		
+		    		scope: $scope.$new(),
+			        templateUrl: 'src/dashboard/views/dialog.html',
+			        clickOutsideToClose: true			        			        	  
+		    });
+		    
+		    $scope.dimensiones('anio','','anio',0);
 		};
 	
 		$scope.completar = function()
@@ -1314,6 +1416,9 @@
 		$scope.datos = [];
 		$scope.dimension = [];    
 		
+		$scope.hide = function() {
+			$mdDialog.hide();
+		};
 
 		$scope.dimensiones = function(campo,valor,nivel,c,ultimo)
 		{
@@ -1407,13 +1512,31 @@
 	  		$scope.dibujarGrafico('CalidadGlobal?campo=&valor=&nivel=anio');   
 		};
 	
-		$scope.toggleModal = function(title)
+		$scope.toggleModal = function(ev)
 		{ 
 			$scope.catVisible=false;
 			$scope.umVisible=false;
 	  		$scope.showModal = !$scope.showModal;
 	
-	  		$scope.dimensiones('anio','','anio',0);
+	  		$scope.contador=0;
+			$scope.parametro={};
+			$scope.bread=[];
+			$scope.datos={};
+			$scope.dimension={};
+			$scope.parDimension={};
+			$scope.parametro = [];
+
+		    $scope.showModal = !$scope.showModal;		    
+		    $scope.editDialog = $mdDialog;
+		    $scope.editDialog.show({
+		    		targetEvent: ev,
+		    		
+		    		scope: $scope.$new(),
+			        templateUrl: 'src/dashboard/views/dialog.html',
+			        clickOutsideToClose: true			        			        	  
+		    });
+		    
+		    $scope.dimensiones('anio','','anio',0);
 		};
 		
 		$scope.dibujarGrafico('CalidadGlobal?campo=&valor=&nivel=anio');
@@ -1442,6 +1565,10 @@
 		$scope.dimension = [];
 	
 		$scope.tipo="Abasto";
+		
+		$scope.hide = function() {
+			$mdDialog.hide();
+		};
 		
 		$scope.getTipo = function(tipo)
 		{
@@ -1622,13 +1749,31 @@
 		  };
 		}
 		
-		$scope.toggleModal = function()
+		$scope.toggleModal = function(ev)
 		{ 
 			$scope.catVisible=true;
 			$scope.umVisible=true;
 			$scope.showModal = !$scope.showModal;
 
-			$scope.dimensiones('anio','','anio',0);
+			$scope.contador=0;
+			$scope.parametro={};
+			$scope.bread=[];
+			$scope.datos={};
+			$scope.dimension={};
+			$scope.parDimension={};
+			$scope.parametro = [];
+
+		    $scope.showModal = !$scope.showModal;		    
+		    $scope.editDialog = $mdDialog;
+		    $scope.editDialog.show({
+		    		targetEvent: ev,
+		    		
+		    		scope: $scope.$new(),
+			        templateUrl: 'src/dashboard/views/dialog.html',
+			        clickOutsideToClose: true			        			        	  
+		    });
+		    
+		    $scope.dimensiones('anio','','anio',0);
 		};
 		
 		$scope.dibujarGrafico('hallazgoGauge?campo=&valor=&nivel=anio&tipo='+$scope.tipo);

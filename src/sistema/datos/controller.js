@@ -34,8 +34,11 @@
 
 
   $scope.onOrderChange = function (order) {
+    $scope.query.order=order;
+    $scope.cargando = true;
     $scope.init(); 
   };
+
 
   $scope.onPaginationChange = function (page, limit) {
     $scope.paginacion = 
@@ -44,6 +47,7 @@
         lim: limit,
         paginas:0
     };
+    $scope.cargando = true;
     $scope.init();
   };
     //fin data
@@ -89,18 +93,9 @@
 
 	    //Ver
 		$scope.ver = function(ruta) 
-		{
-			$http.get(URLS.BASE_API+'UsuarioInfo')
-			.success(function(data, status, headers, config) 
-			{	
-				$scope.dato = data.data;
-				$scope.cargando=false;				
-			})
-			.error(function(data, status, headers, config) 
-			{
-				errorFlash.error(data);
-				$scope.cargando=false;	
-			});	  		
+		{	
+			$scope.dato = infoUsuario;
+			$scope.cargando=false;								
 		};
 		//Modificar
 		$scope.modificar = function(id) 

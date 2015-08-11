@@ -1,15 +1,16 @@
-<md-content style="margin-top:-10px">
+<md-dialog aria-label="Mango (Fruit)">
+  <form>
   <md-toolbar class="md-warn">
     <div class="md-toolbar-tools ">
-      <h2>{{ 'OPCIONES' | translate }}</h2>
+      <h2>{{ 'OPCIONES' | translate }} </h2>
       <span flex></span>
       <md-button class="md-icon-button" ng-click="hide()">
         <md-icon md-svg-src="close" aria-label="Close dialog"></md-icon>
       </md-button>
     </div>
   </md-toolbar>
-  <md-content  >
-  	
+  <md-dialog-content  style="margin-top:-10px">
+    	
   	<md-list-item ng-show="catVisible">	                                        
         <md-input-container flex >     
             <p style="margin:0px">{{ 'CATEGORIA' | translate }}</p>
@@ -122,5 +123,6 @@
         </md-input-container>
     </md-list-item>
     
-  </md-content>
-</md-content>
+  </md-dialog-content>
+</form>
+</md-dialog>

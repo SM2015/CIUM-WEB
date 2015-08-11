@@ -354,13 +354,6 @@ md-input-container p
 }
 .portada {
   background-image: url('assets/img/banner.jpg');
-  background-size: 100% auto;
   background-size: cover;
   background-repeat: no-repeat;
-}
-
-.portada2 {
-  background-image: url('assets/img/pen.png');
-  background-repeat: no-repeat;
-  margin-left: -100%;
 }

@@ -19,105 +19,23 @@
 	</md-toolbar>
 	<md-content >
 
-	<md-list-item layout-sm="row" layout-md="row" style="margin-top:8%">
+	<md-list-item layout-sm="row" layout-md="row" style="margin-top:3%">
   <md-content flex="33" flex-md="25" flex-lg="15" flex-sm="0" hide-sm></md-content>
-  <md-content flex="33" flex-md="50" flex-lg="70" flex-sm="100" class="imprimir">
-    <section class="container" >
+  <md-content flex="33" flex-md="50" flex-lg="70" flex-sm="100" class="imprimir md-padding">
+
+    <md-card>
+      <img src="{{ dato.avatar!=''  ? dato.avatar : 'assets/img/user.png'}}" class="md-card-image" >
+      <md-card-content style="background-color: lightslategrey; color: floralwhite;  text-shadow: 1px 1px darkblue; font-size:1em;">
+        <h2 class="md-title" align="center">{{dato.nombre}} {{dato.apellido_paterno}} {{dato.apellido_materno}}</h2>
+        <p>
+         <strong style="float:left">{{dato.email}}</strong> 
+         <i style="float:right; font-size:.8em;">{{dato.created_at}}</i>
+        </p>
+      </md-card-content>
+      
+    </md-card>
+
     
-    <div class="row active-with-click">
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <article class="material-card Red">
-                <h2>
-                    <span>{{dato.nombres}} {{dato.apellidoPaterno}} {{dato.apellidoMaterno}}</span>
-                    <strong>
-                        <i class="fa fa-fw fa-star"></i>
-                        {{dato.email}}
-                    </strong>
-                </h2>
-                <div class="mc-content">
-                    <div class="img-container">
-                        <img class="img-responsive" src="{{ dato.avatar!=''  ? dato.avatar : 'assets/img/user.png'}}">
-                    </div>
-                    <div class="mc-description">
-                        <md-content class="md-padding">
-                     
-                      <md-list-item layout-wrap >                                         
-                        <md-input-container flex >     
-                            <label>{{ 'NOMBRE' | translate }}</label>
-                                <input required  name="nombre" ng-model="dato.nombres" md-minlength="3" md-maxlength="255">
-                                <div ng-messages="forma.nombre.$error">
-                                  <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>
-                                  <div ng-message="md-minlength">{{ 'CAMPO_MIN_L' | translate }} 3</div>
-                                  <div ng-message="md-maxlength">{{ 'CAMPO_MAX_L' | translate }} 255</div>
-                                </div>
-                        </md-input-container>
-                      </md-list-item>
-                      
-                      <md-list-item layout-wrap >           
-                        <md-input-container flex >     
-                            <label>{{ 'APELLIDO_PATERNO' | translate }}</label>
-                                <input  name="apellidoPaterno" ng-model="dato.apellidoPaterno" >
-                                
-                        </md-input-container>
-                                        
-                        <md-input-container flex >     
-                            <label>{{ 'APELLIDO_MATERNO' | translate }}</label>
-                                <input  name="apellidoMaterno" ng-model="dato.apellidoMaterno" >
-                                
-                        </md-input-container>
-                      </md-list-item>
-                      
-                      <md-list-item>
-                        <md-input-container flex >     
-                            <label>{{ 'CARGO' | translate }}</label>
-                                <input  name="cargo" ng-model="dato.cargo" >
-                                
-                        </md-input-container>
-                      </md-list-item>
-                      
-                      <md-list-item>
-                        <md-input-container flex >     
-                            <label>{{ 'EMAIL' | translate }}</label>
-                                <input name="email"  type="email" ng-model="dato.email" required>       
-                                <div ng-messages="forma.email.$error" >
-                                    <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>
-                                    <div ng-message="email">{{ 'EMAIL_INVALIDO' | translate }}</div>
-                                    <div ng-message="unique">{{ 'CORREO_YA_EXISTE' | translate }}</div>
-                                </div>
-                                
-                        </md-input-container>
-                      </md-list-item>
-                      
-                      <md-list-item>
-                        <md-input-container flex >     
-                            <label>{{ 'TELEFONO' | translate }}</label>
-                                <input type="tel"  name="telefono" ng-model="dato.telefono" >
-                                
-                        </md-input-container>
-                      </md-list-item>
-                      
-                      
-                      
-                      
-                    </md-content>
-                    </div>
-                </div>
-                <a class="mc-btn-action">
-                    <i class="fa fa-bars"></i>
-                </a>
-                <div class="mc-footer">
-                    <h4>
-                        Social
-                    </h4>
-                    <a class="fa fa-fw fa-facebook"></a>
-                    <a class="fa fa-fw fa-twitter"></a>
-                    <a class="fa fa-fw fa-linkedin"></a>
-                    <a class="fa fa-fw fa-google-plus"></a>
-                </div>
-            </article>
-        </div>
-    </div>
-</section>
 
 </md-content>
 <md-content flex="33" flex-md="25" flex-lg="15" flex-sm="0" hide-sm></md-content>

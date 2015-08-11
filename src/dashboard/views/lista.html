@@ -35,18 +35,11 @@
                                 
                                     <span flex class="nav-barra-grafica">
                                         
-                                                                                
-                                        <md-menu>
-                                          <md-button aria-label="toggle" class="md-icon-button" ng-click="$mdOpenMenu();toggleModal($event);">
-                                            <md-icon md-menu-origin md-svg-icon="insert-chart"></md-icon>
-                                          </md-button>
-                                          <md-menu-content width="7">                                            
-                                          	<md-menu-item >
-                                               <div ng-include="'src/dashboard/views/dialog.html'"></div>
-                                            </md-menu-item>
-                                          </md-menu-content>
-                                        </md-menu>
+                                
 
+                                        <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleModal($event);">
+                                            <md-icon md-svg-src="insert-chart"></md-icon>
+                                        </md-button>
                                         
                                         <md-button class="md-icon-button" aria-label="Recargar" ng-click="recargar()">
                                             <md-icon md-svg-src="replay"></md-icon>
@@ -64,9 +57,9 @@
                                 
                                 <ol class="breadcrumb" style="margin-top: 0px;" ><li>Abastos </li><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
 	
-    
-					<canvas tc-chartjs-bar chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart"></canvas>
-                                
+          <div style="width:96%;margin-left:2%; max-height:80% !important;" > 
+					<canvas  tc-chartjs-bar chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart"></canvas>
+           </div>                     
                             </md-content>
                         </div>
                     </md-content>
@@ -90,18 +83,9 @@
                                 
                                     <span flex class="nav-barra-grafica">
                                                                             
-                                        <md-menu>
-                                          <md-button aria-label="toggle" class="md-icon-button" ng-click="$mdOpenMenu();toggleModal($event);">
-                                            <md-icon md-menu-origin md-svg-icon="insert-chart"></md-icon>
-                                          </md-button>
-                                          <md-menu-content width="7">                                            
-                                          	<md-menu-item cg-busy="{promise:calidadOpcion,templateUrl:templateUrl, message:message, backdrop:backdrop, delay:delay, minDuration:minDuration}" >
-                                              <div style="margin-top:2px;" 
-                                                ng-include="'src/dashboard/views/dialog.html'">
-                                              </div>
-                                            </md-menu-item>
-                                          </md-menu-content>
-                                        </md-menu>
+                                        <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleModal($event);">
+                                            <md-icon md-svg-src="insert-chart"></md-icon>
+                                        </md-button>
                                         
                                         <md-button class="md-icon-button" aria-label="Recargar" ng-click="recargar()">
                                             <md-icon md-svg-src="replay"></md-icon>
@@ -118,9 +102,9 @@
                                 
                                 
                                 <ol class="breadcrumb" style="margin-top: 0px;" ><li>Calidad </li><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
-								
+					<div style="width:96%;margin-left:2%; max-height:80% !important;" > 
 					<canvas tc-chartjs-line chart-options="options" style="height:100%" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart"></canvas>
-                                
+          </div>                     
 						
                             </md-content>
                         </div>
@@ -144,18 +128,9 @@
                             <md-content flex>
                                 
                                     <span flex class="nav-barra-grafica">
-                                        <md-menu>
-                                          <md-button aria-label="toggle" class="md-icon-button" ng-click="$mdOpenMenu();toggleModal($event);">
-                                            <md-icon md-menu-origin md-svg-icon="insert-chart"></md-icon>
-                                          </md-button>
-                                          <md-menu-content width="7">                                            
-                                          	<md-menu-item cg-busy="{promise:pieOpcion,templateUrl:templateUrl, message:message, backdrop:backdrop, delay:delay, minDuration:minDuration}" >
-                                             <div style="margin-top:2px;" 
-                                                ng-include="'src/dashboard/views/dialog.html'">
-                                                </div>
-                                             </md-menu-item>
-                                          </md-menu-content>
-                                        </md-menu>
+                                        <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleModal($event);">
+                                            <md-icon md-svg-src="insert-chart"></md-icon>
+                                        </md-button>
                                         
                                         <md-button class="md-icon-button" aria-label="Recargar" ng-click="recargar()">
                                             <md-icon md-svg-src="replay"></md-icon>
@@ -172,9 +147,9 @@
                                 
                                 
                                 <ol class="breadcrumb" style="margin-top: 0px;" ><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
-								
+								<div style="width:96%;margin-left:2%; max-height:80% !important;" > 
 								<canvas tc-chartjs-pie chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart"></canvas>
-                                
+                </div>             
                             </md-content>
                         </div>
                     </md-content>
@@ -198,18 +173,9 @@
                             <md-content flex>
                                 
                                     <span flex class="nav-barra-grafica">
-                                         <md-menu>
-                                          <md-button aria-label="toggle" class="md-icon-button" ng-click="$mdOpenMenu();toggleModal($event);">
-                                            <md-icon md-menu-origin md-svg-icon="insert-chart"></md-icon>
-                                          </md-button>
-                                          <md-menu-content width="7">                                            
-                                          	<md-menu-item cg-busy="{promise:alertaOpcion,templateUrl:templateUrl, message:message, backdrop:backdrop, delay:delay, minDuration:minDuration}" >
-                                              <div style="margin-top:2px;" 
-                                                ng-include="'src/dashboard/views/dialog.html'">
-                                                </div>
-                                             </md-menu-item>
-                                          </md-menu-content>
-                                        </md-menu>
+                                         <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleModal($event);">
+                                            <md-icon md-svg-src="insert-chart"></md-icon>
+                                        </md-button>
                                         
                                         <md-button class="md-icon-button" aria-label="Recargar" ng-click="recargar()">
                                             <md-icon md-svg-src="replay"></md-icon>
@@ -275,19 +241,9 @@
                             <md-content flex>
                                 
                                     <span flex class="nav-barra-grafica">
-                                        <md-menu>
-                                          <md-button aria-label="toggle" class="md-icon-button" ng-click="$mdOpenMenu();toggleModal($event);">
-                                            <md-icon md-menu-origin md-svg-icon="insert-chart"></md-icon>
-                                          </md-button>
-                                          <md-menu-content width="7">                                            
-                                          	<md-menu-item cg-busy="{promise:globalOpcion,templateUrl:templateUrl, message:message, backdrop:backdrop, delay:delay, minDuration:minDuration}" >
-                                          
-                                               <div style="margin-top:2px;" 
-                                                ng-include="'src/dashboard/views/dialog.html'">
-                                                </div>
-                                             </md-menu-item>
-                                          </md-menu-content>
-                                        </md-menu>
+                                        <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleModal($event);">
+                                            <md-icon md-svg-src="insert-chart"></md-icon>
+                                        </md-button>
                                         
                                         <md-button class="md-icon-button" aria-label="Recargar" ng-click="recargar()">
                                             <md-icon md-svg-src="replay"></md-icon>
@@ -345,18 +301,9 @@
                             <md-content flex>
                                 
                                     <span flex class="nav-barra-grafica">
-                                        <md-menu>
-                                          <md-button aria-label="toggle" class="md-icon-button" ng-click="$mdOpenMenu();toggleModal($event);">
-                                            <md-icon md-menu-origin md-svg-icon="insert-chart"></md-icon>
-                                          </md-button>
-                                          <md-menu-content width="7">                                            
-                                          	<md-menu-item cg-busy="{promise:gaugeOpcion,templateUrl:templateUrl, message:message, backdrop:backdrop, delay:delay, minDuration:minDuration}" >
-                                                <div style="margin-top:2px;" 
-                                                	ng-include="'src/dashboard/views/dialog.html'">
-                                                </div>
-                                            </md-menu-item>
-                                          </md-menu-content>
-                                        </md-menu>
+                                        <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleModal($event);">
+                                            <md-icon md-svg-src="insert-chart"></md-icon>
+                                        </md-button>
                                         
                                         <md-button class="md-icon-button" aria-label="Recargar" ng-click="recargar()">
                                             <md-icon md-svg-src="replay"></md-icon>

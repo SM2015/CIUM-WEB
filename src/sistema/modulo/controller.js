@@ -55,8 +55,11 @@
 	};
 
   $scope.onOrderChange = function (order) {
+    $scope.query.order=order;
+    $scope.cargando = true;
     $scope.init(); 
   };
+
 
   $scope.onPaginationChange = function (page, limit) {
     $scope.paginacion = 
@@ -65,6 +68,7 @@
         lim: limit,
         paginas:0
     };
+    $scope.cargando = true;
     $scope.init();
   };
     //fin data
@@ -207,6 +211,7 @@
 	    
 	    $scope.buscarL = function(buscar,columna) 
 	  {
+                                                $scope.cargando = true;
 		  	$scope.init(buscar,columna);
 	  };	
 		//Ver

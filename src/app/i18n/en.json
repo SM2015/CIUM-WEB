@@ -1,7 +1,8 @@
 {
 	"APP_NOMBRE": "CIUM",
-	"APP_DESCRIPCION_BREVE": "Access all applications and online services Health Institute of Chiapas with a single account",
-	
+	"APP_DESCRIPCION_BREVE": "The Ministry of Health (ISECH) A through the Directorate of Information Technology, with the support of Project Mesoamerica Health 2015 (SM2015), launched the Capture Development Indicators Project medical units (CIUM), which aims to facilitate and strengthen detecting the location of the critical points in the Measurement of Quality and supplies in medical units, streamlining decision-making at all levels from the Etab, through which fail to achieve the goals set by the health sector.",
+	"APP_DESCRIPCION_BREVE2":"The CIUM offline paragraph is built to monitor in near real time , the progress of the Capture Assessments one medical units, almost Says Real Evaluators working with UN IOS or Android Mobile Device para the evaluation of medical units do not have internet . Subsequently, the device can deduce us to synchronize all information has been collected with the DATABASE Once the signal evaluator internet Scope.",
+
 	"CREAR_CUENTA": "Create an account now",
 	"BIENVENIDO": "Welcome",
 	"USUARIO": "User",
@@ -198,6 +199,23 @@
 	"MODIFICADO": "Modified",
 	"ELIMINADO": "Deleted",	
 	"FECHA_EVALUACION": "Date Evaluation",
+
+	"TECNOLOGIAS":"The system consists of CIUM...",
+	"CIUM_TEXTO": "Capture indicators in medical units",
+	"CIUM_DESCRIPCION": "It contains services for the online assessments. Only medical units with internet",
+
+	"SALUDID": "SALUD-ID",
+	"SALUDID_TEXTO":"ISECH server credentials",
+	"SALUDID_DESCRIPCION":"The CIUM APP system and IOS / Android use the server credentials ( SALUD-ID) to access the system.",
+
+	"DISPOSITIVOS": "DEVICES",
+	"DISPOSITIVOS_TEXTO":"Tablets or phones with Android or IOS operating system",
+	"DISPOSITIVOS_DESCRIPCION":"The CIUM system has an app on Android or IOS version to catch assessments in medical units that do not have Internet OFF -LINE.",
+
+	"DASHBOARD": "DASHBOARD",
+	"DASHBOARD_TEXTO":"Graphics help decision making",
+	"DASHBOARD_DESCRIPCION":"The dashboard shows the information collected from the medical units in graphic detail to a level - indicator -criteria evaluation . not provide the ETAB",
+
 	
 	"en": "English",
 	"es": "Español",

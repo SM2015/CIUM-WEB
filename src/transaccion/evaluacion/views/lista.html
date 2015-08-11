@@ -31,9 +31,9 @@
 		    <th name="CLUES" order-by="clues"></th>
 			<th hide-sm name="{{ 'USUARIO' | translate }}" order-by="idUsuario"></th>
 			<th name="{{ 'FECHA_EVALUACION' | translate }}" order-by="fechaEvaluacion"></th>
-			<th name="{{ 'TERMINADO' | translate }}"></th>
-			<th name="{{ 'CREADO' | translate }}" hide-sm hide-md hide-lg ></th>
-			<th name="{{ 'MODIFICADO' | translate }}" hide-sm hide-md hide-lg ></th>
+			<th name="{{ 'TERMINADO' | translate }}" order-by="cerrado"></th>
+			<th hide-sm hide-md name="{{ 'CREADO' | translate }}" order-by="creadoAl"></th>
+        	<th hide-sm hide-md hide-lg name="{{ 'MODIFICADO' | translate }}"  order-by="modificadoAl"></th>
 			<th ></th>
 		  </tr>
     </thead>
