@@ -1,6 +1,6 @@
 (function(){
 	
-	var crudModule = angular.module('CrudModule', ['ngMaterial','mdDataTable','ngRoute','ngStorage','ngCookies','ngMessages','pascalprecht.translate','http-auth-interceptor']);
+	var crudModule = angular.module('CrudModule', ['ngMaterial','ngRoute','ngStorage','ngCookies','ngMessages','pascalprecht.translate','http-auth-interceptor']);
 
 	crudModule.config(['$mdThemingProvider','$mdIconProvider','$routeProvider','$httpProvider','$translateProvider','$mdThemingProvider',function($mdThemingProvider,$mdIconProvider,$routeProvider,$httpProvider,$translateProvider, $mdThemingProvider){
 		

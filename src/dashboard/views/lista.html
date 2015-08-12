@@ -30,7 +30,8 @@
                     </md-toolbar>
                     
                     <md-content>
-                        <div cg-busy="{promise:abasto,templateUrl:templateUrl,message:message,backdrop:backdrop,delay:delay,minDuration:minDuration}">
+                    
+                        <div >
                             <md-content flex>
                                 
                                     <span flex class="nav-barra-grafica">
@@ -56,6 +57,7 @@
                                 
                                 
                                 <ol class="breadcrumb" style="margin-top: 0px;" ><li>Abastos </li><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
+                                <md-progress-linear  ng-if="abasto" style="top:-25px; left:0px;"  md-mode="indeterminate"></md-progress-linear>
 	
           <div style="width:96%;margin-left:2%; max-height:80% !important;" > 
 					<canvas  tc-chartjs-bar chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart"></canvas>
@@ -78,7 +80,8 @@
                     </md-toolbar>
                     
                     <md-content>
-                        <div cg-busy="{promise:calidad,templateUrl:templateUrl,message:message,backdrop:backdrop,delay:delay,minDuration:minDuration}">
+                    
+                        <div >
                             <md-content flex>
                                 
                                     <span flex class="nav-barra-grafica">
@@ -102,6 +105,8 @@
                                 
                                 
                                 <ol class="breadcrumb" style="margin-top: 0px;" ><li>Calidad </li><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
+                                <md-progress-linear  ng-if="calidad" style="top:-25px; left:0px;"  md-mode="indeterminate"></md-progress-linear>
+
 					<div style="width:96%;margin-left:2%; max-height:80% !important;" > 
 					<canvas tc-chartjs-line chart-options="options" style="height:100%" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart"></canvas>
           </div>                     
@@ -124,7 +129,7 @@
                     </md-toolbar>
                     
                     <md-content>
-                        <div cg-busy="{promise:pie,templateUrl:templateUrl,message:message,backdrop:backdrop,delay:delay,minDuration:minDuration}">
+                        <div >
                             <md-content flex>
                                 
                                     <span flex class="nav-barra-grafica">
@@ -147,6 +152,8 @@
                                 
                                 
                                 <ol class="breadcrumb" style="margin-top: 0px;" ><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
+                                <md-progress-linear  ng-if="pie" style="top:-25px; left:0px;"  md-mode="indeterminate"></md-progress-linear>
+
 								<div style="width:96%;margin-left:2%; max-height:80% !important;" > 
 								<canvas tc-chartjs-pie chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart"></canvas>
                 </div>             
@@ -169,7 +176,7 @@
                     </md-toolbar>
                     
                     <md-content>
-                        <div cg-busy="{promise:alerta,templateUrl:templateUrl,message:message,backdrop:backdrop,delay:delay,minDuration:minDuration}">
+                        <div >
                             <md-content flex>
                                 
                                     <span flex class="nav-barra-grafica">
@@ -192,6 +199,8 @@
                                 
                                 
                                 <ol class="breadcrumb" style="margin-top: 0px;" ><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
+                                <md-progress-linear  ng-if="alerta" style="top:-25px; left:0px;"  md-mode="indeterminate"></md-progress-linear>
+
 					<md-content  class="md-whiteframe-z1" style="width:98%; max-height:50%; overflow:auto; margin-left:1%; ">		
 					<md-data-table-container>
   <table md-data-table md-progress="datos">
@@ -237,7 +246,7 @@
                     </md-toolbar>
                     
                     <md-content>
-                        <div cg-busy="{promise:global,templateUrl:templateUrl,message:message,backdrop:backdrop,delay:delay,minDuration:minDuration}">
+                        <div >
                             <md-content flex>
                                 
                                     <span flex class="nav-barra-grafica">
@@ -260,13 +269,15 @@
                                 
                                 
                                 <ol class="breadcrumb" style="margin-top: 0px;" ><li>Calidad </li><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
+                                <md-progress-linear  ng-if="global" style="top:-25px; left:0px;"  md-mode="indeterminate"></md-progress-linear>
+
 					<md-content  class="md-whiteframe-z1" style="width:98%; max-height:50%; overflow:auto; margin-left:1%; ">			
 					<md-data-table-container>
-  <table md-data-table md-progress="datos">
+  <table md-data-table md-progress="indicadores">
     <thead md-order="query.order" md-trigger="onOrderChange">
       <tr>
                         <th name="Unidad"></th>
-						<th ng-repeat="v in indicadores" width="10%" ng-title="v.nombre" name="{{ v.codigo }}"></th>
+						<td ng-repeat="v in indicadores" style=" font-size: 12px; color: rgba(0,0,0,.54);" width="10%" name="{{ v.codigo }}" >{{ v.codigo }}</td>
                     </tr>
                     </thead>
     <tbody>
@@ -297,7 +308,7 @@
                     </md-toolbar>
                     
                     <md-content>
-                        <div cg-busy="{promise:gauge,templateUrl:templateUrl,message:message,backdrop:backdrop,delay:delay,minDuration:minDuration}">
+                        <div >
                             <md-content flex>
                                 
                                     <span flex class="nav-barra-grafica">
@@ -320,6 +331,8 @@
                                 
                                 
                                 <ol class="breadcrumb" style="margin-top: 0px;" ><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
+                                <md-progress-linear  ng-if="gauge" style="top:-25px; left:0px;"  md-mode="indeterminate"></md-progress-linear>
+
 						<md-content  class="md-whiteframe-z1" style="width:98%; {{ isFullscreen ? '' : 'max-height:250px' }} ; overflow:auto; margin-left:1%; ">		
 					<md-data-table-container>
   <table md-data-table md-progress="datos">

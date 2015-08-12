@@ -105,11 +105,8 @@
 	}])
 	
 	.controller('abastoController', function($scope, $http, $window, $location, $timeout, $route,  flash, errorFlash, URLS, $mdDialog, EvaluacionId ) {
-		$scope.delay = 0;
-		$scope.minDuration = 0;
-		$scope.message = 'Cargando...';
-		$scope.backdrop = true;
-		$scope.abasto = null;
+		
+		$scope.abasto = true;
 	
 		$scope.contador=0;
 		$scope.parametro={};
@@ -197,16 +194,18 @@
 		};
 		
 		$scope.dibujarGrafico = function (url)
-		{	
-		  $scope.abasto = $http.get(URLS.BASE_API+url)     
+		{
+		  $scope.abasto=true;
+		  $http.get(URLS.BASE_API+url)     
 		  .success(function(data, status, headers, config) 
 		  {   
 			$scope.data  = data.data; 
-		  
+		  	$scope.abasto=false;
 		  })
 		  .error(function(data, status, headers, config) 
 		  {
 			errorFlash.error(data);
+			$scope.abasto=false;
 		  });
 		};
 	
@@ -280,7 +279,7 @@
 		}
 		$scope.dimensiones = function(campo,valor,nivel,c,ultimo)
 		{
-	  		$scope.abastoOpcion = $http.get(URLS.BASE_API+'abastoDimension?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo)     
+	  		$http.get(URLS.BASE_API+'abastoDimension?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo)     
 		  	.success(function(data, status, headers, config) 
 		  	{   
 				$scope.datos[c] = data.data; 
@@ -392,7 +391,8 @@
 		{ 		
 		  if(!angular.isUndefined($scope.dimension[2])&&$scope.dimension[4]!=null)
 		  { 
-			$scope.abasto = $http.get(URLS.BASE_API+'abastoClues?anio='+$scope.dimension[0]+'&mes='+$scope.dimension[1]+'&clues='+$scope.dimension[4])     
+		    $scope.abasto=true;
+			$http.get(URLS.BASE_API+'abastoClues?anio='+$scope.dimension[0]+'&mes='+$scope.dimension[1]+'&clues='+$scope.dimension[4])     
 			.success(function(data, status, headers, config) 
 			{ 				
 				$scope.bread=[];  
@@ -412,12 +412,14 @@
 				$scope.contador=5;
 				$scope.parametro[0]=$scope.dimension[0];
 				$scope.parametro[1]=$scope.dimension[1];
-				$scope.parametro[2]=$scope.dimension[4];			
+				$scope.parametro[2]=$scope.dimension[4];
+				$scope.abasto=false;			
 				   
 			})
 			.error(function(data, status, headers, config) 
 			{
 				errorFlash.error(data);
+				$scope.abasto=false;
 			});
 		  }
 		};
@@ -461,11 +463,8 @@
 	
 	
 	.controller('calidadController', function($scope, $http, $window, $location, $timeout, $route,  flash, errorFlash, URLS, $mdDialog, EvaluacionShow, EvaluacionId ) {
-		$scope.delay = 0;
-		$scope.minDuration = 0;
-		$scope.message = 'Cargando...';
-		$scope.backdrop = true;
-		$scope.calidad = null;
+		
+		$scope.calidad = true;
 	
 		$scope.contador=0;
 		$scope.parametro={};
@@ -555,8 +554,8 @@
 	
 		$scope.dibujarGrafico = function (url)
 		{
-	  
-			$scope.calidad = $http.get(URLS.BASE_API+url)     
+	  		$scope.calidad = true;
+			$http.get(URLS.BASE_API+url)     
 			.success(function(data, status, headers, config) 
 			{   
 				$scope.data  = data.data; 
@@ -565,11 +564,12 @@
 					$scope.data.datasets[0].data=[0,$scope.data.datasets[0].data[0]];
 					$scope.data.labels=['',$scope.data.labels[0]];
 				}
-
+				$scope.calidad=false;
 			})
 			.error(function(data, status, headers, config) 
 			{
 				errorFlash.error(data);
+				$scope.calidad=false;
 			});
 		};
 	
@@ -642,7 +642,7 @@
 		};
 		$scope.dimensiones = function(campo,valor,nivel,c,ultimo)
 		{
-	  		$scope.calidadOpcion = $http.get(URLS.BASE_API+'calidadDimension?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo)     
+	  		$http.get(URLS.BASE_API+'calidadDimension?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo)     
 	  		.success(function(data, status, headers, config) 
 	  		{   
 				$scope.datos[c] = data.data;  
@@ -753,8 +753,8 @@
 		{    
 	  		if(!angular.isUndefined($scope.dimension[2])&&$scope.dimension[4]!=null)
 	  		{ 
-	
-				$scope.calidad = $http.get(URLS.BASE_API+'calidadClues?anio='+$scope.dimension[0]+'&mes='+$scope.dimension[1]+'&clues='+$scope.dimension[4])     
+				$scope.calidad = true;
+				$http.get(URLS.BASE_API+'calidadClues?anio='+$scope.dimension[0]+'&mes='+$scope.dimension[1]+'&clues='+$scope.dimension[4])     
 				.success(function(data, status, headers, config) 
 				{  
 		
@@ -782,12 +782,13 @@
 					$scope.parametro[0]=$scope.dimension[0];
 					$scope.parametro[1]=$scope.dimension[1];
 					$scope.parametro[2]=$scope.dimension[4];
-	
+					$scope.calidad=false;
 		   
 			})
 			.error(function(data, status, headers, config) 
 			{
 				errorFlash.error(data);
+				$scope.calidad=false;
 			});
 		}
 	};
@@ -851,11 +852,8 @@
 	.controller('pieController', function($scope, $http, $window, $location, $timeout, $route,  flash, errorFlash, URLS, $mdDialog ) {
 		
 	
-		$scope.delay = 0;
-		$scope.minDuration = 0;
-		$scope.message = 'Cargando...';
-		$scope.backdrop = true;
-		$scope.pie = null;
+		
+		$scope.pie = true;
 	
 		$scope.contador=0;
 		$scope.parametro={};
@@ -909,7 +907,7 @@
 			var url="calidadDimension";
 			if($scope.tipo=="Abasto")
 				url="abastoDimension";
-	  		$scope.pieOpcion = $http.get(URLS.BASE_API+url+'?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo+"&tipo="+$scope.tipo)     
+	  		$http.get(URLS.BASE_API+url+'?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo+"&tipo="+$scope.tipo)     
 	  		.success(function(data, status, headers, config) 
 	  		{   
 				$scope.datos[c] = data.data;  
@@ -1021,8 +1019,8 @@
 		{    
 			if(!angular.isUndefined($scope.dimension[2])&&$scope.dimension[4]!=null)
 			{ 
-	
-				$scope.pie = $http.get(URLS.BASE_API+'pieVisita?tipo='+$scope.tipo)     
+				$scope.pie = true;
+				$http.get(URLS.BASE_API+'pieVisita?tipo='+$scope.tipo)     
 				.success(function(data, status, headers, config) 
 				{  
 		
@@ -1050,12 +1048,13 @@
 					$scope.parametro[0]=$scope.dimension[0];
 					$scope.parametro[1]=$scope.dimension[1];
 					$scope.parametro[2]=$scope.dimension[4];
-	
+					$scope.pie = false;
 		   
 				})
 				.error(function(data, status, headers, config) 
 				{
 					errorFlash.error(data);
+					$scope.pie = false;
 				});
 	  		}
 		};	
@@ -1063,7 +1062,8 @@
 		
 		$scope.dibujarGrafico = function (url)
 		{
-	  		$scope.pie = $http.post(URLS.BASE_API+url,{dimension:$scope.dimension})     
+			$scope.pie = true;
+	  		$http.post(URLS.BASE_API+url,{dimension:$scope.dimension})     
 	 	 	.success(function(data, status, headers, config) 
 	  		{   
 				$scope.data  = data.data; 
@@ -1087,11 +1087,13 @@
 					$scope.bread.push({label:"Clues: "+$scope.dimension[4]});
 
 				$scope.bread.push({label:"Total: "+total});
+				$scope.pie = false;
 	  
 	  		})
 	  		.error(function(data, status, headers, config) 
 	  		{
 				errorFlash.error(data);
+				$scope.pie = false;
 	  		});
 		};
 	
@@ -1174,11 +1176,8 @@
 	})
 	
 	.controller('alertaController', function($scope, $http, $window, $location, $timeout, $route,  flash, errorFlash, URLS, $mdDialog ) {
-		$scope.delay = 0;
-		$scope.minDuration = 0;
-		$scope.message = 'Cargando...';
-		$scope.backdrop = true;
-		$scope.alerta = null;
+		
+		$scope.alerta = true;
 	
 		$scope.contador=0;
 		$scope.parametro={};
@@ -1199,8 +1198,8 @@
 	
 		$scope.dibujarGrafico = function (url)
 		{
-	  
-			$scope.alerta = $http.get(URLS.BASE_API+url)     
+	  		$scope.alerta = true;
+			$http.get(URLS.BASE_API+url)     
 			.success(function(data, status, headers, config) 
 			{   
 				$scope.dato  = data.data; 
@@ -1218,10 +1217,12 @@
 					$scope.bread.push({label:"Zona: "+$scope.dimension[3]});
 				if(!angular.isUndefined($scope.dimension[4]))
 					$scope.bread.push({label:"Clues: "+$scope.dimension[4]});
+				$scope.alerta = false;
 			})
 			.error(function(data, status, headers, config) 
 			{
 				errorFlash.error(data);
+				$scope.alerta = false;
 			});
 		};
 	
@@ -1262,7 +1263,7 @@
 			var url="calidadDimension";
 			if($scope.tipo=="Abasto")
 				url="abastoDimension";
-	  		$scope.pieOpcion = $http.get(URLS.BASE_API+url+'?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo+"&tipo="+$scope.tipo)     
+	  		$http.get(URLS.BASE_API+url+'?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo+"&tipo="+$scope.tipo)     
 	  		.success(function(data, status, headers, config) 
 	  		{   
 				$scope.datos[c] = data.data;  
@@ -1397,11 +1398,8 @@
 	.controller('globalController', function($scope, $http, $window, $location, $timeout, $route,  flash, errorFlash, URLS, $mdDialog ) {
 		
 	
-		$scope.delay = 0;
-		$scope.minDuration = 0;
-		$scope.message = 'Cargando...';
-		$scope.backdrop = true;
-		$scope.global = null;
+		
+		$scope.global = true;
 	
 		$scope.contador=0;
 		$scope.parametro={};
@@ -1413,6 +1411,7 @@
 		$scope.chart;
 		$scope.verCalidad="";
 		$scope.dato = {};
+		$scope.indicadores = {};
 		$scope.datos = [];
 		$scope.dimension = [];    
 		
@@ -1422,7 +1421,7 @@
 
 		$scope.dimensiones = function(campo,valor,nivel,c,ultimo)
 		{
-	  		$scope.calidadOpcion = $http.get(URLS.BASE_API+'calidadDimension?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo)     
+	  		$http.get(URLS.BASE_API+'calidadDimension?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo)     
 	  		.success(function(data, status, headers, config) 
 	  		{   
 				$scope.datos[c] = data.data;  
@@ -1460,10 +1459,12 @@
 
 		$scope.dibujarGrafico = function (url)
 		{
-			$scope.global = $http.get(URLS.BASE_API+url)     
+			$scope.global = true;
+			$scope.indicadores={};
+			$scope.dato={};
+			$http.get(URLS.BASE_API+url)     
 			.success(function(data, status, headers, config) 
 			{   
-
 				$scope.dato = data.data;
 				$scope.indicadores = data.indicadores;
 
@@ -1483,11 +1484,13 @@
 				var total=data.total;
 				if(total==0) total = "No hay datos"; 
 					$scope.bread.push({label:"Total: "+total});
+				$scope.global = false;
 
 			})
 			.error(function(data, status, headers, config) 
 			{
 				errorFlash.error(data);
+				$scope.global = false;
 			});
 		};
 	
@@ -1505,6 +1508,8 @@
 			$scope.parametro={};
 			$scope.bread=[];
 			$scope.datos={};
+			$scope.dato = {};
+			$scope.indicadores = {};
 			$scope.dimension={};
 			$scope.parDimension={};
 			$scope.parametro = [];
@@ -1522,6 +1527,8 @@
 			$scope.parametro={};
 			$scope.bread=[];
 			$scope.datos={};
+			$scope.dato = {};
+			$scope.indicadores = {};
 			$scope.dimension={};
 			$scope.parDimension={};
 			$scope.parametro = [];
@@ -1545,11 +1552,8 @@
 	.controller('gaugeController', function($scope, $http, $window, $location, $timeout, $route,  flash, errorFlash, URLS, $mdDialog ) {
 		
 	
-		$scope.delay = 0;
-		$scope.minDuration = 0;
-		$scope.message = 'Cargando...';
-		$scope.backdrop = true;
-		$scope.gauge = null;
+		
+		$scope.gauge = true; 
 	
 		$scope.contador=0;
 		$scope.parametro={};
@@ -1592,7 +1596,7 @@
 			var url="calidadDimension";
 			if($scope.tipo=="Abasto")
 				url="abastoDimension";
-	  		$scope.gaugeOpcion = $http.get(URLS.BASE_API+url+'?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo+"&tipo="+$scope.tipo)     
+	  		$http.get(URLS.BASE_API+url+'?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo+"&tipo="+$scope.tipo)     
 	  		.success(function(data, status, headers, config) 
 	  		{   
 				$scope.datos[c] = data.data;  
@@ -1642,7 +1646,8 @@
 				clues=$scope.dimension[4];
 
 			url=url+"&anio="+anio+"&mes="+mes+"&clues="+clues;
-			$scope.gauge = $http.get(URLS.BASE_API+url)     
+			$scope.gauge = true; 
+			$http.get(URLS.BASE_API+url)     
 			.success(function(data, status, headers, config) 
 			{   
 				$scope.value = data.valor;
@@ -1672,11 +1677,13 @@
 				var total=data.total;
 					if(total==0) total = "No hay datos"; 
 				$scope.bread.push({label:"Total: "+total});
+				$scope.gauge = false; 
 
 			})
 			.error(function(data, status, headers, config) 
 			{
 			errorFlash.error(data);
+			$scope.gauge = false; 
 			});
 		};
 	

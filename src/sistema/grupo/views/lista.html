@@ -30,8 +30,9 @@
       <tr>
 		 <th hide-sm name="ID" order-by="id"></th>
 			<th name="{{ 'NOMBRE' | translate }}" order-by="nombre"></th>
-			<th hide-sm hide-md name="{{ 'CREADO' | translate }}" order-by="creadoAl"></th>
-        	<th hide-sm hide-md hide-lg name="{{ 'MODIFICADO' | translate }}"  order-by="modificadoAl"></th>
+			<th hide-sm hide-md  name="{{ 'CREADO' | translate }}" order-by="creadoAl"></th>
+		<th hide-sm hide-md hide-lg name="{{ 'MODIFICADO' | translate }}"  order-by="modificadoAl"></th>
+
 			<th ></th>
 		  </tr>
     </thead>
@@ -43,7 +44,7 @@
 				 <td hide-sm hide-md hide-lg>{{ dato.modificadoAl }}</td>
 				 <td>
 					
-					<section layout="row" layout-sm="column" layout-align="center center">
+					<section layout="row" layout-align="center center">
 						
 						<a url-modulo="ver?id={{ dato.id }}"><md-button class="md-icon-button md-primary" aria-label="Ver">
 							<md-icon md-svg-src="remove-red-eye"></md-icon>
