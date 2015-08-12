@@ -47,13 +47,13 @@
                                 
                                 <div  style="font-size:.7em; margin:20px;">
                                     <span flex="33.33">
-                                    	<strong>JS:</strong> {{ dato.jurisdiccion }}
+                                      <strong>{{ 'JURISDICCION' | translate }}:</strong> {{ dato.jurisdiccion }}
                                     </span>
                                     <span flex="33.33">
-                                    	<strong>Municipio:</strong> {{ dato.municipio }}
+                                      <strong>{{ 'MUNICIPIO' | translate }}:</strong> {{ dato.municipio }}
                                     </span>
                                     <span flex="33.33">
-                                		<strong>Localidad:</strong> {{ dato.localidad }}
+                                    <strong>{{ 'LOCALIDAD' | translate }}:</strong> {{ dato.localidad }}
                                     </span>
                                 </div>                               
                                 <md-divider ></md-divider>
@@ -95,8 +95,8 @@
     <thead >
       <tr>
           <th width="40%" name="No Expediente:"></th>
-          <th ng-repeat="v in columnas" name="{{ v }}">
-          </th>
+          <td ng-repeat="v in columnas" width="1%" align="center" name="{{ v }}" style=" font-size: 12px; color: rgba(0,0,0,.54);">{{ v }}
+          </td>
           <th colspan="4"> </th>
       </tr>
     </thead>
@@ -167,7 +167,7 @@
                   
                   	
 							<th width="40%" name="No Expediente:"></th>
-							<th ng-repeat="v in columnas"  width="1%" name="{{ v }}"></th>
+							<td ng-repeat="v in columnas"  width="1%" align="center" name="{{ v }}" style=" font-size: 12px; color: rgba(0,0,0,.54);">{{ v }}</td>
 						</tr>
                         </thead>
     <tbody>
