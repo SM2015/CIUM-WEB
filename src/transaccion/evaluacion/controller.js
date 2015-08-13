@@ -120,6 +120,7 @@
 		//clues
 		$scope.getClues=function()
 		{
+			$scope.cargando = true;
 			CrudDataApi.lista('CluesUsuario', function (data) {
 				if(data.status  == '407')
 					$window.location="acceso";	
@@ -133,9 +134,9 @@
 						$scope.repos=$scope.Clues;
 					}
 					else
-					{
-						flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-					}
+            {
+                errorFlash.error(data);
+            }
 					$scope.cargando = false;
 				},function (e) {
 					errorFlash.error(e);
@@ -143,7 +144,8 @@
 			});
 		};
 		$scope.CluesChange = function(value) 
-		{ 			
+		{ 	
+			$scope.cargando = true;		
 			CrudDataApi.ver('Clues', value, function (data) {
 			  if(data.status  == '407')
 				$window.location="acceso";
@@ -164,9 +166,9 @@
 					$scope.dato.tipologia = data.data.tipologia;
 			  }
 			  else
-			  {
-				flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-			  }
+            {
+                errorFlash.error(data);
+            }
 			  $scope.cargando = false;
 			},function (e) {
 				errorFlash.error(e);
@@ -271,9 +273,9 @@
 					$scope.options=data.data;
 				}
 				else
-				{
-					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				}
+            {
+                errorFlash.error(data);
+            }
 			});
 		};
 	
@@ -290,9 +292,9 @@
 					$scope.acciones=data.data;
 				}
 				else
-				{
-					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				}
+            {
+                errorFlash.error(data);
+            }
 			});
 		};
 	
@@ -309,9 +311,9 @@
 					$scope.plazos=data.data;
 				}
 				else
-				{
-					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				}
+            {
+                errorFlash.error(data);
+            }
 			});
 		};
 	
@@ -321,7 +323,7 @@
 			var cone=$scope.dato.idCone;
 			var indi=$scope.dato.idIndicador;
 			var idev=$scope.dato.id;
-			
+			$scope.cargando = true;
 			if(!angular.isUndefined(cone)&&cone!=""&&!angular.isUndefined(indi)&&indi!="")
 			{
 				$http.get(URLS.BASE_API+'CriterioEvaluacion/'+cone+'/'+indi+'/'+idev)
@@ -359,10 +361,12 @@
 						$scope.esSeguimiento=false;
 						$scope.tieneHallazgo=false;
 						
-					}	
+					}
+					$scope.cargando = false;	
 				})
 				.error(function(data, status, headers, config) 
 				{
+					$scope.cargando = false;
 					errorFlash.error(data);
 				});
 			}
@@ -370,7 +374,7 @@
 		$scope.cargarCriteriosVer = function()
 		{			
 			var idev=$location.search().id;
-				
+			$scope.cargando = true;	
 			$http.get(URLS.BASE_API+'CriterioEvaluacionVer/'+idev)
 			.success(function(data, status, headers, config) 
 			{
@@ -385,10 +389,12 @@
 				else
 				{
 					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" + data.messages);
-				}	
+				}
+				$scope.cargando = false;	
 			})
 			.error(function(data, status, headers, config) 
 			{
+				$scope.cargando = false;
 				errorFlash.error(data);
 			});		
 		};
@@ -411,6 +417,7 @@
 		$scope.informacion = [];
 		$scope.estadistica = function()
 		{
+			$scope.cargando = true;
 			var idev = $scope.dato.id;
 			if(angular.isUndefined(idev) || idev == "" )
 				idev = $location.search().id;
@@ -440,9 +447,9 @@
 						$scope.terminado=false;		
 				}
 				else
-				{
-					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				}
+            {
+                errorFlash.error(data);
+            }
 					$scope.cargando = false;
 				},function (e) {
 					errorFlash.error(e);
@@ -543,9 +550,9 @@
 					//flash('success', data.messages);				    		
 				}
 				else
-				{
-					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				}
+            {
+                errorFlash.error(data);
+            }
 			})
 			.error(function(data, status, headers, config) 
 			{
@@ -567,9 +574,9 @@
 					$location.path(uri).search({id: data.data.id});				    		
 				}
 				else
-				{
-					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				}
+            {
+                errorFlash.error(data);
+            }
 			})
 			.error(function(data, status, headers, config) 
 			{
@@ -639,9 +646,9 @@
 	    			$scope.paginacion.paginas = data.total;
 	      		}
 	      		else
-	      		{
-	    			flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-	      		}
+            {
+                errorFlash.error(data);
+            }
 	      		$scope.cargando = false;
 	        },function (e) {
 	      		errorFlash.error(e);
@@ -674,9 +681,9 @@
 					$scope.dato=data.data;
 				}
 				else
-				{
-					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				}
+            {
+                errorFlash.error(data);
+            }
 					$scope.cargando = false;
 				},function (e) {
 					errorFlash.error(e);
@@ -702,9 +709,9 @@
 			  flash('success', data.messages);
 		  }
 		  else
-		  {
-			  flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-		  }
+            {
+                errorFlash.error(data);
+            }
 		  $scope.cargando = false;
 		  },function (e) {
 			errorFlash.error(e);
@@ -734,20 +741,14 @@
 
 						uri="/"+uri[1]+"/modificar";
 
-						if(url.search("Modulo")>-1||url.search("modulo")>-1)    
-						{
-						    MenuOption.preparar();
-						    $scope.$on('menuInicio', function() {
-						  $scope.menuOptions = MenuOption.menu;
-						    });
-						}
+						
 
 						$location.path(uri).search({id: data.data.id});
 			  		}
 			  		else
-			  		{
-						flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-			  		}
+            {
+                errorFlash.error(data);
+            }
 			  		$scope.cargando = false;
 			    },function (e) {
 			  		errorFlash.error(e);
@@ -781,19 +782,13 @@
 	      					angular.element('#lista').click();
 	        			flash('success', data.messages);
 
-	        			if(url.search("Modulo")>-1||url.search("modulo")>-1)    
-	        			{
-	      					MenuOption.preparar();
-	      					$scope.$on('menuInicio', function() {
-	    						$scope.menuOptions = MenuOption.menu;
-	      					});
-	        			}
+	        			
 	        			$scope.cargando = false;
 				    }
 				    else
-				    {
-				        flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				    }
+            {
+                errorFlash.error(data);
+            }
 	    			$scope.cargando = false;
 	      		},function (e) {
 				    errorFlash.error(e);

@@ -118,6 +118,7 @@
 		//clues
 		$scope.getClues=function()
 		{
+			$scope.cargando = true;
 			CrudDataApi.lista('CluesUsuario', function (data) {
 				if(data.status  == '407')
 					$window.location="acceso";	
@@ -131,9 +132,9 @@
 						$scope.repos=$scope.Clues;
 					}
 					else
-					{
-						flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-					}
+            {
+                errorFlash.error(data);
+            }
 					$scope.cargando = false;
 				},function (e) {
 					errorFlash.error(e);
@@ -141,7 +142,8 @@
 			});
 		};
 		$scope.CluesChange = function(value) 
-		{ 			
+		{ 	
+			$scope.cargando = true;		
 			CrudDataApi.ver('Clues', value, function (data) {
 			  if(data.status  == '407')
 				$window.location="acceso";
@@ -162,9 +164,9 @@
 					$scope.dato.tipologia = data.data.tipologia;
 			  }
 			  else
-			  {
-				flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-			  }
+            {
+                errorFlash.error(data);
+            }
 			  $scope.cargando = false;
 			},function (e) {
 				errorFlash.error(e);
@@ -269,9 +271,9 @@
 					$scope.options=data.data;
 				}
 				else
-				{
-					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				}
+            {
+                errorFlash.error(data);
+            }
 			});
 		};
 	
@@ -288,9 +290,9 @@
 					$scope.acciones=data.data;
 				}
 				else
-				{
-					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				}
+            {
+                errorFlash.error(data);
+            }
 			});
 		};
 	
@@ -307,9 +309,9 @@
 					$scope.plazos=data.data;
 				}
 				else
-				{
-					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				}
+            {
+                errorFlash.error(data);
+            }
 			});
 		};
 		$scope.columnas = [];
@@ -332,10 +334,10 @@
 			var indi=$scope.dato.idIndicador;
 			var idev=$scope.dato.id;
 			var op=0;
-			
+			$scope.cargando = true;
 			if(!angular.isUndefined(cone)&&cone!=""&&!angular.isUndefined(indi)&&indi!="")
 			{
-				$scope.calidad = $http.get(URLS.BASE_API+'CriterioEvaluacionCalidad/'+cone+'/'+indi+'/'+idev)
+				$http.get(URLS.BASE_API+'CriterioEvaluacionCalidad/'+cone+'/'+indi+'/'+idev)
 				.success(function(data, status, headers, config) 
 				{
 					if(data.status  == '407')
@@ -425,9 +427,11 @@
 						$scope.esSeguimiento=false;
 						flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" + data.messages);
 					}	
+					$scope.cargando = false;
 				})
 				.error(function(data, status, headers, config) 
 				{
+					$scope.cargando = false;
 					errorFlash.error(data);
 				});
 			}
@@ -435,8 +439,8 @@
 		$scope.cargarCriteriosVer = function()
 		{			
 			var idev=$location.search().id;
-				
-			$scope.calidad = $http.get(URLS.BASE_API+'CriterioEvaluacionCalidadVer/'+idev)
+			$scope.cargando = true;
+			$http.get(URLS.BASE_API+'CriterioEvaluacionCalidadVer/'+idev)
 			.success(function(data, status, headers, config) 
 			{
 				if(data.status  == '407')
@@ -465,10 +469,12 @@
 						
 					});	
 	
-					$scope.actualizar();			
+					$scope.actualizar();	
+					$scope.cargando = false;		
 				}
 				else
 				{
+					$scope.cargando = false;
 					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" + data.messages);
 				}	
 			})
@@ -496,13 +502,14 @@
 		
 		$scope.estadistica = function()
 		{
+			$scope.cargando = true;
 			var indi=$scope.dato.idIndicador;
 			var idev = $scope.dato.id;
 			if(angular.isUndefined(idev) || idev == "" )
 				idev = $location.search().id;
 			var tco=0; var co=0;
 			var tinc=0; var inc=0;
-			$scope.calidad = $http.get(URLS.BASE_API+'EstadisticaCalidad/'+idev+'/'+indi)
+			$http.get(URLS.BASE_API+'EstadisticaCalidad/'+idev+'/'+indi)
 			.success(function(data, status, headers, config) 
 			{
 				if(data.status  == '407')
@@ -540,12 +547,14 @@
 						$scope.terminado=false;				
     			}
 				else
-				{
-					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				}	
+            {
+                errorFlash.error(data);
+            }
+            $scope.cargando = false;	
 			})
 			.error(function(data, status, headers, config) 
 			{
+				$scope.cargando = false;
 				errorFlash.error(data);
 			});
 		};
@@ -699,9 +708,9 @@
 					$scope.estadistica();				    		
 				}
 				else
-				{
-					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				}
+            {
+                errorFlash.error(data);
+            }
 			})
 			.error(function(data, status, headers, config) 
 			{
@@ -723,9 +732,9 @@
 					$location.path(uri).search({id: data.data.id});				    		
 				}
 				else
-				{
-					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				}
+            {
+                errorFlash.error(data);
+            }
 			})
 			.error(function(data, status, headers, config) 
 			{
@@ -795,9 +804,9 @@
 	    			$scope.paginacion.paginas = data.total;
 	      		}
 	      		else
-	      		{
-	    			flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-	      		}
+            {
+                errorFlash.error(data);
+            }
 	      		$scope.cargando = false;
 	        },function (e) {
 	      		errorFlash.error(e);
@@ -830,9 +839,9 @@
 					$scope.dato=data.data;
 				}
 				else
-				{
-					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				}
+            {
+                errorFlash.error(data);
+            }
 					$scope.cargando = false;
 				},function (e) {
 					errorFlash.error(e);
@@ -858,9 +867,9 @@
 			  flash('success', data.messages);
 		  }
 		  else
-		  {
-			  flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-		  }
+            {
+                errorFlash.error(data);
+            }
 		  $scope.cargando = false;
 		  },function (e) {
 			errorFlash.error(e);
@@ -890,20 +899,14 @@
 
 						uri="/"+uri[1]+"/modificar";
 
-						if(url.search("Modulo")>-1||url.search("modulo")>-1)    
-						{
-						    MenuOption.preparar();
-						    $scope.$on('menuInicio', function() {
-						  $scope.menuOptions = MenuOption.menu;
-						    });
-						}
+						
 
 						$location.path(uri).search({id: data.data.id});
 			  		}
 			  		else
-			  		{
-						flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-			  		}
+            {
+                errorFlash.error(data);
+            }
 			  		$scope.cargando = false;
 			    },function (e) {
 			  		errorFlash.error(e);
@@ -937,19 +940,13 @@
 	      					angular.element('#lista').click();
 	        			flash('success', data.messages);
 
-	        			if(url.search("Modulo")>-1||url.search("modulo")>-1)    
-	        			{
-	      					MenuOption.preparar();
-	      					$scope.$on('menuInicio', function() {
-	    						$scope.menuOptions = MenuOption.menu;
-	      					});
-	        			}
+	        			
 	        			$scope.cargando = false;
 				    }
 				    else
-				    {
-				        flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				    }
+            {
+                errorFlash.error(data);
+            }
 	    			$scope.cargando = false;
 	      		},function (e) {
 				    errorFlash.error(e);

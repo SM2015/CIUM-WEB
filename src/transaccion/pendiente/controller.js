@@ -169,9 +169,9 @@
 	    			$scope.paginacion.paginas = data.total;
 	      		}
 	      		else
-	      		{
-	    			flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-	      		}
+            {
+                errorFlash.error(data);
+            }
 	      		$scope.cargando = false;
 	        },function (e) {
 	      		errorFlash.error(e);

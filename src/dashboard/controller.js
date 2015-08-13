@@ -1799,9 +1799,9 @@
             $scope.dato=data.data;
           }
           else
-          {
-            flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-          }
+            {
+                errorFlash.error(data);
+            }
           $scope.cargando = false;
         },function (e) {
             errorFlash.error(e);
@@ -1817,9 +1817,9 @@
             $scope.criterios=data.data;
           }
           else
-          {
-            flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-          }
+            {
+                errorFlash.error(data);
+            }
           $scope.cargando = false;
         },function (e) {
             errorFlash.error(e);
@@ -1842,9 +1842,9 @@
             $scope.dato=data.data;
           }
           else
-          {
-            flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-          }
+            {
+                errorFlash.error(data);
+            }
           $scope.cargando = false;
         },function (e) {
             errorFlash.error(e);
@@ -1878,9 +1878,9 @@
 			  }); 
           }
           else
-          {
-            flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-          }
+            {
+                errorFlash.error(data);
+            }
           $scope.cargando = false;
         },function (e) {
             errorFlash.error(e);

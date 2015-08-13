@@ -179,9 +179,9 @@
 					$scope.options[cat]=data.data;			
 				}
 				else
-				{
-					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				}
+            {
+                errorFlash.error(data);
+            }
 				$scope.cargando = false;
 			});
 		};
@@ -278,9 +278,9 @@
 	    			$scope.paginacion.paginas = data.total;
 	      		}
 	      		else
-	      		{
-	    			flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-	      		}
+            {
+                errorFlash.error(data);
+            }
 	      		$scope.cargando = false;
 	        },function (e) {
 	      		errorFlash.error(e);
@@ -317,9 +317,9 @@
 
 				}
 				else
-				{
-					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				}
+            {
+                errorFlash.error(data);
+            }
 				$scope.cargando = false;
 				},function (e) {
 					errorFlash.error(e);
@@ -332,7 +332,10 @@
 		{    
 		    var url=$scope.ruta;
 		    
-		    var json=$scope.criterio;
+		    var json={};
+			json.nombre=$scope.dato.nombre;					
+			json.indicadores = $scope.getIndicadores($scope.criterio.indicador);
+			
 			if(!$scope.validarIndicador())
 			{
 				json=false;
@@ -349,9 +352,9 @@
 		    		flash('success', data.messages);
 				}
 				else
-				{
-				    flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				}
+            {
+                errorFlash.error(data);
+            }
 				$scope.cargando = false;
 		  	},function (e) {
 					errorFlash.error(e);
@@ -359,14 +362,28 @@
 		  		});    
 		    }
 		};
+		$scope.getIndicadores = function(valores)
+		{
+			var indicadores = []; var i = 0;
+			angular.forEach(valores, function(value, key) {
+				var cones = [] ;
+  				angular.forEach(value["cone"], function(val, k) {
+  					var valor = val.split(",");	
+  					cones.push({"id": valor[1]});
+				});
+				indicadores.push({"id": key, "idLugarVerificacion": value["lugar"], "cones": cones});
+			});
+			return indicadores;
+		}
 		// Guardar
 		$scope.guardar = function(form) 
 		{
 		    
 		    var url=$scope.ruta;
 		    var json={};
-			json.nombre=$scope.criterio.nombre;
-			json.indicador=$scope.criterio.indicador;
+			json.nombre=$scope.dato.nombre;					
+			json.indicadores = $scope.getIndicadores($scope.criterio.indicador);
+			
 		    if($scope.validarIndicador())
 			{
 			    CrudDataApi.crear(url, json, function (data) {
@@ -383,20 +400,14 @@
 
 						uri="/"+uri[1]+"/modificar";
 
-						if(url.search("Modulo")>-1||url.search("modulo")>-1)    
-						{
-						    MenuOption.preparar();
-						    $scope.$on('menuInicio', function() {
-						  $scope.menuOptions = MenuOption.menu;
-						    });
-						}
+						
 
 						$location.path(uri).search({id: data.data.id});
 			  		}
 			  		else
-			  		{
-						flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-			  		}
+            {
+                errorFlash.error(data);
+            }
 			  		$scope.cargando = false;
 			    },function (e) {
 			  		errorFlash.error(e);
@@ -430,19 +441,13 @@
 	      					angular.element('#lista').click();
 	        			flash('success', data.messages);
 
-	        			if(url.search("Modulo")>-1||url.search("modulo")>-1)    
-	        			{
-	      					MenuOption.preparar();
-	      					$scope.$on('menuInicio', function() {
-	    						$scope.menuOptions = MenuOption.menu;
-	      					});
-	        			}
+	        			
 	        			$scope.cargando = false;
 				    }
 				    else
-				    {
-				        flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				    }
+            {
+                errorFlash.error(data);
+            }
 	    			$scope.cargando = false;
 	      		},function (e) {
 				    errorFlash.error(e);

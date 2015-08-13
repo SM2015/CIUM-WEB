@@ -250,13 +250,13 @@
                 	<div layout="row" layout-wrap style="width:100%; margin-left:10px">
       				    <div flex="65">                   
                         <md-input-container flex >
-                            <md-select placeholder="{{ 'INDICADOR_SEL' | translate }}" ng-model="dato.idIndicador" ng-change="cargarCriterios()" >
+                            <md-select style="margin-top:33px;" placeholder="{{ 'INDICADOR_SEL' | translate }}" ng-model="dato.idIndicador" ng-change="cargarCriterios()" >
                                 <md-option ng-repeat="item in options" value="{{item.id}}">{{item.codigo+' - '+item.nombre}}</md-option>
                             </md-select>
                         </md-input-container>
                     </div>
                     <div flex="34">
-                        <md-content style=" float:right; margin-top:10px">
+                        <md-content style=" float:right; margin-top:10px; overflow: hidden;">
                             <md-menu flex="100">
                                 <md-button aria-label="estadisticas" style="width:192px; " class="md-raised" ng-click="$mdOpenMenu()">
                                 	

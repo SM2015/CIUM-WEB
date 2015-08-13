@@ -115,9 +115,9 @@
 					$scope.ver('Seguimiento');
 				}
 				else
-				{
-					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				}
+            {
+                errorFlash.error(data);
+            }
 			})
 			.error(function(data, status, headers, config) 
 			{
@@ -139,9 +139,9 @@
 					$location.path(uri).search({id: data.data.id});				    		
 				}
 				else
-				{
-					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				}
+            {
+                errorFlash.error(data);
+            }
 			})
 			.error(function(data, status, headers, config) 
 			{
@@ -167,9 +167,9 @@
 					$scope.dato=data.data;
 				}
 				else
-				{
-					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-				}
+            {
+                errorFlash.error(data);
+            }
 					$scope.cargando = false;
 				},function (e) {
 					errorFlash.error(e);

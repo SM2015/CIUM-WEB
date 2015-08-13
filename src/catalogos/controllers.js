@@ -136,7 +136,7 @@
             }
             else
             {
-            flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
+                errorFlash.error(data);
             }
             $scope.cargando = false;
           },function (e) {
@@ -169,9 +169,9 @@
             $scope.dato=data.data;
           }
           else
-          {
-            flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
-          }
+            {
+                errorFlash.error(data);
+            }
           $scope.cargando = false;
         },function (e) {
             errorFlash.error(e);
@@ -197,7 +197,7 @@
           }
           else
           {
-              flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
+              errorFlash.error(data);              
           }
           $scope.cargando = false;
           },function (e) {
@@ -233,18 +233,12 @@
                   angular.element('#lista').click();
                 flash('success', data.messages);
 
-                if(url.search("Modulo")>-1||url.search("modulo")>-1)    
-                {
-                  MenuOption.preparar();
-                  $scope.$on('menuInicio', function() {
-                  $scope.menuOptions = MenuOption.menu;
-                  });
-                }
+                
                 $scope.cargando = false;
             }
             else
             {
-                flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
+                errorFlash.error(data);
             }
             $scope.cargando = false;
             },function (e) {
@@ -275,19 +269,13 @@
 
             uri="/"+uri[1]+"/modificar";
 
-            if(url.search("Modulo")>-1||url.search("modulo")>-1)    
-            {
-                MenuOption.preparar();
-                $scope.$on('menuInicio', function() {
-              $scope.menuOptions = MenuOption.menu;
-                });
-            }
+            
 
             $location.path(uri).search({id: data.data.id});
             }
             else
             {
-            flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" +data.messages);
+                errorFlash.error(data);
             }
             $scope.cargando = false;
           },function (e) {

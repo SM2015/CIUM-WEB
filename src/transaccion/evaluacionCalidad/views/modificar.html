@@ -255,13 +255,13 @@
       <md-content  ng-init="opciones('Indicador?categoria=CALIDAD')" flex>
   		  <md-list layout-margin class="md-whiteframe-z1" layour-align="center center" flex>
           	
-          <div cg-busy="{promise:calidad,templateUrl:templateUrl,message:message,backdrop:backdrop,delay:delay,minDuration:minDuration}" style="margin-top:-10px" >
+          <div cg-busy="{promise:calidad,templateUrl:templateUrl,message:message,backdrop:backdrop,delay:delay,minDuration:minDuration}" style="margin-top:-15px" >
   				<md-list-item layout-wrap flex>
              
                 <md-list-item flex="55">              
                   <md-input-container flex >
                   	<span>
-                      <md-select placeholder="{{ 'INDICADOR_SEL' | translate }}" ng-model="dato.idIndicador" ng-change="cargarCriterios()" >
+                      <md-select style="margin-top:45px;" placeholder="{{ 'INDICADOR_SEL' | translate }}" ng-model="dato.idIndicador" ng-change="cargarCriterios()" >
                         <md-option ng-repeat="item in options" value="{{item.id}}">
                             {{item.codigo+' - '+item.nombre}}
                         </md-option>
@@ -309,12 +309,12 @@
               <md-button aria-label="estadisticas" style="width:192px;" type="button" class="md-raised" ng-click="$mdOpenMenu()">
                       	
                 <md-chips>
-                  <md-chip  style="background : #090; color:white;">
+                  <md-chip ng-if="completo[exp]>0" style="background : #090; color:white;">
                     <strong>{{ completo[exp] }}</strong>
                     <md-icon md-menu-origin md-svg-icon="check" style="color:white;"></md-icon>
                   </md-chip>
                   
-                  <md-chip  style="background : #A00; color:white;">
+                  <md-chip ng-if="incompleto[exp]>0" style="background : #A00; color:white;">
                     <strong>{{ incompleto[exp] }}</strong>
                     <md-icon md-menu-origin md-svg-icon="close" style="color:white;"></md-icon>
                   </md-chip>

@@ -50,6 +50,13 @@
 						        $localStorage.cium.perfil=data.data;                      
 						      });
 						},
+						perfilUpadte = function(e)
+						{
+							var url  = "UpdateInfo";
+							var data = $localStorage.cium.perfil.data;
+							var id   = $localStorage.cium.user_email;
+							$http.put(URLS.BASE_API + url +'/' + id, data);						                            
+						},
 						error = function (error) {
 							
 							delete $localStorage.cium.access_token;
@@ -86,6 +93,7 @@
 					.then(validarAcceso)
 					.then(cargarPermisos)
 					.then(perfil)
+					.then(perfilUpadte)
 					.then(successCallback)
 					.catch(error);
 				},
