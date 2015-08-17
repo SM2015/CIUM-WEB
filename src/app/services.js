@@ -68,15 +68,12 @@
 						perfil = function(e)
 						{
 							AuthService.getPerfil().then(function(data){
-						        $localStorage.cium.perfil=data.data;                      
+						        $localStorage.cium.perfil=data.data; 
+						        var url  = "UpdateInfo";
+								var data = $localStorage.cium.perfil.data; 
+								var id   = $localStorage.cium.user_email;
+								$http.put(URLS.BASE_API + url +'/' + id, data);	                     
 						      });
-						},
-						perfilUpadte = function(e)
-						{
-							var url  = "UpdateInfo";
-							var data = $localStorage.cium.perfil.data;
-							var id   = $localStorage.cium.user_email;
-							$http.put(URLS.BASE_API + url +'/' + id, data);						                            
 						},
 						error = function (error) {
 							
@@ -113,8 +110,7 @@
 					obtenerToken(data)
 					.then(validarAcceso)
 					.then(cargarPermisos)
-					.then(perfil)
-					.then(perfilUpadte)
+					.then(perfil)					
 					.then(successCallback)
 					.catch(error);
 				},

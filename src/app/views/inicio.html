@@ -3,16 +3,22 @@
 	<md-toolbar ng-include="'src/app/views/menu-publico.html'"></md-toolbar>
 	<md-content flex layout-wrap layout="row" layout-fill  >		
 		<div flex="100"  class="portada" layout="column" layout-padding layout-align="center center">
-			<h1 class="md-display-4" style="font-size:2.5em;line-height:1.0;text-align:center; color:#999;text-align:center; text-shadow: 1px 1px #666"  >
+			<h1 class="md-display-4" style="font-size:2.5em;line-height:1.0;text-align:center; color:#000;text-align:center; "  >
 				<md-icon md-svg-icon="logo" style="width:128px; height:128px;"></md-icon><br/> 
 				{{ 'APP_NOMBRE' | translate }}
 			</h1>
-			
+			<h2 class="md-display-4" style=" font-size:1.5em;line-height:1.0; color:#fff; text-shadow: 1px 1px #000 ;text-align:center;">{{ 'APP_DESCRIPCION_BREVE' | translate }}</h2>
 			<md-button ng-href="#/signin" class="md-raised md-accent"><md-icon md-svg-icon="exit-to-app" ></md-icon> {{ 'INICIAR_SESION' | translate }}</md-button>
 		</div>
-		<div flex layout layout-padding>
 			
-			<h2 class="md-display-4" style=" font-size:1.5em;line-height:1.2; color:#999;text-align:center; text-shadow: 1px 1px #666">{{ 'APP_DESCRIPCION_BREVE' | translate }}</h2>
+		<div flex layout layout-padding>
+			<md-icon md-svg-icon="ssa" style="width:50%; height:auto;"></md-icon>
+		</div>
+		<div flex layout layout-padding>
+			<md-icon md-svg-icon="escudo-chiapas-h" style="width:50%; height:auto;"></md-icon>
+		</div>
+		<div flex layout layout-padding>
+			<md-icon md-svg-icon="marca" style="width:50%; height:auto;"></md-icon>
 		</div>
 			
 				
