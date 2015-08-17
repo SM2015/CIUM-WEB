@@ -1,3 +1,11 @@
+/**
+ * Module App
+ * 
+ * @package    CIUM
+ * @subpackage Module
+ * @author     Hugo Gutierrez Corzo
+ * @created    2015-07-20
+ */
 (function(){
 	'use strict'
 	

@@ -1,15 +1,38 @@
-(function(){
+
+/**
+ * Controller  App
+ * 
+ * @package    CIUM
+ * @subpackage Controlador
+ * @author     Hugo Gutierrez Corzo
+ * @created    2015-07-20
+ */
+ (function(){
 	'use strict';
     angular.module('App')
   .controller('SigninCtrl', ['$rootScope', '$scope', '$location', '$localStorage','$mdBottomSheet','$translate','$mdSidenav', 'Auth','MENU_PUBLICO','URLS', function ($rootScope, $scope, $location, $localStorage, $mdBottomSheet, $translate, $mdSidenav, Auth,  MENU_PUBLICO,URLS) {
      
 $scope.cargando = false;
+
+  /**
+   * Si se pudo obtener el token redireccionar al dashboard.
+   *
+   * @param res
+   * @return redirect
+   */
 function successAuth(res) {
     $scope.cargando = false;
     $rootScope.errorSignin = null;
     $location.path("dashboard");
 }
 
+  /**
+   * obtener el token de acceso.
+   *
+   * @param post 
+   * Response si la operacion es exitosa devolver un array con el listado de clues
+   * @return 
+   */
 $scope.signin = function () {
   var email=$scope.email;
   $localStorage.cium.user_email=email;
@@ -24,6 +47,13 @@ $scope.signin = function () {
     });
 };
 
+  /**
+   * Cerra la sessión.
+   *
+   * @param session 
+   * Response si la operacion es exitosa devolver un array con el listado de clues
+   * @return array
+   */
 $scope.logout = function () {
     $scope.cargando = false;
     Auth.logout(function () {
@@ -41,13 +71,24 @@ $scope.urlObtenerOAuth= URLS.OAUTH_CLIENTE + "/#/signin";
 
 $scope.menuSelected = '';
 
+   /**
+   * Redirect a la página.
+   *
+   * @param paht 
+   * @return redirect
+   */
 $scope.ir = function(path){
 	        $scope.menuSelected = path;
 	       $location.path(path).search({id: null});
 	    };
 
 $scope.menuPublico = MENU_PUBLICO;
-
+  /**
+   * Muestra el templete para la selección de idioma.
+   *
+   * @param event 
+   * @return views
+   */
 $scope.mostrarIdiomas = function($event){    
     $mdBottomSheet.show({
 templateUrl: 'src/app/views/idiomas.html',
@@ -55,7 +96,11 @@ controller: 'ListaIdiomasCtrl',
 targetEvent: $event
     });
 };
-
+  /**
+   * Muestra el menu lateral si la apliación se abre en un dispositivo.
+   *
+   * @return event
+   */
 $scope.toggleMenu  = function  () {    
     $mdSidenav('left-publico').toggle();
 };

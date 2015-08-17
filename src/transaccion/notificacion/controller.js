@@ -5,75 +5,83 @@
 	       ['$rootScope', '$translate', '$scope', '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash',  'CrudDataApi', 'URLS', 'Notificaciones', 
 	function($rootScope,   $translate,   $scope,   $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,    CrudDataApi,   URLS,   Notificaciones){
 	
+	// carga las notificaciones mas recientes del usuario
+	Notificaciones.preparar();
+		
+	$scope.$on('notificacionInicio', function() {
+		$scope.notificaciones = Notificaciones.notificacion.data;
+		$scope.total = Notificaciones.notificacion.total;
+	});
 	
-		Notificaciones.preparar();
-			
-		$scope.$on('notificacionInicio', function() {
-			$scope.notificaciones = Notificaciones.notificacion.data;
-			$scope.total = Notificaciones.notificacion.total;
-		});
+	// cambia el estado a visto una ves que se abre la notificacion
+	$scope.visto = function(id)
+	{
+		var json={};
+		json.visto=1;
+		$http.put(URLS.BASE_API+'Notificacion'+'/'+id,json)
+		.success(function(data, status, headers, config) 
+		{	
+			Notificaciones.preparar();	
+		})
+	}
 		
-		$scope.visto = function(id)
-		{
-			var json={};
-			json.visto=1;
-			$http.put(URLS.BASE_API+'Notificacion'+'/'+id,json)
-			.success(function(data, status, headers, config) 
-			{	
-				Notificaciones.preparar();	
-			})
-		}
-		
-		 $scope.menuSelected = "/"+$location.path().split('/')[1];
-	    $scope.menu = Menu.getMenu();
-	    $scope.fecha_actual = new Date();
-	    
-	    $scope.cargando = true;
+	// cambia de color el menu seleccionado
+	$scope.menuSelected = "/"+$location.path().split('/')[1];
+	// carga el menu correspondiente para el usuario
+	$scope.menu = Menu.getMenu();
+	$scope.fecha_actual = new Date();
 
-	    $scope.ruta="";
+	// inicia la inimación de cargando
+	$scope.cargando = true;
+
+	// inicializa el modulo ruta y url se le asigna el valor de la página actual
+	$scope.ruta="";
     $scope.url=$location.url();
 
+    // cambia los textos del paginado de cada grid
     $scope.paginationLabel = {
       text: $translate.instant('ROWSPERPAGE'),
       of: $translate.instant('DE')
     };
-
-	    
-
-	    $scope.BuscarPor=[                      
-                      {id:'creadoAl', nombre:$translate.instant('CREADO')},
-                      {id:'modificadoAl', nombre:$translate.instant('MODIFICADO')}
-                     ];
-
-	    
-	    // data table
+	   
+    // Inicializa el campo para busquedas disponibles para cada grid
+    $scope.BuscarPor=
+    [
+		{id:"nombre", nombre:$translate.instant('NOMBRE')},
+		{id:'creadoAl', nombre:$translate.instant('CREADO')},
+		{id:'modificadoAl', nombre:$translate.instant('MODIFICADO')}
+	];
+	   
+	// inicia configuración para los data table (grid)
     $scope.selected = [];
 
-  $scope.query = {
-    filter: '',
-    order: 'id',
-    limit: 5,
-    page: 1
-  };
+    // incializa el modelo para el filtro, ordenamiento y paginación
+	$scope.query = {
+		filter: '',
+		order: 'id',
+		limit: 5,
+		page: 1
+	};
 
+	// Evento para incializar el ordenamiento segun la columna clickeada
+	$scope.onOrderChange = function (order) {
+		$scope.query.order=order;
+		$scope.cargando = true;
+		$scope.init(); 
+	};
 
-  $scope.onOrderChange = function (order) {
-    $scope.query.order=order;
-    $scope.cargando = true;
-    $scope.init(); 
-  };
+	// Evento para el control del paginado.
+	$scope.onPaginationChange = function (page, limit) {
+		$scope.paginacion = 
+		{
+			pag: (page-1)*limit,
+			lim: limit,
+			paginas:0
+		};
+		$scope.cargando = true;
+		$scope.init();
+	};
 
-
-  $scope.onPaginationChange = function (page, limit) {
-    $scope.paginacion = 
-    {
-        pag: (page-1)*limit,
-        lim: limit,
-        paginas:0
-    };
-    $scope.cargando = true;
-    $scope.init();
-  };
     //fin data
     $scope.paginacion = 
     {
@@ -81,34 +89,37 @@
         lim: 5,
         paginas:0
     };
-	    $scope.datos = [];
-	    
+	$scope.datos = [];	    
 
-	    $scope.toggleMenu  = function  () {
-	        $mdSidenav('left').toggle();
-	    };
-	    
-	    $scope.mostrarIdiomas = function($event){  
-	                      
-	        $mdBottomSheet.show({
-	          templateUrl: 'src/app/views/idiomas.html',
-	          controller: 'ListaIdiomasCtrl',
-	          targetEvent: $event	
-	        });
-	    };
-	    
-	    $scope.logout = function () {
-	       Auth.logout(function () {
-	           $location.path("signin");
-	       });
-	    };
-	    
-	    $scope.ir = function(path){
-	        $scope.menuSelected = path;
-	       $location.path(path).search({id: null});
-	    };
+	 // muestra el menu para aquellos dispositivos que por su tamaño es oculto
+	$scope.toggleMenu  = function  () {
+	    $mdSidenav('left').toggle();
+	};
 
-	    //export PDF
+	// muestra el templete para cambiar el idioma
+	$scope.mostrarIdiomas = function($event){  
+	                  
+	    $mdBottomSheet.show({
+	      templateUrl: 'src/app/views/idiomas.html',
+	      controller: 'ListaIdiomasCtrl',
+	      targetEvent: $event	
+	    });
+	};
+
+	// cierra la session para salir del sistema
+	$scope.logout = function () {
+	   Auth.logout(function () {
+	       $location.path("signin");
+	   });
+	};
+
+	// redirecciona a la página que se le pase como parametro
+	$scope.ir = function(path){
+	    $scope.menuSelected = path;
+	   $location.path(path).search({id: null});
+	};
+
+	//export PDF
     $scope.exportar = function()
     {
         $scope.generarExport("pdf");              
@@ -137,54 +148,55 @@
             $scope.btexportar=false;
           }); 
     }
-    //Lista
-      $scope.index = function(ruta) 
-      {
-          $scope.ruta=ruta;  
-          var uri=$scope.url;
-       
-          if(uri.search("nuevo")==-1)
-          $scope.init();     
-      };
+    // inicializa las rutas para crear los href correspondientes en la vista actual
+	$scope.index = function(ruta) 
+	{
+	  $scope.ruta=ruta;  
+	  var uri=$scope.url;
 
-	    $scope.init = function(buscar,columna) 
-		{
-			var url=$scope.ruta;
-			
-			var pagina=$scope.paginacion.pag;
-			var limite=$scope.paginacion.lim;
+	  if(uri.search("nuevo")==-1)
+	  $scope.init();     
+	};
+	
+	// obtiene los datos necesarios para crear el grid (listado)
+    $scope.init = function(buscar,columna) 
+	{
+		var url=$scope.ruta;
 		
-			var order=$scope.query.order;
-		
-			if(!angular.isUndefined(buscar))
-				limite=limite+"&columna="+columna+"&valor="+buscar+"&buscar=true";
+		var pagina=$scope.paginacion.pag;
+		var limite=$scope.paginacion.lim;
+	
+		var order=$scope.query.order;
+	
+		if(!angular.isUndefined(buscar))
+			limite=limite+"&columna="+columna+"&valor="+buscar+"&buscar=true";
 
 
-          CrudDataApi.lista(url+'?pagina=' + pagina + '&limite=' + limite+"&order="+order, function (data) {
-	        if(data.status  == '407')
-	        	$window.location="acceso";
+      	CrudDataApi.lista(url+'?pagina=' + pagina + '&limite=' + limite+"&order="+order, function (data) {
+        if(data.status  == '407')
+        	$window.location="acceso";
 
-	      		if(data.status==200)
-	      		{
-	    			$scope.datos = data.data;
-	    			$scope.paginacion.paginas = data.total;
-	      		}
-	      		else
-            {
-                errorFlash.error(data);
-            }
-	      		$scope.cargando = false;
-	        },function (e) {
-	      		errorFlash.error(e);
-	      		$scope.cargando = false;
-	        });
-	    };  
+      		if(data.status==200)
+      		{
+    			$scope.datos = data.data;
+    			$scope.paginacion.paginas = data.total;
+      		}
+      		else
+	        {
+	            errorFlash.error(data);
+	        }
+      		$scope.cargando = false;
+        },function (e) {
+      		errorFlash.error(e);
+      		$scope.cargando = false;
+        });
+    };
 
-	    
-	    $scope.buscarL = function(buscar,columna) 
-	  {
-                                                $scope.cargando = true;
-		  	$scope.init(buscar,columna);
-	  };	
+    // incia la busqueda con los parametros, columna = campo donde buscar, buscar = valor para la busqueda
+	$scope.buscarL = function(buscar,columna) 
+	{
+	    $scope.cargando = true;
+	  	$scope.init(buscar,columna);
+	};	
 	}])
 })();

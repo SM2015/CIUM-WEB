@@ -1,5 +1,14 @@
+/**
+ * Module App
+ * 
+ * @package    CIUM
+ * @subpackage Controlador
+ * @author     Hugo Gutierrez Corzo
+ * @created    2015-07-20
+ */
 (function(){
-	'use strict';	   
+	'use strict';	 
+  // constante con todos las opciones del menu  
 	angular.module('App').constant('MENU',[
 { 
     grupo: false,
@@ -117,9 +126,8 @@ icono: 'event-note'
 }
     ]
   },
-			
-						 
-						 ]);
+]);
+// opciones del menu publico
 	angular.module('App').constant('MENU_PUBLICO',[
 { 
     icono:'exit-to-app' , 

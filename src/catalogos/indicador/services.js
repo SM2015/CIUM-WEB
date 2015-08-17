@@ -1,5 +1,16 @@
+/**
+ * Service stringToNumber
+ * 
+ * @package    CIUM 
+ * @subpackage Service
+ * @author     Eliecer Ramirez Esquinca
+ * @created    2015-07-20
+ */
 (function(){
 	'use strict';
+	/**
+	 * Convertir cadenas a numeros en las vistas.
+	 */
 	angular.module('IndicadorModule')
 	.directive('stringToNumber', function() {
 		return {

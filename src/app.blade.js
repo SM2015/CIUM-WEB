@@ -1,6 +1,20 @@
+/**
+ * Directivas globales
+ * 
+ * @package    CIUM 
+ * @subpackage Directivas
+ * @author     Eliecer Ramirez Esquinca
+ * @created    2015-07-20
+ */
 var app = angular.module('App');  
 
-
+	/**
+	 * Genera la url (modificar, nuevo, ver, listar) de las vistas.
+	 *
+	 * @param attr url-modulo
+	 * 
+	 * @return href
+	 */
 app.directive('urlModulo', function() 
 {	
 	return{
@@ -31,6 +45,13 @@ app.directive('urlModulo', function()
 	};
 });
 
+	/**
+	 * Despliega en pantalla un mensaje de error que se genere al extraer datos de la api.
+	 *
+	 * @param data = array del o los mensajes
+	 * 
+	 * @return templete view
+	 */
 app.factory('errorFlash', function($http, flash) 
 { 
 	return {		 
@@ -55,28 +76,38 @@ app.factory('errorFlash', function($http, flash)
 	};
 });
 
+	/**
+	 * Genera un boton para imprimir determinada area en una página.
+	 *
+	 * @param attr class = area a imprimir
+	 * 
+	 * @return imprimir
+	 */
 app.directive('imprimirDiv', function () 
 {
 	return {
 		restrict: 'A',
 		link: function(scope, element, attrs) 
 		{
+			// evento que dispara el generador de impresión
 			element.bind('click', function(evt)
 			{    
 		    	evt.preventDefault();  
 		    	var elem = document.querySelector(attrs.imprimirDiv);  
 		    	PrintElem(elem);
 			});
-
+			// obtener el área a imprimir y se extrae su contenido html
 			function PrintElem(elem)
 			{
 			    PrintWithIframe(angular.element(elem).html());
 			}
-
+			// generar el ddocumento a imprimir
 			function PrintWithIframe(data) 
 			{
+				// comprobar que el contenedor de impresión no exista
 			    if (!angular.isUndefined(document.getElementById('printf'))) 
 			    {
+			    	// crear el contenedor para guardar el elemento a imprimir
 			    	var iframe = document.createElement('iframe');
 			    	iframe.setAttribute("id","printf"); 
 			    	iframe.setAttribute("style","display:none"); 
@@ -107,10 +138,12 @@ app.directive('imprimirDiv', function ()
 				    
 				    	setTimeout(function()
 					  	{
+					  		// lanzar la sentencia imprimir
 							mywindow.contentWindow.print();
 						},500);
 					  	setTimeout(function()
 					  	{
+					  		// remover el contenedor de impresión
 					    	document.body.removeChild(iframe);
 					  	},2000);  
 				   

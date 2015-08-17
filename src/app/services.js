@@ -1,18 +1,38 @@
+/**
+ * Service App
+ * 
+ * @package    CIUM
+ * @subpackage Controlador
+ * @author     Hugo Gutierrez Corzo
+ * @created    2015-07-20
+ */
+
 (function(){
-	'use strict';	
+	'use strict';
+   /**
+   * Service que obtiene el token valido.
+   *
+   * @param data
+   * 
+   * @return objeto request
+   */	
 	angular.module('App')
 		.service('AuthService',['$http','URLS','$localStorage',function($http, URLS, $localStorage){
 			return {
+				// contiene las credenciales del usuario
 				autenticar: function(data) {
 					
-	    return $http.post(URLS.BASE + 'signin', data, { ignoreAuthModule: true });
-	},
+				    return $http.post(URLS.BASE + 'signin', data, { ignoreAuthModule: true });
+				},
+				// validar que la cuenta este activa
 				validar: function() {
 					return $http.post(URLS.BASE_API + 'validacion-cuenta');
 				},
+				// obtener los permisos que tiene el usuario para contruir el menu
 				getPermisos: function() {
 					return $http.post(URLS.BASE_API + 'permisos-autorizados',{user_email: $localStorage.cium.user_email});
 				},
+				// obtener los datos del perfil del usuario
 				getPerfil: function()
 				{
 					return $http.get(URLS.OAUTH_SERVER+'/v1/perfil');
@@ -20,6 +40,7 @@
 			}
 		}]);
 	
+
 	angular.module('App')
 		.factory('Auth', ['$rootScope', '$http', '$localStorage', 'AuthService', 'URLS','Menu', function ($rootScope, $http, $localStorage, AuthService, URLS, Menu) {
 			return {

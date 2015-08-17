@@ -5,51 +5,63 @@
 	       ['$rootScope', '$scope', '$translate',  '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash', 'listaOpcion', 'Criterios', 'CrudDataApi', 'URLS', 
 	function($rootScope,   $scope, $translate,    $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,   listaOpcion,   Criterios,   CrudDataApi, URLS){
 	
-		 $scope.menuSelected = "/"+$location.path().split('/')[1];
-	    $scope.menu = Menu.getMenu();
-	    $scope.fecha_actual = new Date();
-	    
-	    $scope.cargando = true;
+		 // cambia de color el menu seleccionado
+	$scope.menuSelected = "/"+$location.path().split('/')[1];
+	// carga el menu correspondiente para el usuario
+	$scope.menu = Menu.getMenu();
+	$scope.fecha_actual = new Date();
 
-	    $scope.ruta="";
+	// inicia la inimación de cargando
+	$scope.cargando = true;
+
+	// inicializa el modulo ruta y url se le asigna el valor de la página actual
+	$scope.ruta="";
     $scope.url=$location.url();
 
+    // cambia los textos del paginado de cada grid
     $scope.paginationLabel = {
       text: $translate.instant('ROWSPERPAGE'),
       of: $translate.instant('DE')
     };
-
-	    
-
-	    
-	    // data table
+	   
+    // Inicializa el campo para busquedas disponibles para cada grid
+    $scope.BuscarPor=
+    [
+		{id:"nombre", nombre:$translate.instant('NOMBRE')},
+		{id:'creadoAl', nombre:$translate.instant('CREADO')},
+		{id:'modificadoAl', nombre:$translate.instant('MODIFICADO')}
+	];
+	   
+	// inicia configuración para los data table (grid)
     $scope.selected = [];
 
-  $scope.query = {
-    filter: '',
-    order: 'id',
-    limit: 5,
-    page: 1
-  };
+    // incializa el modelo para el filtro, ordenamiento y paginación
+	$scope.query = {
+		filter: '',
+		order: 'id',
+		limit: 5,
+		page: 1
+	};
 
+	// Evento para incializar el ordenamiento segun la columna clickeada
+	$scope.onOrderChange = function (order) {
+		$scope.query.order=order;
+		$scope.cargando = true;
+		$scope.init(); 
+	};
 
-  $scope.onOrderChange = function (order) {
-    $scope.query.order=order;
-    $scope.cargando = true;
-    $scope.init(); 
-  };
+	// Evento para el control del paginado.
+	$scope.onPaginationChange = function (page, limit) {
+		$scope.paginacion = 
+		{
+			pag: (page-1)*limit,
+			lim: limit,
+			paginas:0
+		};
+		$scope.cargando = true;
+		$scope.init();
+	};
 
-
-  $scope.onPaginationChange = function (page, limit) {
-    $scope.paginacion = 
-    {
-        pag: (page-1)*limit,
-        lim: limit,
-        paginas:0
-    };
-    $scope.cargando = true;
-    $scope.init();
-  };
     //fin data
     $scope.paginacion = 
     {
@@ -57,39 +69,44 @@
         lim: 5,
         paginas:0
     };
-	    $scope.datos = [];
-	    
+	$scope.datos = [];
+		
+	// muestra el menu para aquellos dispositivos que por su tamaño es oculto
+	$scope.toggleMenu  = function  () {
+	    $mdSidenav('left').toggle();
+	};
 
-	    $scope.toggleMenu  = function  () {
-	        $mdSidenav('left').toggle();
-	    };
-	    
-	    $scope.mostrarIdiomas = function($event){  
-	                      
-	        $mdBottomSheet.show({
-	          templateUrl: 'src/app/views/idiomas.html',
-	          controller: 'ListaIdiomasCtrl',
-	          targetEvent: $event	
-	        });
-	    };
-	    
-	    $scope.logout = function () {
-	       Auth.logout(function () {
-	           $location.path("signin");
-	       });
-	    };
-	    
-	    $scope.ir = function(path){
-	        $scope.menuSelected = path;
-	       $location.path(path).search({id: null});
-	    };
-	    $scope.nuevo = function()
-	    {
-	        var uri=$scope.url.split('/');
+	// muestra el templete para cambiar el idioma
+	$scope.mostrarIdiomas = function($event){  
+	                  
+	    $mdBottomSheet.show({
+	      templateUrl: 'src/app/views/idiomas.html',
+	      controller: 'ListaIdiomasCtrl',
+	      targetEvent: $event	
+	    });
+	};
 
-	        uri="/"+uri[1]+"/nuevo";
-	        $location.path(uri).search({id: null});
-	    }
+	// cierra la session para salir del sistema
+	$scope.logout = function () {
+	   Auth.logout(function () {
+	       $location.path("signin");
+	   });
+	};
+
+	// redirecciona a la página que se le pase como parametro
+	$scope.ir = function(path){
+	    $scope.menuSelected = path;
+	   $location.path(path).search({id: null});
+	};
+
+	// evento para el boton nuevo, redirecciona a la vista nuevo
+	$scope.nuevo = function()
+	{
+	    var uri=$scope.url.split('/');
+
+	    uri="/"+uri[1]+"/nuevo";
+	    $location.path(uri).search({id: null});
+	}
 		
 		$scope.arrows = {
 			year: {
@@ -119,11 +136,13 @@
 		$scope.verAbasto="";
 		$scope.dato = {};
 		$scope.dimension = [];
-
+		
+		// cerrar el dialog
 		$scope.hide = function() {
 			$mdDialog.hide();
 		};
-
+		
+		// evento click para el area del grafico
 		$scope.chartClick  = function (event) 
 		{ 
 	  var points = $scope.chart.getBarsAtEvent( event ) ;	
@@ -219,6 +238,7 @@
 		  
 		}
 		
+		// evento para el boton regresar del grafico
 		$scope.regresar = function()
 		{  
 			if($scope.contador>0)  
@@ -261,6 +281,7 @@
 			}
 		}
 		
+		// regresa al estado original el grafico
 		$scope.recargar = function()
 		{  
 		  $scope.dibujarGrafico('abasto?campo=anio&valor=&nivel=anio');
@@ -273,10 +294,14 @@
 		  $scope.parametro = [];
 		};
 		
+		// llamada a la funcion dibujar
+		
 		$scope.irDibujar = function(campo,valor,nivel,c,ultimo)
 		{
 			$scope.dibujarGrafico('abasto?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo);
 		}
+		
+		// evento para el filtrado
 		$scope.dimensiones = function(campo,valor,nivel,c,ultimo)
 		{
 	  		$http.get(URLS.BASE_API+'abastoDimension?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo)     
@@ -300,6 +325,7 @@
 			});
 		};
 		
+		// creacion del filtrado
 		$scope.parDimension={};
 		$scope.getDimension = function(campo,nivel,c)
 		{
@@ -361,6 +387,7 @@
 		  };
 		}
 		
+		// visualizar el dialog de opciones de filtrado
 		$scope.toggleModal = function(ev)
 		{	
 			$scope.catVisible=false;
@@ -387,6 +414,7 @@
 		    $scope.dimensiones('anio','','anio',0);		    
 		};
 		
+		// creacion de la ruta para el dibujo del graficon con las opciones de filtrado
 		$scope.completar = function()
 		{ 		
 		  if(!angular.isUndefined($scope.dimension[2])&&$scope.dimension[4]!=null)

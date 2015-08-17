@@ -5,51 +5,63 @@
 	       ['$rootScope', '$scope', '$translate', '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash',  'infoUsuario', 'CrudDataApi', 'URLS', 
 	function($rootScope,   $scope, $translate,   $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,   infoUsuario,  CrudDataApi, URLS){
 	
-		 $scope.menuSelected = "/"+$location.path().split('/')[1];
-	    $scope.menu = Menu.getMenu();
-	    $scope.fecha_actual = new Date();
-	    
-	    $scope.cargando = true;
+	// cambia de color el menu seleccionado
+	$scope.menuSelected = "/"+$location.path().split('/')[1];
+	// carga el menu correspondiente para el usuario
+	$scope.menu = Menu.getMenu();
+	$scope.fecha_actual = new Date();
 
-	    $scope.ruta="";
+	// inicia la inimación de cargando
+	$scope.cargando = true;
+
+	// inicializa el modulo ruta y url se le asigna el valor de la página actual
+	$scope.ruta="";
     $scope.url=$location.url();
 
+    // cambia los textos del paginado de cada grid
     $scope.paginationLabel = {
       text: $translate.instant('ROWSPERPAGE'),
       of: $translate.instant('DE')
     };
-
-	    
-
-	    
-	    // data table
+	   
+    // Inicializa el campo para busquedas disponibles para cada grid
+    $scope.BuscarPor=
+    [
+		{id:"nombre", nombre:$translate.instant('NOMBRE')},
+		{id:'creadoAl', nombre:$translate.instant('CREADO')},
+		{id:'modificadoAl', nombre:$translate.instant('MODIFICADO')}
+	];
+	   
+	// inicia configuración para los data table (grid)
     $scope.selected = [];
 
-  $scope.query = {
-    filter: '',
-    order: 'id',
-    limit: 5,
-    page: 1
-  };
+    // incializa el modelo para el filtro, ordenamiento y paginación
+	$scope.query = {
+		filter: '',
+		order: 'id',
+		limit: 5,
+		page: 1
+	};
 
+	// Evento para incializar el ordenamiento segun la columna clickeada
+	$scope.onOrderChange = function (order) {
+		$scope.query.order=order;
+		$scope.cargando = true;
+		$scope.init(); 
+	};
 
-  $scope.onOrderChange = function (order) {
-    $scope.query.order=order;
-    $scope.cargando = true;
-    $scope.init(); 
-  };
+	// Evento para el control del paginado.
+	$scope.onPaginationChange = function (page, limit) {
+		$scope.paginacion = 
+		{
+			pag: (page-1)*limit,
+			lim: limit,
+			paginas:0
+		};
+		$scope.cargando = true;
+		$scope.init();
+	};
 
-
-  $scope.onPaginationChange = function (page, limit) {
-    $scope.paginacion = 
-    {
-        pag: (page-1)*limit,
-        lim: limit,
-        paginas:0
-    };
-    $scope.cargando = true;
-    $scope.init();
-  };
     //fin data
     $scope.paginacion = 
     {
