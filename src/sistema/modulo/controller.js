@@ -44,11 +44,12 @@
 	};
    $scope.paginacion = 
     {
-        pag: (page-1)*limit,
-        lim: limit,
+        pag: 1,
+        lim: 5,
         paginas:0
     };
   	// Inicializa los metodos por default para cada modulo
+  	$scope.dato={};
   	$scope.dato.metodos=
 	[
 		{nombre:'Guardar',   recurso:'store',   metodo:'post'},
@@ -89,7 +90,6 @@
 	};
 	$scope.datos = [];
 	
-	$scope.dato={};
 	$scope.colorColor = [];
 	$scope.alertas = [];
 		
