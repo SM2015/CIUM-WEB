@@ -111,7 +111,7 @@
 	"ENTIDAD":"Entity",
 	"LUGAR_SELECT":"Select the spot verification",
 	"CARGO":"Position",
-	"CAMBIAR_UM":"Change UM",
+	"CAMBIAR_UM":"Edit",
 	"CERRAR_EV":"Close evaluation",
 	"INDICADOR_SEL":"Select an indicator",
 	"APROBADO":"Approved",
@@ -155,6 +155,9 @@
 	"VALOR":"Value",
 	"CONE":"Cone´s",
 	"ZONA":"Zone",
+	"NO_CONE": "This UM does not have a level of cone",
+	"NO_INDICADOR" : "Evaluate at least one criterion",
+	"FICHA" : "Data sheet",
 
 	"MANUAL_USUARIO": "Handbook",
 	"ACERCA_DE": "About ... ",
@@ -177,6 +180,7 @@
 	
 	"NUEVO": "New",
 	"NUEVA": "New",
+	"CREAR": "Create",
 	"AGREGAR": "Add",
 	"EDITAR": "Edit",
 	"GUARDAR": "Save",
@@ -194,6 +198,9 @@
 	"PDF": "Export to PDF",
 	"EXCEL": "Export to EXCEL",
 	"CAMBIAR_IDIOMA": "Change languaje",
+	"CONFIRM_DELETE": "Are you sure to delete the item ?",
+	"CONFIRM_MODIFICADO": "The current indicator is saving changes , are you sure indicator of change?",
+	"REPITE_EXPEDIENTE": "Repeats record",
 
 	"CREADO": "Created",
 	"MODIFICADO": "Modified",

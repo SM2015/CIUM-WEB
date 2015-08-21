@@ -1,7 +1,7 @@
 <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
 <div layout="column" class="relative" layout-fill role="main" style="overflow:hidden">
 	
-	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
+	<md-progress-linear  ng-if="cargando" class="md-warn" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
 	<md-toolbar  >
 		<div class="md-toolbar-tools">    
 			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
@@ -398,7 +398,7 @@
     <tbody>
                     <tr ng-repeat="(key, value) in dato">                           
                         <td>{{ key }}</td>  
-                        <td ng-repeat="v in value" style="background-color:{{ v.color }}">{{ v.porcentaje }}
+                        <td ng-repeat="v in value" style="background-color:{{ v.color }}"><span style="color:white">{{ v.porcentaje }}%</span>
                         </td>                    
                  </tr>
     </tbody>

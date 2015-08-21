@@ -1,6 +1,6 @@
 <md-dialog aria-label="Mango (Fruit)">
   <form style="min-width: 500px;">
-  <md-toolbar class="md-warn">
+  <md-toolbar >
     <div class="md-toolbar-tools ">
       <h2>{{ 'OPCIONES' | translate }} </h2>
       <span flex></span>
@@ -63,13 +63,10 @@
     
     
     <md-list-item ng-show="umVisible">	                                        
-        <md-input-container flex >    
-            <p >{{ 'UM' | translate }}</p> 
-                            <section layout="row" layout-align="center center">                      
+                            
                             <div flex="100" ng-show="dimension[1]">
                                 <md-autocomplete
-                                  ng-disabled="isDisabled"
-                                  md-no-cache="noCache"
+                                  
                                   md-selected-item="selectedItem"
                                   md-search-text-change="searchTextChange(searchText)"
                                   md-search-text="searchText"
@@ -77,6 +74,8 @@
                                   md-items="item in querySearch(searchText)"
                                   md-item-text="item.nombre"
                                   md-min-length="0"
+                                  placeholder="{{ 'UM' | translate }}"
+                                  
                                   ng-model="dimension[4]" 
                                   md-menu-class="autocomplete-custom-template">
                                   
@@ -118,9 +117,7 @@
                                     
                               	</md-autocomplete>
                             </div>
-                         </section>
-                
-        </md-input-container>
+                         
     </md-list-item>
     
   </md-dialog-content>

@@ -13,14 +13,14 @@
 
 </a>
 
-<md-button hide-md hide-sm hide-lg aria-label="{{ 'AGRERGAR' | translate }}" ng-click="guardar(forma)" ng-disabled="forma.$invalid" ng-if="url.split('/')[2]=='nuevo'">
+<md-button hide-md hide-sm hide-lg aria-label="{{ 'CREAR' | translate }}" ng-click="guardar(forma)" ng-disabled="forma.$invalid" ng-if="url.split('/')[2]=='nuevo'">
     <md-icon md-svg-icon="save"></md-icon>
-    {{ 'AGREGAR' | translate }}
+    {{ 'CREAR' | translate }}
 </md-button>
 <md-button class="md-icon-button"  hide show-sm show-md show-lg ng-click="guardar(forma)" ng-disabled="forma.$invalid" aria-label="{{ 'AGREGAR' | translate }}" ng-if="url.split('/')[2]=='nuevo'">
   <md-icon md-svg-icon="save"></md-icon>
   <md-tooltip>
-          {{ 'AGREGAR' | translate }}
+          {{ 'CREAR' | translate }}
         </md-tooltip>
 </md-button>
 

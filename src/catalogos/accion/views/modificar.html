@@ -3,7 +3,7 @@
 	<md-button class="md-fab md-fab-bottom-right" ng-click="nuevo()" aria-label="{{ 'NUEVA' | translate }}" >
 		<md-icon md-svg-icon="add"></md-icon>
   	</md-button>
-	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
+	<md-progress-linear  ng-if="cargando" class="md-warn" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
 	<md-toolbar  >
 		<div class="md-toolbar-tools" ng-init="ver('Accion')">    
 			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
@@ -28,11 +28,11 @@
         <md-list-item >						
                 <md-input-container flex >                                    
                     	<label>{{ 'NOMBRE' | translate }}</label>
-                        <input required  name="nombre" ng-model="dato.nombre" md-minlength="3" md-maxlength="255">
+                        <input required  name="nombre" ng-model="dato.nombre" minlength="3" maxlength="255">
                         <div ng-messages="forma.nombre.$error">
                           <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>
-                          <div ng-message="md-minlength">{{ 'CAMPO_MIN_L' | translate }} 3</div>
-                          <div ng-message="md-maxlength">{{ 'CAMPO_MAX_L' | translate }} 255</div>
+                          <div ng-message="minlength">{{ 'CAMPO_MIN_L' | translate }} 3</div>
+                          <div ng-message="maxlength">{{ 'CAMPO_MAX_L' | translate }} 255</div>
                         </div>
                 </md-input-container>
             </md-list-item>

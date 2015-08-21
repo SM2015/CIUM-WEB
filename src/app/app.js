@@ -26,7 +26,6 @@
 									'checklist-model',
 									'angular.filter',
 									'FBAngular',
-									'cgBusy',
 									'tc.chartjs',
 									'ngRadialGauge',
 									'color.picker',
@@ -179,7 +178,8 @@
 		// Configuramos tema de material design
 		$mdThemingProvider.theme('default')
 	    .primaryPalette('green')
-	    .accentPalette('red');	
+	    .warnPalette('red')
+	    .accentPalette('light-green');	
 			  
 		// Configuramos las rutas
 		

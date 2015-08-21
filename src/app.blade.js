@@ -66,11 +66,11 @@ app.factory('errorFlash', function($http, flash)
 				});
 			}
 			else
-			{
-				console.debug(data);
+			{			
 				datos.push({ level: 'danger', text:':( "Ooops! Ocurrio un error (500) ', x:'right', y:'bottom', t:'3000'},
 					{ level: 'warning', text:':( Consulte el log de la consola ', x:'right', y:'bottom', t:'5000'});
 			}
+			console.debug(data);
 			flash(datos);
 		}
 	};

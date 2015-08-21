@@ -2,8 +2,8 @@
 	'use strict';
 	angular.module('AbastoModule')
 	.controller('AbastoCtrl',
-	       ['$rootScope', '$translate', '$scope', '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash', 'listaOpcion', 'Criterios', 'CrudDataApi', 'URLS', 
-	function($rootScope,   $translate,   $scope,   $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,   listaOpcion,   Criterios,   CrudDataApi, URLS){
+	       ['$rootScope', '$translate', '$mdDialog', '$scope', '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash', 'listaOpcion', 'Criterios', 'CrudDataApi', 'URLS', 
+	function($rootScope,   $translate,   $mdDialog,   $scope,   $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,   listaOpcion,   Criterios,   CrudDataApi, URLS){
 	
 	// cambia de color el menu seleccionado
 	$scope.menuSelected = "/"+$location.path().split('/')[1];
@@ -28,8 +28,7 @@
     $scope.BuscarPor=
     [
 		{id:"clues", nombre:"clues"},
-		{id:'creadoAl', nombre:$translate.instant('CREADO')},
-		{id:'modificadoAl', nombre:$translate.instant('MODIFICADO')}
+		{id:'fechaEvaluacion', nombre:$translate.instant('CREADO')}
 	];
 	   
 	// inicia configuración para los data table (grid)
@@ -135,13 +134,14 @@
 						repo.value = repo.nombre.toLowerCase();
 						return repo;
 					});
-					$scope.repos=$scope.Clues;
+					$scope.repos=$scope.Clues;					
 				}
 				else
-		{
-			errorFlash.error(data);
-		}
+				{
+					errorFlash.error(data);
+				}
 				$scope.cargando = false;
+				return $scope.repos;
 			},function (e) {
 				errorFlash.error(e);
 				$scope.cargando = false;
@@ -158,6 +158,8 @@
 
 		  if(data.status==200)
 		  {
+		  	if(data.data.cone_clues!=null)
+		  	{
 				$scope.dato.idCone = data.data.cone_clues.idCone;
 				$scope.dato.nivelCone = data.data.cone.cone.nombre;
 				
@@ -170,25 +172,39 @@
 				$scope.dato.codigoPostal = data.data.codigoPostal;					
 				$scope.dato.tipoUnidad = data.data.tipoUnidad;
 				$scope.dato.tipologia = data.data.tipologia;
+			}
+			else
+			{
+				flash('danger', "Ooops! "+$translate.instant('NO_CONE'));
+			}
 		  }
 		  else
-		{
-			errorFlash.error(data);
-		}
+			{
+				errorFlash.error(data);
+			}
 		  $scope.cargando = false;
 		},function (e) {
 			errorFlash.error(e);
 			$scope.cargando = false;
 		}); 
 	}; 
-	//autocomplete
-	
-	$scope.simulateQuery = false;
-	$scope.isDisabled    = false;		         
-	$scope.querySearch   = querySearch;
-	$scope.selectedItemChange = selectedItemChange;
-	$scope.searchTextChange   = searchTextChange;
-	
+	// cerrar el dialog
+	$scope.hide = function() {
+		$mdDialog.hide();
+	};
+	// abre la ficha de  la clues en un dialog
+	$scope.abrirFicha = function(ev)
+	{		    
+	    $scope.editDialog = $mdDialog;
+	    $scope.editDialog.show({
+	    		targetEvent: ev,
+	    		
+	    		scope: $scope.$new(),
+		        templateUrl: 'src/transaccion/evaluacion/views/ficha.html',
+		        clickOutsideToClose: true			        			        	  
+	    });	    	   
+	};
+	//autocomplete 	
 
 	// ******************************
 	// Internal methods
@@ -197,33 +213,18 @@
 	 * Search for repos... use $timeout to simulate
 	 * remote dataservice call.
 	 */
-	function querySearch (query) {
-	  var results = query ? $scope.repos.filter( createFilterFor(query) ) : $scope.repos,
-		  deferred;
-	  if ($scope.simulateQuery) {
-		deferred = $q.defer();
-		$timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
-		return deferred.promise;
-	  } else {
-		return results;
-	  }
+	$scope.querySearch = function (query) {
+		return $http.get(URLS.BASE_API + 'CluesUsuario',{ params:{termino: query}})
+		.then(function(res)
+		{
+            return res.data.data;                            
+        });
 	}
-	function searchTextChange(text) {
-	}
-	function selectedItemChange(item) {
+	$scope.selectedItemChange = function(item) {
 		if(!angular.isUndefined(item))
 		{
 			$scope.CluesChange(item.clues);
 		}
-	}
-	/**
-	 * Create filter function for a query string
-	 */
-	function createFilterFor(query) {
-	  var lowercaseQuery = angular.lowercase(query);
-	  return function filterFn(item) {
-		return (item.value.indexOf(lowercaseQuery) === 0);
-	  };
 	}
 	$scope.cambiarTipo = function(tipo)
 	{
@@ -298,9 +299,9 @@
 				$scope.acciones=data.data;
 			}
 			else
-		{
-			errorFlash.error(data);
-		}
+			{
+				errorFlash.error(data);
+			}
 		});
 	};
 
@@ -317,19 +318,33 @@
 				$scope.plazos=data.data;
 			}
 			else
-		{
-			errorFlash.error(data);
-		}
+			{
+				errorFlash.error(data);
+			}
 		});
 	};
 	
+	
+	$scope.criterios = []; $scope.modificado = false;
+	$scope.verificarCambios = function()
+	{
+		if($scope.modificado)
+		{
+			if ($window.confirm($translate.instant('CONFIRM_MODIFICADO'))) {  
+				$scope.modificado = false;
+			}
+			event.preventDefault();
+            event.stopPropagation();
+		}
+	}
 	// cargar los criterios que le correspondan al indicador por el tipo de cone
-	$scope.criterios = [];
-	$scope.cargarCriterios= function()
+	$scope.cargarCriterios = function()
 	{
 		var cone=$scope.dato.idCone;
 		var indi=$scope.dato.idIndicador;
 		var idev=$scope.dato.id;
+		
+		
 		$scope.cargando = true;
 		if(!angular.isUndefined(cone)&&cone!=""&&!angular.isUndefined(indi)&&indi!="")
 		{
@@ -340,31 +355,38 @@
 					$window.location="acceso";
 				var op=0;
 				if(data.status==200)
-				{					
+				{						
+					$scope.criterios = {};				
 					$scope.criterios = data.data;
+					$scope.dato.aprobado = {};
 					if(!angular.isUndefined(data.hallazgo))
 					{
-						if(!angular.isUndefined(data.hallazgo[indi]))
-						{
-							$scope.dato.hallazgo = data.hallazgo[indi].descripcion;
-							$scope.dato.accion = data.hallazgo[indi].idAccion;
-							$scope.dato.plazoAccion = data.hallazgo[indi].idPlazoAccion;
-							if($scope.dato.plazoAccion>0)
-								$scope.esSeguimiento=true;
-							$scope.tieneHallazgo=true;op=1;
-						}							
+						$scope.dato.hallazgos={};
+						
+						$scope.dato.hallazgos.descripcion = data.hallazgo.descripcion;
+						$scope.dato.hallazgos.idAccion = data.hallazgo.idAccion;
+						$scope.dato.hallazgos.idPlazoAccion = data.hallazgo.idPlazoAccion;
+						if($scope.dato.hallazgos.idPlazoAccion>0)
+							$scope.esSeguimiento=true;
+						if(!angular.isUndefined(data.hallazgo.descripcion))
+							$scope.tieneHallazgo=true;
+						else
+							$scope.tieneHallazgo=false;
+						op=1;												
 					}
-					$scope.actualizar();				    							
-					$scope.estadistica();
+					else
+					{
+						op=0;
+					}
 				}
 				else
 					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" + data.messages);
 					
 				if(data.status!=200 || op==0)
 				{
-					$scope.dato.hallazgo = "";
-					$scope.dato.accion = "";
-					$scope.dato.plazoAccion = "";	
+					$scope.dato.hallazgos.descripcion = "";
+					$scope.dato.hallazgos.idAccion = "";
+					$scope.dato.hallazgos.idPlazoAccion = "";	
 					$scope.esSeguimiento=false;
 					$scope.tieneHallazgo=false;
 					
@@ -376,7 +398,7 @@
 				$scope.cargando = false;
 				errorFlash.error(data);
 			});
-		}
+		}		
 	};
 	
 	// cargar los criterios de la evaluacion para la vista ver
@@ -392,8 +414,7 @@
 			
 			if(data.status==200)
 			{						
-				$scope.criterios = data.data;			    
-				$scope.actualizar();			
+				$scope.criterios = data.data;				
 			}
 			else
 			{
@@ -406,21 +427,6 @@
 			$scope.cargando = false;
 			errorFlash.error(data);
 		});		
-	};
-	// marcar los puntos de las evaluaciones 	
-	$scope.actualizar = function()
-	{
-		$scope.clase = 'default';
-
-		$scope.hallazgos = $scope.criterios.hallazgo;
-
-		$scope.mishallazgos = [];
-		angular.forEach($scope.hallazgos , function(val, key) 
-		{
-			$scope.mishallazgos.push(key);
-		});	
-		
-		$scope.valores = $scope.criterios.evaluacion;	
 	};
 
 	// crear el estadistico de la evaluacion
@@ -437,6 +443,7 @@
 		
 			if(data.status==200)
 			{
+				$scope.modificado = false;
 				$scope.informacion = data.data;
 
 				$scope.completo = 0;
@@ -457,9 +464,9 @@
 					$scope.terminado=false;		
 			}
 			else
-		{
-			errorFlash.error(data);
-		}
+			{
+				errorFlash.error(data);
+			}
 				$scope.cargando = false;
 			},function (e) {
 				errorFlash.error(e);
@@ -469,45 +476,96 @@
 	
 	// evaluacion de criterio si/no
 	$scope.json = {};
-	$scope.TH={};
-	$scope.AR={};
 	$scope.tieneHallazgo=false;
 	$scope.aprobar = function(index,evaluacion,ap)
-	{				
-		$scope.json.idCriterio = index;
-		$scope.json.idEvaluacion = evaluacion;
-		var apx = $scope.dato.aprobado[index];
-		if( apx == 1 || apx == 2)
-		{		
-			$scope.AR[index]=1;
-			$scope.TH[ap]=$scope.AR;
-		}
-		else
-		{
-			$scope.AR[index]=0;
-			$scope.TH[ap]=$scope.AR;
-
-		}
+	{
+		$scope.modificado = true;						
 		$scope.tieneHallazgo=false;
-		angular.forEach($scope.TH[ap], function(item, key) 
+		angular.forEach($scope.dato.aprobado, function(item, key) 
 		{
 			if(item==0)
 			{
 				$scope.tieneHallazgo=true;
 			}
 		});
-		$scope.json.idIndicador = $scope.dato.idIndicador;
-		$scope.json.aprobado = apx;
+		var indi = angular.element(document.querySelector('#indicador'));
+		var code = indi[0].innerText;
+		code = code.split(" - ");
+		var info = 0; var totalAprobado = 0; var totalCriterio = 0;
+		angular.forEach($scope.dato.aprobado, function(item, key) 
+		{
+			totalAprobado++;
+		});
+		angular.forEach($scope.criterios, function(item, key) 
+		{
+			totalCriterio++;
+		});
+		totalCriterio=totalCriterio-3;
+		angular.forEach($scope.informacion, function(item, key) 
+		{
+			info++; var existe = false;
+			angular.forEach($scope.informacion, function(item, key) 
+			{
+				angular.forEach(item, function(v, k) 
+				{
+					if(k==code[0])
+						existe=true;
+				})
+			});
+			if(existe)
+			{
+				$scope.informacion[info-1][code[0]] = totalAprobado;
+			}
+			else
+			{
+				$scope.informacion.push(
+					{
+				      "id": $scope.dato.idIndicador,
+				      "codigo": code[0],
+				      "nombre": code[1],
+				      "total": totalCriterio
+				    }
+				);
+				$scope.informacion[key][code[0]] = totalAprobado;
+			}
+		});
+		if(info==0)
+		{
+			$scope.informacion.push(
+				{			      
+			      "id": $scope.dato.idIndicador,
+			      "codigo": code[0],
+			      "nombre": code[1],
+			      "total": totalCriterio
+			    }
+			);
+			$scope.informacion[0][code[0]] = totalAprobado;
+		}
 		
-		$scope.guardarCriterio('EvaluacionCriterio');
+		$scope.completo = 0;
+		$scope.incompleto = 0;
+		var co = 0; var inc = 0;
+		angular.forEach($scope.informacion , function(val, key) 
+		{
+			if(val[val.codigo] == val.total)
+				co = co + 1;
+			else
+				inc = inc + 1;
+		});
+		$scope.completo = co;
+		$scope.incompleto = inc;
+
+		if(inc == 0 && co > 0)
+			$scope.terminado=true;
+		else
+			$scope.terminado=false;
 	};
-	
-	$scope.esSeguimiento=[];
+	$scope.esSeguimiento = false;
 	$scope.verSeguimiento = function()
 	{	
 		var este = angular.element(document.getElementById('accion'));
 		var text = este[0].selectedOptions[0].parentElement.label;
-					
+				
 		if(text=='Seguimiento')
 			$scope.esSeguimiento=true;
 		else
@@ -515,85 +573,13 @@
 							
 	};
    
-	$scope.valido=false;
-	$scope.completar = function()
-	{
-		var h = $scope.dato.hallazgo;
-		var a = $scope.dato.accion;
-		var p = $scope.dato.plazoAccion;   
-					
-		if(!angular.isUndefined(h)&!angular.isUndefined(a))
-		{
-			$scope.valido=false;		
-								
-			$scope.json.idIndicador = $scope.dato.idIndicador;
-			$scope.json.idEvaluacion = $scope.dato.id;
-
-			$scope.json.hallazgo = h;
-			$scope.json.accion = a;
-			$scope.json.resuelto = 0;
-			if(angular.isUndefined(p))
-			{
-				p=0;
-				$scope.json.resuelto = 1;
-			}
-			$scope.json.plazoAccion = p;		
-			
-			$scope.json.aprobado = 0;
-			$scope.json.clues = angular.element(document.getElementById("clues")).val();
-			
-			$scope.guardarCriterio('EvaluacionHallazgo');		
-		}
-		else 
-			$scope.valido=true;
-	};
-
-	// guardarCriterio
-	$scope.guardarCriterio = function(url) 
-	{
-		var json=$scope.json;
-
-		$scope.abasto = $http.post(URLS.BASE_API+url, json)
-		.success(function(data, status, headers, config) 
-		{
-			if(data.status == '201' || data.status == '200')
-			{							
-				$scope.estadistica();							
-				//flash('success', data.messages);				    		
-			}
-			else
-		{
-			errorFlash.error(data);
-		}
-		})
-		.error(function(data, status, headers, config) 
-		{
-			errorFlash.error(data);
-		});
-	};
+	
 	//cerrar
 	$scope.cerrar = function(id) 
 	{
-		var json={'clues':$scope.dato.clues, 'cerrado':1};
+		$scope.dato.cerrado = 1;
 		
-		$http.put(URLS.BASE_API+'Evaluacion/' + id, json)
-		.success(function(data, status, headers, config) 
-		{
-			if(data.status == '201' || data.status == '200')
-			{						
-				var uri=$scope.url.split('/');	
-				uri="/"+uri[1]+"/ver";
-				$location.path(uri).search({id: data.data.id});				    		
-			}
-			else
-		{
-			errorFlash.error(data);
-		}
-		})
-		.error(function(data, status, headers, config) 
-		{
-			errorFlash.error(data);
-		});
+		$scope.modificar(id);
 	};
 	//fin abasto
 	
@@ -708,11 +694,26 @@
 	//Modificar. Actualiza el recurso con los datos que envia el usuario
 	$scope.modificar = function(id) 
 	{    
-		var url=$scope.ruta;
-		var json=$scope.dato;
+		var url = $scope.ruta;
+		var json = {}; var criterios = [];
+		angular.forEach($scope.dato.aprobado , function(val, key) 
+		{
+			criterios.push({idCriterio:key,idIndicador:$scope.dato.idIndicador,aprobado:val});
+		});
+		json.evaluaciones=[];
+		json.evaluaciones[0] = {id:$scope.dato.id,clues:$scope.dato.clues, fechaEvaluacion:$scope.dato.fechaEvaluacion,cerrado:$scope.dato.cerrado};
+		json.evaluaciones[0].criterios = criterios;
+		json.evaluaciones[0].hallazgos=[];
+		if(!angular.isUndefined($scope.dato.hallazgos))
+		if($scope.dato.hallazgos.idAccion)
+		{
+			json.evaluaciones[0].hallazgos[0] = $scope.dato.hallazgos;
+			json.evaluaciones[0].hallazgos[0].idIndicador = $scope.dato.idIndicador;
+		}
 		
 		if(json)
 		{
+			$scope.cargando = true;
 			CrudDataApi.editar(url, id, json, function (data) {
 				if(data.status  == '407')
 				$window.location="acceso";
@@ -720,6 +721,14 @@
 				if(data.status==200)
 				{
 				  flash('success', data.messages);
+				  if($scope.dato.cerrado==1)
+				  {
+				  	var uri=$scope.url.split('/');	
+					uri="/"+uri[1]+"/ver";
+					$location.path(uri).search({id: data.data.id});	
+				  }
+				  $scope.estadistica();
+				  $mdDialog.hide();
 				}
 				else
 				{
@@ -738,8 +747,10 @@
 		
 		var url=$scope.ruta;
 		var json=$scope.dato;
+
 		if(json)
 		{
+			$scope.cargando = true;
 			CrudDataApi.crear(url, json, function (data) {
 				if(data.status  == '407')
 					$window.location="acceso";
@@ -753,8 +764,6 @@
 					var uri=$scope.url.split('/');
 
 					uri="/"+uri[1]+"/modificar";
-
-					
 
 					$location.path(uri).search({id: data.data.id});
 				}
@@ -779,10 +788,10 @@
 			id=$location.search().id;
 			op=0;
 		}
-		if ($window.confirm('Esta seguro?')) 
-		{   
+		if ($window.confirm($translate.instant('CONFIRM_DELETE'))) {   
 			var url=$scope.ruta;
-			
+            $scope.cargando = true;
+
 			CrudDataApi.eliminar(url, id, function (data) {
 				if(data.status  == '407')
 					$window.location="acceso";
@@ -797,6 +806,41 @@
 				
 					
 					$scope.cargando = false;
+				}
+				else
+				{
+					errorFlash.error(data);
+				}
+				$scope.cargando = false;
+				},function (e) {
+					errorFlash.error(e);
+					$scope.cargando = false;
+				}
+			); 
+		}
+	}; 
+
+	//Borrar. Elimina el recurso del parametro id
+	$scope.borrarIndicador = function() 
+	{ 
+		var ind = $scope.dato.idIndicador;
+		var eva = $location.search().id;
+		
+		if ($window.confirm($translate.instant('CONFIRM_DELETE'))) {   
+			var url=$scope.ruta;
+            $scope.cargando = true;
+
+			CrudDataApi.eliminar("EvaluacionCriterio", eva+"?idi="+ind, function (data) {
+				if(data.status  == '407')
+					$window.location="acceso";
+				
+				if(data.status==200)
+				{					
+					flash('success', data.messages);
+								
+					$scope.cargando = false;
+
+					$route.reload();	
 				}
 				else
 				{

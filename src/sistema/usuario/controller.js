@@ -215,12 +215,6 @@
 		
 		//autocomplete
 		
-		$scope.simulateQuery = false;
-		$scope.isDisabled    = false;		         
-		$scope.querySearch   = querySearch;
-		$scope.selectedItemChange = selectedItemChange;
-		$scope.searchTextChange   = searchTextChange;
-		
 	
 		// ******************************
 		// Internal methods
@@ -229,20 +223,15 @@
 		 * Search for repos... use $timeout to simulate
 		 * remote dataservice call.
 		 */
-		function querySearch (query) {
-		  var results = query ? $scope.repos.filter( createFilterFor(query) ) : $scope.repos,
-			  deferred;
-		  if ($scope.simulateQuery) {
-			deferred = $q.defer();
-			$timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
-			return deferred.promise;
-		  } else {
-			return results;
-		  }
+		$scope.querySearch = function (query) {
+			var juris = $scope.dato.jurisdiccion;
+			return $http.get(URLS.BASE_API + 'Clues',{ params:{jurisdiccion: juris, termino: query}})
+			.then(function(res)
+			{
+	            return res.data.data;                            
+	        });
 		}
-		function searchTextChange(text) {
-		}
-		function selectedItemChange(item) {
+		$scope.selectedItemChange = function(item) {
 			if(!angular.isUndefined(item))
 			{
 				if(angular.isUndefined(item.clues))
@@ -684,9 +673,9 @@
 			id=$location.search().id;
 			op=0;
 		}
-		if ($window.confirm('Esta seguro?')) 
-		{   
+		if ($window.confirm($translate.instant('CONFIRM_DELETE'))) {   
 			var url=$scope.ruta;
+            $scope.cargando = true;
 			
 			CrudDataApi.eliminar(url, id, function (data) {
 				if(data.status  == '407')

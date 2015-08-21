@@ -304,7 +304,10 @@ md-grid-list md-grid-tile-footer figcaption h3 {
 }
 .color-picker-wrapper input
 {
-  width: 100%;
+  width: 96%;
+}
+.color-picker-wrapper .input-group .color-picker-input-swatch {
+    padding-left: 30px;
 }
 
 .color-picker-wrapper .color-picker-swatch:not(.input-group-addon) {
@@ -356,4 +359,10 @@ md-input-container p
   background-image: url('assets/img/banner.jpg');
   background-size: cover;
   background-repeat: no-repeat;
+}
+.texto-vertical
+{
+  transform: rotate(270deg);
+  transform-origin: left top -10;
+  float: left;
 }

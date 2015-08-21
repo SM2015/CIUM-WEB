@@ -307,9 +307,9 @@
 			id=$location.search().id;
 			op=0;
 		}
-		if ($window.confirm('Esta seguro?')) 
-		{   
+		if ($window.confirm($translate.instant('CONFIRM_DELETE'))) {   
 			var url=$scope.ruta;
+            $scope.cargando = true;
 			
 			CrudDataApi.eliminar(url, id, function (data) {
 				if(data.status  == '407')

@@ -1,27 +1,33 @@
 <md-sidenav  layout="column"  class="md-sidenav-left md-whiteframe-z2" md-component-id="left-publico"  ng-include="'src/app/views/menu-publico-side-nav.html'"></md-sidenav>
 <md-content  layout="column" class="relative" layout-fill >
 	<md-toolbar ng-include="'src/app/views/menu-publico.html'"></md-toolbar>
-	<md-content flex layout-wrap layout="row" layout-fill  >		
-		<div flex="100"  class="portada" layout="column" layout-padding layout-align="center center">
+	<md-content >
+		
+        <div flex="100"  class="portada" layout="column" layout-padding layout-align="center center">
 			<h1 class="md-display-4" style="font-size:2.5em;line-height:1.0;text-align:center; color:#000;text-align:center; "  >
 				<md-icon md-svg-icon="logo" style="width:128px; height:128px;"></md-icon><br/> 
 				{{ 'APP_NOMBRE' | translate }}
 			</h1>
-			<h2 class="md-display-4" style=" font-size:1.5em;line-height:1.0; color:#fff; text-shadow: 1px 1px #000 ;text-align:center;">{{ 'APP_DESCRIPCION_BREVE' | translate }}</h2>
+			
 			<md-button ng-href="#/signin" class="md-raised md-accent"><md-icon md-svg-icon="exit-to-app" ></md-icon> {{ 'INICIAR_SESION' | translate }}</md-button>
 		</div>
+    	
+        <div flex="100">
+			<p  style=" font-size:1.5em;line-height:1.0;text-align:justify;">{{ 'APP_DESCRIPCION_BREVE' | translate }}</p>
+		</div>
+    	
+		<div layout flex="100" layout="row">
+			<div flex layout layout-padding>
+				<md-icon md-svg-icon="ssa" style="width:50%; height:auto;"></md-icon>
+			</div>
+			<div flex layout layout-padding>
+				<md-icon md-svg-icon="escudo-chiapas-h" style="width:50%; height:auto;"></md-icon>
+			</div>
+			<div flex layout layout-padding>
+				<md-icon md-svg-icon="marca" style="width:50%; height:auto;"></md-icon>
+			</div>			
+		</div>
 			
-		<div flex layout layout-padding>
-			<md-icon md-svg-icon="ssa" style="width:50%; height:auto;"></md-icon>
-		</div>
-		<div flex layout layout-padding>
-			<md-icon md-svg-icon="escudo-chiapas-h" style="width:50%; height:auto;"></md-icon>
-		</div>
-		<div flex layout layout-padding>
-			<md-icon md-svg-icon="marca" style="width:50%; height:auto;"></md-icon>
-		</div>
-			
-				
 	</md-content>
 	<md-divider></md-divider>
 	<md-content layout="row" layout-padding ng-include="'src/app/views/pie-pagina.html'"></md-content>	

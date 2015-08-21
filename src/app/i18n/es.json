@@ -111,7 +111,7 @@
 	"ENTIDAD":"Entidad",
 	"LUGAR_SELECT":"Seleccione el lugar de verificación",
 	"CARGO":"Cargo",
-	"CAMBIAR_UM":"Cambiar UM",
+	"CAMBIAR_UM":"Editar",
 	"CERRAR_EV":"Cerrar evaluación",
 	"INDICADOR_SEL":"Seleccione un indicador",
 	"APROBADO":"Aprobado",
@@ -155,6 +155,9 @@
 	"VALOR":"Valor",
 	"CONE":"Cone´s",
 	"ZONA":"Zona",
+	"NO_CONE": "Esta UM no tiene un nivel de cone",
+	"NO_INDICADOR" : "Evalue por lo menos un criterio",
+	"FICHA" : "Ficha técnica",
 
 	"MANUAL_USUARIO": "Manual de usuario",
 	"ACERCA_DE": "Acerca de... ",
@@ -177,6 +180,7 @@
 
 	"NUEVO": "Nuevo",
 	"NUEVA": "Nueva",
+	"CREAR": "Crear",
 	"AGREGAR": "Agregar",
 	"EDITAR": "Editar",
 	"GUARDAR": "Guardar",
@@ -194,6 +198,9 @@
 	"PDF": "Exportar a PDF",
 	"EXCEL": "Exportar a EXCEL",
 	"CAMBIAR_IDIOMA": "Cambiar idioma",
+	"CONFIRM_DELETE": "¿Esta seguro de eliminar el elemento?",
+	"CONFIRM_MODIFICADO": "El indicador actual tiene cambios por guardar, ¿Esta seguro de cambiar de indicador?",
+	"REPITE_EXPEDIENTE": "Este expediente se repite",
 
 	"CREADO": "Creado",
 	"MODIFICADO": "Modificado",

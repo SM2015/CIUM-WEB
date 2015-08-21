@@ -2,8 +2,8 @@
 	'use strict';
 	angular.module('CalidadModule')
 	.controller('CalidadCtrl',
-	       ['$rootScope', '$translate', '$scope', '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash', 'listaOpcion', 'Criterios', 'CrudDataApi', 'URLS', 
-	function($rootScope,   $translate,   $scope,   $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,   listaOpcion,   Criterios,   CrudDataApi, URLS){
+	       ['$rootScope', '$translate', '$mdDialog', '$scope', '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash', 'listaOpcion', 'Criterios', 'CrudDataApi', 'URLS', 
+	function($rootScope,   $translate,   $mdDialog,   $scope,   $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,   listaOpcion,   Criterios,   CrudDataApi, URLS){
 	
 	// cambia de color el menu seleccionado
 	$scope.menuSelected = "/"+$location.path().split('/')[1];
@@ -28,8 +28,7 @@
     $scope.BuscarPor=
     [
 		{id:"clues", nombre:"Clues"},
-		{id:'creadoAl', nombre:$translate.instant('CREADO')},
-		{id:'modificadoAl', nombre:$translate.instant('MODIFICADO')}
+		{id:'fechaEvaluacion', nombre:$translate.instant('CREADO')}
 	];
 	   
 	// inicia configuración para los data table (grid)
@@ -139,9 +138,9 @@
 					$scope.repos=$scope.Clues;
 				}
 				else
-		{
-			errorFlash.error(data);
-		}
+				{
+					errorFlash.error(data);
+				}
 				$scope.cargando = false;
 			},function (e) {
 				errorFlash.error(e);
@@ -173,22 +172,32 @@
 				$scope.dato.tipologia = data.data.tipologia;
 		  }
 		  else
-		{
-			errorFlash.error(data);
-		}
+			{
+				errorFlash.error(data);
+			}
 		  $scope.cargando = false;
 		},function (e) {
 			errorFlash.error(e);
 			$scope.cargando = false;
 		}); 
 	}; 
+	// cerrar el dialog
+	$scope.hide = function() {
+		$mdDialog.hide();
+	};
+	// abre la ficha de  la clues en un dialog
+	$scope.abrirFicha = function(ev)
+	{		    
+	    $scope.editDialog = $mdDialog;
+	    $scope.editDialog.show({
+	    		targetEvent: ev,
+	    		
+	    		scope: $scope.$new(),
+		        templateUrl: 'src/transaccion/evaluacionCalidad/views/ficha.html',
+		        clickOutsideToClose: true			        			        	  
+	    });	    	   
+	};
 	//autocomplete
-	
-	$scope.simulateQuery = false;
-	$scope.isDisabled    = false;		         
-	$scope.querySearch   = querySearch;
-	$scope.selectedItemChange = selectedItemChange;
-	$scope.searchTextChange   = searchTextChange;
 	
 
 	// ******************************
@@ -198,20 +207,14 @@
 	 * Search for repos... use $timeout to simulate
 	 * remote dataservice call.
 	 */
-	function querySearch (query) {
-	  var results = query ? $scope.repos.filter( createFilterFor(query) ) : $scope.repos,
-		  deferred;
-	  if ($scope.simulateQuery) {
-		deferred = $q.defer();
-		$timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
-		return deferred.promise;
-	  } else {
-		return results;
-	  }
+	$scope.querySearch = function (query) {
+		return $http.get(URLS.BASE_API + 'CluesUsuario',{ params:{termino: query}})
+		.then(function(res)
+		{
+            return res.data.data;                            
+        });
 	}
-	function searchTextChange(text) {
-	}
-	function selectedItemChange(item) {
+	$scope.selectedItemChange = function(item) {
 		if(!angular.isUndefined(item))
 		{
 			$scope.CluesChange(item.clues);
@@ -299,9 +302,9 @@
 				$scope.acciones=data.data;
 			}
 			else
-		{
-			errorFlash.error(data);
-		}
+			{
+				errorFlash.error(data);
+			}
 		});
 	};
 
@@ -318,25 +321,42 @@
 				$scope.plazos=data.data;
 			}
 			else
-		{
-			errorFlash.error(data);
-		}
+			{
+				errorFlash.error(data);
+			}
 		});
 	};
 	
 	// agregar columnas(expediente)
 	$scope.columnas = [];
-	$scope.agregarColumna = function()
+	$scope.agregarColumna = function(exp)
 	{
-		$scope.completo[$scope.columnas.length+1]=0;
-		$scope.incompleto[$scope.columnas.length+1]=0;	
+		if(angular.isUndefined(exp))
+		{
+			$scope.completo[$scope.columnas.length+1]=0;
+			$scope.incompleto[$scope.columnas.length+1]=0;
+			exp=null;	
+		}
 		if($scope.columnas.length<20)
 		{
-			$scope.columnas.push({id:$scope.columnas.length+1});
-			$scope.dato.totalExpediente=$scope.columnas.length;
+			$scope.columnas.push({id:$scope.columnas.length+1,exp:exp});
+			$scope.dato.totalExpediente=$scope.columnas.length;			
 		}
 	}
 	
+	$scope.criterios = []; $scope.modificado = false;
+	$scope.verificarCambios = function()
+	{
+		if($scope.modificado)
+		{
+			if ($window.confirm($translate.instant('CONFIRM_MODIFICADO'))) {  
+				$scope.modificado = false;
+			}
+			event.preventDefault();
+            event.stopPropagation();
+		}		
+	}
+
 	// cargar los criterios que le correspondan por indicador y nivel de cone
 	$scope.criterios = [];
 	$scope.informacion = [];
@@ -347,6 +367,7 @@
 		var idev=$scope.dato.id;
 		var op=0;
 		$scope.cargando = true;
+		$scope.dato.tempExpediente = $scope.dato.expediente;
 		if(!angular.isUndefined(cone)&&cone!=""&&!angular.isUndefined(indi)&&indi!="")
 		{
 			$http.get(URLS.BASE_API+'CriterioEvaluacionCalidad/'+cone+'/'+indi+'/'+idev)
@@ -358,7 +379,7 @@
 				if(data.status==200)
 				{									
 					$scope.dato.totalCriterio = {};
-					$scope.dato.expediente = {};
+					
 					$scope.dato.cumple = {};
 					$scope.dato.promedio = {};
 
@@ -370,25 +391,45 @@
 					var promedioGeneral = 0; var aprobado = 0;
 					if(!angular.isUndefined(data.hallazgo))
 					{
-						if(!angular.isUndefined(data.hallazgo[indi]))
-						{
-							$scope.dato.hallazgo = data.hallazgo[indi].descripcion;
-							$scope.dato.accion = data.hallazgo[indi].idAccion;
-							$scope.dato.plazoAccion = data.hallazgo[indi].idPlazoAccion;
-							if($scope.dato.plazoAccion>0)
-								$scope.esSeguimiento=true;
-							op=1;
-						}
+						$scope.dato.hallazgos={};
+						
+						$scope.dato.hallazgos.descripcion = data.hallazgo.descripcion;
+						$scope.dato.hallazgos.idAccion = data.hallazgo.idAccion;
+						$scope.dato.hallazgos.idPlazoAccion = data.hallazgo.idPlazoAccion;
+						if($scope.dato.hallazgos.idPlazoAccion>0)
+							$scope.esSeguimiento=true;
+						if(!angular.isUndefined(data.hallazgo.descripcion))
+							$scope.tieneHallazgo=true;
+						else
+							$scope.tieneHallazgo=false;
+						op=1;												
 					}
+					else
+					{
+						op=0;
+					}
+
 					angular.forEach(data.data , function(val, key) 
 					{
-						var exp = val.registro.columna;
 						
+						var exp = val.registro.expediente;
+						if(exp==0)
+						{ 
+							exp=1; var c=0;
+							angular.forEach($scope.dato.tempExpediente , function(valor, clave) 
+							{
+								if(c==0)
+									val.registro.expediente=valor;								
+								c++;
+							});
+							
+						}
 						if($scope.dato.totalExpediente<total)
-							$scope.agregarColumna();
+							$scope.agregarColumna(exp);
 
 						$scope.criterios = val;
-
+						if(angular.isUndefined($scope.dato.expediente))
+							$scope.dato.expediente=[];
 						$scope.dato.expediente[exp] = val.registro.expediente;
 						$scope.dato.cumple[exp] = val.registro.cumple;
 						$scope.dato.promedio[exp] = val.registro.promedio;
@@ -399,26 +440,27 @@
 						if($scope.dato.promedioGeneral<80)
 							$scope.tieneHallazgo=true;
 						
-						angular.forEach($scope.dato.aprobado[exp] , function(val, key) 
+						angular.forEach($scope.dato.aprobado[exp] , function(v, k) 
 						{ aprobado++; });
 
 						if(aprobado==0)
 							$scope.dato.aprobado[exp]={};
 
-						angular.forEach(val.aprobado , function(val, key) 
+						angular.forEach(val.aprobado , function(v1, k1) 
 						{
-							$scope.dato.aprobado[exp][val]=1;
+							$scope.dato.aprobado[exp][v1]=1;
 						});
-						angular.forEach(val.noAprobado , function(val, key) 
+						angular.forEach(val.noAprobado , function(v2, k2) 
 						{
-							$scope.dato.aprobado[exp][val]=0;
+							$scope.dato.aprobado[exp][v2]=0;
 						});
-						angular.forEach(val.noAplica , function(val, key) 
+						angular.forEach(val.noAplica , function(v3, k3) 
 						{
-							$scope.dato.aprobado[exp][val]=2;
-						});					    
-					});		
-					$scope.actualizar();				    							
+							$scope.dato.aprobado[exp][v3]=2;
+						});	
+
+									    
+					});						    							
 					$scope.estadistica();							    
 				}
 				else					
@@ -481,9 +523,7 @@
 						c++;
 					});
 					
-				});	
-
-				$scope.actualizar();	
+				});		
 				$scope.cargando = false;		
 			}
 			else
@@ -498,20 +538,6 @@
 		});		
 	};
 	
-	$scope.actualizar = function()
-	{
-		$scope.clase = 'default';
-
-		$scope.hallazgos = $scope.criterios.hallazgo;
-
-		$scope.mishallazgos = [];
-		angular.forEach($scope.hallazgos , function(val, key) 
-		{
-			$scope.mishallazgos.push(key);
-		});	
-		
-		$scope.valores = $scope.criterios.evaluacion;	
-	};
 
 	// obtener las estadisticas de la evaluacion
 	$scope.estadistica = function()
@@ -538,7 +564,7 @@
 				var tco = 0; var tinc = 0;
 				angular.forEach(data.data , function(val, key) 
 				{
-					var co = 0; var inc = 0;
+					var co = 0; var inc = 0; 
 					angular.forEach(val , function(v, k) 
 					{
 						if(v[v.codigo] == v.total)
@@ -561,10 +587,10 @@
 					$scope.terminado=false;				
 			}
 			else
-		{
-			errorFlash.error(data);
-		}
-		$scope.cargando = false;	
+			{
+				errorFlash.error(data);
+			}
+			$scope.cargando = false;	
 		})
 		.error(function(data, status, headers, config) 
 		{
@@ -590,8 +616,8 @@
 		var total = 0;
 		$scope.dato.totalCriterio={};
 		$scope.tieneHallazgo=false;
-		for(var exp=1;exp<=$scope.dato.totalExpediente;exp++)
-		{
+		
+		angular.forEach($scope.dato.expediente, function(val, exp) {
 			angular.forEach($scope.criterios, function(value, key) {
 				if(value.hasOwnProperty("idCriterio"))
 				{
@@ -607,7 +633,8 @@
 					catch(e){}
 					totalCriterio++;
 				}
-			});	
+			});
+
 
 			total = aprobado + noaplica;
 			$scope.dato.totalCriterio[exp]=totalCriterio;
@@ -619,54 +646,114 @@
 			$scope.dato.promedio[exp] = (total/totalCriterio)*100;
 			promedioGeneral = promedioGeneral + $scope.dato.promedio[exp];			
 			totalCriterio = 0; total = 0; aprobado = 0; noaplica = 0; noaprobado = 0;
-		}
+		});	
 
 		$scope.dato.promedioGeneral = promedioGeneral/$scope.dato.totalExpediente;
 		if($scope.dato.promedioGeneral<80)
 			$scope.tieneHallazgo=true;
 	};
-	
-	// evaluar un criterio si/no
-	$scope.aprobar = function(index,evaluacion,ap,exp)
-	{
-		$scope.obtenerPromedio();				
-		$scope.json.idCriterio = index;
-		$scope.json.idEvaluacionCalidad = evaluacion;
-		$scope.json.columna = exp;
-		$scope.json.cumple = $scope.dato.cumple[exp];
-		$scope.json.promedio = $scope.dato.promedio[exp];
-		$scope.json.totalCriterio = $scope.dato.totalCriterio[exp];
-		var error = false;
-		try
+	$scope.validarNoRepetirExpediente = function(valor,exp)
+	{		
+		angular.forEach($scope.dato.expediente, function(item, key) 
 		{
-			$scope.json.expediente = $scope.dato.expediente[exp];
-		}
-		catch(e){ error = true; }
-		if(error||angular.isUndefined($scope.json.expediente))
+			if(item==valor&&key!=exp)
+				flash('warning', $translate.instant("REPITE_EXPEDIENTE") );
+		});
+	}
+	// evaluacion de criterio si/no
+	$scope.json = {};
+	$scope.tieneHallazgo=false;
+	$scope.aprobar = function(index,evaluacion,ap,exp,id)
+	{		
+		$scope.obtenerPromedio();
+		if(exp==null)exp=id; 
+		$scope.modificado = true;	
+		angular.forEach($scope.dato.aprobado, function(item, key) 
 		{
-			flash('danger', "Ooops! Ocurrio un error: No ha escrito un número de expediente");
-		}
-		else
-		{			
-			var apx = $scope.dato.aprobado[exp][index];
-			if( apx == 1 || apx == 2)
-			{		
-				$scope.AR[index]=1;
-				$scope.TH[ap]=$scope.AR;
+			if(item==0)
+			{
+				$scope.tieneHallazgo=true;
+			}
+		});
+		var indi = angular.element(document.querySelector('#indicador'));
+		var code = indi[0].innerText;
+		code = code.split(" - ");
+		var info = 0; var totalAprobado = 0; var totalCriterio = 0;
+		angular.forEach($scope.dato.aprobado[exp], function(item, key) 
+		{
+			totalAprobado++;
+		});
+		
+		totalCriterio=$scope.dato.totalCriterio[exp];
+		
+		angular.forEach($scope.informacion[exp], function(item, key) 
+		{
+			var existe = false;
+			angular.forEach($scope.informacion, function(item, key) 
+			{
+				angular.forEach(item, function(v, k) 
+				{
+					if(k==code[0])
+						existe=true;
+				})
+			});
+			if(existe)
+			{
+				$scope.informacion[exp][0][code[0]] = totalAprobado;
 			}
 			else
 			{
-				$scope.AR[index]=0;
-				$scope.TH[ap]=$scope.AR;					
+				$scope.informacion[exp][0]=
+					{
+				      "id": $scope.dato.idIndicador,
+				      "codigo": code[0],
+				      "nombre": code[1],
+				      "total": totalCriterio
+				    };
+				$scope.informacion[exp][0][code[0]] = totalAprobado;
 			}
-			
-			$scope.json.idIndicador = $scope.dato.idIndicador;
-			$scope.json.aprobado = apx;
-			$scope.guardarCriterio('EvaluacionCalidadCriterio');		
+		});
+		if(info==0)
+		{
+			$scope.informacion[exp]=[];
+			$scope.informacion[exp][0]=
+				{
+			      "id": $scope.dato.idIndicador,
+			      "codigo": code[0],
+			      "nombre": code[1],
+			      "total": totalCriterio
+			    };
+			$scope.informacion[exp][0][code[0]] = totalAprobado;
 		}
+		
+		$scope.completo = {};
+		$scope.incompleto = {};
+		var tco = 0; var tinc = 0;
+		angular.forEach($scope.informacion , function(val, key) 
+		{
+			var co = 0; var inc = 0; 
+			angular.forEach(val , function(v, k) 
+			{
+				if(v[v.codigo] == v.total)
+				{
+					tco = tco + 1;
+					co = co + 1;
+				}
+				else
+				{
+					tinc = tinc + 1;
+					inc = inc + 1;
+				}
+			});
+			$scope.completo[key] = co;
+			$scope.incompleto[key] = inc;
+		});
+		if(tinc == 0 && tco > 0)
+			$scope.terminado=true;
+		else
+			$scope.terminado=false;
 	};
-	
-	$scope.esSeguimiento=[];
+	$scope.esSeguimiento = false;	
 	$scope.verSeguimiento = function()
 	{	
 		var este = angular.element(document.getElementById('accion'));
@@ -680,82 +767,14 @@
 	};
    
 	$scope.valido=false;
-	$scope.completar = function()
-	{
-		var h = $scope.dato.hallazgo;
-		var a = $scope.dato.accion;
-		var p = $scope.dato.plazoAccion;   
-					
-		if(!angular.isUndefined(h)&!angular.isUndefined(a))
-		{
-			$scope.valido=false;		
-								
-			$scope.json.idIndicador = $scope.dato.idIndicador;
-			$scope.json.idEvaluacion = $scope.dato.id;
+	
 
-			$scope.json.hallazgo = h;
-			$scope.json.accion = a;
-			$scope.json.resuelto = 0;
-			if(angular.isUndefined(p))
-			{
-				p=0;
-				$scope.json.resuelto = 1;
-			}
-			$scope.json.plazoAccion = p;		
-			
-			$scope.json.aprobado = 0;
-			$scope.json.clues =  angular.element(document.getElementById("clues")).val();
-			$scope.guardarCriterio('EvaluacionCalidadHallazgo');		
-		}
-		else 
-			$scope.valido=true;
-	};
-
-	// guardarCriterio
-	$scope.guardarCriterio = function(url) 
-	{
-		var json=$scope.json;
-
-		$scope.calidad = $http.post(URLS.BASE_API+url, json)
-		.success(function(data, status, headers, config) 
-		{
-			if(data.status == '201' || data.status == '200')
-			{							
-				$scope.estadistica();				    		
-			}
-			else
-		{
-			errorFlash.error(data);
-		}
-		})
-		.error(function(data, status, headers, config) 
-		{
-			errorFlash.error(data);
-		});
-	};
 	//cerrar
 	$scope.cerrar = function(id) 
 	{
-		var json={'clues':$scope.dato.clues, 'cerrado':1};
+		$scope.dato.cerrado = 1;
 		
-		$scope.calidad = $http.put(URLS.BASE_API+'EvaluacionCalidad/' + id, json)
-		.success(function(data, status, headers, config) 
-		{
-			if(data.status == '201' || data.status == '200')
-			{						
-				var uri=$scope.url.split('/');	
-				uri="/"+uri[1]+"/ver";
-				$location.path(uri).search({id: data.data.id});				    		
-			}
-			else
-		{
-			errorFlash.error(data);
-		}
-		})
-		.error(function(data, status, headers, config) 
-		{
-			errorFlash.error(data);
-		});
+		$scope.modificar(id);
 	};
 	//fin calidad
 	
@@ -870,11 +889,43 @@
 	//Modificar. Actualiza el recurso con los datos que envia el usuario
 	$scope.modificar = function(id) 
 	{    
-		var url=$scope.ruta;
-		var json=$scope.dato;
+		var url = $scope.ruta;
+		var json = {}; var registros = []; var i = 0;
+		angular.forEach($scope.dato.aprobado , function(val, key) 
+		{
+			if(!angular.isUndefined($scope.dato.expediente[key]))
+			{
+				i++;
+				registros.push(
+								{
+									idIndicador:$scope.dato.idIndicador, 
+									expediente:$scope.dato.expediente[key], 
+									columna: i, 
+									cumple: $scope.dato.cumple[key], 
+									promedio: $scope.dato.promedio[key], 
+									totalCriterio: $scope.dato.totalCriterio[key]
+								});
+				registros[i-1].criterios=[];
+				angular.forEach(val , function(v, k) 
+				{
+					registros[i-1].criterios.push({idCriterio:k,idIndicador:$scope.dato.idIndicador,aprobado:v});
+				});
+			}
+		});
+		json.evaluaciones=[];
+		json.evaluaciones[0] = {id:$scope.dato.id,clues:$scope.dato.clues, fechaEvaluacion:$scope.dato.fechaEvaluacion,cerrado:$scope.dato.cerrado};
+		json.evaluaciones[0].registros = registros;
+		json.evaluaciones[0].hallazgos=[];
+		if(!angular.isUndefined($scope.dato.hallazgos))
+		if($scope.dato.hallazgos.idAccion)
+		{
+			json.evaluaciones[0].hallazgos[0] = $scope.dato.hallazgos;
+			json.evaluaciones[0].hallazgos[0].idIndicador = $scope.dato.idIndicador;
+		}
 		
 		if(json)
 		{
+			$scope.cargando = true;
 			CrudDataApi.editar(url, id, json, function (data) {
 				if(data.status  == '407')
 				$window.location="acceso";
@@ -882,6 +933,14 @@
 				if(data.status==200)
 				{
 				  flash('success', data.messages);
+				  if($scope.dato.cerrado==1)
+				  {
+				  	var uri=$scope.url.split('/');	
+					uri="/"+uri[1]+"/ver";
+					$location.path(uri).search({id: data.data.id});	
+				  }
+				  $scope.cargarCriterios();
+				  $mdDialog.hide();
 				}
 				else
 				{
@@ -917,8 +976,6 @@
 
 					uri="/"+uri[1]+"/modificar";
 
-					
-
 					$location.path(uri).search({id: data.data.id});
 				}
 				else
@@ -942,9 +999,9 @@
 			id=$location.search().id;
 			op=0;
 		}
-		if ($window.confirm('Esta seguro?')) 
-		{   
+		if ($window.confirm($translate.instant('CONFIRM_DELETE'))) {   
 			var url=$scope.ruta;
+            $scope.cargando = true;
 			
 			CrudDataApi.eliminar(url, id, function (data) {
 				if(data.status  == '407')
@@ -960,6 +1017,41 @@
 				
 					
 					$scope.cargando = false;
+				}
+				else
+				{
+					errorFlash.error(data);
+				}
+				$scope.cargando = false;
+				},function (e) {
+					errorFlash.error(e);
+					$scope.cargando = false;
+				}
+			); 
+		}          
+	};
+
+	//Borrar. Elimina el recurso del parametro id
+	$scope.borrarIndicador = function() 
+	{ 
+		var ind = $scope.dato.idIndicador;
+		var eva = $location.search().id;
+		
+		if ($window.confirm($translate.instant('CONFIRM_DELETE'))) {   
+			var url=$scope.ruta;
+            $scope.cargando = true;
+
+			CrudDataApi.eliminar("EvaluacionCalidadCriterio", eva+"?idi="+ind, function (data) {
+				if(data.status  == '407')
+					$window.location="acceso";
+				
+				if(data.status==200)
+				{					
+					flash('success', data.messages);
+								
+					$scope.cargando = false;
+
+					$route.reload();	
 				}
 				else
 				{

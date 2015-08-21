@@ -80,7 +80,7 @@
 	$scope.datos = [];
 	
 	
-	$scope.dato = [];
+	$scope.dato = {};
 	$scope.colorColor = [];
 	$scope.alertas = [];
 	
@@ -146,19 +146,25 @@
 		$scope.dato.indicador_alertas.splice($index, 1);		
 	}
 	$scope.calcularMinimo = function(t) 
-	{
-		$scope.dato.indicador_alertas[t+1].minimo=parseInt($scope.dato.indicador_alertas[t].maximo)+1;
+	{	
+		if(!angular.isUndefined($scope.dato.indicador_alertas[t+1]))
+		{
+			$scope.dato.indicador_alertas[t+1].minimo=parseInt($scope.dato.indicador_alertas[t].maximo)+0.01;
+			$scope.dato.indicador_alertas[t+1].maximo=parseInt($scope.dato.indicador_alertas[t+1].minimo)+10;
+		}
 	}
 	$scope.agregarAlerta = function() 
-	{
+	{	
 		var t=$scope.dato.indicador_alertas.length;
 		if(t>0)	
 		{
-			var valor=parseInt($scope.dato.indicador_alertas[t-1].maximo)+1;
-			$scope.dato.indicador_alertas.push({minimo:valor,maximo:valor+1,color:0});
+			var valor=parseInt($scope.dato.indicador_alertas[t-1].maximo)+0.01;
+			if(valor<100)
+				$scope.dato.indicador_alertas.push({minimo:valor,maximo:(valor+10) > 100 ? 100 : valor+10,color:0});
 		}
 		else
 			$scope.dato.indicador_alertas.push({minimo:0,maximo:0,color:0});
+		
 	};
 	$scope.quitarAlerta = function(index) 
 	{
@@ -326,9 +332,9 @@
 			id=$location.search().id;
 			op=0;
 		}
-		if ($window.confirm('Esta seguro?')) 
-		{   
+		if ($window.confirm($translate.instant('CONFIRM_DELETE'))) {   
 			var url=$scope.ruta;
+            $scope.cargando = true;
 			
 			CrudDataApi.eliminar(url, id, function (data) {
 				if(data.status  == '407')

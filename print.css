@@ -34,5 +34,10 @@
     transition: width .6s ease;
 }
 }
-
+.texto-vertical
+{
+  transform: rotate(270deg);
+  transform-origin: left top -10;
+  float: left;
+}
 @page {margin: 25mm 0mm 25mm 0mm}

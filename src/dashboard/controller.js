@@ -1816,7 +1816,7 @@
 	
 		
 	})
-	function DialogAbasto($scope, $mdDialog, EvaluacionShow, EvaluacionId) {
+	function DialogAbasto($scope, $mdDialog, EvaluacionShow, EvaluacionId, errorFlash) {
 		var id = EvaluacionId.getId();
 		EvaluacionShow.ver('Evaluacion', id, function (data) {
           if(data.status  == '407')
@@ -1836,7 +1836,7 @@
             $scope.cargando = false;
         }); 
 
-        EvaluacionShow.ver('CriterioEvaluacionVer', id, function (data) {
+        EvaluacionShow.ver('EvaluacionCriterio', id, function (data) {
           if(data.status  == '407')
             $window.location="acceso";
 
@@ -1859,7 +1859,7 @@
   	};
   }
 
-  	function DialogCalidad($scope, $mdDialog, EvaluacionShow, EvaluacionId) {
+  	function DialogCalidad($scope, $mdDialog, EvaluacionShow, EvaluacionId, errorFlash) {
 		var id = EvaluacionId.getId();
 		EvaluacionShow.ver('EvaluacionCalidad', id, function (data) {
           if(data.status  == '407')
@@ -1879,7 +1879,7 @@
             $scope.cargando = false;
         }); 
 
-        EvaluacionShow.ver('CriterioEvaluacionCalidadVer', id, function (data) {
+        EvaluacionShow.ver('EvaluacionCalidadCriterio', id, function (data) {
           if(data.status  == '407')
             $window.location="acceso";
 

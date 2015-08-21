@@ -3,14 +3,14 @@
 	<md-button class="md-fab md-fab-bottom-right" ng-click="nuevo()" aria-label="{{ 'NUEVA' | translate }}" >
 		<md-icon md-svg-icon="add"></md-icon>
   	</md-button>
-	<md-progress-linear  ng-if="cargando" class="md-accent" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
+	<md-progress-linear  ng-if="cargando" class="md-warn" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
 	<md-toolbar  >
 		<div class="md-toolbar-tools" ng-init="index('Evaluacion')">    
 			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
 		  <md-icon md-svg-icon="menu" ></md-icon>
 		    </md-button>   
 			<h2>
-			  <span>{{ 'EVALUACION' | translate }} {{ 'ABASTO' | translate }} <md-icon md-svg-icon="chevron-right"></md-icon>  {{ 'LISTA' | translate }}</span>
+			  <span>{{ 'LISTA' | translate }}<md-icon md-svg-icon="chevron-right"></md-icon></span>
 			</h2>
 			<span flex></span>		
 			<span ng-include="'src/app/views/menu-opciones.html'"></span>
@@ -32,8 +32,6 @@
 			<th hide-sm name="{{ 'USUARIO' | translate }}" order-by="idUsuario"></th>
 			<th name="{{ 'FECHA_EVALUACION' | translate }}" order-by="fechaEvaluacion"></th>
 			<th name="{{ 'TERMINADO' | translate }}" order-by="cerrado"></th>
-			<th hide-sm hide-md hide-lg name="{{ 'CREADO' | translate }}" order-by="creadoAl"></th>
-        	<th hide-sm hide-md hide-lg name="{{ 'MODIFICADO' | translate }}"  order-by="modificadoAl"></th>
 			<th ></th>
 		  </tr>
     </thead>
@@ -44,8 +42,6 @@
 				 <td hide-sm>{{ dato.usuarios.nombres+' '+dato.usuarios.apellidoPaterno+' '+dato.usuarios.apellidoMaterno | uppercase }}</td>
 				 <td>{{ dato.fechaEvaluacion }}</td>
 				 <td>{{ dato.cerrado ? "Si" : "No" }}</td>
-				 <td hide-sm hide-md hide-lg>{{ dato.creadoAl }}</td>
-				 <td hide-sm hide-md hide-lg>{{ dato.modificadoAl }}</td>
 				 <td>
 					
 					<section layout="row" layout-align="center center">
@@ -64,7 +60,7 @@
   </md-tooltip>
 						</md-button></a>
 						
-						<md-button ng-if="!dato.cerrado" ng-click="borrar(dato.id, $index)" class="md-icon-button md-accent" aria-label="Eliminar">
+						<md-button ng-if="!dato.cerrado" ng-click="borrar(dato.id, $index)" class="md-icon-button md-warn" aria-label="Eliminar">
 						  <md-icon md-svg-src="delete" ></md-icon>
   <md-tooltip>
     {{ 'ELIMINAR' | translate }}

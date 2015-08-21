@@ -1,29 +1,57 @@
-<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
-<div layout="column" class="relative" layout-fill role="main" flex>
-	
-	<md-progress-linear  ng-if="cargando" class="md-warn" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
-	<md-toolbar  >
-		<div class="md-toolbar-tools" ng-init="index('Evaluacion')">    
-			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
-		  <md-icon md-svg-icon="menu" ></md-icon>
-		    </md-button>   
-			<h2>
-			  <span>{{ 'NUEVA' | translate }}<md-icon md-svg-icon="chevron-right"></md-icon></span>
-			</h2>
-			<span flex></span>	
-            
-            <span ng-include="'src/app/views/menu-opciones.html'"></span>
-		</div>
-	</md-toolbar>
-	<md-content>
-	
+<md-dialog aria-label="FICHA">
+  <md-toolbar >
+    <div class="md-toolbar-tools ">
+      <h2>{{ 'CALIDAD' | translate }} </h2>
+      <span flex></span>
+      
 
-<form role="form" name="forma">
-	<md-content layout="column" class="imprimir"  layour-align="center center"  >
-		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
+      <md-button hide-md hide-sm hide-lg ng-show="!update"  aria-label="{{ 'CAMBIAR_UM' | translate }}" ng-click="update=true" >
+        <md-icon md-svg-icon="mode-edit"></md-icon>
+      {{ 'CAMBIAR_UM' | translate }}
+    </md-button>
+    <md-button class="md-icon-button"  ng-show="!update" hide show-sm show-md show-lg show-sm ng-click="update=true" aria-label="{{ 'CAMBIAR_UM' | translate }}" >
+      <md-icon md-svg-icon="mode-edit"></md-icon>
+      <md-tooltip>
+          {{ 'CAMBIAR_UM' | translate }}
+        </md-tooltip>
+    </md-button>
+      
+    <md-button hide-md hide-sm hide-lg ng-show="update"  aria-label="{{ 'GUARDAR' | translate }}" ng-click="modificar(id)" ng-disabled="forma.$invalid">
+        <md-icon md-svg-icon="save"></md-icon>
+        {{ 'GUARDAR' | translate }}
+    </md-button>
+    <md-button class="md-icon-button"  ng-show="update" hide show-sm show-md show-lg show-sm ng-click="modificar(id)" ng-disabled="forma.$invalid" aria-label="{{ 'GUARDAR' | translate }}" >
+      <md-icon md-svg-icon="save"></md-icon>
+      <md-tooltip>
+          {{ 'GUARDAR' | translate }}
+        </md-tooltip>
+    </md-button>
+
+    <md-button class="md-icon-button" ng-click="hide()">
+        <md-icon md-svg-src="close" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content >
+
+	<form role="form" name="forma">
+<input type="hidden" ng-model="dato.id" />
+	<md-content  layout="column"  layour-align="center center"  >
+		<md-list layout-margin layout-align="center center" >
         		
-            <md-content class="md-padding">     
-
+            <md-content class="md-padding">
+              <md-list-item layout-wrap ng-if="!update">
+              	<div  align="center" style="width:100%">
+                    <md-icon md-svg-icon="today"></md-icon>
+                    <span> {{dato.fechaEvaluacion}} </span>
+           			<br />
+                    <span> <strong style="font-size:.8em;">{{ dato.cerrado == 1 ? 'Cerrado' : 'Abierto' }}</strong> </span>
+                  </div>
+              	
+              </md-list-item>
+              
+              <md-list-item layout-wrap ng-if="update" >                 
+                        <div flex>
                                 <md-autocomplete 
                                   md-selected-item="selectedItem"
                                   md-search-text-change="searchTextChange(searchText)"
@@ -37,28 +65,28 @@
                                   ng-model="dato.idClues" 
                                   md-input-name="idClues"
                                   md-menu-class="autocomplete-custom-template">
-
+                                  
                                     <md-item-template >
                                       <span class="item-title">
                                         <md-icon md-svg-icon="business"></md-icon>
-                                        <span md-highlight-text="searchTerm"> {{item.nombre}} </span>
+                                        <span> {{item.nombre}} </span>
                                         <md-icon md-svg-icon="star"></md-icon>
-                                        <span > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong style="font-size:.8em;" md-highlight-text="searchTerm">{{item.clues}}</strong> </span>
+                                        <span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong style="font-size:.8em;">{{item.clues}}</strong> </span>
                                       </span>
                                       <span class="item-metadata" style="font-size:.8em">
                                         <span class="item-metastat" >
-                                          <strong>{{ 'JURISDICCION' | translate }}: </strong> <span md-highlight-text="searchTerm">{{item.jurisdiccion}}</span>
+                                          <strong>{{ 'JURISDICCION' | translate }}: </strong> {{item.jurisdiccion}}
                                         </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <span class="item-metastat">
-                                          <strong>{{ 'MUNICIPIO' | translate }}: </strong><span md-highlight-text="searchTerm">{{item.municipio}} </span>
+                                          <strong>{{ 'MUNICIPIO' | translate }}: </strong>{{item.municipio}} 
                                         </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <span class="item-metastat">
-                                          <strong>{{ 'LOCALIDAD' | translate }}: </strong> <span md-highlight-text="searchTerm">{{item.localidad}}</span>
+                                          <strong>{{ 'LOCALIDAD' | translate }}: </strong> {{item.localidad}}
                                         </span>
                                       </span>
                                       <span class="item-metadata" style="font-size:.6em">
                                       	<md-icon md-svg-icon="place"></md-icon>
-                                        <span class="item-metastat" md-highlight-text="searchTerm">
+                                        <span class="item-metastat">
                                           {{item.domicilio}} 
                                         </span>
                                       </span>
@@ -79,16 +107,19 @@
                                     <div ng-messages="forma.idCone.$error" >
                                       <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>                                    
                                   </div>
-                              	</md-autocomplete><input type="hidden" aria-label="idCone" ng-model="dato.idCone" name="idCone" required>  
-                           
-                    
+                              	</md-autocomplete><input type="hidden" aria-label="idCone" ng-model="dato.idCone" name="idCone" required> 
+                            
+                  </div>
+                </md-list-item>
               	
-              </md-content> 
-                 <md-content layout="column"  layour-align="center center" >
-					<md-list layout-margin layout-align="center center" >
+            </md-content>
+
+          <md-content layout="column"  layour-align="center center" >
+					  <md-list layout-margin  layout-align="center center" >
+
                     	<md-input-container flex >
                             <div style="text-align:center" flex>                            
-                            	<h4 style="font-size:1.5em">{{ dato.nombre }}</h4>
+                            	<h4 style="font-size:1.3em">{{ dato.nombre }}</h4>
                                 <h5 style="font-size:1em"><md-icon md-svg-icon="star"></md-icon> {{ dato.clues }}</h5>
                                 <p style="font-size:.5em; margin-bottom:20px;">
                                 {{ dato.domicilio }}  <strong>CP: </strong> {{ dato.codigoPostal }}
@@ -131,7 +162,7 @@
 			  
 		</md-list>
 	</md-content>
-    
-</form>
-<span ng-init="cargando = false;"></span> 
-</md-content></div>
+    </form>
+
+</md-dialog-content>
+</md-dialog>    
