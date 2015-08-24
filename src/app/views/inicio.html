@@ -3,20 +3,20 @@
 	<md-toolbar ng-include="'src/app/views/menu-publico.html'"></md-toolbar>
 	<md-content >
 		
-        <div flex="100"  class="portada" layout="column" layout-padding layout-align="center center">
+        <div flex="100"  class="portada" layout="column" layout-padding layout-align="center center" style="height:{{alto}}px">
 			<h1 class="md-display-4" style="font-size:2.5em;line-height:1.0;text-align:center; color:#000;text-align:center; "  >
 				<md-icon md-svg-icon="logo" style="width:128px; height:128px;"></md-icon><br/> 
 				{{ 'APP_NOMBRE' | translate }}
 			</h1>
 			
-			<md-button ng-href="#/signin" class="md-raised md-accent"><md-icon md-svg-icon="exit-to-app" ></md-icon> {{ 'INICIAR_SESION' | translate }}</md-button>
+			<md-button ng-href="#/signin" class="md-raised md-warn"><md-icon md-svg-icon="exit-to-app" ></md-icon> {{ 'INICIAR_SESION' | translate }}</md-button>
 		</div>
     	
         <div flex="100">
 			<p  style=" font-size:1.5em;line-height:1.0;text-align:justify;">{{ 'APP_DESCRIPCION_BREVE' | translate }}</p>
 		</div>
     	
-		<div layout flex="100" layout="row">
+		<div layout flex="100" layout="row" hide-sm hide-md>
 			<div flex layout layout-padding>
 				<md-icon md-svg-icon="ssa" style="width:50%; height:auto;"></md-icon>
 			</div>

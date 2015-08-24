@@ -119,6 +119,23 @@
 	    uri="/"+uri[1]+"/nuevo";
 	    $location.path(uri).search({id: null});
 	}
+
+	$scope.showSearch = false;
+	$scope.listaTemp={};
+	$scope.moduloName=angular.uppercase($location.path().split('/')[1]);
+	$scope.mostrarSearch = function(t)
+	{
+		$scope.showSearch = ! $scope.showSearch;
+		if(t==0)
+		{
+			$scope.listaTemp = $scope.datos;		
+		}
+		else
+		{
+			$scope.buscar='';
+			$scope.datos = $scope.listaTemp;
+		}
+	}
 		//usuario
 		$scope.Jurisdiccion = {};
 		$scope.Clues = {};
@@ -564,7 +581,7 @@
     $scope.init = function(buscar,columna) 
 	{
 		var url=$scope.ruta;
-		
+		buscar = $scope.buscar;
 		var pagina=$scope.paginacion.pag;
 		var limite=$scope.paginacion.lim;
 	

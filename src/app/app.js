@@ -179,7 +179,11 @@
 		$mdThemingProvider.theme('default')
 	    .primaryPalette('green')
 	    .warnPalette('red')
-	    .accentPalette('light-green');	
+	    .accentPalette('light-green');
+	  
+		  $mdThemingProvider.theme('altTheme')
+		    .primaryPalette('grey',{'default':'50'});
+
 			  
 		// Configuramos las rutas
 		

@@ -2,13 +2,13 @@
 <div layout="column" class="relative" layout-fill role="main" flex>
 	
 	<md-progress-linear  ng-if="cargando" class="md-warn" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
-	<md-toolbar  >
+	<md-toolbar >
 		<div class="md-toolbar-tools" ng-init="index('Cone')">    
 			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
 		  <md-icon md-svg-icon="menu" ></md-icon>
 		    </md-button>   
 			<h2>
-			  <span>Cone <md-icon md-svg-icon="chevron-right"></md-icon>  {{ 'NUEVO' | translate }}</span>
+			  <span>{{ 'NUEVO' | translate }}</span>
 			</h2>
 			<span flex></span>	
             
@@ -68,15 +68,15 @@
                                         <md-icon md-svg-icon="business"></md-icon>
                                         <span> {{item.nombre}} </span>
                                         <md-icon md-svg-icon="star"></md-icon>
-                                        <span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong style="font-size:.8em;">{{item.clues}}</strong> </span>
+                                        <span> <strong style="font-size:.8em;">{{item.clues}}</strong> </span>
                                       </span>
                                       <span class="item-metadata" style="font-size:.8em">
                                         <span class="item-metastat" >
                                           <strong>JS: </strong> {{item.jurisdiccion}}
-                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </span>
                                         <span class="item-metastat">
                                           <strong>M: </strong>{{item.municipio}} 
-                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </span>
                                         <span class="item-metastat">
                                           <strong>L: </strong> {{item.localidad}}
                                         </span>
@@ -91,7 +91,7 @@
                                       	<md-icon md-svg-icon="style"></md-icon>
                                         <span class="item-metastat">
                                           <strong>{{item.tipoUnidad}}</strong> 
-                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </span>
                                         <span class="item-metastat">
                                           <md-icon md-svg-icon="airline-seat-flat"></md-icon>
                                           <strong>{{item.tipologia}}</strong> 

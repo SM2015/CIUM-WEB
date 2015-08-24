@@ -107,6 +107,23 @@
 	    uri="/"+uri[1]+"/nuevo";
 	    $location.path(uri).search({id: null});
 	}
+
+	$scope.showSearch = false;
+	$scope.listaTemp={};
+	$scope.moduloName=angular.uppercase($location.path().split('/')[1]);
+	$scope.mostrarSearch = function(t)
+	{
+		$scope.showSearch = ! $scope.showSearch;
+		if(t==0)
+		{
+			$scope.listaTemp = $scope.datos;		
+		}
+		else
+		{
+			$scope.buscar='';
+			$scope.datos = $scope.listaTemp;
+		}
+	}
 		
 	$scope.arrows = {
 		year: {
@@ -192,9 +209,10 @@
 	$scope.hide = function() {
 		$mdDialog.hide();
 	};
+	
 	// abre la ficha de  la clues en un dialog
 	$scope.abrirFicha = function(ev)
-	{		    
+	{	 
 	    $scope.editDialog = $mdDialog;
 	    $scope.editDialog.show({
 	    		targetEvent: ev,
@@ -378,6 +396,8 @@
 					{
 						op=0;
 					}
+					if(data.total==3)
+						flash('warning', $translate.instant("NO_CRITERIO"));
 				}
 				else
 					flash('danger', "Ooops! Ocurrio un error (" + data.status + ") ->" + data.messages);
@@ -626,7 +646,7 @@
     $scope.init = function(buscar,columna) 
 	{
 		var url=$scope.ruta;
-		
+		buscar = $scope.buscar;
 		var pagina=$scope.paginacion.pag;
 		var limite=$scope.paginacion.lim;
 	
@@ -678,6 +698,8 @@
 			{
 				$scope.id=data.data.id;
 				$scope.dato=data.data;
+				$scope.nombre=data.data.nombre;
+				$scope.clues=data.data.clues;
 			}
 			else
 			{
@@ -692,16 +714,17 @@
 	};
 		
 	//Modificar. Actualiza el recurso con los datos que envia el usuario
-	$scope.modificar = function(id) 
+	$scope.modificar = function(id,f) 
 	{    
 		var url = $scope.ruta;
 		var json = {}; var criterios = [];
+		if(f==1)$scope.clues = $scope.dato.clues;
 		angular.forEach($scope.dato.aprobado , function(val, key) 
 		{
 			criterios.push({idCriterio:key,idIndicador:$scope.dato.idIndicador,aprobado:val});
 		});
 		json.evaluaciones=[];
-		json.evaluaciones[0] = {id:$scope.dato.id,clues:$scope.dato.clues, fechaEvaluacion:$scope.dato.fechaEvaluacion,cerrado:$scope.dato.cerrado};
+		json.evaluaciones[0] = {id:$scope.dato.id,clues:$scope.clues, fechaEvaluacion:$scope.dato.fechaEvaluacion,cerrado:$scope.dato.cerrado};
 		json.evaluaciones[0].criterios = criterios;
 		json.evaluaciones[0].hallazgos=[];
 		if(!angular.isUndefined($scope.dato.hallazgos))
@@ -727,6 +750,10 @@
 					uri="/"+uri[1]+"/ver";
 					$location.path(uri).search({id: data.data.id});	
 				  }
+				  if(f==1)
+				  	$scope.nombre=$scope.dato.nombre;
+				  $scope.clues=data.data.clues;
+				  $scope.cargarCriterios();
 				  $scope.estadistica();
 				  $mdDialog.hide();
 				}

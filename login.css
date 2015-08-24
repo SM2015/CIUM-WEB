@@ -347,7 +347,7 @@ md-grid-list md-grid-tile-footer figcaption h3 {
   background: rgba(0,0,0,0.4); 
 }
 
-md-input-container p
+md-input-container p, .search-input
 {
   color: rgba(0,0,0,0.54);
   position: relative;
@@ -355,6 +355,7 @@ md-input-container p
   font-size: .85em;
   font-family: RobotoDraft,Roboto,'Helvetica Neue',sans-serif;
 }
+
 .portada {
   background-image: url('assets/img/banner.jpg');
   background-size: cover;

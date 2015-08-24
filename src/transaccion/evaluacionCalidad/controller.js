@@ -108,6 +108,23 @@
 	    uri="/"+uri[1]+"/nuevo";
 	    $location.path(uri).search({id: null});
 	}
+
+	$scope.showSearch = false;
+	$scope.listaTemp={};
+	$scope.moduloName=angular.uppercase($location.path().split('/')[1]);
+	$scope.mostrarSearch = function(t)
+	{
+		$scope.showSearch = ! $scope.showSearch;
+		if(t==0)
+		{
+			$scope.listaTemp = $scope.datos;		
+		}
+		else
+		{
+			$scope.buscar='';
+			$scope.datos = $scope.listaTemp;
+		}
+	}
 		
 	$scope.arrows = {
 		year: {
@@ -538,7 +555,7 @@
 		});		
 	};
 	
-
+	$scope.tieneExpediente=[];
 	// obtener las estadisticas de la evaluacion
 	$scope.estadistica = function()
 	{
@@ -580,6 +597,7 @@
 					});
 					$scope.completo[key] = co;
 					$scope.incompleto[key] = inc;
+					$scope.tieneExpediente[key] = true;
 				});
 				if(tinc == 0 && tco > 0)
 					$scope.terminado=true;
@@ -821,7 +839,7 @@
     $scope.init = function(buscar,columna) 
 	{
 		var url=$scope.ruta;
-		
+		buscar = $scope.buscar;
 		var pagina=$scope.paginacion.pag;
 		var limite=$scope.paginacion.lim;
 	
@@ -873,6 +891,8 @@
 			{
 				$scope.id=data.data.id;
 				$scope.dato=data.data;
+				$scope.nombre=data.data.nombre;
+				$scope.clues=data.data.clues;
 			}
 			else
 			{
@@ -887,10 +907,11 @@
 	};
 	
 	//Modificar. Actualiza el recurso con los datos que envia el usuario
-	$scope.modificar = function(id) 
+	$scope.modificar = function(id,f) 
 	{    
 		var url = $scope.ruta;
 		var json = {}; var registros = []; var i = 0;
+		if(f==1)$scope.clues = $scope.dato.clues;
 		angular.forEach($scope.dato.aprobado , function(val, key) 
 		{
 			if(!angular.isUndefined($scope.dato.expediente[key]))
@@ -913,7 +934,7 @@
 			}
 		});
 		json.evaluaciones=[];
-		json.evaluaciones[0] = {id:$scope.dato.id,clues:$scope.dato.clues, fechaEvaluacion:$scope.dato.fechaEvaluacion,cerrado:$scope.dato.cerrado};
+		json.evaluaciones[0] = {id:$scope.dato.id,clues:$scope.clues, fechaEvaluacion:$scope.dato.fechaEvaluacion,cerrado:$scope.dato.cerrado};
 		json.evaluaciones[0].registros = registros;
 		json.evaluaciones[0].hallazgos=[];
 		if(!angular.isUndefined($scope.dato.hallazgos))
@@ -939,6 +960,9 @@
 					uri="/"+uri[1]+"/ver";
 					$location.path(uri).search({id: data.data.id});	
 				  }
+				  if(f==1)
+				  	$scope.nombre=$scope.dato.nombre;
+				  $scope.clues=data.data.clues;
 				  $scope.cargarCriterios();
 				  $mdDialog.hide();
 				}
@@ -1041,7 +1065,7 @@
 			var url=$scope.ruta;
             $scope.cargando = true;
 
-			CrudDataApi.eliminar("EvaluacionCalidadCriterio", eva+"?idi="+ind, function (data) {
+			CrudDataApi.eliminar("EvaluacionCalidadCriterio", eva+"?idIndicador="+ind, function (data) {
 				if(data.status  == '407')
 					$window.location="acceso";
 				
@@ -1052,6 +1076,47 @@
 					$scope.cargando = false;
 
 					$route.reload();	
+				}
+				else
+				{
+					errorFlash.error(data);
+				}
+				$scope.cargando = false;
+				},function (e) {
+					errorFlash.error(e);
+					$scope.cargando = false;
+				}
+			); 
+		}          
+	};
+	//Borrar. Elimina el recurso del parametro id
+	$scope.borrarExpediente = function(exp,col) 
+	{ 
+		var ind = $scope.dato.idIndicador;
+		var eva = $location.search().id;
+		if(angular.isUndefined($scope.tieneExpediente[exp]))
+		{
+			$scope.columnas.splice(col,1);	
+			delete $scope.completo[exp];	
+			delete $scope.incompleto[exp];
+		}
+		else if ($window.confirm($translate.instant('CONFIRM_DELETE'))) {   
+			var url=$scope.ruta;
+            $scope.cargando = true;
+
+			CrudDataApi.eliminar("EvaluacionCalidadCriterio", eva+"?idIndicador="+ind+"&expediente="+exp, function (data) {
+				if(data.status  == '407')
+					$window.location="acceso";
+				
+				if(data.status==200)
+				{					
+					flash('success', data.messages);
+								
+					$scope.cargando = false;
+
+					$scope.columnas.splice(col,1);	
+					delete $scope.completo[exp];	
+					delete $scope.incompleto[exp];						
 				}
 				else
 				{

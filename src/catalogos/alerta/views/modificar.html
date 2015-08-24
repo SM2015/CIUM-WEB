@@ -1,16 +1,16 @@
 <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
 <div layout="column" class="relative" layout-fill role="main" flex>
-	<md-button class="md-fab md-fab-bottom-right" ng-click="nuevo()" aria-label="{{ 'NUEVA' | translate }}" >
+	<md-button class="md-fab md-fab-bottom-right md-warn" ng-click="nuevo()" aria-label="{{ 'NUEVA' | translate }}" >
 		<md-icon md-svg-icon="add"></md-icon>
   	</md-button>
 	<md-progress-linear  ng-if="cargando" class="md-warn" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
-	<md-toolbar  >
+	<md-toolbar >
 		<div class="md-toolbar-tools" ng-init="ver('Alerta')">    
 			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
 		  <md-icon md-svg-icon="menu" ></md-icon>
 		    </md-button>   
 			<h2>
-			  <span>{{ 'ALERTA' | translate}} <md-icon md-svg-icon="chevron-right"></md-icon>  {{ 'EDITAR' | translate }}</span>
+			  <span>{{ 'EDITAR' | translate }}</span>
 			</h2>
 			<span flex></span>	
             
@@ -37,8 +37,9 @@
 
     
         <md-list-item >						
-            <md-input-container flex >     
-            	<label style="margin-top:-45px">{{ 'COLOR' | translate }}</label>
+            <md-input-container flex >  
+            <span style="background: {{ dato.color }}; display:block; height:25px; width:25px; position:absolute; margin-left:0px; border-radius: 5px; border: 1px #000 solid;"></span>   
+            	<label style="margin-top:-48px">{{ 'COLOR' | translate }}</label>
                 <color-picker required ng-model="dato.color" color-picker-format="HEX" name="color" style="position:relative"></color-picker>
                	<div ng-messages="forma.color.$error" style="margin-top:30px">
                   <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>

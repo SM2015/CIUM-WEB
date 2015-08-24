@@ -1,7 +1,8 @@
 <md-dialog aria-label="FICHA">
+<form role="form" name="forma" style="min-width: 500px;">
   <md-toolbar >
     <div class="md-toolbar-tools ">
-      <h2>{{ 'CALIDAD' | translate }} </h2>
+      <h2>{{ 'ABASTO' | translate }} </h2>
       <span flex></span>
       
 
@@ -16,11 +17,11 @@
         </md-tooltip>
     </md-button>
       
-    <md-button hide-md hide-sm hide-lg ng-show="update"  aria-label="{{ 'GUARDAR' | translate }}" ng-click="modificar(id)" ng-disabled="forma.$invalid">
+    <md-button hide-md hide-sm hide-lg ng-show="update"  aria-label="{{ 'GUARDAR' | translate }}" ng-click="modificar(id,1)" ng-disabled="forma.$invalid">
         <md-icon md-svg-icon="save"></md-icon>
         {{ 'GUARDAR' | translate }}
     </md-button>
-    <md-button class="md-icon-button"  ng-show="update" hide show-sm show-md show-lg show-sm ng-click="modificar(id)" ng-disabled="forma.$invalid" aria-label="{{ 'GUARDAR' | translate }}" >
+    <md-button class="md-icon-button"  ng-show="update" hide show-sm show-md show-lg show-sm ng-click="modificar(id,1)" ng-disabled="forma.$invalid" aria-label="{{ 'GUARDAR' | translate }}" >
       <md-icon md-svg-icon="save"></md-icon>
       <md-tooltip>
           {{ 'GUARDAR' | translate }}
@@ -32,26 +33,25 @@
       </md-button>
     </div>
   </md-toolbar>
-  <md-dialog-content >
+  <md-dialog-content style="min-width: 500px;">
+  
+    <md-list layout-margin layout-align="center center" ng-if="!update">
 
-	<form role="form" name="forma">
-<input type="hidden" ng-model="dato.id" />
-	<md-content  layout="column"  layour-align="center center"  >
-		<md-list layout-margin layout-align="center center" >
-        		
             <md-content class="md-padding">
-              <md-list-item layout-wrap ng-if="!update">
-              	<div  align="center" style="width:100%">
+              <md-list-item layout-wrap >
+                <div  align="center" style="width:100%">
                     <md-icon md-svg-icon="today"></md-icon>
                     <span> {{dato.fechaEvaluacion}} </span>
-           			<br />
+                <br />
                     <span> <strong style="font-size:.8em;">{{ dato.cerrado == 1 ? 'Cerrado' : 'Abierto' }}</strong> </span>
                   </div>
-              	
+                
               </md-list-item>
-              
-              <md-list-item layout-wrap ng-if="update" >                 
-                        <div flex>
+            </md-content>
+    </md-list>
+    
+    <md-list-item  ng-if="update" >                 
+                        <div flex="100">
                                 <md-autocomplete 
                                   md-selected-item="selectedItem"
                                   md-search-text-change="searchTextChange(searchText)"
@@ -64,6 +64,7 @@
                                   md-delay="300"
                                   ng-model="dato.idClues" 
                                   md-input-name="idClues"
+
                                   md-menu-class="autocomplete-custom-template">
                                   
                                     <md-item-template >
@@ -71,30 +72,30 @@
                                         <md-icon md-svg-icon="business"></md-icon>
                                         <span> {{item.nombre}} </span>
                                         <md-icon md-svg-icon="star"></md-icon>
-                                        <span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong style="font-size:.8em;">{{item.clues}}</strong> </span>
+                                        <span> <strong style="font-size:.8em;">{{item.clues}}</strong> </span>
                                       </span>
                                       <span class="item-metadata" style="font-size:.8em">
                                         <span class="item-metastat" >
                                           <strong>{{ 'JURISDICCION' | translate }}: </strong> {{item.jurisdiccion}}
-                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </span>
                                         <span class="item-metastat">
                                           <strong>{{ 'MUNICIPIO' | translate }}: </strong>{{item.municipio}} 
-                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </span>
                                         <span class="item-metastat">
                                           <strong>{{ 'LOCALIDAD' | translate }}: </strong> {{item.localidad}}
                                         </span>
                                       </span>
                                       <span class="item-metadata" style="font-size:.6em">
-                                      	<md-icon md-svg-icon="place"></md-icon>
+                                        <md-icon md-svg-icon="place"></md-icon>
                                         <span class="item-metastat">
                                           {{item.domicilio}} 
                                         </span>
                                       </span>
                                       <span class="item-metadata" style="font-size:.7em">
-                                      	<md-icon md-svg-icon="style"></md-icon>
+                                        <md-icon md-svg-icon="style"></md-icon>
                                         <span class="item-metastat">
                                           <strong>{{item.tipoUnidad}}</strong> 
-                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </span>
                                         <span class="item-metastat">
                                           <md-icon md-svg-icon="airline-seat-flat"></md-icon>
                                           <strong>{{item.tipologia}}</strong> 
@@ -104,22 +105,21 @@
                                     <md-not-found>
                                       No hay resultados para  "{{searchText}}".
                                     </md-not-found>
-                                    <div ng-messages="forma.idCone.$error" >
-                                      <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>                                    
+                                    <div ng-messages="forma.idClues.$error" >
+                                      <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>
+                                      <div ng-message="min-length">{{ 'CAMPO_MIN_L' | translate }} 3</div>                               
                                   </div>
-                              	</md-autocomplete><input type="hidden" aria-label="idCone" ng-model="dato.idCone" name="idCone" required> 
+                                </md-autocomplete> 
                             
                   </div>
-                </md-list-item>
-              	
-            </md-content>
+        </md-list-item>
 
           <md-content layout="column"  layour-align="center center" >
-					  <md-list layout-margin  layout-align="center center" >
+            <md-list layout-margin  layout-align="center center" >
 
-                    	<md-input-container flex >
+                      <md-input-container flex >
                             <div style="text-align:center" flex>                            
-                            	<h4 style="font-size:1.3em">{{ dato.nombre }}</h4>
+                              <h4 style="font-size:1.3em">{{ dato.nombre }}</h4>
                                 <h5 style="font-size:1em"><md-icon md-svg-icon="star"></md-icon> {{ dato.clues }}</h5>
                                 <p style="font-size:.5em; margin-bottom:20px;">
                                 {{ dato.domicilio }}  <strong>CP: </strong> {{ dato.codigoPostal }}
@@ -128,41 +128,40 @@
                                 
                                 <div  style="font-size:.7em; margin:20px;">
                                     <span flex="33.33">
-                                    	<strong>{{ 'JURISDICCION' | translate }}:</strong> {{ dato.jurisdiccion }}
+                                      <strong>{{ 'JURISDICCION' | translate }}:</strong> {{ dato.jurisdiccion }}
                                     </span>
                                     <span flex="33.33">
-                                    	<strong>{{ 'MUNICIPIO' | translate }}:</strong> {{ dato.municipio }}
+                                      <strong>{{ 'MUNICIPIO' | translate }}:</strong> {{ dato.municipio }}
                                     </span>
                                     <span flex="33.33">
-                                		<strong>{{ 'LOCALIDAD' | translate }}:</strong> {{ dato.localidad }}
+                                    <strong>{{ 'LOCALIDAD' | translate }}:</strong> {{ dato.localidad }}
                                     </span>
                                 </div>                               
                                 <md-divider ></md-divider>
                                 
                                 <div  style="font-size:.6em; margin:20px;">
                                     <span flex="50">
-                                    	<md-icon md-svg-icon="business"></md-icon> {{ dato.tipologia }}
+                                      <md-icon md-svg-icon="business"></md-icon> {{ dato.tipologia }}
                                     </span>
                                     <span flex="50">
-                                    	<md-icon md-svg-icon="style"></md-icon> {{ dato.tipoUnidad }}
+                                      <md-icon md-svg-icon="style"></md-icon> {{ dato.tipoUnidad }}
                                     </span>
                                 </div>
                                 <md-divider ></md-divider>
                                 
                                 <div  style="font-size:.7em; margin-top:20px">
-                                	<span class="col-xs-12">
-                                		<md-icon md-svg-icon="airline-seat-flat"></md-icon><strong> Nivel CONE:</strong> {{ dato.nivelCone }}
+                                  <span class="col-xs-12">
+                                    <md-icon md-svg-icon="airline-seat-flat"></md-icon><strong> Nivel CONE:</strong> {{ dato.nivelCone }}
                                     </span>
                                 </div>
                             </div>
-						</md-input-container>
-
-                	</md-list>
-				</md-content>
-			  
-		</md-list>
-	</md-content>
-    </form>
-
+            </md-input-container>
+                  <input type="hidden" ng-model="dato.id" />
+                  <input type="hidden" aria-label="idCone" ng-model="dato.idCone" name="idCone" required>
+                  </md-list>
+        </md-content>
+        
+    </md-list>
 </md-dialog-content>
+</form>
 </md-dialog>    

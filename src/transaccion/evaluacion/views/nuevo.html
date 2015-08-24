@@ -2,13 +2,13 @@
 <div layout="column" class="relative" layout-fill role="main" flex>
 	
 	<md-progress-linear  ng-if="cargando" class="md-warn" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
-	<md-toolbar  >
+	<md-toolbar >
 		<div class="md-toolbar-tools" ng-init="index('Evaluacion')">    
 			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
 		  <md-icon md-svg-icon="menu" ></md-icon>
 		    </md-button>   
 			<h2>
-			  <span>{{ 'NUEVA' | translate }}<md-icon md-svg-icon="chevron-right"></md-icon></span>
+			  <span>{{ 'NUEVA' | translate }}</span>
 			</h2>
 			<span flex></span>	
             
@@ -43,15 +43,15 @@
                                         <md-icon md-svg-icon="business"></md-icon>
                                         <span md-highlight-text="searchTerm"> {{item.nombre}} </span>
                                         <md-icon md-svg-icon="star"></md-icon>
-                                        <span > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong style="font-size:.8em;" md-highlight-text="searchTerm">{{item.clues}}</strong> </span>
+                                        <span > <strong style="font-size:.8em;" md-highlight-text="searchTerm">{{item.clues}}</strong> </span>
                                       </span>
                                       <span class="item-metadata" style="font-size:.8em">
                                         <span class="item-metastat" >
                                           <strong>{{ 'JURISDICCION' | translate }}: </strong> <span md-highlight-text="searchTerm">{{item.jurisdiccion}}</span>
-                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </span>
                                         <span class="item-metastat">
                                           <strong>{{ 'MUNICIPIO' | translate }}: </strong><span md-highlight-text="searchTerm">{{item.municipio}} </span>
-                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </span>
                                         <span class="item-metastat">
                                           <strong>{{ 'LOCALIDAD' | translate }}: </strong> <span md-highlight-text="searchTerm">{{item.localidad}}</span>
                                         </span>
@@ -66,7 +66,7 @@
                                       	<md-icon md-svg-icon="style"></md-icon>
                                         <span class="item-metastat">
                                           <strong>{{item.tipoUnidad}}</strong> 
-                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </span>
                                         <span class="item-metastat">
                                           <md-icon md-svg-icon="airline-seat-flat"></md-icon>
                                           <strong>{{item.tipologia}}</strong> 

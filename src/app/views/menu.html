@@ -93,7 +93,7 @@
 	</header>
 	<div ng-repeat="grupo in menu">
 		<md-subheader class="md-primary" ng-hide="!grupo.grupo">{{ grupo.grupo | translate }}</md-subheader>
-		<md-list-item ng-repeat="item in grupo.lista" ng-class="{'md-primary': menuSelected== item.path}" ng-click="ir(item.path)">
+		<md-list-item ng-repeat="item in grupo.lista" ng-class="{'md-primary': menuSelected== item.path}" ng-click="ir(item.path)" >
 		  	<md-icon ng-class="{'md-primary': menuSelected == item.path}" md-svg-icon="{{ item.icono }}"></md-icon>
 		    <p ng-style="menuSelected == item.path ? { 'font-weight':'bold' }: { 'font-weight': 'inherit' }" > {{ item.titulo | translate }} </p>			    
 		</md-list-item>

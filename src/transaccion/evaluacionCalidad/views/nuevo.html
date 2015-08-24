@@ -8,7 +8,7 @@
 		  <md-icon md-svg-icon="menu" ></md-icon>
 		    </md-button>   
 			<h2>
-			  <span>{{ 'NUEVA' | translate }}<md-icon md-svg-icon="chevron-right"></md-icon></span>
+			  <span>{{ 'NUEVA' | translate }}</span>
 			</h2>
 			<span flex></span>            
             		
@@ -44,15 +44,15 @@
                                         <md-icon md-svg-icon="business"></md-icon>
                                         <span> {{item.nombre}} </span>
                                         <md-icon md-svg-icon="star"></md-icon>
-                                        <span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong style="font-size:.8em;">{{item.clues}}</strong> </span>
+                                        <span> <strong style="font-size:.8em;">{{item.clues}}</strong> </span>
                                       </span>
                                       <span class="item-metadata" style="font-size:.8em">
                                         <span class="item-metastat" >
                                           <strong>{{ 'JURISDICCION' | translate }}: </strong> {{item.jurisdiccion}}
-                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </span>
                                         <span class="item-metastat">
                                           <strong>{{ 'MUNICIPIO' | translate }}: </strong>{{item.municipio}} 
-                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </span>
                                         <span class="item-metastat">
                                           <strong>{{ 'LOCALIDAD' | translate }}: </strong> {{item.localidad}}
                                         </span>
@@ -67,7 +67,7 @@
                                         <md-icon md-svg-icon="style"></md-icon>
                                         <span class="item-metastat">
                                           <strong>{{item.tipoUnidad}}</strong> 
-                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </span>
                                         <span class="item-metastat">
                                           <md-icon md-svg-icon="airline-seat-flat"></md-icon>
                                           <strong>{{item.tipologia}}</strong> 

@@ -1,7 +1,7 @@
 <md-dialog aria-label="{{'ABASTO' | translate}}" >
 <md-toolbar>
     <div class="md-toolbar-tools">
-      <h2>{{'EVALUACION' | translate}} {{'ABASTO' | translate}} <md-icon md-svg-icon="chevron-right"></md-icon> # {{dato.id}}</h2>
+      <h2>{{'EVALUACION' | translate}} {{'ABASTO' | translate}}  # {{dato.id}}</h2>
       <span flex></span>
       <md-button class="md-icon-button" ng-click="hide()">
         <md-icon md-svg-src="close" aria-label="Close"></md-icon>
@@ -196,7 +196,7 @@
             </md-input-container>
 
 	   		    <md-input-container flex ng-if="esSeguimiento">
-		          <p>{{ 'PLAZO_ACCION' | translate }}</p>
+		          <p>{{ 'PLAZO-ACCION' | translate }}</p>
 		          <select ng-options="item.id as item.nombre for item in plazos" ng-model="dato.plazoAccion" disabled >
 					     <option value="">Seleccione</option>
 				      </select>

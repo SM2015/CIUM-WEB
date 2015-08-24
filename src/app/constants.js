@@ -90,13 +90,13 @@ icono: 'event-note'
   icono: "perm-scan-wifi"
 },
 {
-  titulo: "LUGAR_VERIFICACION",
+  titulo: "LUGAR-VERIFICACION",
   key: "LugarVerificacionController.index",
   path: "/lugar-verificacion",
   icono: "place"
 },
 {
-  titulo: "PLAZO_ACCION",
+  titulo: "PLAZO-ACCION",
   key: "PlazoAccionController.index",
   path: "/plazo-accion",
   icono: "perm-contact-calendar"

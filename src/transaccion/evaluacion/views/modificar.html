@@ -8,7 +8,7 @@
 		  <md-icon md-svg-icon="menu" ></md-icon>
 		    </md-button>   
 			<h2>
-			  <span>{{ 'EDITAR' | translate }} <md-icon md-svg-icon="chevron-right"></md-icon> </span>
+			  <span>{{ 'EDITAR' | translate }}  </span>
 			</h2>
 			<span flex></span>				 
             
@@ -50,22 +50,12 @@
     </md-tooltip>
 </md-button>
 
-<md-button hide-md hide-sm hide-lg  aria-label="{{ 'ELIMINAR' | translate }}" ng-click="borrarIndicador()" ng-if="dato.idIndicador">
-    <md-icon md-svg-icon="delete"></md-icon>
-    {{ 'ELIMINAR' | translate }}
-</md-button>
-<md-button class="md-icon-button"  hide show-sm show-md show-lg nng-click="borrarIndicador()" aria-label="{{ 'ELIMINAR' | translate }}" ng-if="dato.idIndicadordato.idIndicador">
-  <md-icon md-svg-icon="delete"></md-icon>
-  <md-tooltip>
-          {{ 'ELIMINAR' | translate }}
-        </md-tooltip>
-</md-button>
 
-<md-button hide-md hide-sm hide-lg  aria-label="{{ 'FICHA' | translate }}" ng-click="abrirFicha($event)" >
+<md-button hide-md hide-sm hide-lg  aria-label="{{ 'FICHA' | translate }}" ng-click="abrirFicha($event);" >
     <md-icon md-svg-icon="info"></md-icon>
   {{ 'FICHA' | translate }}
 </md-button>
-<md-button class="md-icon-button"  hide show-sm show-md show-lg show-sm ng-click="abrirFicha($event)" aria-label="{{ 'FICHA' | translate }}" >
+<md-button class="md-icon-button"  hide show-sm show-md show-lg show-sm ng-click="abrirFicha($event);" aria-label="{{ 'FICHA' | translate }}" >
   <md-icon md-svg-icon="info"></md-icon>
   <md-tooltip>
       {{ 'FICHA' | translate }}
@@ -100,7 +90,7 @@
           <div  align="center" style="width:100%">
             <md-icon md-svg-icon="today"></md-icon>
             <span> {{dato.fechaEvaluacion}}                      
-            <md-icon md-svg-icon="star"></md-icon> {{ dato.clues }}  <md-icon md-svg-icon="chevron-right"></md-icon>   {{ dato.nombre }}       
+            <md-icon md-svg-icon="star" ></md-icon> {{ clues }}    {{ nombre }}  
             </span>                    
           </div>
        </md-list>
@@ -118,6 +108,12 @@
                         </md-input-container>
                     
                         <md-content style=" float:right; margin-top:10px; overflow: hidden;">
+                            <md-button class="md-icon-button  md-warn"  ng-click="borrarIndicador()" aria-label="{{ 'ELIMINAR' | translate }}" ng-if="criterios.aprobado.length>0 || criterios.noAprobado.length>0">
+                            <md-icon md-svg-icon="delete"></md-icon>
+                            <md-tooltip>
+                                    {{ 'ELIMINAR_IND' | translate }}
+                                  </md-tooltip>
+                          </md-button>
                             <md-menu flex="100" >
                                 <md-button aria-label="estadisticas" style="width:192px; " class="md-raised" ng-click="$mdOpenMenu();">
                                 	
@@ -216,7 +212,7 @@
                                                 </div>
                                         </md-input-container>
 								   		<md-input-container flex ng-if="esSeguimiento">
-									        <p>{{ 'PLAZO_ACCION' | translate }}</p>
+									        <p>{{ 'PLAZO-ACCION' | translate }}</p>
 									        <select ng-options="item.id as item.nombre for item in plazos" ng-model="dato.hallazgos.idPlazoAccion"  >
 												<option value="">Seleccione</option>
 											</select>

@@ -123,7 +123,7 @@ controller: 'ListaIdiomasCtrl',
 targetEvent: $event
     });
 };
-
+$scope.alto = (screen.availHeight-(screen.availHeight/2));
 $scope.toggleMenu  = function  () {  
     $mdSidenav('left-publico').toggle();
 };

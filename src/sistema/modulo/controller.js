@@ -67,18 +67,18 @@
   };
 
 
-  $scope.onPaginationChange = function (page, limit) {
-   
-    $scope.cargando = true;
-    $scope.init();
-  };
+  // Evento para el control del paginado.
+	$scope.onPaginationChange = function (page, limit) {
+		$scope.paginacion = 
+		{
+			pag: (page-1)*limit,
+			lim: limit,
+			paginas:0
+		};
+		$scope.cargando = true;
+		$scope.init();
+	};
     //fin data
-    $scope.paginacion = 
-    {
-        pag: 1,
-        lim: 5,
-        paginas:0
-    };
 	
 	$scope.quitarMetodo = function(index) 
 	{
@@ -128,6 +128,23 @@
 
 	    uri="/"+uri[1]+"/nuevo";
 	    $location.path(uri).search({id: null});
+	}
+
+	$scope.showSearch = false;
+	$scope.listaTemp={};
+	$scope.moduloName=angular.uppercase($location.path().split('/')[1]);
+	$scope.mostrarSearch = function(t)
+	{
+		$scope.showSearch = ! $scope.showSearch;
+		if(t==0)
+		{
+			$scope.listaTemp = $scope.datos;		
+		}
+		else
+		{
+			$scope.buscar='';
+			$scope.datos = $scope.listaTemp;
+		}
 	}
 
 		$scope.showModal = false;
@@ -195,7 +212,7 @@
     $scope.init = function(buscar,columna) 
 	{
 		var url=$scope.ruta;
-		
+		buscar = $scope.buscar;
 		var pagina=$scope.paginacion.pag;
 		var limite=$scope.paginacion.lim;
 	

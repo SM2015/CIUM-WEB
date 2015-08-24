@@ -2,13 +2,13 @@
 <div layout="column" class="relative" layout-fill role="main" flex>
 	
 	<md-progress-linear  ng-if="cargando" class="md-warn" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
-	<md-toolbar  >
+	<md-toolbar >
 		<div class="md-toolbar-tools" ng-init="index('Grupo')">    
 			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
 		  <md-icon md-svg-icon="menu" ></md-icon>
 		    </md-button>   
 			<h2>
-			  <span>{{ 'GRUPO' | translate }} <md-icon md-svg-icon="chevron-right"></md-icon>  {{ 'NUEVO' | translate }}</span>
+			  <span>{{ 'NUEVO' | translate }}</span>
 			</h2>
 			<span flex></span>		
             
