@@ -1833,7 +1833,20 @@
 	
 		
 	})
-	function DialogAbasto($scope, $mdDialog, EvaluacionShow, EvaluacionId, errorFlash) {
+	
+	function DialogAbasto($scope, $mdDialog, EvaluacionShow, EvaluacionId, errorFlash, listaOpcion) {
+		$scope.acciones=[];
+		$scope.hallazgos = {};	
+		listaOpcion.options('Accion').success(function(data)
+		{
+			$scope.acciones=data.data;			
+		});
+	
+		$scope.plazos=[];
+		listaOpcion.options('PlazoAccion').success(function(data)
+		{
+			$scope.plazos=data.data;
+		});
 		var id = EvaluacionId.getId();
 		EvaluacionShow.ver('Evaluacion', id, function (data) {
           if(data.status  == '407')
@@ -1860,6 +1873,7 @@
           if(data.status==200)
           {
             $scope.criterios=data.data;
+            $scope.hallazgos = data.hallazgos;
           }
           else
             {
@@ -1876,7 +1890,21 @@
   	};
   }
 
-  	function DialogCalidad($scope, $mdDialog, EvaluacionShow, EvaluacionId, errorFlash) {
+  	function DialogCalidad($scope, $mdDialog, EvaluacionShow, EvaluacionId, errorFlash, listaOpcion) {
+
+		$scope.acciones=[];
+		$scope.hallazgos = {};	
+		listaOpcion.options('Accion').success(function(data)
+		{
+			$scope.acciones=data.data;			
+		});
+	
+		$scope.plazos=[];
+		listaOpcion.options('PlazoAccion').success(function(data)
+		{
+			$scope.plazos=data.data;
+		});
+	
 		var id = EvaluacionId.getId();
 		EvaluacionShow.ver('EvaluacionCalidad', id, function (data) {
           if(data.status  == '407')
@@ -1908,7 +1936,8 @@
 			  $scope.columnas = {}; $scope.indicadorColumna = [];
 			
 			  $scope.indicadores = [];
-			  
+			  $scope.hallazgos = data.hallazgos;
+
 			  angular.forEach(data.data.indicadores , function(val, key) 
 			  {
 					$scope.indicadores.push(val);

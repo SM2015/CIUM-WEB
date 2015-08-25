@@ -420,7 +420,7 @@
 			});
 		}		
 	};
-	
+	$scope.hallazgos={};
 	// cargar los criterios de la evaluacion para la vista ver
 	$scope.cargarCriteriosVer = function()
 	{			
@@ -434,7 +434,8 @@
 			
 			if(data.status==200)
 			{						
-				$scope.criterios = data.data;				
+				$scope.criterios = data.data;	
+				$scope.hallazgos = data.hallazgos;			
 			}
 			else
 			{

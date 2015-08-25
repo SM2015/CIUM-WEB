@@ -69,7 +69,7 @@
                                 
                                 <div  style="font-size:.6em; margin:20px;">
                                     <span flex="50">
-                                    	<md-icon md-svg-icon="business"></md-icon></md-icon> {{ dato.tipologia }}
+                                    	<md-icon md-svg-icon="business"></md-icon>{{ dato.tipologia }}
                                     </span>
                                     <span flex="50">
                                     	<md-icon md-svg-icon="style"></md-icon> {{ dato.tipoUnidad }}
@@ -79,7 +79,7 @@
                                 
                                 <div  style="font-size:.7em; margin-top:20px">
                                 	<span class="col-xs-12">
-                                		<md-icon md-svg-icon="airline-seat-flat"></md-icon> Nivel CONE:</strong> {{ dato.nivelCone }}
+                                		<md-icon md-svg-icon="airline-seat-flat"></md-icon><strong> Nivel CONE:</strong> {{ dato.nivelCone }}
                                     </span>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
 
                 	</md-list>
 				</md-content>
-			  
+			  </md-content>
 		</md-list>
 	</md-content>
     
@@ -160,7 +160,7 @@
     
     <md-content  layout="column"  layour-align="center center"  >
 		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
-        	<md-toolbar style="background-color:#F27900">
+        	<md-toolbar md-theme="altTheme" class="md-accent">
               <h2 class="md-toolbar-tools">
                 <span flex>{{ 'CRITERIO' | translate}}</span>                                 
               </h2> 
@@ -178,7 +178,7 @@
                 <md-data-table-container>
   <table md-data-table md-progress="datos">
     <thead >
-      <tr ng-init="tieneHallazgo = (hallazgos[value[0].idlugarVerificacion]) ? true : false">
+      <tr >
                   
                   	
 							<th width="40%" name="No Expediente:"></th>
@@ -202,10 +202,54 @@
   </table>
 </md-data-table-container>                                        
                 
-              </md-data-table>
+              </md-content>
             
                 
             </md-content>
         </md-list>
-	</md-content>          
+	</md-content>  
+  <md-content  layout="column"  layour-align="center center"   ng-if="hallazgos" >   <span ng-init="acciones();accionesPlazo()"></span>                            
+    <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" ng-repeat="(key, dato) in hallazgos">
+      
+            
+          <md-toolbar class="md-accent md-warn" >
+              <h2 class="md-toolbar-tools">
+                <span flex>{{ 'HALLAZGO' | translate }} {{  'INDICADOR' | translate }} : {{key}}</span>                                 
+              </h2>
+          </md-toolbar>
+
+          <md-list-item>
+                      
+            <md-input-container flex >     
+                <label>{{ 'HALLAZGO' | translate }}</label>
+                    <textarea ng-model="dato.descripcion" name="hallazgo" columns="1" maxlength="500" readonly></textarea>      
+                    
+            </md-input-container>
+
+          </md-list-item>
+          <md-list-item >
+
+            <md-input-container flex >     
+              <p>{{ 'ACCION' | translate }}</p>
+                <select ng-options="item.id as item.nombre group by item.tipo=='R' ? 'Resolutiva' : 'Seguimiento' for item in acciones" ng-model="dato.idAccion"   disabled>
+                <option value="">Seleccione</option>
+              </select>
+              
+            </md-input-container>
+
+            <md-input-container flex ng-if="dato.idPlazoAccion>0">
+              <p>{{ 'PLAZO-ACCION' | translate }}</p>
+              <select ng-options="item.id as item.nombre for item in plazos" ng-model="dato.idPlazoAccion" disabled >
+               <option value="">Seleccione</option>
+              </select>
+                
+            </md-input-container>
+
+          </md-list-item>
+
+      </md-list>
+    </md-content>
   </div>
+  </md-content>
+  </div>
+  

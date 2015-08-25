@@ -163,24 +163,24 @@
             
                 
             </md-content>
+            </md-content>
         </md-list>
     
-    <md-list-item ng-if="tieneHallazgo">                               
-	<md-list-item  style="width:100%">
-   	  <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="width:100%">
-   		<span ng-init="acciones();accionesPlazo()"></span>
-          	
+    <md-content  layout="column"  layour-align="center center"   ng-if="hallazgos" >                               
+    <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" ng-repeat="(key, dato) in hallazgos">
+      
+            
           <md-toolbar class="md-accent md-warn" >
               <h2 class="md-toolbar-tools">
-                <span flex>{{ 'HALLAZGO' | translate }}</span>                                 
+                <span flex>{{ 'HALLAZGO' | translate }} {{  'INDICADOR' | translate }} : {{key}}</span>                                 
               </h2>
           </md-toolbar>
 
-        	<md-list-item>
-                    	
+          <md-list-item>
+                      
             <md-input-container flex >     
                 <label>{{ 'HALLAZGO' | translate }}</label>
-                    <textarea ng-model="dato.hallazgo" name="hallazgo" columns="1" maxlength="500" readonly></textarea>			
+                    <textarea ng-model="dato.descripcion" name="hallazgo" columns="1" maxlength="500" readonly></textarea>      
                     
             </md-input-container>
 
@@ -189,34 +189,24 @@
 
             <md-input-container flex >     
               <p>{{ 'ACCION' | translate }}</p>
-                <select ng-options="item.id as item.nombre group by item.tipo=='R' ? 'Resolutiva' : 'Seguimiento' for item in acciones" ng-model="dato.accion"   disabled>
-      					<option value="">Seleccione</option>
-      				</select>
+                <select ng-options="item.id as item.nombre group by item.tipo=='R' ? 'Resolutiva' : 'Seguimiento' for item in acciones" ng-model="dato.idAccion"   disabled>
+                <option value="">Seleccione</option>
+              </select>
               
             </md-input-container>
 
-	   		    <md-input-container flex ng-if="esSeguimiento">
-		          <p>{{ 'PLAZO-ACCION' | translate }}</p>
-		          <select ng-options="item.id as item.nombre for item in plazos" ng-model="dato.plazoAccion" disabled >
-					     <option value="">Seleccione</option>
-				      </select>
-              	
-		        </md-input-container>
+            <md-input-container flex ng-if="dato.idPlazoAccion>0">
+              <p>{{ 'PLAZO-ACCION' | translate }}</p>
+              <select ng-options="item.id as item.nombre for item in plazos" ng-model="dato.idPlazoAccion" disabled >
+               <option value="">Seleccione</option>
+              </select>
+                
+            </md-input-container>
 
           </md-list-item>
-                       
-          <md-list-item>
 
-            <md-input-container flex>
-            	<md-button class="md-raised" ng-disabled="form.$invalid">
-                
-              </md-button>
-            </md-input-container>
-                          
-          </md-list-item>  
-
-  			</md-list>
-  		</md-list-item>   
-      </md-list-item>	
-   </div>   		
+      </md-list>
+    </md-content>
+  </md-list>
+</div>
 </md-dialog>

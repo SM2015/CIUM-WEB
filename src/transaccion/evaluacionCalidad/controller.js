@@ -507,7 +507,7 @@
 			});
 		}
 	};
-	
+	$scope.hallazgos = {};	
 	// cargar los criterios para la vista ver
 	$scope.cargarCriteriosVer = function()
 	{			
@@ -525,7 +525,7 @@
 				$scope.criterios = data.data.criterios;
 				$scope.marcados = data.data.datos; 
 				$scope.columnas = {}; $scope.indicadorColumna = [];
-
+				$scope.hallazgos = data.hallazgos;	
 				$scope.indicadores = [];
 				
 				angular.forEach(data.data.indicadores , function(val, key) 

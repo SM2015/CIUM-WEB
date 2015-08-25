@@ -138,7 +138,7 @@
     
     <md-content  layout="column"  layour-align="center center"  >
 		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
-        	<md-toolbar style="background-color:#F27900">
+        	<md-toolbar md-theme="altTheme" class="md-accent">
               <h2 class="md-toolbar-tools">
                 <span flex>{{ 'CRITERIO' | translate}}</span>                                 
               </h2> 
@@ -152,44 +152,38 @@
                 </md-toolbar>
                 <md-content>
                 
-                <md-data-table-container>
-  <table md-data-table md-progress="datos">
-    <thead md-order="query.order" md-trigger="onOrderChange">
-      <tr>
-                        <th width="90%" name="{{ 'CRITERIO' | translate}}"></th>
-                        <th name="{{ 'APROBADO' | translate}}"></th>
-                    </tr>
-                    </thead>
-    <tbody>
-            
-                    <tr ng-repeat="c in value">
-                
-
-                    <td width="90%">{{ c.criterio  }}</td>
-                    
-                    <td>																						
-                        <md-button class="md-raised"  style="width:100%; background-color: {{ c.aprobado == 1 ? '#7BE15E' : c.aprobado == 0 ? '#FF3C3C' : '#3198FF' }}; color:#FFF; font-weight:bold;">
-                            {{ c.aprobado == 1 ? 'Si' : c.aprobado == 0 ? 'No' : 'N/A' }} 
-                        </md-button>
-                    </td>
-                </tr>
-    </tbody>
-  </table>
-</md-data-table-container>
-            
-                
+                    <md-data-table-container>
+                      <table md-data-table md-progress="datos">
+                        <thead md-order="query.order" md-trigger="onOrderChange">
+                          <tr>
+                              <th width="90%" name="{{ 'CRITERIO' | translate}}"></th>
+                              <th name="{{ 'APROBADO' | translate}}"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="c in value">
+                              <td width="90%">{{ c.criterio  }}</td>
+                               <td>
+                                <md-button class="md-raised"  style="width:100%; background-color: {{ c.aprobado == 1 ? '#7BE15E' : c.aprobado == 0 ? '#FF3C3C' : '#3198FF' }}; color:#FFF; font-weight:bold;">{{ c.aprobado == 1 ? 'Si' : c.aprobado == 0 ? 'No' : 'N/A' }} 
+                                </md-button>
+                                </td>
+                              </tr>
+                        </tbody>
+                      </table>
+                    </md-data-table-container>                         
+                </md-content>
             </md-content>
         </md-list>
 	</md-content>
+
     
-    <md-list-item ng-if="tieneHallazgo">                               
-	<md-list-item  style="width:100%">
-   	  <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="width:100%">
-   		<span ng-init="acciones();accionesPlazo()"></span>
+  <md-content  layout="column"  layour-align="center center"   ng-if="hallazgos" >   <span ng-init="acciones();accionesPlazo()"></span>                            
+    <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" ng-repeat="(key, dato) in hallazgos">
+   		
           	
           <md-toolbar class="md-accent md-warn" >
               <h2 class="md-toolbar-tools">
-                <span flex>{{ 'HALLAZGO' | translate }}</span>                                 
+                <span flex>{{ 'HALLAZGO' | translate }} {{  'INDICADOR' | translate }} : {{key}}</span>                                 
               </h2>
           </md-toolbar>
 
@@ -197,7 +191,7 @@
                     	
             <md-input-container flex >     
                 <label>{{ 'HALLAZGO' | translate }}</label>
-                    <textarea ng-model="dato.hallazgo" name="hallazgo" columns="1" maxlength="500" readonly></textarea>			
+                    <textarea ng-model="dato.descripcion" name="hallazgo" columns="1" maxlength="500" readonly></textarea>			
                     
             </md-input-container>
 
@@ -206,33 +200,24 @@
 
             <md-input-container flex >     
               <p>{{ 'ACCION' | translate }}</p>
-                <select ng-options="item.id as item.nombre group by item.tipo=='R' ? 'Resolutiva' : 'Seguimiento' for item in acciones" ng-model="dato.accion"   disabled>
+                <select ng-options="item.id as item.nombre group by item.tipo=='R' ? 'Resolutiva' : 'Seguimiento' for item in acciones" ng-model="dato.idAccion"   disabled>
       					<option value="">Seleccione</option>
       				</select>
               
             </md-input-container>
 
-	   		    <md-input-container flex ng-if="esSeguimiento">
+	   		    <md-input-container flex ng-if="dato.idPlazoAccion>0">
 		          <p>{{ 'PLAZO-ACCION' | translate }}</p>
-		          <select ng-options="item.id as item.nombre for item in plazos" ng-model="dato.plazoAccion" disabled >
+		          <select ng-options="item.id as item.nombre for item in plazos" ng-model="dato.idPlazoAccion" disabled >
 					     <option value="">Seleccione</option>
 				      </select>
               	
 		        </md-input-container>
 
           </md-list-item>
-                       
-          <md-list-item>
-
-            <md-input-container flex>
-            	<md-button class="md-raised" ng-disabled="form.$invalid">
-                
-              </md-button>
-            </md-input-container>
-                          
-          </md-list-item>  
 
 			</md-list>
-		</md-list-item>   
-      </md-list-item>			
+		</md-content>
+  </div>
+</md-content>
 </div>

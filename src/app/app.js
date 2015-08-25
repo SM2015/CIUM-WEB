@@ -182,7 +182,9 @@
 	    .accentPalette('light-green');
 	  
 		  $mdThemingProvider.theme('altTheme')
-		    .primaryPalette('grey',{'default':'50'});
+		    .primaryPalette('grey',{'default':'50'})
+		    .warnPalette('pink')
+	    	.accentPalette('orange');
 
 			  
 		// Configuramos las rutas
