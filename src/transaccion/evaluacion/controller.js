@@ -858,7 +858,7 @@
 			var url=$scope.ruta;
             $scope.cargando = true;
 
-			CrudDataApi.eliminar("EvaluacionCriterio", eva+"?idi="+ind, function (data) {
+			CrudDataApi.eliminar("EvaluacionCriterio", eva+"?idIndicador="+ind, function (data) {
 				if(data.status  == '407')
 					$window.location="acceso";
 				
