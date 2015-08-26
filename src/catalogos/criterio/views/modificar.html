@@ -7,21 +7,16 @@
 	<md-toolbar >
 		<div class="md-toolbar-tools" ng-init="ver('Criterio');opciones('Indicador','indicadores');opciones('Cone','cones');opciones('LugarVerificacion','lugares');">    
 			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
-		  <md-icon md-svg-icon="menu" ></md-icon>
-		    </md-button>   
-			<h2>
-			  <span>{{ 'LISTA' | translate }}</span>
-			</h2>
-			<form ng-submit="buscarL(buscar,columna)" flex layout="row"> 
-			<md-icon hide-sm md-svg-src="search" ></md-icon>
-			<md-input-container  flex md-theme="default">			     		
-            <label>&nbsp;</label>
-            <input class="label" ng-model="buscar" type="text" placeholder="{{ 'BUSCAR' | translate }}" flex>            
-          </md-input-container>	
-          </form>
-			<span ng-include="'src/app/views/menu-opciones.html'"></span>
-		</div>
-	</md-toolbar>
+          <md-icon md-svg-icon="menu" ></md-icon>
+            </md-button>   
+            <h2>
+              <span>{{ 'EDITAR' | translate }}</span>
+            </h2>
+            <span flex></span>  
+            
+            <span ng-include="'src/app/views/menu-opciones.html'"></span>
+        </div>
+    </md-toolbar>
 	<md-content>
 	
 
