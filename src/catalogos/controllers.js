@@ -70,7 +70,7 @@
         paginas:0
     };
     $scope.datos = [];
-    
+    $scope.dato = {};
 
     // muestra el menu para aquellos dispositivos que por su tamaño es oculto
 	$scope.toggleMenu  = function  () {
