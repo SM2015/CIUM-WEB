@@ -203,19 +203,20 @@
                                      </md-list-item>
                                      <md-list-item >
                                         <md-input-container flex >     
-                                            <p>{{ 'ACCION' | translate }}</p>
-                                                <select ng-options="item.id as item.nombre group by item.tipo=='R' ? 'Resolutiva' : 'Seguimiento' for item in acciones" ng-model="dato.hallazgos.idAccion"   ng-change="verSeguimiento()" id="accion" >
-												<option value="">Seleccione</option>
-											</select>
+                                                
+                      <md-select  ng-model="dato.hallazgos.idAccion"  id="accion" placeholder="{{ 'ACCION' | translate }}" >
+                        <md-optgroup label="{{currentGroup == 'R' ? 'Resolutiva' : 'Seguimiento' }}" ng-repeat="currentGroup in groupList" >
+                          <md-option ng-value="item.id" ng-repeat="item in acciones | filter: {tipo: currentGroup}" ng-click="verSeguimiento(item.tipo)">{{item.nombre}}</md-option>
+                        </md-optgroup>
+                      </md-select>
                                                 <div ng-messages="forma.hallazgo.$error" >
                                                     <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>                                    
                                                 </div>
                                         </md-input-container>
 								   		<md-input-container flex ng-if="esSeguimiento">
-									        <p>{{ 'PLAZO-ACCION' | translate }}</p>
-									        <select ng-options="item.id as item.nombre for item in plazos" ng-model="dato.hallazgos.idPlazoAccion"  >
-												<option value="">Seleccione</option>
-											</select>
+									        <md-select ng-model="dato.hallazgos.idPlazoAccion"  placeholder="{{ 'PLAZO-ACCION' | translate }}">
+												<md-option ng-value="item.id" ng-repeat="item in plazos" >{{item.nombre}}</md-option>
+											</md-select>
                                             <div ng-messages="forma.hallazgo.$error" >
                                                     <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>                                    
                                                 </div>	

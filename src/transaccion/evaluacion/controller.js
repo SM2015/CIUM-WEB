@@ -315,6 +315,13 @@
 			if(data.status==200)
 			{
 				$scope.acciones=data.data;
+				$scope.groupList = $scope.acciones.reduce(function(previous, current) {
+				    if (previous.indexOf(current.tipo) === -1) {
+				      previous.push(current.tipo);
+				    }
+
+				    return previous;
+				}, []);
 			}
 			else
 			{
@@ -582,12 +589,11 @@
 			$scope.terminado=false;
 	};
 	$scope.esSeguimiento = false;
-	$scope.verSeguimiento = function()
+	$scope.verSeguimiento = function(text)
 	{	
-		var este = angular.element(document.getElementById('accion'));
-		var text = este[0].selectedOptions[0].parentElement.label;
+
 				
-		if(text=='Seguimiento')
+		if(text=='s' || text == 'S')
 			$scope.esSeguimiento=true;
 		else
 			$scope.esSeguimiento=false;

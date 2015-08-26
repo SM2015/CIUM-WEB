@@ -877,7 +877,7 @@
 	datasetStroke : true,
 	
 	//Number - Pixel width of dataset stroke
-	datasetStrokeWidth : 1,
+	datasetStrokeWidth : 2,
 	
 	//Boolean - Whether to fill the dataset with a colour
 	datasetFill : true,

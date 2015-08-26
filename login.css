@@ -367,3 +367,8 @@ md-input-container p, .search-input
   transform-origin: left top -10;
   float: left;
 }
+
+.md-select-label
+{
+  width: 100%;
+}

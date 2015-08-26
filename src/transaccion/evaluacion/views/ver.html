@@ -200,18 +200,19 @@
 
             <md-input-container flex >     
               <p>{{ 'ACCION' | translate }}</p>
-                <select ng-options="item.id as item.nombre group by item.tipo=='R' ? 'Resolutiva' : 'Seguimiento' for item in acciones" ng-model="dato.idAccion"   disabled>
-      					<option value="">Seleccione</option>
-      				</select>
+                <md-select  ng-model="dato.idAccion"  id="accion" placeholder="{{ 'ACCION' | translate }}" disabled>
+                        <md-optgroup label="{{currentGroup == 'R' ? 'Resolutiva' : 'Seguimiento' }}" ng-repeat="currentGroup in groupList" >
+                          <md-option ng-value="item.id" ng-repeat="item in acciones | filter: {tipo: currentGroup}" ng-click="verSeguimiento(item.tipo)">{{item.nombre}}</md-option>
+                        </md-optgroup>
+                      </md-select>
               
             </md-input-container>
 
 	   		    <md-input-container flex ng-if="dato.idPlazoAccion>0">
 		          <p>{{ 'PLAZO-ACCION' | translate }}</p>
-		          <select ng-options="item.id as item.nombre for item in plazos" ng-model="dato.idPlazoAccion" disabled >
-					     <option value="">Seleccione</option>
-				      </select>
-              	
+		          <md-select ng-model="dato.idPlazoAccion"  placeholder="{{ 'PLAZO-ACCION' | translate }}" disabled>
+												<md-option ng-value="item.id" ng-repeat="item in plazos" >{{item.nombre}}</md-option>
+											</md-select>     	
 		        </md-input-container>
 
           </md-list-item>
