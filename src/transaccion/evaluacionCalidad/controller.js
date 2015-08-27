@@ -630,6 +630,7 @@
 						indi = vl;
 						$scope.completo[indi][exp] = co;
 						$scope.incompleto[indi][exp] = inc;
+						$scope.tieneExpediente[exp] = true;
 					});
 				});
 				if(tinc == 0 && tco > 0)
