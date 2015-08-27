@@ -99,7 +99,7 @@
                 <md-list-item flex>              
                   
                   	<span flex>
-                      <md-select style="margin-top:45px;" placeholder="{{ 'INDICADOR_SEL' | translate }}" ng-model="dato.idIndicador" ng-change="cargarCriterios()" id="indicador">
+                      <md-select style="margin-top:45px;" placeholder="{{ 'INDICADOR_SEL' | translate }}" ng-model="dato.idIndicador" ng-click="verificarCambios();" ng-change="cargarCriterios()" id="indicador">
                         <md-option ng-repeat="item in options" value="{{item.id}}">
                             {{item.codigo+' - '+item.nombre}}
                         </md-option>
@@ -144,20 +144,20 @@
                
         </md-input-container>
         <md-input-container flex>
-          <md-content >
+          <md-content ng-init="incompleto[dato.idIndicador][exp]=incompleto[dato.idIndicador][exp]==null ? 0 : incompleto[dato.idIndicador][exp]"> 
 
-            <md-menu flex="100" style="float:right;">
+            <md-menu flex="100" style="float:right;" ng-init="completo[dato.idIndicador][exp]=completo[dato.idIndicador][exp]==null ? 0 : completo[dato.idIndicador][exp]">
               
               <md-button aria-label="estadisticas" style="width:192px;" type="button" class="md-raised" ng-click="$mdOpenMenu()">
                   
-                <md-chips>
-                  <md-chip ng-if="completo[exp]>0" style="background : #090; color:white;">
-                    <strong>{{ completo[exp] }}</strong>
+                <md-chips >
+                  <md-chip style="background : #090; color:white;">
+                    <strong>{{ completo[dato.idIndicador][exp] }}</strong>
                     <md-icon md-menu-origin md-svg-icon="check" style="color:white;"></md-icon>
                   </md-chip>
                   
-                  <md-chip ng-if="incompleto[exp]>0" style="background : #A00; color:white;">
-                    <strong>{{ incompleto[exp] }}</strong>
+                  <md-chip style="background : #A00; color:white;">
+                    <strong>{{ incompleto[dato.idIndicador][exp] }}</strong>
                     <md-icon md-menu-origin md-svg-icon="close" style="color:white;"></md-icon>
                   </md-chip>
                   
@@ -215,7 +215,7 @@
           <p >  {{ c.criterio }} </p>
           <md-radio-group layout="row" layout-wrap 
                       ng-model="dato.aprobado[exp][c.idCriterio]" 
-                      ng-click="aprobar(c.idCriterio,dato.id,value[0].idlugarVerificacion,exp,a.id)" 
+                      ng-change="aprobar(c.idCriterio,dato.id,value[0].idlugarVerificacion,exp,a.id)" 
                       ng-init="criterios.noAplica.indexOf(c.idCriterio)>-1 ? dato.aprobado[c.idCriterio]=2 : criterios.aprobado.indexOf(c.idCriterio)>-1 ? dato.aprobado[c.idCriterio]=1 : criterios.noAprobado.indexOf(c.idCriterio)>-1 ? dato.aprobado[c.idCriterio]=0 : ''">
                            
                   <div flex="33"><md-radio-button value="1" class="md-primary">{{ 'SI' | translate}}</md-radio-button></div>
@@ -283,10 +283,10 @@
           
 
 		
-                             
+    <span ng-init="acciones();accionesPlazo()"></span>                         
     <md-list-item ng-if="tieneHallazgo" > 
       <md-list layout-margin  layout-align="center center" style="width:100%">
-   		<span ng-init="acciones();accionesPlazo()"></span>
+   		
           	
           <md-toolbar class="md-accent md-warn" >
               <h2 class="md-toolbar-tools">

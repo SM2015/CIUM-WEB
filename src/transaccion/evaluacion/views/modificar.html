@@ -166,7 +166,7 @@
           <md-list-item ng-repeat="c in value">
           <p  id="lv{{ value[0].idlugarVerificacion }}">  {{ c.criterio }} </p>
           <md-radio-group layout="row" layout-wrap 
-                      ng-model="dato.aprobado[c.idCriterio]" ng-click="aprobar(c.idCriterio,dato.id,value[0].idlugarVerificacion)" ng-init="criterios.noAplica.indexOf(c.idCriterio)>-1 ? dato.aprobado[c.idCriterio] = 2 : criterios.aprobado.indexOf(c.idCriterio)>-1 ? dato.aprobado[c.idCriterio]=1 : criterios.noAprobado.indexOf(c.idCriterio)>-1 ? dato.aprobado[c.idCriterio]=0 : ''">
+                      ng-model="dato.aprobado[c.idCriterio]" ng-change="aprobar(c.idCriterio,dato.id,value[0].idlugarVerificacion)" ng-init="criterios.noAplica.indexOf(c.idCriterio)>-1 ? dato.aprobado[c.idCriterio] = 2 : criterios.aprobado.indexOf(c.idCriterio)>-1 ? dato.aprobado[c.idCriterio]=1 : criterios.noAprobado.indexOf(c.idCriterio)>-1 ? dato.aprobado[c.idCriterio]=0 : ''">
                            
                   <div flex="33"><md-radio-button value="1" class="md-primary">{{ 'SI' | translate}}</md-radio-button></div>
                   <div flex="33"><md-radio-button value="0" class="md-warn">{{ 'NO' | translate}}</md-radio-button></div>
@@ -182,9 +182,10 @@
                             
                         </md-content>
                  </md-list-item>
+                 <span ng-init="acciones();accionesPlazo()"></span>
                  <md-list-item ng-if="tieneHallazgo" > 
                  <md-list layout-margin  layout-align="center center" style="width:100%">
-                 		<span ng-init="acciones();accionesPlazo()"></span>
+                 		
                         	
                             <md-toolbar class="md-warn" >
                                 <h2 class="md-toolbar-tools">

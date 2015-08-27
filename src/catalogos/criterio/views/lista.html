@@ -62,8 +62,8 @@
                     <div class="tree" style="margin-left:-10%" >
                         <ul>
                             <li ng-repeat="i in dato.indicadores" class="parent_li" title="Abrir">
-                                <span ng-click="treeClick('indicador'+criterio.id+''+i.id);" class="principal" id="indicador{{ criterio.id }}{{i.id }}" >
-                                    <md-icon md-svg-src="{{ !icono['indicador'+criterio.id+''+i.id] ? 'add' : 'remove'}}"></md-icon> 
+                                <span ng-click="treeClick('indicador'+dato.id+''+i.id);" class="principal" id="indicador{{ dato.id }}{{i.id }}" >
+                                    <md-icon md-svg-src="{{ !icono['indicador'+dato.id+''+i.id] ? 'add' : 'remove'}}"></md-icon> 
                                     <strong>{{ 'INDICADOR' | translate }}: </strong> {{ i.codigo }} | {{ i.nombre }}
                                 </span>
                                 <ul>			               

@@ -369,10 +369,11 @@
 		var indi=$scope.dato.idIndicador;
 		var idev=$scope.dato.id;
 		
+		$scope.verificarCambios();
 		
-		$scope.cargando = true;
-		if(!angular.isUndefined(cone)&&cone!=""&&!angular.isUndefined(indi)&&indi!="")
+		if(!angular.isUndefined(cone)&&cone!=""&&!angular.isUndefined(indi)&&indi!=""&& !$scope.modificado)
 		{
+			$scope.cargando = true;
 			$http.get(URLS.BASE_API+'CriterioEvaluacion/'+cone+'/'+indi+'/'+idev)
 			.success(function(data, status, headers, config) 
 			{
@@ -516,7 +517,11 @@
 				$scope.tieneHallazgo=true;
 			}
 		});
+		if(!$scope.tieneHallazgo)
+			$scope.dato.hallazgos = {};
+
 		var indi = angular.element(document.querySelector('#indicador'));
+
 		var code = indi[0].innerText;
 		code = code.split(" - ");
 		var info = 0; var totalAprobado = 0; var totalCriterio = 0;
@@ -590,14 +595,11 @@
 	};
 	$scope.esSeguimiento = false;
 	$scope.verSeguimiento = function(text)
-	{	
-
-				
+	{				
 		if(text=='s' || text == 'S')
 			$scope.esSeguimiento=true;
 		else
-			$scope.esSeguimiento=false;
-							
+			$scope.esSeguimiento=false;							
 	};
    
 	
@@ -760,6 +762,7 @@
 				  if(f==1)
 				  	$scope.nombre=$scope.dato.nombre;
 				  $scope.clues=data.data.clues;
+				  $scope.modificado=false;
 				  $scope.cargarCriterios();
 				  $scope.estadistica();
 				  $mdDialog.hide();

@@ -54,7 +54,7 @@
                         			<span ng-click="treeClick(criterio.id+''+i.id+''+c.id);">
                         				<md-icon md-svg-src="airline-seat-flat"></md-icon>   
                         				<input checklist-model="criterio.indicador[i.id].cone" checklist-value="i.id+','+c.id" ng-checked="che[i.id+','+c.id]" id="che{{i.id+'-'+c.id}}" type="checkbox" ng-click="treeClickCheck(i.id,0,'indicador'+criterio.id+''+i.id);" > 
-                        				<strong>CONE: </strong> {{ c.nombre }}                                                                                
+                        				<strong ><label for="che{{i.id+'-'+c.id}}">CONE: </label></strong><label for="che{{i.id+'-'+c.id}}"> {{ c.nombre }} </label>                                                                            
                                                 
                         			</span> 			  
                         		</li>

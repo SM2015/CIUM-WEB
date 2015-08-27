@@ -195,7 +195,7 @@
 		if(!angular.isUndefined(buscar))
 			limite=limite+"&columna="+columna+"&valor="+buscar+"&buscar=true";
 
-
+		$scope.cargando = true;
       CrudDataApi.lista(url+'?pagina=' + pagina + '&limite=' + limite+"&order="+order, function (data) {
         if(data.status  == '407')
         	$window.location="acceso";
@@ -229,7 +229,7 @@
 		$scope.ruta=ruta;		
 		var url=$scope.ruta;		
 		var id=$location.search().id;
-		
+		$scope.cargando = true;
 		CrudDataApi.ver(url, id, function (data) {
 			if(data.status  == '407')
 			$window.location="acceso";
@@ -260,6 +260,7 @@
 	  
 	  if(json)
 	  {
+	  	$scope.cargando = true;
 		CrudDataApi.editar(url, id, json, function (data) {
 	  if(data.status  == '407')
 		$window.location="acceso";
@@ -328,7 +329,7 @@
 	  
 	  var url=$scope.ruta;
 	  var json=$scope.dato;
-	
+	  $scope.cargando = true;
 	  CrudDataApi.crear(url, json, function (data) {
 		if(data.status  == '407')
 		$window.location="acceso";

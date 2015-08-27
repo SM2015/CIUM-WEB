@@ -343,15 +343,23 @@
 			}
 		});
 	};
-	
+	$scope.completo = []
+	$scope.incompleto = [];
 	// agregar columnas(expediente)
 	$scope.columnas = [];
 	$scope.agregarColumna = function(exp)
 	{
+		var indi = $scope.indicador;
 		if(angular.isUndefined(exp))
 		{
-			$scope.completo[$scope.columnas.length+1]=0;
-			$scope.incompleto[$scope.columnas.length+1]=0;
+			if(angular.isUndefined($scope.completo[indi]))
+				$scope.completo[indi] = [];
+
+			if(angular.isUndefined($scope.incompleto[indi]))
+				$scope.incompleto[indi] = [];
+
+			$scope.completo[indi][$scope.columnas.length+1]=0;
+			$scope.incompleto[indi][$scope.columnas.length+1]=0;
 			exp=null;	
 		}
 		if($scope.columnas.length<20)
@@ -383,10 +391,14 @@
 		var indi=$scope.dato.idIndicador;
 		var idev=$scope.dato.id;
 		var op=0;
-		$scope.cargando = true;
+		$scope.verificarCambios();
 		$scope.dato.tempExpediente = $scope.dato.expediente;
-		if(!angular.isUndefined(cone)&&cone!=""&&!angular.isUndefined(indi)&&indi!="")
+		if(!angular.isUndefined(cone)&&cone!=""&&!angular.isUndefined(indi)&&indi!="" && !$scope.modificado)
 		{
+			$scope.cargando = true;
+			$scope.criterios = {};
+
+			$scope.estadistica();
 			$http.get(URLS.BASE_API+'CriterioEvaluacionCalidad/'+cone+'/'+indi+'/'+idev)
 			.success(function(data, status, headers, config) 
 			{
@@ -394,7 +406,12 @@
 					$window.location="acceso";
 				
 				if(data.status==200)
-				{									
+				{
+					if(data.tiene==1)
+					{
+						$scope.dato.totalExpediente=0;
+						$scope.columnas = [];
+					}								
 					$scope.dato.totalCriterio = {};
 					
 					$scope.dato.cumple = {};
@@ -477,8 +494,7 @@
 						});	
 
 									    
-					});						    							
-					$scope.estadistica();							    
+					});						    																			   
 				}
 				else					
 				{
@@ -566,7 +582,7 @@
 			idev = $location.search().id;
 		var tco=0; var co=0;
 		var tinc=0; var inc=0;
-		$http.get(URLS.BASE_API+'EstadisticaCalidad/'+idev+'/'+indi)
+		$http.get(URLS.BASE_API+'EstadisticaCalidad/'+idev)
 		.success(function(data, status, headers, config) 
 		{
 			if(data.status  == '407')
@@ -575,29 +591,42 @@
 			if(data.status == 200)
 			{									
 				$scope.informacion = data.data;
-
-				$scope.completo = {};
-				$scope.incompleto = {};
+				
+				
 				var tco = 0; var tinc = 0;
-				angular.forEach(data.data , function(val, key) 
+				$scope.misIndicadores=[];
+				angular.forEach($scope.informacion , function(val, key) 
 				{
-					var co = 0; var inc = 0; 
 					angular.forEach(val , function(v, k) 
 					{
-						if(v[v.codigo] == v.total)
-						{
-							tco = tco + 1;
-							co = co + 1;
-						}
-						else
-						{
-							tinc = tinc + 1;
-							inc = inc + 1;
-						}
+						$scope.completo[v.id]= [];					
+						$scope.incompleto[v.id]= [];
+						$scope.misIndicadores.push(v.id);
+					})
+				})	
+				angular.forEach($scope.informacion , function(val, key) 
+				{					
+					var exp=key;
+					angular.forEach($scope.misIndicadores , function(vl, ky) 
+					{
+						var co = 0; var inc = 0; 
+						angular.forEach(val , function(v, k) 
+						{ 
+							if(v[v.codigo] == v.total)
+							{
+								tco = tco + 1;
+								co = co + 1;
+							}
+							else
+							{
+								tinc = tinc + 1;
+								inc = inc + 1;
+							}
+						});
+						indi = vl;
+						$scope.completo[indi][exp] = co;
+						$scope.incompleto[indi][exp] = inc;
 					});
-					$scope.completo[key] = co;
-					$scope.incompleto[key] = inc;
-					$scope.tieneExpediente[key] = true;
 				});
 				if(tinc == 0 && tco > 0)
 					$scope.terminado=true;
@@ -669,6 +698,8 @@
 		$scope.dato.promedioGeneral = promedioGeneral/$scope.dato.totalExpediente;
 		if($scope.dato.promedioGeneral<80)
 			$scope.tieneHallazgo=true;
+		else
+			$scope.dato.hallazgos={};
 	};
 	$scope.validarNoRepetirExpediente = function(valor,exp)
 	{		
@@ -693,6 +724,8 @@
 				$scope.tieneHallazgo=true;
 			}
 		});
+		if(!$scope.tieneHallazgo)
+			$scope.dato.hallazgos = {};
 		var indi = angular.element(document.querySelector('#indicador'));
 		var code = indi[0].innerText;
 		code = code.split(" - ");
@@ -706,8 +739,8 @@
 		
 		angular.forEach($scope.informacion[exp], function(item, key) 
 		{
-			var existe = false;
-			angular.forEach($scope.informacion, function(item, key) 
+			var existe = false; info++;
+			angular.forEach($scope.informacion[exp], function(item, key) 
 			{
 				angular.forEach(item, function(v, k) 
 				{
@@ -717,18 +750,18 @@
 			});
 			if(existe)
 			{
-				$scope.informacion[exp][0][code[0]] = totalAprobado;
+				$scope.informacion[exp][key][code[0]] = totalAprobado;
 			}
 			else
 			{
-				$scope.informacion[exp][0]=
+				$scope.informacion[exp][key]=
 					{
 				      "id": $scope.dato.idIndicador,
 				      "codigo": code[0],
 				      "nombre": code[1],
 				      "total": totalCriterio
 				    };
-				$scope.informacion[exp][0][code[0]] = totalAprobado;
+				$scope.informacion[exp][key][code[0]] = totalAprobado;
 			}
 		});
 		if(info==0)
@@ -743,33 +776,46 @@
 			    };
 			$scope.informacion[exp][0][code[0]] = totalAprobado;
 		}
-		
-		$scope.completo = {};
-		$scope.incompleto = {};
 		var tco = 0; var tinc = 0;
+		$scope.misIndicadores=[]; 
+
 		angular.forEach($scope.informacion , function(val, key) 
 		{
-			var co = 0; var inc = 0; 
 			angular.forEach(val , function(v, k) 
 			{
-				if(v[v.codigo] == v.total)
-				{
-					tco = tco + 1;
-					co = co + 1;
-				}
-				else
-				{
-					tinc = tinc + 1;
-					inc = inc + 1;
-				}
+				$scope.completo[v.id]= [];					
+				$scope.incompleto[v.id]= [];
+				$scope.misIndicadores.push(v.id);
+			})
+		}); 
+		angular.forEach($scope.informacion , function(val, key) 
+		{					
+			var exp=key;
+			angular.forEach($scope.misIndicadores , function(vl, ky) 
+			{
+				var co = 0; var inc = 0; 
+				angular.forEach(val , function(v, k) 
+				{ 
+					if(v[v.codigo] == v.total)
+					{
+						tco = tco + 1;
+						co = co + 1;
+					}
+					else
+					{
+						tinc = tinc + 1;
+						inc = inc + 1;
+					}
+				});
+				indi = vl; 
+				$scope.completo[indi][exp] = co;
+				$scope.incompleto[indi][exp] = inc;
 			});
-			$scope.completo[key] = co;
-			$scope.incompleto[key] = inc;
 		});
 		if(tinc == 0 && tco > 0)
 			$scope.terminado=true;
 		else
-			$scope.terminado=false;
+			$scope.terminado=false;	
 	};
 	$scope.esSeguimiento = false;	
 	$scope.verSeguimiento = function()
@@ -963,6 +1009,7 @@
 				  if(f==1)
 				  	$scope.nombre=$scope.dato.nombre;
 				  $scope.clues=data.data.clues;
+				  $scope.modificado=false;
 				  $scope.cargarCriterios();
 				  $mdDialog.hide();
 				}

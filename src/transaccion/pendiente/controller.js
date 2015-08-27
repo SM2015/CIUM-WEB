@@ -197,6 +197,23 @@
 	{
 	    $scope.cargando = true;
 	  	$scope.init(buscar,columna);
-	};	
+	};
+
+	$scope.showSearch = false;
+	$scope.listaTemp={};
+	$scope.moduloName=angular.uppercase($location.path().split('/')[1]);
+	$scope.mostrarSearch = function(t)
+	{
+		$scope.showSearch = ! $scope.showSearch;
+		if(t==0)
+		{
+			$scope.listaTemp = $scope.datos;		
+		}
+		else
+		{
+			$scope.buscar='';
+			$scope.datos = $scope.listaTemp;
+		}
+	}	
 	}])
 })();
