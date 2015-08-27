@@ -317,6 +317,13 @@
 			if(data.status==200)
 			{
 				$scope.acciones=data.data;
+				$scope.groupList = $scope.acciones.reduce(function(previous, current) {
+				    if (previous.indexOf(current.tipo) === -1) {
+				      previous.push(current.tipo);
+				    }
+
+				    return previous;
+				}, []);
 			}
 			else
 			{
@@ -423,13 +430,14 @@
 					var total = data.total;	
 					var totalCriterio = data.totalCriterio;	
 					var promedioGeneral = 0; var aprobado = 0;
-					if(!angular.isUndefined(data.hallazgo))
+					$scope.dato.hallazgos = {};
+					if(!angular.isUndefined(data.hallazgo[indi]))
 					{
 						$scope.dato.hallazgos={};
 						
-						$scope.dato.hallazgos.descripcion = data.hallazgo.descripcion;
-						$scope.dato.hallazgos.idAccion = data.hallazgo.idAccion;
-						$scope.dato.hallazgos.idPlazoAccion = data.hallazgo.idPlazoAccion;
+						$scope.dato.hallazgos.descripcion = data.hallazgo[indi].descripcion;
+						$scope.dato.hallazgos.idAccion = data.hallazgo[indi].idAccion;
+						$scope.dato.hallazgos.idPlazoAccion = data.hallazgo[indi].idPlazoAccion;
 						if($scope.dato.hallazgos.idPlazoAccion>0)
 							$scope.esSeguimiento=true;
 						if(!angular.isUndefined(data.hallazgo.descripcion))
@@ -467,12 +475,7 @@
 						$scope.dato.expediente[exp] = val.registro.expediente;
 						$scope.dato.cumple[exp] = val.registro.cumple;
 						$scope.dato.promedio[exp] = val.registro.promedio;
-						promedioGeneral=parseFloat(promedioGeneral)+parseFloat($scope.dato.promedio[exp]);
-						$scope.dato.totalCriterio[exp] = totalCriterio;
-
-						$scope.dato.promedioGeneral = promedioGeneral/total;
-						if($scope.dato.promedioGeneral<80)
-							$scope.tieneHallazgo=true;
+						
 						
 						angular.forEach($scope.dato.aprobado[exp] , function(v, k) 
 						{ aprobado++; });
@@ -494,7 +497,8 @@
 						});	
 
 									    
-					});						    																			   
+					});		
+					$scope.obtenerPromedio();				    																			   
 				}
 				else					
 				{
@@ -817,17 +821,13 @@
 		else
 			$scope.terminado=false;	
 	};
-	$scope.esSeguimiento = false;	
-	$scope.verSeguimiento = function()
-	{	
-		var este = angular.element(document.getElementById('accion'));
-		var text = este[0].selectedOptions[0].parentElement.label;
-		
-		if(text=='Seguimiento')
+	$scope.esSeguimiento = false;
+	$scope.verSeguimiento = function(text)
+	{				
+		if(text=='s' || text == 'S')
 			$scope.esSeguimiento=true;
 		else
-			$scope.esSeguimiento=false;
-							
+			$scope.esSeguimiento=false;							
 	};
    
 	$scope.valido=false;
