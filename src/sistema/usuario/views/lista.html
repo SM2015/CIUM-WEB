@@ -49,8 +49,6 @@
       <tr>
 					<th hide-sm name="id" order-by="id"></th>
 					<th hide-sm name="{{ 'NOMBRE' | translate }}/s" order-by="nombres"></th>
-					<th hide-sm name="{{ 'APELLIDO_PATERNO' | translate }}" order-by="apellidoPaterno"></th>
-					<th hide-sm name="{{ 'APELLIDO_MATERNO' | translate }}" order-by="apellidoMaterno"></th>
 					<th hide-sm name="{{ 'CARGO' | translate }}" order-by="cargo"></th>
 					<th hide-sm name="{{ 'TELEFONO' | translate }}" order-by="telefono"></th>
 					<th name="{{ 'EMAIL' | translate }}" order-by="email"></th>
@@ -62,10 +60,8 @@
     <tbody>
       <tr md-auto-select ng-repeat="dato in datos">
 				 <td hide-sm>{{ id = dato.id }}</td>				 
-				 <td hide-sm>{{ dato.nombres | uppercase }}</td>
-				 <td hide-sm>{{ dato.apellidoPaterno | uppercase }}</td>
-				 <td hide-sm>{{ dato.apellidoMaterno | uppercase }}</td>
-				 <td hide-sm>{{ dato.cargo | uppercase }}</td>
+				 <td hide-sm>{{ dato.nombres | uppercase }} {{ dato.apellidoPaterno | uppercase }} {{ dato.apellidoMaterno | uppercase }}</td>
+				 <td hide-sm>{{ dato.nivel == 1 ? 'Estatal (1)' : dato.nivel == 2 ? 'Jurisdiccional (2)' : dato.nivel == 3 ? 'Zonal (3)' : '' }}</td>
 				 <td hide-sm>{{ dato.telefono?dato.telefono:"No tiene" | uppercase }}</td>
 				 <td>{{ dato.email?dato.email:"No tiene" | uppercase }}</td>
 				 <td>

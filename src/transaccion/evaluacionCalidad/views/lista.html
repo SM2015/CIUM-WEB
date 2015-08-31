@@ -48,7 +48,7 @@
   <table md-data-table md-progress="datos">
     <thead md-order="query.order" md-trigger="onOrderChange">
       <tr>
-		 <th hide-sm name="ID" order-by="id"></th>
+		 <th hide-sm name="ID" order-by="EvaluacionCalidad.id"></th>
 		    <th name="CLUES" order-by="clues"></th>
 			<th hide-sm name="{{ 'USUARIO' | translate }}" order-by="idUsuario"></th>
 			<th name="{{ 'FECHA_EVALUACION' | translate }}" order-by="fechaEvaluacion"></th>
@@ -59,7 +59,7 @@
     <tbody>
       <tr md-auto-select ng-repeat="dato in datos">
 				 <td hide-sm>{{ dato.id  }}</td>
-				 <td>{{ dato.clues | uppercase }}</td>
+				 <td>{{ dato.clues | uppercase }}: {{ dato.cluess.nombre | uppercase }} ({{ dato.cluess.jurisdiccion | uppercase }})</td>
 				 <td hide-sm>{{ dato.usuarios.nombres+' '+dato.usuarios.apellidoPaterno+' '+dato.usuarios.apellidoMaterno | uppercase }}</td>
 				 <td>{{ dato.fechaEvaluacion }}</td>
 				 <td>{{ dato.cerrado ? "Si" : "No" }}</td>

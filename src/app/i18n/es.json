@@ -1,6 +1,6 @@
 {
 	"APP_NOMBRE": "CIUM",
-	"APP_DESCRIPCION_BREVE": "La secretaria de salud (ISECH) a través de la Dirección de Informática, con el apoyo del Proyecto Salud Mesoamérica 2015 (SM2015), pone en marcha el desarrollo del proyecto Captura de indicadores de unidades medicas (CIUM), cuyo objetivo es facilitar y fortalecer la detección de la ubicación de los puntos críticos en  la medición de calidad y abastos en unidades médicas, agilizando la toma de decisiones en todos los niveles provenientes del eTAB, por medio de los cuales se logran alcanzar las metas propuestas por el sector salud.",
+	"APP_DESCRIPCION_BREVE": "La secretaria de salud (ISECH) a través de la Dirección de Informática, con el apoyo del Proyecto Salud Mesoamérica 2015 (SM2015), pone en marcha el desarrollo del proyecto Captura de indicadores de unidades medicas (CIUM), cuyo objetivo es facilitar y fortalecer la detección de la ubicación de los puntos críticos en  la medición de calidad y recursos en unidades médicas, agilizando la toma de decisiones en todos los niveles provenientes del eTAB, por medio de los cuales se logran alcanzar las metas propuestas por el sector salud.",
 	"APP_DESCRIPCION_BREVE2":"El CIUM en línea es construido para monitorear en tiempo casi real el progreso de la captura de las evaluaciones a unidades médicas, se dice casi real por que los evaluadores trabajan con un dispositivo móvil IOS o Android para la evaluación de las unidades médicas que no cuenten con internet. Posteriormente el dispositivo tendrá que sincronizar toda la información que se haya recabado con la base de datos una vez el evaluador alcance la señal de internet.",
 
 	"CREAR_CUENTA": "Crear una cuenta ahora",
@@ -88,12 +88,11 @@
 	"NOTIFICACION": "Notificacion",
 	"PENDIENTE": "Pendiente",
 	"EVALUACION": "Evaluación",
-	"ABASTO": "Abasto",
+	"RECURSO": "Recurso",
 	"CALIDAD": "Calidad",
-	"EVALUACION-ABASTO": "Abasto",
+	"EVALUACION-RECURSO": "Recurso",
 	"EVALUACION-CALIDAD": "Calidad",
 	"ETIQUETA": "Etiqueta",
-	"RECURSO": "Recurso",
 	"METODO": "Método",
 	"CODIGO": "Código",
 	"DATOS_GENERALES": "Datos generales",
@@ -113,7 +112,7 @@
 	"LOCALIDAD":"Localidad",
 	"ENTIDAD":"Entidad",
 	"LUGAR_SELECT":"Seleccione el lugar de verificación",
-	"CARGO":"Cargo",
+	"CARGO":"Nivel",
 	"CAMBIAR_UM":"Editar",
 	"CERRAR_EV":"Cerrar evaluación",
 	"INDICADOR_SEL":"Seleccione un indicador",
@@ -136,7 +135,7 @@
 	"OPCIONES":"Opciones",
 	"TERMINADO":"Terminado",
 
-	"RU_ABASTO":"Reporte de unidad (Abastecimiento)",
+	"RU_RECURSO":"Reporte de unidad (Recurso)",
 	"RU_CALIDAD":"Reporte de unidad (Calidad)",
 	"INDICADOR_ALERTA":"Indicadores en alerta",
 	"REPORTE_X_EQUIPO":"Reporte visitas por grupo",
@@ -199,6 +198,7 @@
 	"ULTIMA": "Ultima Página",
 	"SIGUIENTE": "Siguiente",
 	"REGRESAR": "Regresar",
+	"RESPONSABLE": "Responsable",
 
 	"BUSCAR": "Buscar",
 	"PDF": "Exportar a PDF",

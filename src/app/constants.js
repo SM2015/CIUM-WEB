@@ -25,9 +25,9 @@ icono: 'dashboard'
     grupo:'EVALUACION' ,
     lista: [
   { 
-titulo: 'ABASTO', 
-key: 'EvaluacionController.index', 
-path: '/evaluacion-abasto', 
+titulo: 'RECURSO', 
+key: 'EvaluacionRecursoController.index', 
+path: '/evaluacion-recurso', 
 icono: 'event-available' 
   },
   { 
@@ -41,6 +41,12 @@ icono: 'event-note'
     key: "SeguimientoController.index",
     path: "/seguimiento",
     icono: "check-box"
+  },
+  {
+    titulo: "HALLAZGO",
+    key: "HallazgoController.index",
+    path: "/hallazgo",
+    icono: "view-list"
   }
     ]
 }, 

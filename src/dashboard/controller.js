@@ -138,9 +138,9 @@
 		
 	}])
 	
-	.controller('abastoController', function($scope, $http, $window, $location, $timeout, $route,  flash, errorFlash, URLS, $mdDialog, EvaluacionId ) {
+	.controller('RecursoController', function($scope, $http, $window, $location, $timeout, $route,  flash, errorFlash, URLS, $mdDialog, EvaluacionId ) {
 		
-		$scope.abasto = true;
+		$scope.recurso = true;
 	
 		$scope.contador=0;
 		$scope.parametro={};
@@ -150,7 +150,7 @@
 		$scope.showModal = false;
 		$scope.showModalCriterio = false;
 		$scope.chart;
-		$scope.verAbasto="";
+		$scope.verRecurso="";
 		$scope.dato = {};
 		$scope.dimension = [];
 		
@@ -196,7 +196,7 @@
 	  {	
 	  	  	
 		var posision=$scope.contador-1;
-		$scope.dibujarGrafico('abastoClues?anio='+$scope.parametro[0]+'&mes='+$scope.parametro[1]+'&clues='+points[0].label+"&parametro="+$scope.parametro[posision]) 		
+		$scope.dibujarGrafico('recursoClues?anio='+$scope.parametro[0]+'&mes='+$scope.parametro[1]+'&clues='+points[0].label+"&parametro="+$scope.parametro[posision]) 		
 		$scope.bread.push({label:"Clues: "+points[0].label}); 
 	  }
 
@@ -219,8 +219,8 @@
 			$scope.showModalCriterio = !$scope.showModalCriterio;
 			EvaluacionId.setId(punto[1]);
 			$mdDialog.show({
-		      controller: DialogAbasto,
-		      templateUrl: 'src/dashboard/views/verAbasto.html',
+		      controller: DialogRecurso,
+		      templateUrl: 'src/dashboard/views/verRecurso.html',
 		      parent: angular.element(document.body),
 		    })					
 			
@@ -231,17 +231,17 @@
 		
 		$scope.dibujarGrafico = function (url)
 		{
-		  $scope.abasto=true;
+		  $scope.recurso=true;
 		  $http.get(URLS.BASE_API+url)     
 		  .success(function(data, status, headers, config) 
 		  {   
 			$scope.data  = data.data; 
-		  	$scope.abasto=false;
+		  	$scope.recurso=false;
 		  })
 		  .error(function(data, status, headers, config) 
 		  {
 			errorFlash.error(data);
-			$scope.abasto=false;
+			$scope.recurso=false;
 		  });
 		};
 	
@@ -268,12 +268,12 @@
 			var campo="";
 			if($scope.contador==0)
 			{    
-				$scope.dibujarGrafico("abasto?campo=anios&valor= and anio='"+$scope.parametro[0]+"'&nivel=anio");
+				$scope.dibujarGrafico("recurso?campo=anios&valor= and anio='"+$scope.parametro[0]+"'&nivel=anio");
 			}
 			if($scope.contador==1)
 			{
 				var parametro=" and anio='"+$scope.parametro[0]+"' and month='"+$scope.parametro[1]+"'";
-				$scope.dibujarGrafico('abasto?campo=mes&valor='+parametro+'&nivel=mes');
+				$scope.dibujarGrafico('recurso?campo=mes&valor='+parametro+'&nivel=mes');
 			}
 			if($scope.contador==2)
 			{
@@ -301,7 +301,7 @@
 		// regresa al estado original el grafico
 		$scope.recargar = function()
 		{  
-		  $scope.dibujarGrafico('abasto?campo=anio&valor=&nivel=anio');
+		  $scope.dibujarGrafico('recurso?campo=anio&valor=&nivel=anio');
 		  $scope.contador=0;
 		  $scope.parametro={};
 		  $scope.bread=[];
@@ -315,13 +315,13 @@
 		
 		$scope.irDibujar = function(campo,valor,nivel,c,ultimo)
 		{
-			$scope.dibujarGrafico('abasto?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo);
+			$scope.dibujarGrafico('recurso?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo);
 		}
 		
 		// evento para el filtrado
 		$scope.dimensiones = function(campo,valor,nivel,c,ultimo)
 		{
-	  		$http.get(URLS.BASE_API+'abastoDimension?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo)     
+	  		$http.get(URLS.BASE_API+'recursoDimension?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo)     
 		  	.success(function(data, status, headers, config) 
 		  	{   
 				$scope.datos[c] = data.data; 
@@ -333,7 +333,7 @@
 						}); 
 				}
 				
-				$scope.dibujarGrafico('abasto?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo);
+				$scope.dibujarGrafico('recurso?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo);
 		  	})
 		  	.error(function(data, status, headers, config) 
 			{
@@ -436,8 +436,8 @@
 		{ 		
 		  if(!angular.isUndefined($scope.dimension[2])&&$scope.dimension[4]!=null)
 		  { 
-		    $scope.abasto=true;
-			$http.get(URLS.BASE_API+'abastoClues?anio='+$scope.dimension[0]+'&mes='+$scope.dimension[1]+'&clues='+$scope.dimension[4])     
+		    $scope.recurso=true;
+			$http.get(URLS.BASE_API+'recursoClues?anio='+$scope.dimension[0]+'&mes='+$scope.dimension[1]+'&clues='+$scope.dimension[4])     
 			.success(function(data, status, headers, config) 
 			{ 				
 				$scope.bread=[];  
@@ -458,17 +458,17 @@
 				$scope.parametro[0]=$scope.dimension[0];
 				$scope.parametro[1]=$scope.dimension[1];
 				$scope.parametro[2]=$scope.dimension[4];
-				$scope.abasto=false;			
+				$scope.recurso=false;			
 				   
 			})
 			.error(function(data, status, headers, config) 
 			{
 				errorFlash.error(data);
-				$scope.abasto=false;
+				$scope.recurso=false;
 			});
 		  }
 		};
-		$scope.dibujarGrafico('abasto?campo=anio&valor=&nivel=anio');
+		$scope.dibujarGrafico('recurso?campo=anio&valor=&nivel=anio');
 	
 	
 	
@@ -913,7 +913,7 @@
 		$scope.datos = [];
 		$scope.dimension = {};
 	
-		$scope.tipo="Abasto";
+		$scope.tipo="Recurso";
 		
 		$scope.hide = function() {
 			$mdDialog.hide();
@@ -950,8 +950,8 @@
 		$scope.dimensiones = function(campo,valor,nivel,c,ultimo)
 		{
 			var url="calidadDimension";
-			if($scope.tipo=="Abasto")
-				url="abastoDimension";
+			if($scope.tipo=="Recurso")
+				url="recursoDimension";
 	  		$http.get(URLS.BASE_API+url+'?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo+"&tipo="+$scope.tipo)     
 	  		.success(function(data, status, headers, config) 
 	  		{   
@@ -1291,7 +1291,7 @@
 			$scope.parDimension={};
 			$scope.parametro = [];
 			
-			$scope.tipo="Abasto";
+			$scope.tipo="Recurso";
 			$scope.bread.push({label:$scope.tipo});
 			$scope.dibujarGrafico('alertaDash?tipo='+$scope.tipo+'&campo=&valor=&nivel=anio');  
 		};
@@ -1306,8 +1306,8 @@
 		$scope.dimensiones = function(campo,valor,nivel,c,ultimo)
 		{
 			var url="calidadDimension";
-			if($scope.tipo=="Abasto")
-				url="abastoDimension";
+			if($scope.tipo=="Recurso")
+				url="RecursoDimension";
 	  		$http.get(URLS.BASE_API+url+'?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo+"&tipo="+$scope.tipo)     
 	  		.success(function(data, status, headers, config) 
 	  		{   
@@ -1433,7 +1433,7 @@
 		};
 	
 		
-		$scope.tipo="Abasto";
+		$scope.tipo="Recurso";
 		$scope.bread.push({label:$scope.tipo});
 		$scope.dibujarGrafico('alertaDash?tipo='+$scope.tipo+'&campo=&valor=&nivel=anio');  			
 	})
@@ -1613,7 +1613,7 @@
 		$scope.datos = [];
 		$scope.dimension = [];
 	
-		$scope.tipo="Abasto";
+		$scope.tipo="Recurso";
 		
 		$scope.hide = function() {
 			$mdDialog.hide();
@@ -1639,8 +1639,8 @@
 		$scope.dimensiones = function(campo,valor,nivel,c,ultimo)
 		{
 			var url="calidadDimension";
-			if($scope.tipo=="Abasto")
-				url="abastoDimension";
+			if($scope.tipo=="Recurso")
+				url="RecursoDimension";
 	  		$http.get(URLS.BASE_API+url+'?campo='+campo+'&valor='+valor+'&nivel='+nivel+"&parametro="+ultimo+"&tipo="+$scope.tipo)     
 	  		.success(function(data, status, headers, config) 
 	  		{   
@@ -1742,7 +1742,7 @@
 	
 		$scope.recargar = function()
 		{  
-	  		$scope.tipo="Abasto"; 
+	  		$scope.tipo="Recurso"; 
 	  		$scope.contador=0;
 			$scope.parametro={};
 			$scope.bread=[];
@@ -1834,7 +1834,7 @@
 		
 	})
 	
-	function DialogAbasto($scope, $mdDialog, EvaluacionShow, EvaluacionId, errorFlash, listaOpcion) {
+	function DialogRecurso($scope, $mdDialog, EvaluacionShow, EvaluacionId, errorFlash, listaOpcion) {
 		$scope.acciones=[];
 		$scope.hallazgos = {};	
 		listaOpcion.options('Accion').success(function(data)

@@ -99,7 +99,7 @@
                 <md-list-item flex>              
                   
                   	<span flex>
-                      <md-select style="margin-top:45px;" placeholder="{{ 'INDICADOR_SEL' | translate }}" ng-model="dato.idIndicador" ng-click="verificarCambios();" ng-change="cargarCriterios()" id="indicador">
+                      <md-select style="margin-top:8px;" placeholder="{{ 'INDICADOR_SEL' | translate }}" ng-model="dato.idIndicador" ng-click="verificarCambios();" ng-change="cargarCriterios()" id="indicador">
                         <md-option ng-repeat="item in options" value="{{item.id}}">
                             {{item.codigo+' - '+item.nombre}}
                         </md-option>

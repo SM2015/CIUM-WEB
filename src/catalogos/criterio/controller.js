@@ -46,7 +46,7 @@
     // incializa el modelo para el filtro, ordenamiento y paginación
 	$scope.query = {
 		filter: '',
-		order: 'id',
+		order: 'Criterio.id',
 		limit: 5,
 		page: 1
 	};

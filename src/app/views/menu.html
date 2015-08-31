@@ -86,7 +86,7 @@
 	
 	<header class="nav-header" ng-controller="DatoCtrl">
 	<a ng-href="{{ '#/datos/ver?id='+usuarioInfo.id; }}" class="docs-logo" style="text-decoration:none;color:#999">
-		<img ng-src="{{usuarioInfo.avatar}}" style="width:85px; heigth:90px;border-radius:50%; margin-left:36%; margin-top:5px;">
+		<img ng-src="{{usuarioInfo.avatar ? usuarioInfo.avatar : 'assets/img/user.png' }}" style="width:85px; heigth:90px;border-radius:50%; margin-left:36%; margin-top:5px;">
 		<h5 class="docs-logotype md-heading" style="text-align: center;">{{usuarioInfo.nombre + " " +usuarioInfo.apellido_paterno + " " +usuarioInfo.apellido_materno}}</h5>
 	</a>
 	<md-divider></md-divider>

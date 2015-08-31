@@ -35,13 +35,14 @@
 									'GrupoModule',
 									'ModuloModule',
 									'UsuarioModule',
-									'AbastoModule',
+									'RecursoModule',
 									'CalidadModule',
 									'DashboardModule',
 									'NotificacionModule',
 									'PendienteModule',
 									'DatoModule',
-									'SeguimientoModule']);
+									'SeguimientoModule',
+									'HallazgoModule']);
 	   
 	app.config(['$mdThemingProvider','$mdIconProvider','$routeProvider','$httpProvider','$translateProvider',function($mdThemingProvider,$mdIconProvider,$routeProvider,$httpProvider,$translateProvider){
 		// Configuramos iconos
@@ -80,6 +81,7 @@
 		  .icon("perm-contact-calendar", "bower_components/material-design-icons/action/svg/production/ic_perm_contact_cal_48px.svg", 48)
 		  .icon("group-work", "bower_components/material-design-icons/action/svg/production/ic_group_work_48px.svg", 48)
 		  .icon("view-module", "bower_components/material-design-icons/action/svg/production/ic_view_module_48px.svg", 48)
+		  .icon("view-list", "bower_components/material-design-icons/action/svg/production/ic_view_list_48px.svg", 48)
 		  .icon("verified-user", "bower_components/material-design-icons/action/svg/production/ic_verified_user_48px.svg", 48)
 		  .icon("perm-identity", "bower_components/material-design-icons/action/svg/production/ic_perm_identity_48px.svg", 48)
 		  .icon("search", "bower_components/material-design-icons/action/svg/production/ic_search_48px.svg", 48)

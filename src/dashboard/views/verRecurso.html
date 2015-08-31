@@ -1,25 +1,14 @@
-<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
-<div layout="column" class="relative" layout-fill role="main" flex>
-	
-	<md-progress-linear  ng-if="cargando" class="md-warn" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
-	<md-toolbar >
-		<div class="md-toolbar-tools" ng-init="ver('EvaluacionCalidad')">    
-			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
-		  <md-icon md-svg-icon="menu" ></md-icon>
-		    </md-button>   
-			<h2>
-			  <span>{{ 'VER' | translate }}</span>
-			</h2>
-			<span flex></span>
-   
-                                                           
-            <span ng-include="'src/app/views/menu-opciones.html'"></span>		
-			
-		</div>
-	</md-toolbar>
-	<md-content>
-<div class="imprimir">  
-<md-content  layout="column"  layour-align="center center"  >
+<md-dialog aria-label="{{'RECURSO' | translate}}" >
+<md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>{{'EVALUACION' | translate}} {{'RECURSO' | translate}}  # {{dato.id}}</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="hide()">
+        <md-icon md-svg-src="close" aria-label="Close"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+<div class="row" style="overflow:auto">
 		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
         		
             <md-content class="md-padding">
@@ -43,8 +32,9 @@
                     </md-input-container>
                  </md-list-item>
                  
-                 <md-content layout="column"  layour-align="center center" >
+                
 					<md-list layout-margin  layout-align="center center" >
+
                     	<md-input-container flex >
                             <div style="text-align:center" flex>                            
                             	<h4 style="font-size:1.3em">{{ dato.nombre }}</h4>
@@ -56,20 +46,20 @@
                                 
                                 <div  style="font-size:.7em; margin:20px;">
                                     <span flex="33.33">
-                                    	<strong>{{ 'JURISDICCION' | translate }}:</strong> {{ dato.jurisdiccion }}
+                                      <strong>{{ 'JURISDICCION' | translate }}:</strong> {{ dato.jurisdiccion }}
                                     </span>
                                     <span flex="33.33">
-                                    	<strong>{{ 'MUNICIPIO' | translate }}:</strong> {{ dato.municipio }}
+                                      <strong>{{ 'MUNICIPIO' | translate }}:</strong> {{ dato.municipio }}
                                     </span>
                                     <span flex="33.33">
-                                		<strong>{{ 'LOCALIDAD' | translate }}:</strong> {{ dato.localidad }}
+                                    <strong>{{ 'LOCALIDAD' | translate }}:</strong> {{ dato.localidad }}
                                     </span>
                                 </div>                               
                                 <md-divider ></md-divider>
                                 
                                 <div  style="font-size:.6em; margin:20px;">
                                     <span flex="50">
-                                    	<md-icon md-svg-icon="business"></md-icon>{{ dato.tipologia }}
+                                    	<md-icon md-svg-icon="business"></md-icon> {{ dato.tipologia }}
                                     </span>
                                     <span flex="50">
                                     	<md-icon md-svg-icon="style"></md-icon> {{ dato.tipoUnidad }}
@@ -87,12 +77,7 @@
 
                 	</md-list>
 				</md-content>
-			  </md-content>
-		</md-list>
-	</md-content>
-    
-    <div style="margin-top:40px"></div>
-    <md-content  layout="column"  layour-align="center center"  ng-init="cargarCriteriosVer()">
+	
 		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
         	<md-toolbar class="md-theme-light">
               <h2 class="md-toolbar-tools">
@@ -105,72 +90,46 @@
   <table md-data-table md-progress="datos">
     <thead >
       <tr>
-          <th width="40%" name="No Expediente:"></th>
-          <td ng-repeat="v in columnas" width="1%" align="center" name="{{ v }}" style=" font-size: 12px; color: rgba(0,0,0,.54);"><span class="texto-vertical">{{ v }}</span>
-          </td>
-          <th colspan="4"> </th>
-      </tr>
-    </thead>
-  <tbody> 
-
-      <tr style=" font-size: 12px; color: rgba(0,0,0,.54);">
-          <th width="50%" name="{{ 'INDICADOR' | translate}}"></th>
-          <th ng-repeat="v in columnas" width="1%" >{{ $index+1 }}</th>
-          <th name="{{ 'CRITERIO' | translate}}">{{ 'CRITERIO' | translate}}</th>
-          <th name="{{ 'APROBADO' | translate}}">{{ 'APROBADO' | translate}}</th>
-          <th name="{{ 'CUMPLE' | translate}}">{{ 'CUMPLE' | translate}}</th>
-          <th width="30%" name="{{ 'PORCENTAJE' | translate}}">{{ 'PORCENTAJE' | translate}}</th>
-     </tr>
-    
-    
+                        <th name="{{ 'INDICADOR' | translate}}"></th>
+                        <th name="{{ 'CRITERIO' | translate}}"></th>
+                        <th name="{{ 'APROBADO' | translate}}"></th>
+                        <th name="{{ 'PORCENTAJE' | translate}}"></th>
+                    </tr>
+                    </thead>
+    <tbody>
                     
-					<tr ng-repeat="value in indicadores">
+                    <tr ng-repeat="value in criterios.indicadores">
                                 
- 
-                        <td>{{ value.codigo }} | {{ value.indicador }}</td>
-                        <td ng-repeat="a in columnas"  style="background-color:{{ indicadorColumna[value.codigo][$index].color }};color:white; font-weight:bold; border: 1px #fff;">
-                        	{{ indicadorColumna[value.codigo][$index].total }}
-                        </td>
-                        
+                        <td>{{ value.codigo }} | {{ value.nombre }}</td>
+                        <td>{{ value.indicadores.totalCriterios }}</td>
+                        <td>{{ value.indicadores.totalAprobados }}</td>
                         <td>
-                        	{{ value.totalCriterio }}/{{ value.totalColumnas }}={{ value.totalCriterio / value.totalColumnas }}
-                        </td>
-                        <td>
-                        	{{ value.sumaCriterio }}
-                        </td>
-                        <td>
-                        	{{ value.totalCriterio==value.sumaCriterio ? 'Si' : 'No' }}
-                        </td>
-                        <td>
-                            <div class="progress" >
+                        	<div class="progress" >
                               <div class="progress-bar progress-bar-striped active progress-bar-default" role="progressbar"
-                              aria-valuenow="{{ value.porciento }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ value.porciento }}%; background:{{ value.color }}">
-                                {{ value.porciento }}%
-                            </div></div>
-						</td>					
-					</tr>
+                              aria-valuenow="{{ value.indicadores.totalPorciento }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ value.indicadores.totalPorciento }}%; background:{{ value.indicadores.totalColor }}">
+                                {{ value.indicadores.totalPorciento }}%
+                              </div></div>			
+                    	</td>
+                     
+                 	</tr>
     </tbody>
   </table>
 </md-data-table-container>
-                
+
             </md-content>
         </md-list>
-	</md-content>
-    
-    
-    <md-content  layout="column"  layour-align="center center"  >
+	
 		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
-        	<md-toolbar md-theme="altTheme" class="md-accent">
+        	<md-toolbar style="background-color:#F27900">
               <h2 class="md-toolbar-tools">
                 <span flex>{{ 'CRITERIO' | translate}}</span>                                 
               </h2> 
             </md-toolbar>
-            
-            <md-content  ng-repeat="(key, value) in criterios" ng-if="key != 'undefined'">
+            <md-content  ng-repeat="(key, value) in criterios | groupBy : 'lugarVerificacion'"  ng="'animate'" ng-if="key != 'undefined'">
             
                 <md-toolbar class="md-theme-light">
                   <h2 class="md-toolbar-tools">
-                    <span flex>{{ key }} | {{ value[0].lugar }}</span>                                 
+                    <span flex>{{ value[0].codigo }} | {{ key }}</span>                                 
                   </h2> 
                 </md-toolbar>
                 <md-content>
@@ -178,37 +137,36 @@
                 <md-data-table-container>
   <table md-data-table md-progress="datos">
     <thead >
-      <tr >
+      <tr ng-init="tieneHallazgo = (hallazgos[value[0].idlugarVerificacion]) ? true : false">
                   
                   	
-							<th width="40%" name="No Expediente:"></th>
-							<td ng-repeat="v in columnas"  width="1%" align="center" name="{{ v }}" style=" font-size: 12px; color: rgba(0,0,0,.54);">{{ v }}</td>
-						</tr>
-                        </thead>
+                        <th width="90%" name="{{ 'CRITERIO' | translate}}"></th>
+                        <th name="{{ 'APROBADO' | translate}}"></th>
+                    </tr>
+                    </thead>
     <tbody>
-						<tr ng-repeat="c in value" ng-init="x=$index">
-                   
-                        	<td width="40%">{{ c.nombre  }}</td>
-			 				<td ng-repeat="a in columnas"   ng-init="y=$index+1" width="1%">
-			 					
-                                <md-button class="md-raised"  style=" background-color: {{ marcados[key][y][x].aprobado == 1 ? '#7BE15E' : marcados[key][y][x].aprobado == 0 ? '#FF3C3C' : '#3198FF' }}; color:#FFF; font-weight:bold;">
-                            {{ marcados[key][y][x].aprobado == 1 ? 'Si' : marcados[key][y][x].aprobado == 0 ? 'No' : 'N/A' }} 
-                        		</md-button>
-			 				</td>
-							
-							
-						</tr>
+            
+                    <tr ng-repeat="c in value">
+                
+
+                    <td width="90%">{{ c.criterio  }}</td>
+                    
+                    <td>																						
+                        <md-button class="md-raised"  style="width:100%; background-color: {{ c.aprobado == 1 ? '#7BE15E' : c.aprobado == 0 ? '#FF3C3C' : '#3198FF' }}; color:#FFF; font-weight:bold;">
+                            {{ c.aprobado == 1 ? 'Si' : c.aprobado == 0 ? 'No' : 'N/A' }} 
+                        </md-button>
+                    </td>
+                </tr>
     </tbody>
   </table>
-</md-data-table-container>                                        
-                
-              </md-content>
+</md-data-table-container>
             
                 
             </md-content>
+            </md-content>
         </md-list>
-	</md-content>  
-  <md-content  layout="column"  layour-align="center center"   ng-if="hallazgos" >   <span ng-init="acciones();accionesPlazo()"></span>                            
+    
+    <md-content  layout="column"  layour-align="center center"   ng-if="hallazgos" >                               
     <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" ng-repeat="(key, dato) in hallazgos">
       
             
@@ -222,7 +180,7 @@
                       
             <md-input-container flex >     
                 <label>{{ 'HALLAZGO' | translate }}</label>
-                    <textarea ng-model="dato.descripcion" name="hallazgo" columns="1" maxlength="500" readonly>{{ dato.descripcion }}</textarea>      
+                    <textarea ng-model="dato.descripcion" name="hallazgo" columns="1" maxlength="500" readonly></textarea>      
                     
             </md-input-container>
 
@@ -250,18 +208,6 @@
 
       </md-list>
     </md-content>
-
-     <md-content  layout="column"  layour-align="center center" >               
-    <md-list layout-margin layout-align="center center" class="md-whiteframe-z1">
-    <div align="center">
-      {{ 'REPONSABLE' | translate }}
-      <div style="margin-top:50px;"><img ng-show="dato.firma" style="width:10%" src="data:image/png;base64,{{dato.firma}}"></div>
-      <hr style="margin-top:30px;width:300px;">
-      <div style="padding:15px;">{{ dato.nombres }} {{ dato.apellidoPaterno }} {{ dato.apellidoMaterno }}</div>
-    </div>
-    </md-list>
-    </md-content>
-  </div>
-  </md-content>
-  </div>
-  
+  </md-list>
+</div>
+</md-dialog>

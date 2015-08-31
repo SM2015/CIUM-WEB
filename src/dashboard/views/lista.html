@@ -19,13 +19,13 @@
 	<md-list layout="row" layout-wrap class="md-whiteframe-z1">
     
         
-        	<!-- inicio grafico abasto-->
-            <md-content  layout="column"  layour-align="center center" flex-md="100" flex-sm="100" flex-lg="100" flex="{{isFullscreen ? 100 : 50}}" fullscreen="isFullscreen" ng-controller="abastoController" id="abastoDialog">
+        	<!-- inicio grafico Recurso-->
+            <md-content  layout="column"  layour-align="center center" flex-md="100" flex-sm="100" flex-lg="100" flex="{{isFullscreen ? 100 : 50}}" fullscreen="isFullscreen" ng-controller="RecursoController" id="RecursoDialog">
                 <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="min-height:508px">
                 
                     <md-toolbar class="md-theme-light">
                       <h2 class="md-toolbar-tools">
-                        <span flex>{{ 'RU_ABASTO' | translate}}</span>                                 
+                        <span flex>{{ 'RU_RECURSO' | translate}}</span>                                 
                       </h2> 
                     </md-toolbar>
                     
@@ -46,18 +46,18 @@
                                             <md-icon md-svg-src="replay"></md-icon>
                                         </md-button>
                                         
-                                        <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-abasto')" id="max-abasto">
+                                        <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-Recurso')" id="max-Recurso">
                                             <md-icon md-svg-src="{{!isFullscreen ? 'zoom-in' : 'zoom-out'}}"></md-icon>
                                         </md-button>
                                         
-                                        <md-button class="md-icon-button" aria-label="Regresar" id="regresar-abasto" ng-click="regresar()" ng-if="contador>0">
+                                        <md-button class="md-icon-button" aria-label="Regresar" id="regresar-Recurso" ng-click="regresar()" ng-if="contador>0">
                                             <md-icon md-svg-src="arrow-back"></md-icon>
                                         </md-button>
                                     </span>
                                 
                                 
-                                <ol class="breadcrumb" style="margin-top: 0px;" ><li>Abastos </li><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
-                                <md-progress-linear  ng-if="abasto" style="top:-25px; left:0px;"  md-mode="indeterminate"></md-progress-linear>
+                                <ol class="breadcrumb" style="margin-top: 0px;" ><li>Recursos </li><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
+                                <md-progress-linear  ng-if="Recurso" style="top:-25px; left:0px;"  md-mode="indeterminate"></md-progress-linear>
 	
           <div style="width:96%;margin-left:2%; max-height:80% !important;" > 
 					<canvas  tc-chartjs-bar chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart"></canvas>
