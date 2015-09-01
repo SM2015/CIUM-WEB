@@ -2,8 +2,8 @@
 	'use strict';
 	angular.module('ModuloModule')
 	.controller('ModuloCtrl',
-	       ['$rootScope', '$translate', '$scope', '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash', 'listaOpcion', 'Criterios', 'URLS', 'CrudDataApi', 
-	function($rootScope,   $translate,   $scope,   $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,   listaOpcion, Criterios, URLS,   CrudDataApi){
+	       ['$rootScope', '$translate', '$scope', '$localStorage','$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash', 'listaOpcion', 'Criterios', 'URLS', 'CrudDataApi', 
+	function($rootScope,   $translate,   $scope,   $localStorage,  $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,   listaOpcion, Criterios, URLS,   CrudDataApi){
 	
 		 // cambia de color el menu seleccionado
 	$scope.menuSelected = "/"+$location.path().split('/')[1];
@@ -17,6 +17,11 @@
 	// inicializa el modulo ruta y url se le asigna el valor de la página actual
 	$scope.ruta="";
     $scope.url=$location.url();
+
+    $scope.permisoModificar = $localStorage.cium.menu.indexOf("SysModuloController.update")>=0 ? true : false;
+    $scope.permisoEliminar  = $localStorage.cium.menu.indexOf("SysModuloController.destroy")>=0 ? true : false;
+    $scope.permisoVer       = $localStorage.cium.menu.indexOf("SysModuloController.show")>=0 ? true : false;
+    $scope.permisoAgregar   = $localStorage.cium.menu.indexOf("SysModuloController.store")>=0 ? true : false;
 
     // cambia los textos del paginado de cada grid
     $scope.paginationLabel = {

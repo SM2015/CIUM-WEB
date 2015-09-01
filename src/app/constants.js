@@ -37,12 +37,6 @@ path: '/evaluacion-calidad',
 icono: 'event-note' 
   },
   {
-    titulo: "SEGUIMIENTO",
-    key: "SeguimientoController.index",
-    path: "/seguimiento",
-    icono: "check-box"
-  },
-  {
     titulo: "HALLAZGO",
     key: "HallazgoController.index",
     path: "/hallazgo",

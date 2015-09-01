@@ -2,8 +2,8 @@
 	'use strict';
 	angular.module('RecursoModule')
 	.controller('RecursoCtrl',
-	       ['$rootScope', '$translate', '$mdDialog', '$scope', '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash', 'listaOpcion', 'Criterios', 'CrudDataApi', 'URLS', 
-	function($rootScope,   $translate,   $mdDialog,   $scope,   $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,   listaOpcion,   Criterios,   CrudDataApi, URLS){
+	       ['$rootScope', '$translate', '$localStorage', '$mdDialog', '$scope', '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash', 'listaOpcion', 'Criterios', 'CrudDataApi', 'URLS', 
+	function($rootScope,   $translate,   $localStorage,   $mdDialog,   $scope,   $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,   listaOpcion,   Criterios,   CrudDataApi, URLS){
 	
 	// cambia de color el menu seleccionado
 	$scope.menuSelected = "/"+$location.path().split('/')[1];
@@ -17,6 +17,11 @@
 	// inicializa el modulo ruta y url se le asigna el valor de la página actual
 	$scope.ruta="";
     $scope.url=$location.url();
+
+    $scope.permisoModificar = $localStorage.cium.menu.indexOf("EvaluacionRecursoController.update")>=0 ? true : false;
+    $scope.permisoEliminar  = $localStorage.cium.menu.indexOf("EvaluacionRecursoController.destroy")>=0 ? true : false;
+    $scope.permisoVer       = $localStorage.cium.menu.indexOf("EvaluacionRecursoController.show")>=0 ? true : false;
+    $scope.permisoAgregar   = $localStorage.cium.menu.indexOf("EvaluacionRecursoController.store")>=0 ? true : false;
 
     // cambia los textos del paginado de cada grid
     $scope.paginationLabel = {
@@ -218,7 +223,7 @@
 	    		targetEvent: ev,
 	    		
 	    		scope: $scope.$new(),
-		        templateUrl: 'src/transaccion/evaluacion/views/ficha.html',
+		        templateUrl: 'src/transaccion/evaluacionRecurso/views/ficha.html',
 		        clickOutsideToClose: true			        			        	  
 	    });	    	   
 	};
@@ -606,9 +611,10 @@
 	//cerrar
 	$scope.cerrar = function(id) 
 	{
-		$scope.dato.cerrado = 1;
-		
-		$scope.modificar(id);
+		if ($window.confirm($translate.instant('CONFIRM_CERRAR'))) {
+			$scope.dato.cerrado = 1;			
+			$scope.modificar(id);
+		}		
 	};
 	//fin Recurso
 	

@@ -2,8 +2,8 @@
 	'use strict';
 	angular.module('CalidadModule')
 	.controller('CalidadCtrl',
-	       ['$rootScope', '$translate', '$mdDialog', '$scope', '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash', 'listaOpcion', 'Criterios', 'CrudDataApi', 'URLS', 
-	function($rootScope,   $translate,   $mdDialog,   $scope,   $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,   listaOpcion,   Criterios,   CrudDataApi, URLS){
+	       ['$rootScope', '$translate', '$localStorage','$mdDialog', '$scope', '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash', 'listaOpcion', 'Criterios', 'CrudDataApi', 'URLS', 
+	function($rootScope,   $translate,   $localStorage,  $mdDialog,   $scope,   $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,   listaOpcion,   Criterios,   CrudDataApi, URLS){
 	
 	// cambia de color el menu seleccionado
 	$scope.menuSelected = "/"+$location.path().split('/')[1];
@@ -17,6 +17,11 @@
 	// inicializa el modulo ruta y url se le asigna el valor de la página actual
 	$scope.ruta="";
     $scope.url=$location.url();
+
+    $scope.permisoModificar = $localStorage.cium.menu.indexOf("EvaluacionCalidadController.update")>=0 ? true : false;
+    $scope.permisoEliminar  = $localStorage.cium.menu.indexOf("EvaluacionCalidadController.destroy")>=0 ? true : false;
+    $scope.permisoVer       = $localStorage.cium.menu.indexOf("EvaluacionCalidadController.show")>=0 ? true : false;
+    $scope.permisoAgregar   = $localStorage.cium.menu.indexOf("EvaluacionCalidadController.store")>=0 ? true : false;
 
     // cambia los textos del paginado de cada grid
     $scope.paginationLabel = {
@@ -718,109 +723,117 @@
 	$scope.json = {};
 	$scope.tieneHallazgo=false;
 	$scope.aprobar = function(index,evaluacion,ap,exp,id)
-	{		
-		$scope.obtenerPromedio();
-		if(exp==null)exp=id; 
-		$scope.modificado = true;	
-		angular.forEach($scope.dato.aprobado, function(item, key) 
-		{
-			if(item==0)
+	{
+		if(!angular.isUndefined($scope.dato.expediente[exp]))
+		{	
+			$scope.obtenerPromedio();
+			if(exp==null)exp=id; 
+			$scope.modificado = true;	
+			angular.forEach($scope.dato.aprobado, function(item, key) 
 			{
-				$scope.tieneHallazgo=true;
-			}
-		});
-		if(!$scope.tieneHallazgo)
-			$scope.dato.hallazgos = {};
-		var indi = angular.element(document.querySelector('#indicador'));
-		var code = indi[0].innerText;
-		code = code.split(" - ");
-		var info = 0; var totalAprobado = 0; var totalCriterio = 0;
-		angular.forEach($scope.dato.aprobado[exp], function(item, key) 
-		{
-			totalAprobado++;
-		});
-		
-		totalCriterio=$scope.dato.totalCriterio[exp];
-		
-		angular.forEach($scope.informacion[exp], function(item, key) 
-		{
-			var existe = false; info++;
+				if(item==0)
+				{
+					$scope.tieneHallazgo=true;
+				}
+			});
+			if(!$scope.tieneHallazgo)
+				$scope.dato.hallazgos = {};
+			var indi = angular.element(document.querySelector('#indicador'));
+			var code = indi[0].innerText;
+			code = code.split(" - ");
+			var info = 0; var totalAprobado = 0; var totalCriterio = 0;
+			angular.forEach($scope.dato.aprobado[exp], function(item, key) 
+			{
+				totalAprobado++;
+			});
+			
+			totalCriterio=$scope.dato.totalCriterio[exp];
+			
 			angular.forEach($scope.informacion[exp], function(item, key) 
 			{
-				angular.forEach(item, function(v, k) 
+				var existe = false; info++;
+				angular.forEach($scope.informacion[exp], function(item, key) 
 				{
-					if(k==code[0])
-						existe=true;
-				})
+					angular.forEach(item, function(v, k) 
+					{
+						if(k==code[0])
+							existe=true;
+					})
+				});
+				if(existe)
+				{
+					$scope.informacion[exp][key][code[0]] = totalAprobado;
+				}
+				else
+				{
+					$scope.informacion[exp][key]=
+						{
+					      "id": $scope.dato.idIndicador,
+					      "codigo": code[0],
+					      "nombre": code[1],
+					      "total": totalCriterio
+					    };
+					$scope.informacion[exp][key][code[0]] = totalAprobado;
+				}
 			});
-			if(existe)
+			if(info==0)
 			{
-				$scope.informacion[exp][key][code[0]] = totalAprobado;
-			}
-			else
-			{
-				$scope.informacion[exp][key]=
+				$scope.informacion[exp]=[];
+				$scope.informacion[exp][0]=
 					{
 				      "id": $scope.dato.idIndicador,
 				      "codigo": code[0],
 				      "nombre": code[1],
 				      "total": totalCriterio
 				    };
-				$scope.informacion[exp][key][code[0]] = totalAprobado;
+				$scope.informacion[exp][0][code[0]] = totalAprobado;
 			}
-		});
-		if(info==0)
-		{
-			$scope.informacion[exp]=[];
-			$scope.informacion[exp][0]=
-				{
-			      "id": $scope.dato.idIndicador,
-			      "codigo": code[0],
-			      "nombre": code[1],
-			      "total": totalCriterio
-			    };
-			$scope.informacion[exp][0][code[0]] = totalAprobado;
-		}
-		var tco = 0; var tinc = 0;
-		$scope.misIndicadores=[]; 
+			var tco = 0; var tinc = 0;
+			$scope.misIndicadores=[]; 
 
-		angular.forEach($scope.informacion , function(val, key) 
-		{
-			angular.forEach(val , function(v, k) 
+			angular.forEach($scope.informacion , function(val, key) 
 			{
-				$scope.completo[v.id]= [];					
-				$scope.incompleto[v.id]= [];
-				$scope.misIndicadores.push(v.id);
-			})
-		}); 
-		angular.forEach($scope.informacion , function(val, key) 
-		{					
-			var exp=key;
-			angular.forEach($scope.misIndicadores , function(vl, ky) 
-			{
-				var co = 0; var inc = 0; 
 				angular.forEach(val , function(v, k) 
-				{ 
-					if(v[v.codigo] == v.total)
-					{
-						tco = tco + 1;
-						co = co + 1;
-					}
-					else
-					{
-						tinc = tinc + 1;
-						inc = inc + 1;
-					}
+				{
+					$scope.completo[v.id]= [];					
+					$scope.incompleto[v.id]= [];
+					$scope.misIndicadores.push(v.id);
+				})
+			}); 
+			angular.forEach($scope.informacion , function(val, key) 
+			{					
+				var exp=key;
+				angular.forEach($scope.misIndicadores , function(vl, ky) 
+				{
+					var co = 0; var inc = 0; 
+					angular.forEach(val , function(v, k) 
+					{ 
+						if(v[v.codigo] == v.total)
+						{
+							tco = tco + 1;
+							co = co + 1;
+						}
+						else
+						{
+							tinc = tinc + 1;
+							inc = inc + 1;
+						}
+					});
+					indi = vl; 
+					$scope.completo[indi][exp] = co;
+					$scope.incompleto[indi][exp] = inc;
 				});
-				indi = vl; 
-				$scope.completo[indi][exp] = co;
-				$scope.incompleto[indi][exp] = inc;
 			});
-		});
-		if(tinc == 0 && tco > 0)
-			$scope.terminado=true;
+			if(tinc == 0 && tco > 0)
+				$scope.terminado=true;
+			else
+				$scope.terminado=false;	
+		}
 		else
-			$scope.terminado=false;	
+		{
+			flash('warning', $translate.instant("NO_EXPEDIENTE"));
+			$scope.dato.aprobado[exp][index] = null;
+		}
 	};
 	$scope.esSeguimiento = false;
 	$scope.verSeguimiento = function(text)
@@ -837,9 +850,10 @@
 	//cerrar
 	$scope.cerrar = function(id) 
 	{
-		$scope.dato.cerrado = 1;
-		
-		$scope.modificar(id);
+		if ($window.confirm($translate.instant('CONFIRM_CERRAR'))) {
+			$scope.dato.cerrado = 1;			
+			$scope.modificar(id);
+		}
 	};
 	//fin calidad
 	

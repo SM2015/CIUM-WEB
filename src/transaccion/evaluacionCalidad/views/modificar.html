@@ -32,7 +32,7 @@
   {{ 'CERRAR_EV' | translate }}
 </md-button>
 <md-button class="md-icon-button"  ng-show="terminado" hide show-sm show-md show-lg show-sm ng-click="cerrar(dato.id)" ng-disabled="forma.$invalid" aria-label="{{ 'CERRAR_EV' | translate }}">
-  <md-icon md-svg-icon="save"></md-icon>
+  <md-icon md-svg-icon="check"></md-icon>
   <md-tooltip>
       {{ 'CERRAR_EV' | translate }}
     </md-tooltip>
@@ -137,7 +137,7 @@
         
         <md-input-container flex >    
           <label>{{ 'NUMERO_EXP' | translate }}: <strong>{{ a.id }}</strong></label>
-            <input  name="expediente" ng-model="dato.expediente[exp]" required ng-blur="validarNoRepetirExpediente(dato.expediente[exp],exp)" />
+            <input  name="expediente" ng-model="dato.expediente[exp]"  required ng-blur="validarNoRepetirExpediente(dato.expediente[exp],exp)" />
               <div ng-messages="formExp.expediente.$error">
                   <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>                                    
               </div>
@@ -246,13 +246,13 @@
                   <md-list-item class="md-3-line">
                     <div class="md-list-item-text">
                       <h3>{{ 'CUMPLE' | translate}}</h3>
-                      <p><md-button class="md-raised {{ dato.cumple[exp]==0 ? 'md-warn' : 'md-primary' }} ">{{ dato.cumple[exp] }}</md-button><input ng-model="dato.cumple[exp]" type="hidden"></p>
+                      <p><md-button class="md-raised {{ dato.cumple[exp]==0 ? 'md-warn' : 'md-primary' }} ">{{ dato.cumple[exp] == 0 ? 'No' : 'Si' }}</md-button><input ng-model="dato.cumple[exp]" type="hidden"></p>
                     </div>
                    
                     <div class="md-list-item-text">
                       <h3>{{ 'PROMEDIO' | translate}}</h3>
                       <h4>{{ dato.promedio[exp] }}%</h4>
-                      <p><md-progress-linear class="md-warn" md-mode="buffer" value="{{ dato.promedio[exp] }}" md-buffer-value="{{ dato.promedio[exp] }}">
+                      <p><md-progress-linear class="md-warn" md-mode="" value="{{ dato.promedio[exp] }}" md-buffer-value="{{ dato.promedio[exp] }}">
   </md-progress-linear><input ng-model="dato.promedio[exp]" type="hidden"></p>
                     </div>
                     
@@ -264,7 +264,7 @@
                     <div class="md-list-item-text">
                       <h3>{{ 'PROMEDIO_GRAL' | translate}}</h3>
                       <h4>{{ dato.promedioGeneral }} </h4>
-                      <p><md-progress-linear class="md-accent md-primary" md-mode="buffer" value="{{ dato.promedioGeneral }}" md-buffer-value="{{ dato.promedioGeneral }}">
+                      <p><md-progress-linear class="md-accent md-primary" md-mode="" value="{{ dato.promedioGeneral }}" md-buffer-value="{{ dato.promedioGeneral }}">
   </md-progress-linear><input ng-model="dato.promedioGeneral" type="hidden"></p>
                     </div>
                   </md-list-item>

@@ -60,15 +60,16 @@ app.factory('errorFlash', function($http, flash)
 			var datos=[];
 			if(angular.isObject(data))
 			{
+				var i=0;
 				angular.forEach(data, function(id, key) 
 				{
-					datos.push({ level: 'danger', text:id[0], x:'right', y:'top', t:'5000'});
+					i++; var tiempo = (1500*i);
+					datos.push({ level: 'danger', text: ''+id, x:'right', y:'top', t:tiempo});
 				});
 			}
 			else
 			{			
-				datos.push({ level: 'danger', text:':( "Ooops! Ocurrio un error (500) ', x:'right', y:'bottom', t:'3000'},
-					{ level: 'warning', text:':( Consulte el log de la consola ', x:'right', y:'bottom', t:'5000'});
+				datos.push({ level: 'danger', text:':( "Ooops! Ocurrio un error (500) ', x:'right', y:'bottom', t:'3000'});
 			}
 			console.debug(data);
 			flash(datos);
