@@ -75,7 +75,7 @@
     };
 	
 	$scope.datos = [];
-		
+	$scope.imprimirDetalle = true;	
 	// muestra el menu para aquellos dispositivos que por su tamaño es oculto
 	$scope.toggleMenu  = function  () {
 	    $mdSidenav('left').toggle();
@@ -112,7 +112,7 @@
 	    uri="/"+uri[1]+"/nuevo";
 	    $location.path(uri).search({id: null});
 	}
-
+	$scope.tamanoHeight = $window.innerHeight-230;
 	$scope.showSearch = false;
 	$scope.listaTemp={};
 	$scope.moduloName=angular.uppercase($location.path().split('/')[1]);
@@ -447,8 +447,8 @@
 			
 			if(data.status==200)
 			{						
-				$scope.criterios = data.data;	
-				$scope.hallazgos = data.hallazgos;			
+				$scope.indicadores = data.data;		
+				$scope.estadistica = data.estadistica;		
 			}
 			else
 			{
@@ -711,10 +711,10 @@
 
 			if(data.status==200)
 			{
-				$scope.id=data.data.id;
-				$scope.dato=data.data;
-				$scope.nombre=data.data.nombre;
-				$scope.clues=data.data.clues;
+				$scope.id = data.data.id;
+				$scope.dato = data.data;
+				$scope.nombre = data.data.nombre;
+				$scope.clues = data.data.clues;				
 			}
 			else
 			{

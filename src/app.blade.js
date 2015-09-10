@@ -71,7 +71,6 @@ app.factory('errorFlash', function($http, flash)
 			{			
 				datos.push({ level: 'danger', text:':( "Ooops! Ocurrio un error (500) ', x:'right', y:'bottom', t:'3000'});
 			}
-			console.debug(data);
 			flash(datos);
 		}
 	};
@@ -169,4 +168,10 @@ app.directive('focusMe', function($timeout, $parse) {
       });
     }
   };
+});
+
+app.filter('numberFixedLen', function () {
+    return function(a,b){
+        return(1e4+a+"").slice(-b)
+    }
 });

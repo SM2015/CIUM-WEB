@@ -3,7 +3,7 @@
 	
 	<md-progress-linear  ng-if="cargando" class="md-warn" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
 	<md-toolbar >
-		<div class="md-toolbar-tools" ng-init="ver('Seguimiento')">    
+		<div class="md-toolbar-tools" ng-init="ver('Hallazgo')">    
 			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
 		  <md-icon md-svg-icon="menu" ></md-icon>
 		    </md-button>   
@@ -11,120 +11,165 @@
 			  <span>{{ 'VER' | translate }}</span>
 			</h2>
 			<span flex></span>		
-			<span ng-include="'src/app/views/menu-opciones.html'"></span>
+      
+<a ng-click="secondClick(dato.indicador.codigo)">
+  <md-button hide-md hide-sm hide-lg aria-label="{{ 'REGRESAR' | translate }}" >
+    <md-icon md-svg-icon="arrow-back"></md-icon>
+    {{ 'REGRESAR' | translate }}
+  </md-button>
+
+  <md-button class="md-icon-button"  hide show-sm show-md show-lg  aria-label="{{ 'REGRESAR' | translate }}" >
+    <md-icon md-svg-icon="arrow-back"></md-icon>
+    <md-tooltip>
+          {{ 'REGRESAR' | translate }}
+        </md-tooltip>
+  </md-button> 
+</a>
+  
+<md-button hide-md hide-sm hide-lg  aria-label="{{ 'PDF' | translate }}" imprimir-div=".imprimir" >
+  <md-icon md-svg-icon="print"></md-icon>
+  {{ 'PDF' | translate }}
+</md-button>
+<md-button class="md-icon-button"  hide show-sm show-md show-lg imprimir-div=".imprimir" aria-label="{{ 'PDF' | translate }}" >
+  <md-icon md-svg-icon="print"></md-icon>
+  <md-tooltip>
+          {{ 'PDF' | translate }}
+        </md-tooltip>
+</md-button>
+
+<md-button hide-md hide-sm hide-lg  aria-label="ver"  ng-click="verEvaluacionCompleta()">
+  <md-icon md-svg-icon="remove-red-eye"></md-icon>
+  {{ 'VER_EVALUACION_COMPLETA' | translate }}
+</md-button>
+<md-button class="md-icon-button" hide show-sm show-md show-lg aria-label="Ver" ng-click="verEvaluacionCompleta()">
+  <md-icon md-svg-src="remove-red-eye"></md-icon>
+    <md-tooltip>
+    {{ 'VER_EVALUACION_COMPLETA' | translate }}
+  </md-tooltip>
+</md-button> 
+
+<md-button hide-sm class="md-icon-button" aria-label="{{ 'CAMBIAR_IDIOMA' | translate }}" ng-click="mostrarIdiomas($event)">
+  <md-icon md-svg-icon="language"></md-icon>
+        <md-tooltip>
+          {{ 'CAMBIAR_IDIOMA' | translate }}
+        </md-tooltip>
+</md-button>
+      
+<md-button hide-sm ng-click="logout()"  aria-label="{{ 'CERRAR_SESION' | translate }}">
+  <md-icon md-svg-icon="exit-to-app"></md-icon>
+  {{ 'CERRAR_SESION' | translate }}
+</md-button>
+
 		</div>
 	</md-toolbar>
-	<md-content class="imprimir">
-	
-
-<md-content  layout="column"  layour-align="center center"  >
-		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
-        		
-            <md-content class="md-padding">
-              <md-list-item layout-wrap ng-if="!update">
-              	<div  align="center" style="width:100%">
-                    <md-icon md-svg-icon="today"></md-icon>
-                    <span> {{dato.evaluacion.fechaEvaluacion}} </span>
-           			<br />
-                    <span> <strong style="font-size:.8em;">{{ dato.evaluacion.cerrado == 1 ? 'Cerrado' : 'Abierto' }}</strong> </span>
-                    
-                    <br />
-                    <span> <strong style="font-size:.8em;">{{ 'INDICADOR' | translate}}: {{ dato.indicador.nombre  }}</strong> </span>
-                  </div>
-              	
-              </md-list-item>
-              
-              
-              	<md-list-item style="margin-top:-35px;"> 
-                    <md-input-container flex >
-                         <input type="hidden" aria-label="idCone" ng-model="dato.evaluacion.idCone" name="idCone" required>
-                         <div ng-messages="forma.idCone.$error" >
-                            <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>                                    
-                        </div>
-                    </md-input-container>
-                 </md-list-item>
-            </md-content>     
-                 <md-content layout="column"  layour-align="center center" >
-					<md-list layout-margin  layout-align="center center" >
-                    	<md-input-container flex >
-                            <div style="text-align:center" flex>                            
-                            	<h4 style="font-size:1.3em">{{ dato.evaluacion.nombre }}</h4>
-                                <h5 style="font-size:1em"><md-icon md-svg-icon="star"></md-icon> {{ dato.evaluacion.clues }}</h5>
-                                <p style="font-size:.5em; margin-bottom:20px;">
-                                {{ dato.evaluacion.domicilio }}  <strong>CP: </strong> {{ dato.evaluacion.codigoPostal }}
-                                </p>
-                                <md-divider ></md-divider>
-                                
-                                <div  style="font-size:.7em; margin:20px;">
-                                    <span flex="33.33">
-                                    	<strong>{{ 'JURISDICCION' | translate }}:</strong> {{ dato.evaluacion.jurisdiccion }}
-                                    </span>
-                                    <span flex="33.33">
-                                    	<strong>{{ 'MUNICIPIO' | translate }}:</strong> {{ dato.evaluacion.municipio }}
-                                    </span>
-                                    <span flex="33.33">
-                                		<strong>{{ 'LOCALIDAD' | translate }}:</strong> {{ dato.evaluacion.localidad }}
-                                    </span>
-                                </div>                               
-                                <md-divider ></md-divider>
-                                
-                                <div  style="font-size:.6em; margin:20px;">
-                                    <span flex="50">
-                                    	<md-icon md-svg-icon="business"></md-icon> {{ dato.evaluacion.tipologia }}
-                                    </span>
-                                    <span flex="50">
-                                    	<md-icon md-svg-icon="style"></md-icon> {{ dato.evaluacion.tipoUnidad }}
-                                    </span>
-                                </div>
-                                <md-divider ></md-divider>
-                                
-                                <div  style="font-size:.7em; margin-top:20px">
-                                	<span class="col-xs-12">
-                                		<md-icon md-svg-icon="airline-seat-flat"></md-icon><strong> Nivel CONE:</strong> {{ dato.evaluacion.nivelCone }}
-                                    </span>
-                                </div>
-                            </div>
-						</md-input-container>
-
-                	</md-list>
-				</md-content>
-			  
-		</md-list>
-	</md-content>
+<md-content layout-padding>
+  <div class="imprimir" > 
     
-    <md-content  layout="column"  layour-align="center center" >
-		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
-        	<md-toolbar class="md-theme-light">
-              <h2 class="md-toolbar-tools">
-                <span flex>{{ 'HISTORIAL' | translate}} {{ dato.descripcion }}</span>                                 
-              </h2> 
-            </md-toolbar>
-            <md-content>
-            	
-                <md-data-table-container>
-  <table md-data-table md-progress="datos">
-    <thead md-order="query.order" md-trigger="onOrderChange">
-      <tr>
-                        <th hide-sm name="ID" order-by="id"></th>
-                        <th name="{{ 'USUARIO' | translate }}"></th>
-                        <th name="{{ 'DESCRIPCION' | translate }}"></th>				
-                        <th name="{{ 'CREADO' | translate }}"></th>								
+    <table  cellspacing="0" class="Tabla" align="right" style="margin-bottom:1em">
+            <tr style="background:#ddd">
+              <th colspan="4">{{'EVALUACION_RECURSO' | translate | uppercase}}</th>
+              <th>{{'FOLIO' | translate | uppercase}}</th>          
+            </tr>
+            <tr>
+              <th>{{'FECHA_EVALUACION' | translate}}:</th>
+              <td>{{dato.fechaEvaluacion | date:'MM/dd/yyyy'}}</td>
+              <th>{{'ESTADO' | translate}}:</th>
+              <td>{{ dato.cerrado  ? 'Cerrado' : 'Abierto' }}</td>
+              <th>{{dato.id | numberFixedLen:4}}</th>
+              
+            </tr>        
+          </table>
+          
+          <table width="100%" cellspacing="0" class="Tabla">
+            <caption>{{ 'DATOS_UNIDAD' | translate | uppercase}}</caption>
+              <tr>
+                <td><strong>{{'CLUES' | translate}}</strong></td>
+                <td>{{ dato.clues | uppercase}}</td>
+                <td><strong>{{'NIVEL_CONE' | translate}}</strong></td>
+                <td>{{ dato.nivelCone | uppercase}}</td>
+              </tr>
+              <tr>
+                <td><strong>{{'NOMBRE' | translate}}</strong></td>
+                <td colspan="3">{{ dato.nombre | uppercase}}</td>
+              </tr>
+              <tr>
+                <td><strong>{{'JURISDICCION' | translate}}</strong></td>
+                <td> {{ dato.jurisdiccion | uppercase}}</td>
+                <td><strong>{{'MUNICIPIO' | translate}}</strong></td>
+                <td>{{ dato.municipio | uppercase}}</td>
+              </tr>
+              <tr>
+                <td><strong>{{'ZONA' | translate}}</strong></td>
+                <td>{{ dato.zona | uppercase}}</td>
+                <td><strong>{{'TIPOLOGIA' | translate}}</strong></td>
+                <td>{{ dato.tipologia | uppercase}} | {{ dato.tipoUnidad | uppercase}}</td>
+              </tr>
+              <tr>
+                <td><strong>{{'DOMICILIO' | translate}}</strong></td>
+                <td colspan="3"> {{ dato.domicilio | uppercase}}  <strong>CP: </strong> {{ dato.codigoPostal }}</td>
+              </tr>
+            </table>
+          <br>
+     <h3 style="text-align:center; font-size:1em;" class="h3-caption">{{ 'DETALLES_EV' | translate | uppercase}}</h3>	  
+      
+      <div style="border: 2px solid #ccc; padding:0.5em; margin-bottom:1em;">
+        
+          <h3 style="line-height:1em;">
+            <span class="img-circle" style="background: {{ dato.indicador.color }}; display:block; height:1em; width:1em;float:left; margin-right:.5em"></span> 
+            {{dato.indicador.codigo}} | {{dato.indicador.nombre}}
+          </h3>
+            <div ng-repeat="(key, value) in dato.criteriosRecurso | groupBy : 'lugarVerificacion'" ng-if="key != 'undefined'" style="margin-bottom:0.5em">
+              <table width="100%" class="Tabla" style="border:0" cellspacing="0"  >                
+                  <thead>
+                    <tr>
+                      <th align="left">{{key}}</th>
+                      <th colspan="2" align="center">{{ 'APROBADO' | translate}}</th>
                     </tr>
-    </tbody>
-                    
-                    <tbody>
-      <tr md-auto-select ng-repeat="dato in dato.seguimiento">
-							
-                         <td hide-sm>{{ dato.id  }}</td>
-                         <td>{{ dato.usuario.nombres+' '+dato.usuario.apellidoPaterno+' '+dato.usuario.apellidoMaterno | uppercase }}</td>
-                         <td>{{ dato.descripcion }}</td>
-                         <td>{{ dato.creadoAl }}</td>
-                    
-                 </tr>
-    </tbody>
-  </table>
-</md-data-table-container>
-                </md-content>
-            </md-list>
-	</md-content>
-</md-content></div>				
+                    <tr>
+                      <th align="left">{{ 'CRITERIO' | translate}}</th>
+                      <th >{{ 'SI' | translate}}</th>
+                      <th >{{ 'NO' | translate}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="c in value">
+                        <td width="90%">{{ c.criterio  }}</td>
+                          <td width="1%" style="background-color: {{ c.aprobado == 1 ? '#7BE15E'  : '' }}; color:#000; font-weight:bold;">
+                            <md-icon md-svg-icon="{{ c.aprobado == 1 ? 'check'  : '' }} " ></md-icon>
+                        
+                          </td>
+                          <td width="1%" style="background-color: {{ c.aprobado == 0 ? '#FF3C3C' : '' }}; color:#000; font-weight:bold;">
+                            <md-icon md-svg-icon="{{ c.aprobado == 0 ? 'close'  : '' }} " ></md-icon>
+                        
+                          </td>
+                        </tr>
+                  </tbody>
+                </table>
+            </div>
+            
+         <table width="100%" class="Tabla" style="margin-bottom:0.5em">
+          <caption>{{ 'DETALLE' | translate  | uppercase}}</caption>
+          <thead >
+            <tr >                                                  
+              <th align="right" width="40%">{{'NUMERO_EXP' | translate}}</th>
+              <td style="vertical-align:bottom;text-align:center; height:{{ k.length/2.8 }}em;" ng-repeat="(k, v) in dato.criteriosCalidad" ng-if="k != 'criterios'" width="1%" align="center" name="{{ k }}" ><span class="texto-vertical">{{ k }}</span></td>
+            </tr>
+            <tr>
+              <th  align="left" >{{ 'CRITERIO' | translate}}s</th>
+              <td ng-repeat="(k, v) in dato.criteriosCalidad"  width="1%" align="center" ng-if="k != 'criterios'" style="font-size:.7em !important" >{{ $index+1 }}</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="(key, value) in dato.criteriosCalidad.criterios" ng-if="key != 'criterios'" ng-init="y=$index">
+              <td width="40%">{{ value.criterio  }}</td>
+              <td ng-repeat="(b, a) in dato.criteriosCalidad" ng-if="b != 'criterios'" width="1%" style=" background-color: {{ a[y].aprobado == 1 ? '#7BE15E' : a[y].aprobado == 0 ? '#FF3C3C' : '' }}; color:#FFF; font-weight:bold;">
+                      
+                   <md-icon md-svg-icon="{{ a[y].aprobado == 0 ? 'close' :  a[y].aprobado == 1 ? 'check': '' }} " style="width:80%"></md-icon>
+              </td>                                        
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </md-content>
+  </div>				

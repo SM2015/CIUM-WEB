@@ -1,0 +1,97 @@
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
+<div layout="column" class="relative" layout-fill role="main" flex>
+	
+	<md-progress-linear  ng-if="cargando" class="md-warn" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
+	<md-toolbar >
+		<div class="md-toolbar-tools" ng-init="ver('Hallazgo')">    
+			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
+		  <md-icon md-svg-icon="menu" ></md-icon>
+		    </md-button>   
+			<h2>
+			  <span>{{ 'EVALUACION' | translate }}</span>
+			</h2>
+			<span flex></span>		
+
+<a ng-click="firstClick(dato.id,true)">
+  <md-button hide-md hide-sm hide-lg aria-label="{{ 'REGRESAR' | translate }}" >
+    <md-icon md-svg-icon="arrow-back"></md-icon>
+    {{ 'REGRESAR' | translate }}
+  </md-button>
+
+  <md-button class="md-icon-button"  hide show-sm show-md show-lg  aria-label="{{ 'REGRESAR' | translate }}" >
+    <md-icon md-svg-icon="arrow-back"></md-icon>
+    <md-tooltip>
+          {{ 'REGRESAR' | translate }}
+        </md-tooltip>
+  </md-button> 
+</a>
+  
+<md-button hide-md hide-sm hide-lg  aria-label="{{ 'PDF' | translate }}" imprimir-div=".imprimir" >
+  <md-icon md-svg-icon="print"></md-icon>
+  {{ 'PDF' | translate }}
+</md-button>
+<md-button class="md-icon-button"  hide show-sm show-md show-lg imprimir-div=".imprimir" aria-label="{{ 'PDF' | translate }}" >
+  <md-icon md-svg-icon="print"></md-icon>
+  <md-tooltip>
+          {{ 'PDF' | translate }}
+        </md-tooltip>
+</md-button>
+
+<md-button hide-sm class="md-icon-button" aria-label="{{ 'CAMBIAR_IDIOMA' | translate }}" ng-click="mostrarIdiomas($event)">
+  <md-icon md-svg-icon="language"></md-icon>
+        <md-tooltip>
+          {{ 'CAMBIAR_IDIOMA' | translate }}
+        </md-tooltip>
+</md-button>
+      
+<md-button hide-sm ng-click="logout()"  aria-label="{{ 'CERRAR_SESION' | translate }}">
+  <md-icon md-svg-icon="exit-to-app"></md-icon>
+  {{ 'CERRAR_SESION' | translate }}
+</md-button>
+            
+		</div>
+	</md-toolbar>
+	<md-content class="imprimir" layout="column" layout-padding>
+	
+    <md-chips class="custom-chips" ng-model="eIndicador" readonly="true" >						
+        <md-chip-template>
+            <md-icon md-svg-src="brightness-1" style="float: left; margin-left: -.8em; margin-top: .2em; margin-right: .5em;color:{{ $chip.color }}"></md-icon>
+            <span class="chip-text"><strong>{{$chip.codigo}}</strong> {{ $chip.indicador }}</span>
+        </md-chip-template>			
+	</md-chips>
+        
+    <md-content  layout="column"  layour-align="center center"  >
+		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
+            <md-content layout="column" >  
+                    
+                    <section >						
+                        
+                        <md-list>	
+                                                        
+                            <md-list-item ng-repeat="c in dato" class="md-2-line" ng-click="verEvaluacion(c.idEvaluacion,c.categoriaEvaluacion)">	
+                                 	                        
+                                <div class="md-list-item-text">
+                                    
+                                    <h3>												
+                                        {{c.fechaEvaluacion}}                                        										
+                                    </h3>
+                                    
+                                    <p>
+                                        {{c.categoriaEvaluacion}} # {{c.idEvaluacion}} 
+                                        <br>   
+                                        <small> {{ c.clues }} {{c.nombre}} ({{c.jurisdiccion}}) </small>
+                                    </p>
+                                    
+                                </div>
+                                                            
+                                <md-divider></md-divider>
+                            </md-list-item>													
+                        </md-list>
+                        
+                    </section>
+                </md-content>
+		</md-list>
+	</md-content>
+
+    </md-content>
+</div>				

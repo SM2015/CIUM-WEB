@@ -113,8 +113,9 @@
 	    uri="/"+uri[1]+"/nuevo";
 	    $location.path(uri).search({id: null});
 	}
-
+	$scope.tamanoHeight = $window.innerHeight-355;
 	$scope.showSearch = false;
+	$scope.imprimirDetalle = true;
 	$scope.listaTemp={};
 	$scope.moduloName=angular.uppercase($location.path().split('/')[1]);
 	$scope.mostrarSearch = function(t)
@@ -455,54 +456,33 @@
 					{
 						op=0;
 					}
-
+					$scope.criterios = data.criterios;
 					angular.forEach(data.data , function(val, key) 
 					{
-						
-						var exp = val.registro.expediente;
+						var exp = val.expediente;
 						if(exp==0)
 						{ 
 							exp=1; var c=0;
 							angular.forEach($scope.dato.tempExpediente , function(valor, clave) 
 							{
 								if(c==0)
-									val.registro.expediente=valor;								
+									val.expediente=valor;								
 								c++;
 							});
 							
 						}
 						if($scope.dato.totalExpediente<total)
 							$scope.agregarColumna(exp);
-
-						$scope.criterios = val;
+						
 						if(angular.isUndefined($scope.dato.expediente))
 							$scope.dato.expediente=[];
-						$scope.dato.expediente[exp] = val.registro.expediente;
-						$scope.dato.cumple[exp] = val.registro.cumple;
-						$scope.dato.promedio[exp] = val.registro.promedio;
-						
-						
-						angular.forEach($scope.dato.aprobado[exp] , function(v, k) 
-						{ aprobado++; });
+						$scope.dato.expediente[exp] = val.expediente;
+						$scope.dato.cumple[exp] = val.cumple;
+						$scope.dato.promedio[exp] = val.promedio;
 
-						if(aprobado==0)
-							$scope.dato.aprobado[exp]={};
-
-						angular.forEach(val.aprobado , function(v1, k1) 
-						{
-							$scope.dato.aprobado[exp][v1]=1;
-						});
-						angular.forEach(val.noAprobado , function(v2, k2) 
-						{
-							$scope.dato.aprobado[exp][v2]=0;
-						});
-						angular.forEach(val.noAplica , function(v3, k3) 
-						{
-							$scope.dato.aprobado[exp][v3]=2;
-						});	
-
+						$scope.dato.aprobado[exp] = val.aprobado;									
 									    
-					});		
+					});	
 					$scope.obtenerPromedio();				    																			   
 				}
 				else					
@@ -1025,7 +1005,6 @@
 				  	$scope.nombre=$scope.dato.nombre;
 				  $scope.clues=data.data.clues;
 				  $scope.modificado=false;
-				  $scope.cargarCriterios();
 				  $mdDialog.hide();
 				}
 				else

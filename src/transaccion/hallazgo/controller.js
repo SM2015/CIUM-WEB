@@ -2,8 +2,8 @@
 	'use strict';
 	angular.module('HallazgoModule')
 	.controller('HallazgoCtrl',
-	       ['$rootScope', '$scope', '$translate',  '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash',   'CrudDataApi', 'URLS', 
-	function($rootScope,   $scope, $translate,   $mdSidenav,  $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,    CrudDataApi, URLS){
+	       ['$rootScope', '$scope', '$translate', '$mdSidenav', '$localStorage', '$mdUtil', '$log', '$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash',   'CrudDataApi', 'URLS', 
+	function($rootScope,   $scope,   $translate,   $mdSidenav,   $localStorage,   $mdUtil,   $log,   $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,    CrudDataApi, URLS){
 		
 	// cambia de color el menu seleccionado
 	$scope.menuSelected = "/"+$location.path().split('/')[1];
@@ -109,8 +109,8 @@
 	}
 
 	$scope.showSearch = false;
-	$scope.listaTemp={};
-	$scope.moduloName=angular.uppercase($location.path().split('/')[1]);
+	$scope.listaTemp = {};
+	$scope.moduloName = angular.uppercase($location.path().split('/')[1]);
 	$scope.mostrarSearch = function(t)
 	{
 		$scope.showSearch = ! $scope.showSearch;
@@ -135,78 +135,228 @@
 			right:'bower_components/material-design-icons/navigation/svg/production/ic_chevron_right_48px.svg'
 		}
 	}
-	
-	// agregar observaciones al seguimiento
-	$scope.agregar = function(msg,id) 
-	{
-		var json={'descripcion':msg, 'idHallazgo':id, 'evaluacion':$location.search().id};
-		
-		$http.post(URLS.BASE_API+"Seguimiento", json)
-		.success(function(data, status, headers, config) 
+	$scope.filtro = {};
+	$scope.filtro.historial = false;
+	$scope.filtro.indicador = [];
+	$scope.toggleRight = buildToggler('filtro');
+	$scope.toggleRightIndicadores = buildToggler('indicadores');
+	$scope.filtros = {};
+    $scope.filtros.activo = false;
+    function buildToggler(navID) {
+      var debounceFn =  $mdUtil.debounce(function(){
+            $mdSidenav(navID)
+              .toggle()
+              .then(function () {
+              });
+          },200);
+      return debounceFn;
+    };
+	$scope.tempIndicador = [];
+	$scope.toggle = function (item, list) {
+		var idx = list.indexOf(item.codigo);
+		if (idx > -1) 
+			list.splice(idx, 1);
+		else 
 		{
-			if(data.status == '201' || data.status == '200')
-			{							
-				flash('success', data.messages);				    		
-				$scope.ver('Seguimiento');
-			}
-			else
-		{
-			errorFlash.error(data);
+			list.push(item.codigo);
+			$scope.chipIndicador[item.codigo] = item;
 		}
-		})
-		.error(function(data, status, headers, config) 
-		{
-			errorFlash.error(data);
-		});
 	};
-	//cerrar concluir el seguimiento
-	$scope.cerrar = function(id) 
-	{
-		var json={'resuelto':1};
-		
-		$http.put(URLS.BASE_API+'Seguimiento/' + id, json)
-		.success(function(data, status, headers, config) 
-		{
-			if(data.status == '201' || data.status == '200')
-			{						
-				var uri=$scope.url.split('/');	
-				uri="/"+uri[1]+"/ver";
-				$location.path(uri).search({id: data.data.id});				    		
-			}
-			else
-		{
-			errorFlash.error(data);
-		}
-		})
-		.error(function(data, status, headers, config) 
-		{
-			errorFlash.error(data);
-		});
+	$scope.exists = function (item, list) {
+		return list.indexOf(item) > -1;
 	};
 	
-	// Ver. Muestra los datos del elemento que se le pase como parametro
+	$scope.cambiarVerTodoIndicador = function ()
+	{
+		if($scope.filtro.verTodosIndicadores)
+		{
+			$scope.filtro.indicador = [];
+			$scope.chipIndicador = [];
+			$scope.tempIndicador = [];
+		}
+	}
+	$scope.cambiarVerTodoUM = function ()
+	{
+		if($scope.filtro.verTodosUM)
+			$scope.filtro.um = [];
+	}
+	$scope.filtro.um = {};
+	$scope.mostrarCategoria=[];
+	$scope.filtro.verTodosIndicadores = true;
+	$scope.filtro.verTodosUM = true;
+	$scope.chipIndicador = [];
+	$scope.aplicarFiltro = function(avanzado,item)
+	{
+		$scope.filtros.activo=true;
+		$scope.filtro.indicador = $scope.tempIndicador;
+		if(!avanzado)
+		{
+			$scope.filtro.indicador = [];
+			$scope.filtro.verTodosIndicadores = false;
+			if($scope.filtro.indicador.indexOf(item.codigo) == -1)
+			{
+				$scope.filtro.indicador.push(item.codigo);
+				$scope.chipIndicador[item.codigo] = item;
+			}			
+			$mdSidenav('indicadores').close();
+		}		
+		$scope.init();
+	};
+	$scope.quitarFiltro = function(avanzado)
+	{
+		$scope.filtro.indicador = [];
+		$scope.filtro.um = {};
+		$scope.filtro.verTodosIndicadores = true;
+		$scope.filtro.verTodosUM = true;
+		$scope.filtros.activo=false;
+		$scope.init();
+	};
+	$scope.history = function()
+	{
+		$scope.init();
+	}
+	
+	$scope.firstClick = function(id,ev)
+	{
+		id = angular.isUndefined(id) ? $scope.filtro.umActiva : id;
+		$localStorage.cium.filtro.umActiva = id;
+		if($scope.filtro.indicador.length>1||$scope.filtro.verTodosIndicadores)
+		{
+			$localStorage.cium.filtro.nivel = 1;
+			$location.path("/hallazgo/indicadores").search({id: id});
+		}
+		else
+		{
+			if(ev)
+				$location.path("/hallazgo").search({id: null});
+			else{
+				$localStorage.cium.filtro.nivel = 2;
+				$localStorage.cium.filtro.tipo = null;
+				$location.path("/hallazgo/evaluaciones").search({id: $scope.filtro.indicador[0]});
+			}
+		}
+	};
+	$scope.secondClick = function(id)
+	{
+		$localStorage.cium.filtro.nivel = 2;
+		$localStorage.cium.filtro.tipo = null;		
+		$location.path("/hallazgo/evaluaciones").search({id: id});
+	}
+	$scope.verEvaluacion = function(id,tipo)
+	{
+		$localStorage.cium.filtro.nivel = 3;
+		$localStorage.cium.filtro.tipo = tipo;
+		$localStorage.cium.filtro.indicadorActivo = $location.search().id;
+		$location.path("/hallazgo/ver").search({id: id,});
+	}
+	
+	$scope.verEvaluacionCompleta = function()
+	{
+		var id = $location.search().id;
+		if($scope.filtro.tipo == "CALIDAD" )
+			$location.path("/evaluacion-calidad/ver").search({id: id,});
+		if($scope.filtro.tipo == "RECURSO" )
+			$location.path("/evaluacion-recurso/ver").search({id: id,});
+	}
+	// inicializa las rutas para crear los href correspondientes en la vista actual
+	$scope.index = function(ruta) 
+	{
+	  $scope.ruta=ruta;  
+	  var uri=$scope.url;
+
+	  if(uri.search("nuevo")==-1)
+	  $scope.init();     
+	};
+	
+	// obtiene los datos necesarios para crear el grid (listado)
+    $scope.init = function(buscar,columna) 
+	{
+		var url=$scope.ruta;
+		buscar = $scope.buscar;
+		var pagina=$scope.paginacion.pag;
+		var limite=$scope.paginacion.lim;
+	
+		var order=$scope.query.order;
+	
+		if(!angular.isUndefined(buscar))
+			limite=limite+"&columna="+columna+"&valor="+buscar+"&buscar=true";
+		$scope.cargando=true;
+		$localStorage.cium.filtro = $scope.filtro;
+      	CrudDataApi.lista(url+'?pagina=' + pagina + '&limite=' + limite+"&order="+order+"&filtro="+JSON.stringify($scope.filtro), function (data) {
+        if(data.status  == '407')
+        	$window.location="acceso";
+
+      		if(data.status==200)
+      		{				
+				$scope.jurisdicciones = [];
+				$scope.municipios = [];
+				$scope.localidades = [];
+				$scope.cones = [];
+				
+    			$scope.datos = data.data;
+				angular.forEach(data.filtroUM , function(val, key) {
+					if($scope.jurisdicciones.indexOf(val.jurisdiccion)==-1)
+						$scope.jurisdicciones.push(val.jurisdiccion);
+					
+					if($scope.municipios.indexOf(val.municipio)==-1)
+						$scope.municipios.push(val.municipio);
+					
+					if($scope.localidades.indexOf(val.localidad)==-1)
+						$scope.localidades.push(val.localidad);
+					
+					if($scope.cones.indexOf(val.cone)==-1)
+						$scope.cones.push(val.cone);
+				});
+				$scope.datos.indicadores = data.indicadores;
+				$scope.total = data.totalIndicador;
+    			$scope.paginacion.paginas = data.total;
+				$scope.cargando=false;
+      		}
+      		else
+			{
+				$scope.cargando=false;
+				errorFlash.error(data);
+			}
+      		$scope.cargando = false;
+        },function (e) {
+      		errorFlash.error(e);
+      		$scope.cargando = false;
+        });
+    };
+	
+	// incia la busqueda con los parametros, columna = campo donde buscar, buscar = valor para la busqueda
+	$scope.buscarL = function(buscar,columna) 
+	{
+		$scope.cargando = true;
+		$scope.init(buscar,columna);
+	};	
+	
+	//Ver. Muestra el detalle del id del recurso
 	$scope.ver = function(ruta) 
 	{
-		$scope.ruta=ruta;
-		
-		var url=$scope.ruta;
-		
+		$scope.ruta=ruta;		
+		var url=$scope.ruta;		
 		var id=$location.search().id;
-
-		CrudDataApi.ver(url, id, function (data) {
+		$scope.cargando=true;
+		$scope.filtro = $localStorage.cium.filtro;
+		CrudDataApi.ver(url, id+"?filtro="+JSON.stringify($scope.filtro), function (data) {
 			if(data.status  == '407')
 				$window.location="acceso";
 
 			if(data.status==200)
 			{
-				$scope.id=data.data.id;
 				$scope.dato=data.data;
+				if($localStorage.cium.filtro.nivel==2)
+				{
+					$scope.eIndicador=[];
+					$scope.eIndicador.push(data.data[0]);	
+				}			
 			}
 			else
-		{
-			errorFlash.error(data);
-		}
-				$scope.cargando = false;
+			{
+				errorFlash.error(data);
+			}
+			$scope.cargando = false;
 			},function (e) {
 				errorFlash.error(e);
 				$scope.cargando = false;

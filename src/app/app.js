@@ -38,10 +38,7 @@
 									'RecursoModule',
 									'CalidadModule',
 									'DashboardModule',
-									'NotificacionModule',
-									'PendienteModule',
 									'DatoModule',
-									'SeguimientoModule',
 									'HallazgoModule']);
 	   
 	app.config(['$mdThemingProvider','$mdIconProvider','$routeProvider','$httpProvider','$translateProvider',function($mdThemingProvider,$mdIconProvider,$routeProvider,$httpProvider,$translateProvider){
@@ -93,6 +90,10 @@
 		  .icon("zoom-out", "bower_components/material-design-icons/action/svg/production/ic_zoom_out_24px.svg", 48)
 		  .icon("supervisor-accoun", "bower_components/material-design-icons/action/svg/production/ic_supervisor_account_24px.svg", 48)
 		  .icon("autorenew", "bower_components/material-design-icons/action/svg/production/ic_autorenew_24px.svg", 48)
+		  .icon("history", "bower_components/material-design-icons/action/svg/production/ic_history_24px.svg", 48)
+		  .icon("perm-data-setting", "bower_components/material-design-icons/action/svg/production/ic_perm_data_setting_24px.svg", 48)
+		  .icon("build", "bower_components/material-design-icons/action/svg/production/ic_build_24px.svg", 48)
+		  .icon("settings", "bower_components/material-design-icons/action/svg/production/ic_settings_24px.svg", 48)
 		  
 		  // Content
 		  .icon("save", "bower_components/material-design-icons/content/svg/production/ic_save_48px.svg", 48)
@@ -100,7 +101,7 @@
 		  .icon("remove", "bower_components/material-design-icons/content/svg/production/ic_remove_48px.svg", 48)
 		  .icon("report", "bower_components/material-design-icons/content/svg/production/ic_report_48px.svg", 48)
 		  .icon("content-paste", "bower_components/material-design-icons/content/svg/production/ic_content_paste_48px.svg", 48)
-		  
+		  .icon("flag", "bower_components/material-design-icons/content/svg/production/ic_flag_48px.svg", 48)
 		  
 		  // Editor
 		  .icon("format-list-numbered", "bower_components/material-design-icons/editor/svg/production/ic_format_list_numbered_48px.svg", 48)
@@ -120,6 +121,7 @@
 		  // Navigation
 		  .icon("menu", "bower_components/material-design-icons/navigation/svg/production/ic_menu_48px.svg", 48)
 		  .icon("check", "bower_components/material-design-icons/navigation/svg/production/ic_check_48px.svg", 48)
+		  .icon("cancel", "bower_components/material-design-icons/navigation/svg/production/ic_cancel_48px.svg", 48)
 		  .icon("arrow-forward", "bower_components/material-design-icons/navigation/svg/production/ic_arrow_forward_48px.svg", 48)
 		  .icon("arrow-back", "bower_components/material-design-icons/navigation/svg/production/ic_arrow_back_48px.svg", 48)
 		  .icon("chevron-right", "bower_components/material-design-icons/navigation/svg/production/ic_chevron_right_48px.svg", 48)
@@ -127,13 +129,16 @@
 		  .icon("expand-more", "bower_components/material-design-icons/navigation/svg/production/ic_expand_more_48px.svg", 48)
 		  .icon("expand-less", "bower_components/material-design-icons/navigation/svg/production/ic_expand_less_48px.svg", 48)
 		  .icon("close", "bower_components/material-design-icons/navigation/svg/production/ic_close_48px.svg", 48)
+		  .icon("more-vert", "bower_components/material-design-icons/navigation/svg/production/ic_more_vert_48px.svg", 48)
 		  
 		  // Image
 		  .icon("image", "bower_components/material-design-icons/image/svg/production/ic_image_48px.svg", 48)
 		  .icon("panorama", "bower_components/material-design-icons/image/svg/production/ic_panorama_48px.svg", 48)
+		  .icon("flash-on", "bower_components/material-design-icons/image/svg/production/ic_flash_on_48px.svg", 48)
 		  .icon("picture-as-pdf", "bower_components/material-design-icons/image/svg/production/ic_picture_as_pdf_48px.svg", 48)
 		  .icon("remove-red-eye", "bower_components/material-design-icons/image/svg/production/ic_remove_red_eye_48px.svg", 48)
 		  .icon("style", "bower_components/material-design-icons/image/svg/production/ic_style_48px.svg", 48)
+		  .icon("brightness-1", "bower_components/material-design-icons/image/svg/production/ic_brightness_1_48px.svg", 48)
 		  .icon("brightness-3", "bower_components/material-design-icons/image/svg/production/ic_brightness_3_48px.svg", 48)
 		  .icon("brightness-4", "bower_components/material-design-icons/image/svg/production/ic_brightness_4_48px.svg", 48)
 		  .icon("brightness-5", "bower_components/material-design-icons/image/svg/production/ic_brightness_5_48px.svg", 48)		  
@@ -143,7 +148,8 @@
 		  .icon("people", "bower_components/material-design-icons/social/svg/production/ic_people_48px.svg", 48)
 		  .icon("notifications", "bower_components/material-design-icons/social/svg/production/ic_notifications_48px.svg", 48)
 		  .icon("notifications-off", "bower_components/material-design-icons/social/svg/production/ic_notifications_off_48px.svg", 48)
-		  .icon("notifications-on", "bower_components/material-design-icons/social/svg/production/ic_notifications_on_48px.svg", 48)		  		  
+		  .icon("notifications-on", "bower_components/material-design-icons/social/svg/production/ic_notifications_on_48px.svg", 48)
+		  .icon("mood-bad", "bower_components/material-design-icons/social/svg/production/ic_mood_bad_48px.svg", 48)		  		  
 		  
 		  // Alert
 		  .icon("error", "bower_components/material-design-icons/alert/svg/production/ic_error_48px.svg", 48)
@@ -178,17 +184,38 @@
 		  ;
 		
 		// Configuramos tema de material design
+		$mdThemingProvider.definePalette('amazingPalette', {
+			'50': 'd0f8ce',
+			'100': 'a3e9a4',
+			'200': '72d572',
+			'300': '42bd41',
+			'400': 'ffffff',
+			'500': '259b24',
+			'600': '037902',
+			'700': '026801',
+			'800': 'ffffff',
+			'900': 'ffffff',
+			'A100': 'ffffff',
+			'A200': 'ffffff',
+			'A400': 'ffffff',
+			'A700': 'ffffff',
+			'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
+												// on this palette should be dark or light
+			'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+			'200', '300', '400', 'A100'],
+			'contrastLightColors': undefined    // could also specify this if default was 'dark'
+		});
+		
 		$mdThemingProvider.theme('default')
-	    .primaryPalette('green')
+	    .primaryPalette('amazingPalette',{'hue-1':'600','hue-2':'200','hue-3':'A100'})
 	    .warnPalette('red')
 	    .accentPalette('light-green');
 	  
-		  $mdThemingProvider.theme('altTheme')
-		    .primaryPalette('grey',{'default':'50'})
-		    .warnPalette('pink')
-	    	.accentPalette('orange');
-
-			  
+		$mdThemingProvider.theme('altTheme')
+		.primaryPalette('grey',{'default':'50'})
+		.warnPalette('pink')
+	    .accentPalette('orange');
+		
 		// Configuramos las rutas
 		
 		$routeProvider.when('/',{

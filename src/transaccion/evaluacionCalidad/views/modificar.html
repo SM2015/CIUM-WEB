@@ -78,9 +78,6 @@
 	
 <form name="forma">   
 
-  <div ng-init="verTarjeta=false"  layout="row" layout-wrap flex >  
-
-    <div flex="verTarjeta ? 65 : 100" flex-md="100" flex-lg="100" flex-sm="100" layout="column" layout-wrap >
       <md-content  ng-init="opciones('Indicador?categoria=CALIDAD')" flex>
         <md-list layout-margin class="md-whiteframe-z1" layour-align="center center" flex>
             
@@ -128,7 +125,7 @@
           <md-list-item layout-wrap flex>
           	<md-content flex>
          
-<md-tabs md-dynamic-height md-border-bottom ng-if="dato.totalExpediente>0">
+<md-tabs md-dynamic-height md-border-bottom ng-if="dato.totalExpediente>0" class="mitab">
 	<md-tab  ng-repeat="a in columnas"  label="{{a.id}}" ng-init="col=$index">
     
     <md-list-item ng-init="exp = a.exp != null ? a.exp : a.id " layout="row" layout-wrap >
@@ -187,155 +184,122 @@
                   </md-button>
                 </md-menu-item>
               </md-menu-content>
-            </md-menu>
-            <md-button style="float:right;" class="md-icon-button  md-warn"  ng-click="borrarExpediente(exp,col)" aria-label="{{ 'ELIMINAR' | translate }}" >
-                            <md-icon md-svg-icon="delete"></md-icon>
-                            <md-tooltip>
-                                    {{ 'ELIMINAR_EXP' | translate }}
-                                  </md-tooltip>
-                          </md-button>
-          </md-content>
-        </md-input-container>
+                        </md-menu>
+                        <md-button style="float:right;" class="md-icon-button  md-warn"  ng-click="borrarExpediente(exp,col)" aria-label="{{ 'ELIMINAR' | translate }}" >
+                          <md-icon md-svg-icon="delete"></md-icon>
+                          <md-tooltip>
+                            {{ 'ELIMINAR_EXP' | translate }}
+                          </md-tooltip>
+                        </md-button>
+                      </md-content>
+                    </md-input-container>
        
-        </ng-form>
-      </md-list-item>
-      
-      <md-list-item ng-repeat="(key, value) in criterios | groupBy :  'lugarVerificacion'" ng-if="key != 'undefined' ">   
-  	  	<md-content style="width:100%">
-              
-        <md-toolbar flex> 
-          <h2 class="md-toolbar-tools">
-            <span flex>{{ key }}</span>                                 
-          </h2> 
-        </md-toolbar>
-        
-        <md-list >
-          <md-subheader class="md-no-sticky">{{ 'CRITERIO' | translate }} <span style="float:right"> {{ 'APROBADO' | translate }}</span></md-subheader>
-          <md-list-item ng-repeat="c in value">
-          <p >  {{ c.criterio }} </p>
-          <md-radio-group layout="row" layout-wrap 
-                      ng-model="dato.aprobado[exp][c.idCriterio]" 
-                      ng-change="aprobar(c.idCriterio,dato.id,value[0].idlugarVerificacion,exp,a.id)" 
-                      ng-init="criterios.noAplica.indexOf(c.idCriterio)>-1 ? dato.aprobado[c.idCriterio]=2 : criterios.aprobado.indexOf(c.idCriterio)>-1 ? dato.aprobado[c.idCriterio]=1 : criterios.noAprobado.indexOf(c.idCriterio)>-1 ? dato.aprobado[c.idCriterio]=0 : ''">
-                           
-                  <div flex="33"><md-radio-button value="1" class="md-primary">{{ 'SI' | translate}}</md-radio-button></div>
-                  <div flex="33"><md-radio-button value="0" class="md-warn">{{ 'NO' | translate}}</md-radio-button></div>
-                  <!-- <div flex="33"><md-radio-button value="2" class="md-primary">{{ 'NA' | translate}}</md-radio-button></div> -->
-                              
-                              
-                </md-radio-group>
-                <md-divider></md-divider>
-          </md-list-item>
-                    
-          
-        </md-list>
-        </md-content>
-      </md-list-item>
-        
-    
-    <md-list-item >
-      <md-content flex>
-        <md-list layout-margin  layout-align="center center" >
-            <md-toolbar class="md-theme-light">
-              <h2 class="md-toolbar-tools">
-                <span flex>{{ 'ESTADISTICA' | translate}}</span>                                 
-              </h2> 
-            </md-toolbar>
-            <md-content>
-                <md-list>
-                  <md-list-item class="md-3-line">
-                    <div class="md-list-item-text">
-                      <h3>{{ 'CUMPLE' | translate}}</h3>
-                      <p><md-button class="md-raised {{ dato.cumple[exp]==0 ? 'md-warn' : 'md-primary' }} ">{{ dato.cumple[exp] == 0 ? 'No' : 'Si' }}</md-button><input ng-model="dato.cumple[exp]" type="hidden"></p>
-                    </div>
-                   
-                    <div class="md-list-item-text">
-                      <h3>{{ 'PROMEDIO' | translate}}</h3>
-                      <h4>{{ dato.promedio[exp] }}%</h4>
-                      <p><md-progress-linear class="md-warn" md-mode="" value="{{ dato.promedio[exp] }}" md-buffer-value="{{ dato.promedio[exp] }}">
-  </md-progress-linear><input ng-model="dato.promedio[exp]" type="hidden"></p>
-                    </div>
-                    
-                    
-                  </md-list-item>
-                
-                  <hr />
-                  <md-list-item class="md-3-line">
-                    <div class="md-list-item-text">
-                      <h3>{{ 'PROMEDIO_GRAL' | translate}}</h3>
-                      <h4>{{ dato.promedioGeneral }} </h4>
-                      <p><md-progress-linear class="md-accent md-primary" md-mode="" value="{{ dato.promedioGeneral }}" md-buffer-value="{{ dato.promedioGeneral }}">
-  </md-progress-linear><input ng-model="dato.promedioGeneral" type="hidden"></p>
-                    </div>
-                  </md-list-item>
-                </md-list>
-            </md-content>
+                  </ng-form>
+                </md-list-item>
+
+                <md-list-item >   
+                  <md-content style="width:100%; height: {{tamanoHeight}}px; overflow-x:hidden;"> 
+                    <section>
+                      <div ng-repeat="(key, value) in criterios | groupBy :  'lugarVerificacion'" ng-if="key != 'undefined' "  style="margin-bottom:1em;border: 1px solid #eee"> 
+                        <md-subheader class="md-primary">{{key}}</md-subheader>
+                        <md-list >
+                          <md-subheader class="md-no-sticky" style="background:#eee;width:100%;">{{ 'CRITERIO' | translate }} <span style="float: right;margin-right: 5.3em;display: block;"> {{ 'APROBADO' | translate }}</span></md-subheader>
+                          <md-list-item ng-repeat="c in value" style="border-top: 1px solid #ddd">
+                          <p >  {{ c.criterio }} </p>
+                          <md-radio-group layout="row" layout-wrap 
+                                      ng-model="dato.aprobado[exp][c.idCriterio]" 
+                                      ng-change="aprobar(c.idCriterio,dato.id,value[0].idlugarVerificacion,exp,a.id)">
+                                           
+                                  <div flex="33"><md-radio-button value="1" class="md-primary">{{ 'SI' | translate}}</md-radio-button></div>
+                                  <div flex="33"><md-radio-button value="0" class="md-warn">{{ 'NO' | translate}}</md-radio-button></div>
+                                  <!-- <div flex="33"><md-radio-button value="2" class="md-primary">{{ 'NA' | translate}}</md-radio-button></div> -->                                                        
+                                </md-radio-group>
+                          </md-list-item>                                  
+                        </md-list>
+                      </div>
+                    </section>
+                  </md-content>
+                </md-list-item>
             
-         </md-list>
-      </md-content>
-    </md-list-item>
-    
-  </md-tab>
-</md-tabs>        
-           
-            </md-content>
-          </md-list-item>
+                <md-list-item >
+                  <md-content style="width:99.5%">
+                    <md-list layout-margin  layout-align="center center" > 
+                      <div style="margin-bottom:1em;border: 1px solid #eee; margin-left:8px">           
+                      <md-subheader class="md-primary">{{ 'ESTADISTICA' | translate}}</md-subheader>
+                        <md-content>
+                          <md-list>
+                            <md-list-item class="md-3-line">
+                              <div class="md-list-item-text">
+                                <md-button class="md-raised {{ dato.cumple[exp]==0 ? 'md-warn' : 'md-primary' }} ">{{ dato.cumple[exp] == 0 ? 'No' : 'Si' }} {{ 'CUMPLE' | translate}}</md-button><input ng-model="dato.cumple[exp]" type="hidden">
+
+                              </div>                   
+                              <div class="md-list-item-text">
+                                <h3>{{ 'PROMEDIO' | translate}}</h3>
+                                <h4>{{ dato.promedio[exp] }}%</h4>
+                                <p><md-progress-linear class="md-warn" md-mode="" value="{{ dato.promedio[exp] }}" md-buffer-value="{{ dato.promedio[exp] }}">
+            </md-progress-linear><input ng-model="dato.promedio[exp]" type="hidden"></p>
+                              </div>                                      
+                            </md-list-item>                
+                            <hr />
+                            <md-list-item class="md-3-line">
+                              <div class="md-list-item-text">
+                                <h3>{{ 'PROMEDIO_GRAL' | translate}}</h3>
+                                <h4>{{ dato.promedioGeneral }} </h4>
+                                <p>
+                                  <md-progress-linear class="md-accent md-primary" md-mode="" value="{{ dato.promedioGeneral }}" md-buffer-value="{{ dato.promedioGeneral }}">
+                                  </md-progress-linear><input ng-model="dato.promedioGeneral" type="hidden">
+                                </p>
+                              </div>
+                            </md-list-item>
+                          </md-list>
+                        </md-content>  
+                      </div>        
+                    </md-list>
+                  </md-content>
+                </md-list-item>
+              </md-tab>
+            </md-tabs>                   
+          </md-content>
+        </md-list-item>
           
+        <span ng-init="acciones();accionesPlazo()"></span>                                     
+        
+      </md-list>
 
-		
-    <span ng-init="acciones();accionesPlazo()"></span>                         
-    <md-list-item ng-if="tieneHallazgo" > 
-      <md-list layout-margin  layout-align="center center" style="width:100%">
-   		
-          	
-          <md-toolbar class="md-accent md-warn" >
-              <h2 class="md-toolbar-tools">
-                <span flex>{{ 'HALLAZGO' | translate }}</span>                                 
-              </h2>
-          </md-toolbar>
-
-        	<md-list-item>
-                    	
+      <md-list ng-if="tieneHallazgo" layout-margin class="md-whiteframe-z1" layour-align="center center" flex> 
+          <md-subheader class="md-warn">{{ 'HALLAZGO' | translate }}</md-subheader>
+          <md-list-item>              
             <md-input-container flex >     
-                <label>{{ 'HALLAZGO' | translate }}</label>
-                    <textarea ng-model="dato.hallazgos.descripcion" name="hallazgo" columns="1" maxlength="500" ></textarea>			
-                    <div ng-messages="forma.hallazgo.$error" >
-                        <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>                                    
-                    </div>
+              <label>{{ 'HALLAZGO' | translate }}</label>
+              <textarea ng-model="dato.hallazgos.descripcion" name="hallazgo" columns="1" maxlength="500" ></textarea>      
+              <div ng-messages="forma.hallazgo.$error" >
+                <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>                                    
+              </div>
             </md-input-container>
-
           </md-list-item>
           <md-list-item >
-
             <md-input-container flex >     
-               <md-select  ng-model="dato.hallazgos.idAccion"  id="accion" placeholder="{{ 'ACCION' | translate }}" >
-                        <md-optgroup label="{{currentGroup == 'R' ? 'Resolutiva' : 'Seguimiento' }}" ng-repeat="currentGroup in groupList" >
-                          <md-option ng-value="item.id" ng-repeat="item in acciones | filter: {tipo: currentGroup}" ng-click="verSeguimiento(item.tipo)">{{item.nombre}}</md-option>
-                        </md-optgroup>
-                      </md-select>
+              <md-select  ng-model="dato.hallazgos.idAccion"  id="accion" placeholder="{{ 'ACCION' | translate }}" >
+                <md-optgroup label="{{currentGroup == 'R' ? 'Resolutiva' : 'Seguimiento' }}" ng-repeat="currentGroup in groupList" >
+                 <md-option ng-value="item.id" ng-repeat="item in acciones | filter: {tipo: currentGroup}" ng-click="verSeguimiento(item.tipo)">{{item.nombre}}</md-option>
+                </md-optgroup>
+              </md-select>
               <div ng-messages="forma.hallazgo.$error" >
-                  <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>                                 
+                <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>                                 
               </div>
             </md-input-container>
 
-	   		    <md-input-container flex ng-if="esSeguimiento">
-		          <md-select ng-model="dato.hallazgos.idPlazoAccion"  placeholder="{{ 'PLAZO-ACCION' | translate }}">
-												<md-option ng-value="item.id" ng-repeat="item in plazos" >{{item.nombre}}</md-option>
-											</md-select>
+            <md-input-container flex ng-if="esSeguimiento">
+              <md-select ng-model="dato.hallazgos.idPlazoAccion"  placeholder="{{ 'PLAZO-ACCION' | translate }}">
+                <md-option ng-value="item.id" ng-repeat="item in plazos" >{{item.nombre}}</md-option>
+              </md-select>
               <div ng-messages="forma.hallazgo.$error" >
                 <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>                                    
-                  </div>	
-		        </md-input-container>
+              </div>  
+            </md-input-container>
+          </md-list-item> 
+        </md-list> 
 
-          </md-list-item>
-                      
-
-			</md-list>
-</md-list-item>          
-          
-      </md-list>
     </md-content>
-  </div>
-</div>
-</form>
+  </form>
 </md-content></div>

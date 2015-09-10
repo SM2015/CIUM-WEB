@@ -1,11 +1,12 @@
 (function(){
 	'use strict';
-	var seguimientoModule = angular.module('HallazgoModule', ['ngMaterial','ngRoute','ngStorage','ngCookies','ngMessages','pascalprecht.translate','http-auth-interceptor']);
-	seguimientoModule.config(['$mdThemingProvider','$mdIconProvider','$routeProvider','$httpProvider','$translateProvider',function($mdThemingProvider,$mdIconProvider,$routeProvider,$httpProvider,$translateProvider){
+	var hallazgoModule = angular.module('HallazgoModule', ['ngMaterial','ngRoute','ngStorage','ngCookies','ngMessages','pascalprecht.translate','http-auth-interceptor']);
+	hallazgoModule.config(['$mdThemingProvider','$mdIconProvider','$routeProvider','$httpProvider','$translateProvider',function($mdThemingProvider,$mdIconProvider,$routeProvider,$httpProvider,$translateProvider){
 		
 		$routeProvider
-		.when('/hallazgo', { templateUrl: 'src/transaccion/seguimiento/views/lista.html',	controller: 'HallazgoCtrl'})
-		.when('/hallazgo/modificar', {templateUrl: 'src/transaccion/seguimiento/views/modificar.html',	controller: 'SeguimientoCtrl'})
-		.when('/hallazgo/ver', {templateUrl: 'src/transaccion/seguimiento/views/ver.html',	controller: 'HallazgoCtrl'})	
+		.when('/hallazgo', { templateUrl: 'src/transaccion/hallazgo/views/lista.html',	controller: 'HallazgoCtrl'})
+		.when('/hallazgo/ver', {templateUrl: 'src/transaccion/hallazgo/views/ver.html',	controller: 'HallazgoCtrl'})
+		.when('/hallazgo/indicadores', {templateUrl: 'src/transaccion/hallazgo/views/indicadores.html',	controller: 'HallazgoCtrl'})
+		.when('/hallazgo/evaluaciones', {templateUrl: 'src/transaccion/hallazgo/views/evaluaciones.html',	controller: 'HallazgoCtrl'})	
 	}]);
 })();
