@@ -61,14 +61,14 @@
 	</md-chips>
         
     <md-content  layout="column"  layour-align="center center"  >
-		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
+		<md-list layout-margin  layout-align="center center" >
             <md-content layout="column" >  
                     
                     <section >						
                         
                         <md-list>	
                                                         
-                            <md-list-item ng-repeat="c in dato" class="md-2-line" ng-click="verEvaluacion(c.idEvaluacion,c.categoriaEvaluacion)">	
+                            <md-list-item ng-repeat="c in dato" class="md-2-line" ng-click="verEvaluacion(c.idEvaluacion,c.categoria)">	
                                  	                        
                                 <div class="md-list-item-text">
                                     
@@ -77,7 +77,7 @@
                                     </h3>
                                     
                                     <p>
-                                        {{c.categoriaEvaluacion}} # {{c.idEvaluacion}} 
+                                        {{c.categoria}} # {{c.idEvaluacion}} 
                                         <br>   
                                         <small> {{ c.clues }} {{c.nombre}} ({{c.jurisdiccion}}) </small>
                                     </p>

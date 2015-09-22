@@ -158,7 +158,7 @@
           <thead >          
             <tr> 
               <th align="right" > {{ 'EXPEDIENTE' | translate }}</th>                                  
-              <td height="{{ v.expediente.length*5 }}px" ng-repeat="v in indi.columnas" width="1%" align="center"><span class="texto-vertical">{{ v.expediente }}</span></td>
+              <td style="vertical-align:bottom;text-align:center; height:{{ v.expediente.length/2.8 }}em;"  ng-repeat="v in indi.columnas" width="1%" align="center"><span class="texto-vertical">{{ v.expediente }}</span></td>
             </tr>
                       
           </thead>
@@ -178,7 +178,7 @@
           <thead >
             <tr >                                                  
               <th align="right" width="40%">{{'NUMERO_EXP' | translate}}</th>
-              <td height="{{ v.expediente.length*5 }}px" ng-repeat="v in indi.columnas"  width="1%" align="center" name="{{ v }}" ><span class="texto-vertical">{{ v.expediente }}</span></td>
+              <td style="vertical-align:bottom;text-align:center; height:{{ v.expediente.length/2.8 }}em;" ng-repeat="v in indi.columnas"  width="1%" align="center" name="{{ v }}" ><span class="texto-vertical">{{ v.expediente }}</span></td>
             </tr>
             <tr>
               <th  align="left" >{{k}}</th>
@@ -231,7 +231,6 @@
           </div>
         </div>
     </div>
-
       </md-list>
     </md-content>
 	</div>

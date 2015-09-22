@@ -80,7 +80,7 @@
                       <div class="progress-bar progress-bar-striped active progress-bar-default" role="progressbar"
                       aria-valuenow="{{ value.indicadores.totalPorciento }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ value.indicadores.totalPorciento }}%; background:{{ value.indicadores.totalColor }}">
                         {{ value.indicadores.totalPorciento }}%
-                      </div></div>      
+                      </div></div>			
               </td>        
             </tr>
           </tbody>
@@ -99,13 +99,25 @@
             {{ 'IMPRIMIR_DETALLE_OFF' | translate }}
         </md-tooltip>
     </md-button>
-    </h3>   
+    </h3>	  
     <div ng-if="imprimirDetalle">
-      <div ng-repeat="criterios in indicadores" style="border: 2px solid #ccc; padding:0.5em; margin-bottom:1em;">                  
-       <h3 style="line-height:1em;">
-         <span class="img-circle" style="background: {{ criterios.indicador.color }}; display:block; height:1em; width:1em;float:left; margin-right:.5em"></span> 
-         {{ criterios.indicador.codigo }} | {{ criterios.indicador.nombre }}
-       </h3>
+      <div ng-repeat="criterios in indicadores" style="border-bottom: 2px solid #999;  padding-bottom:3em; margin-bottom:3em;">                  
+       <table width="100%" class="Tabla" style="margin-bottom:0.5em">
+
+
+          <caption style="font-size:1.3em">INDICADOR</caption>
+          <tbody>
+            <tr>
+              <th>Código</th>
+              <th style="text-align:left;"><span class="img-circle" style="background: {{ criterios.indicador.color }}; display:block; height:1em; width:1em; float:left; margin-right:.5em"></span> {{ criterios.indicador.codigo }}</th>
+            </tr>
+            <tr>
+              <th>Nombre</th>
+              <th style="text-align:left;">{{ criterios.indicador.nombre }}</th>
+            </tr>
+          </tbody>
+        </table>
+
         <div ng-repeat="(key, value) in criterios | groupBy : 'lugarVerificacion'" ng-if="key != 'undefined'" style="margin-bottom:0.5em">
           <table width="100%" class="Tabla" style="border:0" cellspacing="0"  >                
               <thead>

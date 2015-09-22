@@ -126,7 +126,7 @@
                         <md-tab label="{{g.name}}" ng-repeat="g in grupos">
                             
                               
-                                <div class="md-sidenav-left md-whiteframe-z2">
+                                <div >
 <md-data-table-container>
   <table md-data-table >
     <thead md-order="query.order" md-trigger="onOrderChange">
@@ -179,7 +179,7 @@
                          <md-list-item>
                         <md-input-container flex > 
                               <div class="alert alert-info"></div>
-                                    <div class="md-sidenav-left md-whiteframe-z2">
+                                    <div >
                                     <p ng-if="dato.nivel==1"> {{ 'ESTATAL' | translate }}</p>
 <md-data-table-container ng-if="dato.nivel!=1">
   <table md-data-table >

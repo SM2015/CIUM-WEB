@@ -23,9 +23,19 @@
     <md-tooltip>
       {{ 'REGRESAR' | translate }}
     </md-tooltip>
-  </md-button> 
-
+  </md-button>
 </a>
+
+<md-button hide-md hide-sm hide-lg  aria-label="{{ 'PDF' | translate }}" imprimir-div=".imprimir">
+  <md-icon md-svg-icon="print"></md-icon>
+  {{ 'PDF' | translate }}
+</md-button>
+<md-button class="md-icon-button"  hide show-sm show-md show-lg imprimir-div=".imprimir" aria-label="{{ 'PDF' | translate }}" >
+  <md-icon md-svg-icon="print"></md-icon>
+  <md-tooltip>
+          {{ 'PDF' | translate }}
+        </md-tooltip>
+</md-button>
 
 <md-button hide-md hide-sm hide-lg ng-show="terminado"  aria-label="{{ 'CERRAR_EV' | translate }}" ng-click="cerrar(dato.id)" ng-disabled="forma.$invalid">
     <md-icon md-svg-icon="check"></md-icon>
@@ -76,7 +86,7 @@
 	</md-toolbar>
 	<md-content>
 	
-<form name="forma">   
+<form name="forma" class="imprimir">   
 
       <md-content  ng-init="opciones('Indicador?categoria=CALIDAD')" flex>
         <md-list layout-margin class="md-whiteframe-z1" layour-align="center center" flex>
@@ -88,7 +98,7 @@
             </span>                    
           </div>
        </md-list>
-  		  <md-list layout-margin class="md-whiteframe-z1" layour-align="center center" flex>
+  		  <md-list layout-margin  layour-align="center center" flex>
           	
           
   				<md-list-item layout-wrap flex >
@@ -103,17 +113,17 @@
                       </md-select>
 
                     </span>
-                	  <md-button class="md-icon-button  md-warn"  ng-click="borrarIndicador()" aria-label="{{ 'ELIMINAR' | translate }}" ng-if="criterios.aprobado.length>0 || criterios.noAprobado.length>0">
+                	  <md-button class="md-icon-button  md-warn equis"  ng-click="borrarIndicador()" aria-label="{{ 'ELIMINAR' | translate }}" ng-if="criterios.aprobado.length>0 || criterios.noAprobado.length>0">
                             <md-icon md-svg-icon="delete"></md-icon>
                             <md-tooltip>
                                     {{ 'ELIMINAR_IND' | translate }}
                                   </md-tooltip>
-                          </md-button>
-                    <md-button type="button"  class="md-raised md-primary" ng-click="agregarColumna()" ng-if="dato.totalExpediente>0">
+                    </md-button>
+                    <md-button type="button"  class="md-raised md-primary equis" ng-click="agregarColumna()" ng-if="dato.totalExpediente>0">
                         <md-icon md-svg-icon="add"></md-icon><span hide-sm> {{ 'AGREGAR_EXP' | translate }}</span>
                     </md-button>
                         
-                    <md-button class="md-raised"  hide-sm  type="button" ng-if="dato.totalExpediente>0">
+                    <md-button class="md-raised equis"  hide-sm  type="button" ng-if="dato.totalExpediente>0">
                         <span hide-md>{{ 'TOTAL_EXP' | translate }}:</span> <strong>{{ dato.totalExpediente }}</strong>
                     </md-button>
 
@@ -140,14 +150,14 @@
               </div>
                
         </md-input-container>
-        <md-input-container flex>
+        <md-input-container flex class="equis">
           <md-content ng-init="incompleto[dato.idIndicador][exp]=incompleto[dato.idIndicador][exp]==null ? 0 : incompleto[dato.idIndicador][exp]"> 
 
             <md-menu flex="100" style="float:right;" ng-init="completo[dato.idIndicador][exp]=completo[dato.idIndicador][exp]==null ? 0 : completo[dato.idIndicador][exp]">
               
               <md-button aria-label="estadisticas" style="width:192px;" type="button" class="md-raised" ng-click="$mdOpenMenu()">
                   
-                <md-chips >
+                <md-chips class="equis>
                   <md-chip style="background : #090; color:white;">
                     <strong>{{ completo[dato.idIndicador][exp] }}</strong>
                     <md-icon md-menu-origin md-svg-icon="check" style="color:white;"></md-icon>
@@ -198,7 +208,7 @@
                 </md-list-item>
 
                 <md-list-item >   
-                  <md-content style="width:100%; height: {{tamanoHeight}}px; overflow-x:hidden;"> 
+                  <md-content style="width:100%; overflow-x:hidden;"> 
                     <section>
                       <div ng-repeat="(key, value) in criterios | groupBy :  'lugarVerificacion'" ng-if="key != 'undefined' "  style="margin-bottom:1em;border: 1px solid #eee"> 
                         <md-subheader class="md-primary">{{key}}</md-subheader>
@@ -221,7 +231,7 @@
                   </md-content>
                 </md-list-item>
             
-                <md-list-item >
+                <md-list-item class="equis">
                   <md-content style="width:99.5%">
                     <md-list layout-margin  layout-align="center center" > 
                       <div style="margin-bottom:1em;border: 1px solid #eee; margin-left:8px">           

@@ -44,13 +44,13 @@
 	$scope.query = {
 		filter: '',
 		order: 'id',
-		limit: 5,
+		limit: 25,
 		page: 1
 	};
    $scope.paginacion = 
     {
         pag: 1,
-        lim: 5,
+        lim: 25,
         paginas:0
     };
   	// Inicializa los metodos por default para cada modulo

@@ -37,11 +37,10 @@ $scope.signin = function () {
   var email=$scope.email;
   $localStorage.cium.user_email=email;
     var formData = {
-  email: $scope.email,
-  password: $scope.password
+      email: $scope.email,
+      password: $scope.password
     };
-    $scope.cargando = true;
-  
+    $scope.cargando = true;    
     Auth.signin(formData, successAuth, function(){
       $scope.cargando = false;          
     });

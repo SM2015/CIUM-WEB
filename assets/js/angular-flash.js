@@ -27,7 +27,7 @@
 		  var icon = m.level == 'success' ? 'check'   : m.level == 'danger' ? 'close'   : m.level== 'info' ? 'info' : 'warning';
 		  var posicion = m.x+" "+m.y;
 		  var tiempo   = m.t;
-		  var template='<md-toast >' +
+		  var template='<md-toast style="margin-top:60px">' +
 				'<span flex ><md-icon md-svg-icon="'+icon+'" style="color: '+color+'"></md-icon>&nbsp; '+m.text+'.</span>'+
 				'<md-button ng-click="closeToast()">X</md-button>'+
 			'</md-toast>';
@@ -71,7 +71,7 @@
 	  	if(angular.isUndefined(x))
 			x="right";
 		if(angular.isUndefined(y))
-			y="bottom";
+			y="top";
 		if(angular.isUndefined(t))
 			t="4000";
 		

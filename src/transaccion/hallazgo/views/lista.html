@@ -76,37 +76,37 @@
 			</button>	
 		</md-chips>
 		<div layout-padding flex>			
-			<div class=" md-whiteframe-z2">
-				<md-data-table-container>
-					<table md-data-table md-progress="datos">
-						<thead md-order="query.order" md-trigger="onOrderChange">
-							<tr>
-						
-								<th name="{{ 'CLUES' | translate }}" order-by="clues"></th>	
-								<th name="{{ 'NOMBRE' | translate }}" order-by="nombre"></th>	
-								<th hide-sm name="{{ 'JURISDICCION' | translate }}" order-by="jurisdiccion"></th>	
-								<th hide-sm name="{{ 'CONE' | translate }}" order-by="cone"></th>				
-								
-							</tr>
-						</thead>
-						<tbody>
-							<tr md-auto-select ng-repeat="dato in datos" ng-click="firstClick(dato.clues)" style="cursor:pointer">																
-								<td>{{ dato.clues | uppercase }}</td>
-								<td>{{ dato.nombre | uppercase }}</td>
-								<td hide-sm>{{ dato.jurisdiccion | uppercase }}</td>
-								<td hide-sm>{{ dato.cone | uppercase }}</td>			 
-													
-							</tr>
-						</tbody>
-					</table>
-				</md-data-table-container>								
-				<md-data-table-pagination md-limit="query.limit" md-label="paginationLabel" md-row-select="[5,10,15,25,50,100,1000]" md-page="query.page" md-total="{{paginacion.paginas}}" md-trigger="onPaginationChange"></md-data-table-pagination>
-			</div> 			
+			
+			<md-data-table-container>
+				<table md-data-table md-progress="datos">
+					<thead md-order="query.order" md-trigger="onOrderChange">
+						<tr>
+					
+							<th name="{{ 'CLUES' | translate }}" order-by="clues"></th>	
+							<th name="{{ 'NOMBRE' | translate }}" order-by="nombre"></th>	
+							<th hide-sm name="{{ 'JURISDICCION' | translate }}" order-by="jurisdiccion"></th>	
+							<th hide-sm name="{{ 'CONE' | translate }}" order-by="cone"></th>				
+							
+						</tr>
+					</thead>
+					<tbody>
+						<tr md-auto-select ng-repeat="dato in datos" ng-click="firstClick(dato.clues)" style="cursor:pointer">																
+							<td>{{ dato.clues | uppercase }}</td>
+							<td>{{ dato.nombre | uppercase }}</td>
+							<td hide-sm>{{ dato.jurisdiccion | uppercase }}</td>
+							<td hide-sm>{{ dato.cone | uppercase }}</td>			 
+												
+						</tr>
+					</tbody>
+				</table>
+			</md-data-table-container>								
+			<md-data-table-pagination md-limit="query.limit" md-label="paginationLabel" md-row-select="[25,50,100,1000,10000]" md-page="query.page" md-total="{{paginacion.paginas}}" md-trigger="onPaginationChange"></md-data-table-pagination>
+					
 		</div>
 	</md-content>
 </div>
 <md-sidenav class="md-sidenav-right md-whiteframe-z1" md-component-id="filtro" layout="column">
-      <md-toolbar > 
+      <md-toolbar class="md-accent"> 
 		  <div class="md-toolbar-tools">  
 			<h1 class="md-toolbar-tools">{{ 'FILTRAR' | translate }}</h1>
 			<span flex></span>
@@ -135,7 +135,7 @@
 					</md-radio-group>
 					<md-content layout="column" ng-if="!filtro.verTodosIndicadores">  
 						
-						<section ng-repeat="(key, value) in datos.indicadores | groupBy :  'categoriaEvaluacion'" ng-if="key != 'undefined' ">						
+						<section ng-repeat="(key, value) in datos.indicadores | groupBy :  'categoria'" ng-if="key != 'undefined' ">						
 							<md-subheader class="md-primary" >
 								{{ key | translate }}                              
 							</md-subheader>
@@ -210,7 +210,7 @@
 	
 	
 	<md-sidenav class="md-sidenav-right md-whiteframe-z1" md-component-id="indicadores" layout="column">
-      <md-toolbar > 
+      <md-toolbar class="md-warn"> 
 		  <div class="md-toolbar-tools">  
 			<h1 class="md-toolbar-tools">{{total}} {{ 'INDICADOR_ALERTA' | translate }}</h1>
 			
@@ -218,7 +218,7 @@
       </md-toolbar>
 	  <md-content layout="column">  
 						
-		<section ng-repeat="(key, value) in datos.indicadores | groupBy :  'categoriaEvaluacion'" ng-if="key != 'undefined' ">						
+		<section ng-repeat="(key, value) in datos.indicadores | groupBy :  'categoria'" ng-if="key != 'undefined' ">						
 			<md-subheader class="md-primary" >
 				{{ key | translate }}                              
 			</md-subheader>

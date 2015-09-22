@@ -1,8 +1,6 @@
 <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
 <div layout="column" class="relative" layout-fill role="main" flex ng-init="index('PlazoAccion')">
-	<md-button class="md-fab md-fab-bottom-right md-warn" ng-click="nuevo()" aria-label="{{ 'NUEVA' | translate }}" >
-		<md-icon md-svg-icon="add"></md-icon>
-  	</md-button>
+	
 	<md-progress-linear  ng-if="cargando" class="md-warn" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
 	<md-toolbar ng-show="!showSearch">
 			<div class="md-toolbar-tools">    
@@ -14,11 +12,23 @@
 				</h2>
 				<span flex></span>
 				<md-button class="md-icon-button" ng-click="mostrarSearch(0)" aria-label="{{ 'BUSCAR' | translate }}">
-				   <md-icon md-svg-icon="search"></md-icon>
-                        <md-tooltip>
-				          {{ 'BUSCAR'| translate }}
+				    <md-icon md-svg-icon="search"></md-icon>
+                    <md-tooltip>
+			          {{ 'BUSCAR'| translate }}
+			        </md-tooltip>
+				</md-button>
+
+				<md-button hide-md hide-sm hide-lg aria-label="{{ 'NUEVO' | translate }}" ng-click="nuevo()">
+				    <md-icon md-svg-icon="add"></md-icon>
+				    {{ 'NUEVO' | translate }}
+				</md-button>
+				<md-button class="md-icon-button"  hide show-sm show-md show-lg ng-click="nuevo()" aria-label="{{ 'NUEVO' | translate }}">
+				  <md-icon md-svg-icon="add"></md-icon>
+				  <md-tooltip>
+				          {{ 'NUEVO' | translate }}
 				        </md-tooltip>
-				</md-button><span ng-include="'src/app/views/menu-opciones.html'"></span>
+				</md-button>
+				<span ng-include="'src/app/views/menu-opciones.html'"></span>
 			</div>
 	</md-toolbar>
 
@@ -41,10 +51,7 @@
 		</div>
 	</md-toolbar>
 	<md-content>
-	
-<div layout="row" >  
-  <div layout-padding flex>
-	<div class="md-sidenav-left md-whiteframe-z2">
+
 <md-data-table-container>
   <table md-data-table md-progress="datos">
     <thead md-order="query.order" md-trigger="onOrderChange">
@@ -69,7 +76,7 @@
 				 <td hide-sm hide-md hide-lg>{{ dato.modificadoAl }}</td>
 				 <td>
 					
-					<section layout="row" layout-align="center center">
+					<section layout="row" layout-align="end center">
 						
 						<a url-modulo="ver?id={{ dato.id }}"><md-button class="md-icon-button md-primary" aria-label="Ver">
 							<md-icon md-svg-src="remove-red-eye"></md-icon>
@@ -102,9 +109,6 @@
 </md-data-table-container>
 
 
-<md-data-table-pagination md-limit="query.limit" md-label="paginationLabel" md-row-select="[5,10,15,25,50,100,1000]" md-page="query.page" md-total="{{paginacion.paginas}}" md-trigger="onPaginationChange"></md-data-table-pagination>
-       </div> 
+<md-data-table-pagination md-limit="query.limit" md-label="paginationLabel" md-row-select="[25,50,100,1000,10000]" md-page="query.page" md-total="{{paginacion.paginas}}" md-trigger="onPaginationChange"></md-data-table-pagination>
 
-        </div>
-    </div>
 </md-content></div>	

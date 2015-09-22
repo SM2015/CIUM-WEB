@@ -55,10 +55,10 @@
 	
 
     <md-content  layout="column"  layour-align="center center"  >
-		<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >
+		<md-list layout-margin layout-align="center center" >
             <md-content layout="column" >  
                     
-                    <section ng-repeat="(key, value) in dato | groupBy :  'categoriaEvaluacion'" ng-if="key != 'undefined' ">						
+                    <section ng-repeat="(key, value) in dato | groupBy :  'categoria'" ng-if="key != 'undefined' ">						
                         <md-subheader class="md-primary" >
                             {{ key | translate }}                              
                         </md-subheader>

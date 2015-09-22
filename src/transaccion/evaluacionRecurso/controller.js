@@ -43,7 +43,7 @@
 	$scope.query = {
 		filter: '',
 		order: '-fechaEvaluacion',
-		limit: 5,
+		limit: 25,
 		page: 1
 	};
 
@@ -70,7 +70,7 @@
     $scope.paginacion = 
     {
         pag: 1,
-        lim: 5,
+        lim: 25,
         paginas:0
     };
 	
@@ -130,16 +130,6 @@
 		}
 	}
 		
-	$scope.arrows = {
-		year: {
-			left: 'bower_components/material-design-icons/navigation/svg/production/ic_arrow_back_48px.svg',
-			right:'bower_components/material-design-icons/navigation/svg/production/ic_arrow_forward_48px.svg'
-		},
-		month: {
-			left: 'bower_components/material-design-icons/navigation/svg/production/ic_chevron_left_48px.svg',
-			right:'bower_components/material-design-icons/navigation/svg/production/ic_chevron_right_48px.svg'
-		}
-	}
 	$scope.update=false;
 	
 	// obtener el listado de clues que le correspondan al usuario

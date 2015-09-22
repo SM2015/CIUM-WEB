@@ -21,7 +21,7 @@
 	
 
 <md-content layout="column" class="imprimir" layour-align="center center" ng-init="ver('Indicador');Alertas();">
-	<md-list layout-margin class="md-whiteframe-z1" layout-align="center center" >					
+	<md-list layout-margin layout-align="center center" >					
 		<md-list-item >	
             <md-input-container flex="25">                                    
                 <span class="img-circle" style="background: {{dato.color}}; display:block; height:50px; width:50px;"></span>
@@ -68,7 +68,7 @@
         <md-list-item >						
             <md-input-container flex >          
 			   
-			  <div class="md-sidenav-left md-whiteframe-z2">
+			  <div >
               <md-data-table-toolbar ng-hide="selected.length || filter.show">
   <h2 class="md-title"><p>{{ 'ALERTA' | translate }}</p></h2>
   <div flex></div>

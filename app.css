@@ -119,7 +119,7 @@
 }
 .gauge
 {
-  background: transparent url("assets/img/gauge.png") no-repeat 50% 50%;
+  
   width: 250px;
   height: 250px;
   text-align: center;
@@ -466,4 +466,28 @@ table.Tabla caption
   color: #000;
   padding: .5em;
   border: 1px #999 solid !important;
+}
+
+
+html,
+body {
+  margin:0;
+  padding:0;
+  height:100%;
+}
+#wrapper {
+  position:relative;
+}
+#header {
+}
+#content {
+  padding-bottom:100px;   
+}
+#footer {
+  width:100%;
+  position:absolute;
+  bottom:0;
+  left:0;
+  background:#e1e1e1;
+  border-top:1px solid rgb(37,155,36);
 }

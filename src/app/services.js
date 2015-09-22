@@ -20,8 +20,7 @@
 		.service('AuthService',['$http','URLS','$localStorage',function($http, URLS, $localStorage){
 			return {
 				// contiene las credenciales del usuario
-				autenticar: function(data) {
-					
+				autenticar: function(data) {					
 				    return $http.post(URLS.BASE + 'signin', data, { ignoreAuthModule: true });
 				},
 				// validar que la cuenta este activa
@@ -49,11 +48,11 @@
 					var obtenerToken = function(data)
 					    {
 										
-					  return AuthService.autenticar(data)   
+					  		return AuthService.autenticar(data)   
 					    			.then(function(res){
 													$localStorage.cium.access_token = res.data.access_token;
 			   							$localStorage.cium.refresh_token = res.data.refresh_token;
-					  return true;
+					  		return true;
 					    });
 					    },
 						validarAcceso = function(e){

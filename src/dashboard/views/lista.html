@@ -1,5 +1,13 @@
-<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
-<div layout="column" class="relative" layout-fill role="main" style="overflow:hidden">
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" ng-include="'src/app/views/menu.html'"></md-sidenav>
+<style>
+    .md-sidenav-backdrop
+    {
+        position: fixed;
+        top: 0;
+    }
+</style>
+
+<div layout="column" class="relative" layout-fill role="main">
 	
 	<md-progress-linear  ng-if="cargando" class="md-warn" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
 	<md-toolbar >
@@ -15,403 +23,332 @@
 		</div>
 	</md-toolbar>
 	
-<md-content flex>
-	<md-list layout="row" layout-wrap class="md-whiteframe-z1">
-    
-        
-        	<!-- inicio grafico Recurso-->
-            <md-content  layout="column"  layour-align="center center" flex-md="100" flex-sm="100" flex-lg="100" flex="{{isFullscreen ? 100 : 50}}" fullscreen="isFullscreen" ng-controller="RecursoController" id="RecursoDialog">
-                <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="min-height:508px">
+    <md-content flex >
+		<div layout="column" layout-gt-lg="row"  layout-margin>
+            <!-- inicio grafico seguimiento-->
+            <md-content class="md-whiteframe-z2" flex fullscreen="isFullscreen" ng-controller="gaugeRecursoController" id="gaugeRecurso">
                 
-                    <md-toolbar class="md-theme-light">
-                      <h2 class="md-toolbar-tools">
-                        <span flex>{{ 'RU_RECURSO' | translate}}</span>                                 
-                      </h2> 
+                    <md-toolbar class="md-theme-light" md-theme="altTheme">
+                        <div class="md-toolbar-tools">
+                            <h2>
+                                <span flex>{{ 'HALLAZGO_RECURSO' | translate}}</span>                                 
+                            </h2> 
+                            <span flex></span>
+                            <span>
+                                <md-button class="md-icon-button" aria-label="Opciones"  ng-click="toggleRightOpciones('gaugeRecurso');" id="gauge">
+                                    <md-icon md-svg-src="perm-data-setting"></md-icon>
+                                </md-button>                                                               
+                                
+                                <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-gauge')" id="max-gaugeRecurso">
+                                    <md-icon md-svg-src="{{!isFullscreen ? 'fullscreen' : 'fullscreen-exit'}}"></md-icon>
+                                </md-button>
+                            </span>
+                        </div>
                     </md-toolbar>
                     
-                    <md-content>
-                    
-                        <div >
-                            <md-content flex>
-                                
-                                    <span flex class="nav-barra-grafica">
-                                        
-                                
-
-                                        <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleModal($event);">
-                                            <md-icon md-svg-src="insert-chart"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Recargar" ng-click="recargar()">
-                                            <md-icon md-svg-src="replay"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-Recurso')" id="max-Recurso">
-                                            <md-icon md-svg-src="{{!isFullscreen ? 'zoom-in' : 'zoom-out'}}"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Regresar" id="regresar-Recurso" ng-click="regresar()" ng-if="contador>0">
-                                            <md-icon md-svg-src="arrow-back"></md-icon>
-                                        </md-button>
-                                    </span>
-                                
-                                
-                                <ol class="breadcrumb" style="margin-top: 0px;" ><li>Recursos </li><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
-                                <md-progress-linear  ng-if="recurso" style="top:-25px; left:0px;"  md-mode="indeterminate"></md-progress-linear>
-	
-          <div style="width:96%;margin-left:2%; max-height:80% !important;" > 
-					<canvas  tc-chartjs-bar chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart"></canvas>
-           </div>                     
-                            </md-content>
-                        </div>
+                    <md-content flex>                                                                                                                                                                    
+                        <md-progress-linear  ng-if="gaugeRecurso" style="position:absolute; top:-5px; left:0px;" class="md-accent"   md-mode="indeterminate"></md-progress-linear>                                 
+                        <div  style="width:{{tamano}}px; height: auto;" class="gauge" ng-radial-gauge ranges="ranges" value="value" value-unit="unit" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit"></div>
+                        <ul class="tc-chart-js-legend"><li ng-repeat="item in indicadores"><span style="background-color:{{item.color}}"></span>{{item.indicador}}</ul>                                
                     </md-content>
-                 </md-list>
+                    <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="gaugeRecurso"  ng-include="'src/dashboard/views/dialog.html'" style="position: fixed;"></md-sidenav>
+            </md-content>
+            <!-- fin grafico -->
+
+            <!-- inicio grafico gauge-->
+            <md-content class="md-whiteframe-z2" flex fullscreen="isFullscreen" ng-controller="gaugeCalidadController" id="gaugeCalidad">                
+                <md-toolbar class="md-theme-light" md-theme="altTheme">
+                    <div class="md-toolbar-tools">
+                        <h2>
+                            <span flex>{{ 'HALLAZGO_CALIDAD' | translate}}</span>                                 
+                        </h2> 
+                        <span flex></span>
+                        <span>
+                            <md-button class="md-icon-button" aria-label="Opciones"  ng-click="toggleRightOpciones('gaugeCalidad');">
+                                <md-icon md-svg-src="perm-data-setting"></md-icon>
+                            </md-button>                                                                
+                            
+                            <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-gauge')" id="max-gaugeCalidad">
+                                <md-icon md-svg-src="{{!isFullscreen ? 'fullscreen' : 'fullscreen-exit'}}"></md-icon>
+                            </md-button>
+                        </span>
+                    </div>
+                </md-toolbar>
+                
+                <md-content flex >                                                                                                                                                                    
+                    <md-progress-linear  ng-if="gaugeCalidad" style="position:absolute; top:-5px; left:0px;" class="md-accent"   md-mode="indeterminate"></md-progress-linear>                                 
+                    <div style="width:{{tamano}}px; height: auto;" class="gauge" ng-radial-gauge ranges="ranges" value="value" value-unit="unit" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit"></div>
+                    <ul class="tc-chart-js-legend"><li ng-repeat="item in indicadores"><span style="background-color:{{item.color}}"></span>{{item.indicador}}</ul>                                
+                </md-content>
+                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="gaugeCalidad"  ng-include="'src/dashboard/views/dialog.html'" style="position: fixed;"></md-sidenav>
+            </md-content>
+            <!-- fin grafico -->
+        </div> 
+        <div layout-margin layout="column" flex layout-gt-lg="row">
+            <!-- inicio grafico Recurso-->           
+            <md-content  class="md-whiteframe-z2" flex="49" ng-controller="recursoController" id="recurso">
+                <div layout-fill fullscreen="isFullscreen">
+                    <md-toolbar class="md-theme-light" md-theme="altTheme">
+                        <div class="md-toolbar-tools"> 
+                            <h2>
+                                <span flex>{{ 'RU_RECURSO' | translate}}</span>                             
+                            </h2> 
+                            <span flex></span>
+                            <span>
+                                <md-button class="md-icon-button" aria-label="info" ng-click="showAlert($event)" ng-if="verInfo" >
+                                <md-icon md-svg-src="info"></md-icon>
+                                </md-button>
+                                
+                                <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleRightOpciones('recurso');">
+                                <md-icon md-svg-src="perm-data-setting"></md-icon>
+                                </md-button>                                                                
+                                
+                                <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-Recurso')" id="max-Recurso">
+                                <md-icon md-svg-src="{{!isFullscreen ? 'fullscreen' : 'fullscreen-exit'}}"></md-icon>
+                                </md-button>
+                            </span>
+                        </div>
+                    </md-toolbar>
+                                
+                    <md-content layout-padding>                                                                                             
+                        <md-progress-linear  ng-if="recurso" style="position:absolute; top:-5px; left:0px;" class="md-accent"   md-mode="indeterminate"></md-progress-linear> 
+                        <div style="width:{{ isFullscreen ? '100%' : tamano > 0 ? tamano+'px' : ''}}" >                           
+                            <canvas  tc-chartjs-bar chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart" id="chart"></canvas>
+                        </div>                                        
+                    </md-content>   
+                </div> 
+                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="recurso"  ng-include="'src/dashboard/views/dialog.html'" style="position: fixed;"></md-sidenav>                                        
             </md-content>
             <!-- fin grafico -->
             
             <!-- inicio grafico calidad -->
-            <md-content  layout="column"  layour-align="center center" flex-md="100" flex-sm="100" flex-lg="100" flex="{{isFullscreen ? 100 : 50}}" fullscreen="isFullscreen" ng-controller="calidadController">
-                <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="min-height: 508px;">
-                
-                    <md-toolbar class="md-theme-light">
-                      <h2 class="md-toolbar-tools">
-                        <span flex>{{ 'RU_CALIDAD' | translate}}</span>                                 
-                      </h2> 
+            <md-content class="md-whiteframe-z2" flex ng-controller="calidadController" id="calidad">  
+                <div layout-fill fullscreen="isFullscreen">                             
+                    <md-toolbar class="md-theme-light" md-theme="altTheme">
+                        <div class="md-toolbar-tools">
+                            <h2 >
+                                <span flex>{{ 'RU_CALIDAD' | translate}}</span>                                 
+                            </h2> 
+                            <span flex></span>
+                            <span>
+                                <md-button class="md-icon-button" aria-label="info" ng-click="showAlert($event)" ng-if="verInfo" >
+                                <md-icon md-svg-src="info"></md-icon>
+                                </md-button>
+                                
+                                <md-button class="md-icon-button" aria-label="Opciones"  ng-click="toggleRightOpciones('calidad');">
+                                <md-icon md-svg-src="perm-data-setting"></md-icon>
+                                </md-button>                                                                
+                                
+                                <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-calidad')" id="max-calidad">
+                                <md-icon md-svg-src="{{!isFullscreen ? 'fullscreen' : 'fullscreen-exit'}}"></md-icon>
+                                </md-button>                                                                
+                            </span>
+                        </div>
                     </md-toolbar>
                     
-                    <md-content>
-                    
-                        <div >
-                            <md-content flex>
-                                
-                                    <span flex class="nav-barra-grafica">
-                                                                            
-                                        <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleModal($event);">
-                                            <md-icon md-svg-src="insert-chart"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Recargar" ng-click="recargar()">
-                                            <md-icon md-svg-src="replay"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-calidad')" id="max-calidad">
-                                            <md-icon md-svg-src="{{!isFullscreen ? 'zoom-in' : 'zoom-out'}}"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Regresar" id="regresar-calidad" ng-click="regresar()" ng-if="contador>1">
-                                            <md-icon md-svg-src="arrow-back"></md-icon>
-                                        </md-button>
-                                    </span>
-                                
-                                
-                                <ol class="breadcrumb" style="margin-top: 0px;" ><li>Calidad </li><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
-                                <md-progress-linear  ng-if="calidad" style="top:-25px; left:0px;"  md-mode="indeterminate"></md-progress-linear>
-
-					<div style="width:96%;margin-left:2%; max-height:80% !important;" > 
-					<canvas tc-chartjs-line chart-options="options" style="height:100%" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart"></canvas>
-          </div>                     
-						
-                            </md-content>
-                        </div>
+                    <md-content layout-padding>                                                                                                
+                        <md-progress-linear  ng-if="calidad" style="position:absolute; top:-5px; left:0px;" class="md-accent"   md-mode="indeterminate"></md-progress-linear> 
+                        <div style="width:{{ isFullscreen ? '100%' : tamano > 0 ? tamano+'px' : ''}}">                                    
+                            <canvas  tc-chartjs-bar chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart"></canvas>
+                        </div>                                                 
                     </md-content>
-                 </md-list>
+                </div>
+                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="calidad"  ng-include="'src/dashboard/views/dialog.html'" style="position: fixed;"></md-sidenav>
             </md-content>
-            <!-- fin grafico -->
-            
+            <!-- fin grafico -->  
+        </div>
+        
+        <div layout="column" layout-gt-lg="row"  layout-margin>
             <!-- inicio grafico reporte x equipo pie-->
-            <md-content  layout="column"  layour-align="center center" flex-md="100" flex-sm="100" flex-lg="100" flex="{{isFullscreen ? 100 : 50}}" fullscreen="isFullscreen" ng-controller="pieController">
-                <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="min-height:508px">
-                
-                    <md-toolbar class="md-theme-light">
-                      <h2 class="md-toolbar-tools">
-                        <span flex>{{ 'REPORTE_X_EQUIPO' | translate}}</span>                                 
-                      </h2> 
-                    </md-toolbar>
-                    
-                    <md-content>
-                        <div >
-                            <md-content flex>
-                                
-                                    <span flex class="nav-barra-grafica">
-                                        <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleModal($event);">
-                                            <md-icon md-svg-src="insert-chart"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Recargar" ng-click="recargar()">
-                                            <md-icon md-svg-src="replay"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-equipo')" id="max-equipo">
-                                            <md-icon md-svg-src="{{!isFullscreen ? 'zoom-in' : 'zoom-out'}}"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Regresar" id="regresar-equipo" ng-click="regresar()" ng-if="contador>1">
-                                            <md-icon md-svg-src="arrow-back"></md-icon>
-                                        </md-button>
-                                    </span>
-                                
-                                
-                                <ol class="breadcrumb" style="margin-top: 0px;" ><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
-                                <md-progress-linear  ng-if="pie" style="top:-25px; left:0px;"  md-mode="indeterminate"></md-progress-linear>
-
-								<div style="width:96%;margin-left:2%; max-height:80% !important;" > 
-								<canvas tc-chartjs-pie width="400" chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart"></canvas>
-                </div>             
-                            </md-content>
+            <md-content class="md-whiteframe-z2" flex ng-controller="pieController"> 
+                <div layout-fill fullscreen="isFullscreen">               
+                    <md-toolbar class="md-theme-light" md-theme="altTheme">
+                        <div class="md-toolbar-tools">
+                            <h2>
+                                <span flex>{{ 'REPORTE_X_EQUIPO' | translate}} ({{filtro.tipo}})</span>                                 
+                            </h2> 
+                            <span flex></span>
+                            <span>
+                                    <md-button class="md-icon-button" aria-label="Opciones"  ng-click="toggleRightOpciones('pie');" id="pie">
+                                        <md-icon md-svg-src="perm-data-setting"></md-icon>
+                                    </md-button>                                                                        
+                                    
+                                    <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-equipo')" id="max-equipo">
+                                        <md-icon md-svg-src="{{!isFullscreen ? 'fullscreen' : 'fullscreen-exit'}}"></md-icon>
+                                    </md-button>
+                                </span>
                         </div>
+                    </md-toolbar>                
+                    <md-content layout-padding>                                                                                                                                                                    
+                        <md-progress-linear  ng-if="pie" style="position:absolute; top:-5px; left:0px;" class="md-accent"   md-mode="indeterminate"></md-progress-linear> 
+                        <div style="width:{{ isFullscreen ? '100%' : tamano > 0 ? tamano+'px' : ''}}"> 
+                            <canvas tc-chartjs-pie width="400" chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart"></canvas>
+                        </div>             
                     </md-content>
-                 </md-list>
+                </div>
+                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="pie"  ng-include="'src/dashboard/views/dialog.html'" style="position: fixed;"></md-sidenav>
             </md-content>
             <!-- fin grafico -->
         
          	
             <!-- inicio grafico alertas-->
-            <md-content  layout="column"  layour-align="center center" flex-md="100" flex-sm="100" flex-lg="100" flex="{{isFullscreen ? 100 : 50}}" fullscreen="isFullscreen" ng-controller="alertaController">
-                <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="min-height:508px; {{ isFullscreen ? '' : 'max-height:760px' }} ; overflow:auto;">
+            <md-content class="md-whiteframe-z2" flex fullscreen="isFullscreen" ng-controller="alertaController" id="alerta">                
+                <md-toolbar class="md-theme-light" md-theme="altTheme">
+                    <div class="md-toolbar-tools">
+                        <h2>
+                            <span flex>{{ 'INDICADOR_ALERTA' | translate}} ({{filtro.tipo}})</span>                                 
+                        </h2> 
+                        <span flex></span>
+                        <span>
+                                <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleRightOpciones('alerta');">
+                                <md-icon md-svg-src="perm-data-setting"></md-icon>
+                            </md-button>                                                                
+                            
+                            <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-alerta')" id="max-alerta">
+                                <md-icon md-svg-src="{{!isFullscreen ? 'fullscreen' : 'fullscreen-exit'}}"></md-icon>
+                            </md-button>
+                        </span>
+                    </div>
+                </md-toolbar>
                 
-                    <md-toolbar class="md-theme-light">
-                      <h2 class="md-toolbar-tools">
-                        <span flex>{{ 'INDICADOR_ALERTA' | translate}}</span>                                 
-                      </h2> 
-                    </md-toolbar>
-                    
-                    <md-content>
-                        <div >
-                            <md-content flex>
-                                
-                                    <span flex class="nav-barra-grafica">
-                                         <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleModal($event);">
-                                            <md-icon md-svg-src="insert-chart"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Recargar" ng-click="recargar()">
-                                            <md-icon md-svg-src="replay"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-alerta')" id="max-alerta">
-                                            <md-icon md-svg-src="{{!isFullscreen ? 'zoom-in' : 'zoom-out'}}"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Regresar" id="regresar-alerta" ng-click="regresar()" ng-if="contador>1">
-                                            <md-icon md-svg-src="arrow-back"></md-icon>
-                                        </md-button>
-                                    </span>
-                                
-                                
-                                <ol class="breadcrumb" style="margin-top: 0px;" ><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
-                                <md-progress-linear  ng-if="alerta" style="top:-25px; left:0px;"  md-mode="indeterminate"></md-progress-linear>
-
-					<md-content  class="md-whiteframe-z1" style="width:98%; max-height:50%; overflow:auto; margin-left:1%; ">		
-					<md-data-table-container>
-  <table md-data-table md-progress="datos">
-    <thead md-order="query.order" md-trigger="onOrderChange">
-      <tr>
-                        <th name="{{ 'INDICADOR' | translate }}"></th>
-                        <th name="{{ 'VALOR' | translate }}"></th>
-                    </tr>
-                    </thead>
-    <tbody>
-                    
-                    <tr ng-repeat="value in dato">							
-                        <td>{{ value.codigo }} | {{ value.nombre }}</td>
-                        <td>
-                        	<div class="progress" >
-                              <div class="progress-bar progress-bar-striped active progress-bar-default" role="progressbar"
-                              aria-valuenow="{{ value.porcentaje }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ value.porcentaje }}%; background:{{ value.color }}">
-                                {{ value.porcentaje }}%
-                              </div></div>
-                        </td>		             
-                     </tr>
-    </tbody>
-  </table>
-</md-data-table-container>
-                       </md-content>         
-                            </md-content>
-                        </div>
-                    </md-content>
-                 </md-list>
-            </md-content>
-            <!-- fin grafico -->
-            
-            
-            <!-- inicio grafico seguimiento-->
-            <md-content  layout="column"  layour-align="center center" flex-md="100" flex-sm="100" flex-lg="100" flex="{{isFullscreen ? 100 : 50}}" fullscreen="isFullscreen" ng-controller="gaugeController">
-                <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="min-height:508px">
-                
-                    <md-toolbar class="md-theme-light">
-                      <h2 class="md-toolbar-tools">
-                        <span flex>{{ 'REPORTE_SEGUIMIENTO' | translate}}</span>                                 
-                      </h2> 
-                    </md-toolbar>
-                    
-                    <md-content>
-                        <div >
-                            <md-content flex>
-                                
-                                    <span flex class="nav-barra-grafica">
-                                        <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleModal($event);">
-                                            <md-icon md-svg-src="insert-chart"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Recargar" ng-click="recargar()">
-                                            <md-icon md-svg-src="replay"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-gauge')" id="max-gauge">
-                                            <md-icon md-svg-src="{{!isFullscreen ? 'zoom-in' : 'zoom-out'}}"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Regresar" id="regresar-gauge" ng-click="regresar()" ng-if="contador>1">
-                                            <md-icon md-svg-src="arrow-back"></md-icon>
-                                        </md-button>
-                                    </span>
-                                
-                                
-                                <ol class="breadcrumb" style="margin-top: 0px;" ><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
-                                <md-progress-linear  ng-if="gauge" style="top:-25px; left:0px;"  md-mode="indeterminate"></md-progress-linear>
-
-						<md-content  class="md-whiteframe-z1" style="width:98%; {{ isFullscreen ? '' : 'max-height:250px' }} ; overflow:auto; margin-left:1%; ">		
-					<md-data-table-container>
-  <table md-data-table md-progress="datos">
-    <thead md-order="query.order" md-trigger="onOrderChange">
-      <tr>
-                        <th name="{{ 'INDICADOR' | translate }}"></th>
-						<th name="{{ 'DESCRIPCION' | translate }}"></th>
-						<th name="{{ 'TOTAL_EXP' | translate }}"></th>
-					
-                    </tr>
-                    </thead>
-    <tbody>
-                    <tr ng-repeat="value in dato">							
-                        <td>{{ value.codigo }} | {{ value.nombre }}</td>	
-						<td>{{ tipo }}</td>	
-						<td>{{ value.total }}</td>	
-					</tr>
-    </tbody>
-  </table>
-</md-data-table-container>
-                		</md-content>
-					
-                    
-                    
-					
-                                
-                            </md-content>
-                        </div>
-                    </md-content>
-                 </md-list>
-            </md-content>
-            <!-- fin grafico -->
-
-            <!-- inicio grafico gauge-->
-            <md-content  layout="column"  layour-align="center center" flex-md="100" flex-sm="100" flex-lg="100" flex="{{isFullscreen ? 100 : 50}}" fullscreen="isFullscreen" ng-controller="gaugeController">
-                <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="min-height:508px">
-                
-                    <md-toolbar class="md-theme-light">
-                      <h2 class="md-toolbar-tools">
-                        <span flex>{{ 'SEGUIMIENTO_HALLAZGO' | translate}}</span>                                 
-                      </h2> 
-                    </md-toolbar>
-                    
-                    <md-content>
-                        <div >
-                            <md-content flex>
-                                
-                                    <span flex class="nav-barra-grafica">
-                                        <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleModal($event);">
-                                            <md-icon md-svg-src="insert-chart"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Recargar" ng-click="recargar()">
-                                            <md-icon md-svg-src="replay"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-gauge')" id="max-gauge">
-                                            <md-icon md-svg-src="{{!isFullscreen ? 'zoom-in' : 'zoom-out'}}"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Regresar" id="regresar-gauge" ng-click="regresar()" ng-if="contador>1">
-                                            <md-icon md-svg-src="arrow-back"></md-icon>
-                                        </md-button>
-                                    </span>
-                                
-                                
-                                <ol class="breadcrumb" style="margin-top: 0px;" ><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
-                                <md-progress-linear  ng-if="gauge" style="top:-25px; left:0px;"  md-mode="indeterminate"></md-progress-linear>
-
-               
-                    
-                    <div width="240" class="gauge" ng-radial-gauge ranges="ranges" value="value" value-unit="unit" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit"></div>
-                                
-                            </md-content>
-                        </div>
-                    </md-content>
-                 </md-list>
-            </md-content>
-            <!-- fin grafico -->
-            
-            <!-- inicio grafico reporte global-->
-            <md-content  layout="column"  layour-align="center center" flex-md="100" flex-sm="100" flex-lg="100" flex="100" fullscreen="isFullscreen" ng-controller="globalController">
-                <md-list layout-margin class="md-whiteframe-z1" layout-align="center center" style="min-height:508px; {{ isFullscreen ? '' : 'max-height:760px' }} ; overflow:auto;">
-                
-                    <md-toolbar class="md-theme-light">
-                      <h2 class="md-toolbar-tools">
-                        <span flex>{{ 'REPORTE_GLOBAL' | translate}}</span>                                 
-                      </h2> 
-                    </md-toolbar>
-                    
-                    <md-content>
-                        <div >
-                            <md-content flex>
-                                
-                                    <span flex class="nav-barra-grafica">
-                                        <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleModal($event);">
-                                            <md-icon md-svg-src="insert-chart"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Recargar" ng-click="recargar()">
-                                            <md-icon md-svg-src="replay"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-global')" id="max-global">
-                                            <md-icon md-svg-src="{{!isFullscreen ? 'zoom-in' : 'zoom-out'}}"></md-icon>
-                                        </md-button>
-                                        
-                                        <md-button class="md-icon-button" aria-label="Regresar" id="regresar-global" ng-click="regresar()" ng-if="contador>1">
-                                            <md-icon md-svg-src="arrow-back"></md-icon>
-                                        </md-button>
-                                    </span>
-                                
-                                
-                                <ol class="breadcrumb" style="margin-top: 0px;" ><li>Calidad </li><li ng-repeat="b in bread"> {{ b.label }}</li></ol>
-                                <md-progress-linear  ng-if="global" style="top:-25px; left:0px;"  md-mode="indeterminate"></md-progress-linear>
-
-                    <md-content  class="md-whiteframe-z1" style="width:98%; max-height:50%; overflow:auto; margin-left:1%; ">           
+                <md-content flex>                                                                                                                                                                   
+                    <md-progress-linear  ng-if="alerta" style="position:absolute; top:-5px; left:0px;" class="md-accent"   md-mode="indeterminate"></md-progress-linear> 	
                     <md-data-table-container>
-  <table md-data-table md-progress="indicadores">
-    <thead md-order="query.order" md-trigger="onOrderChange">
-      <tr>
-                        <th name="Unidad"></th>
-                        <td ng-repeat="v in indicadores" style=" font-size: 12px; color: rgba(0,0,0,.54);" width="10%" name="{{ v.codigo }}" >{{ v.codigo }}</td>
-                    </tr>
-                    </thead>
-    <tbody>
-                    <tr ng-repeat="(key, value) in dato">                           
-                        <td>{{ key }}</td>  
-                        <td ng-repeat="v in value" style="background-color:{{ v.color }}"><span style="color:white">{{ v.porcentaje }}%</span>
-                        </td>                    
-                 </tr>
-    </tbody>
-  </table>
-</md-data-table-container>
-                    </md-content>
-                            </md-content>
-                        </div>
-                    </md-content>
-                 </md-list>
+                        <table md-data-table md-progress="datos">
+                            <thead md-order="query.order" md-trigger="onOrderChange">
+                                <tr>
+                                    <th name="{{ 'INDICADOR' | translate }}"></th>
+                                    <th name="{{ 'VALOR' | translate }}"></th>
+                                </tr>
+                            </thead>
+                        <tbody>                                            
+                            <tr ng-repeat="value in dato">							
+                                <td>{{ value.codigo }} | {{ value.nombre }}</td>
+                                <td>
+                                    <div class="progress" >
+                                    <div class="progress-bar progress-bar-striped active progress-bar-default" role="progressbar"
+                                    aria-valuenow="{{ value.porcentaje }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ value.porcentaje }}%; background:{{ value.color }}">
+                                        {{ value.porcentaje }}%
+                                    </div></div>
+                                </td>		             
+                            </tr>
+                        </tbody>
+                        </table>
+                    </md-data-table-container>
+                    <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="alerta"  ng-include="'src/dashboard/views/dialog.html'" style="position: fixed;"></md-sidenav>
+                </md-content>
+                
             </md-content>
             <!-- fin grafico -->
-      
-  </md-list>
-</md-content>
+        </div>
+                
+            
+        <div layout="column" layout-gt-lg="row"  layout-margin>               
+            <!-- inicio grafico reporte global-->
+            <md-content class="md-whiteframe-z2" flex fullscreen="isFullscreen" ng-controller="globalRecursoController" id="globalRecurso">                
+                <md-toolbar class="md-theme-light" md-theme="altTheme">
+                    <div class="md-toolbar-tools">
+                        <h2>
+                            <span flex>Top {{filtro.top}} {{ 'DE' | translate}} {{ 'RECURSO' | translate}}</span>                                 
+                        </h2> 
+                        <span flex></span>
+                        <span>
+                            <md-button class="md-icon-button" aria-label="Opciones"  ng-click="toggleRightOpciones('globalRecurso');">
+                                <md-icon md-svg-src="perm-data-setting"></md-icon>
+                            </md-button>                                                               
+                            
+                            <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-globalRecurso')" id="max-globalRecurso">
+                                <md-icon md-svg-src="{{!isFullscreen ? 'fullscreen' : 'fullscreen-exit'}}"></md-icon>
+                            </md-button>
+                        </span>
+                    </div>
+                </md-toolbar>
+                    
+                <md-content flex>                                                                                                                                                                    
+                    <md-progress-linear  ng-if="globalRecurso" style="position:absolute; top:-5px; left:0px;" class="md-accent"   md-mode="indeterminate"></md-progress-linear> 
+                    
+                    <md-content style="max-height:600px; overflow:auto;">           
+                        <div ng-repeat="(key, value) in dato" class="md-whiteframe-z2" ng-if="mostrarTop[key]">                           
+                            <md-data-table-toolbar >
+                                <h2 class="md-title">{{ key | translate }}</h2>                                
+                            </md-data-table-toolbar>
+                            <md-data-table-container>
+                                <table md-data-table md-progress="indicadores"> 
+                                    <thead md-order="query.order" md-trigger="onOrderChange">
+                                    <tr>
+                                        <th name="{{ 'CLUES' | translate}}"></th>
+                                        <th name="{{ 'NOMBRE' | translate}}"></th>
+                                        <th name="{{ 'PORCENTAJE' | translate}}"></th>
+                                    </tr>
+                                </thead>                                                   
+                                    <tbody>
+                                        <tr ng-repeat="item in value">                           
+                                            <td>{{ item.clues }}</td>   
+                                            <td>{{ item.nombre }}</td>                                                              
+                                            <td>{{ item.porcentaje }} %</td>                    
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </md-data-table-container> 
+                        </div>
+                    </md-content>
+                </md-content>
+                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="globalRecurso"  ng-include="'src/dashboard/views/dialog.html'" style="position: fixed;"></md-sidenav>
+            </md-content>
+            <!-- fin grafico -->   
+            
+            <!-- inicio grafico reporte global calidad-->
+            <md-content class="md-whiteframe-z2" flex fullscreen="isFullscreen" ng-controller="globalCalidadController" id="globalCalidad">                
+                <md-toolbar class="md-theme-light" md-theme="altTheme">
+                    <div class="md-toolbar-tools">
+                        <h2>
+                            <span flex>Top {{filtro.top}} {{ 'DE' | translate}} {{ 'CALIDAD' | translate}}</span>                                 
+                        </h2> 
+                        <span flex></span>
+                        <span>
+                            <md-button class="md-icon-button" aria-label="Opciones"  ng-click="toggleRightOpciones('globalCalidad');">
+                                <md-icon md-svg-src="perm-data-setting"></md-icon>
+                            </md-button>                                                               
+                            
+                            <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-globalCalidad')" id="max-globalCalidad">
+                                <md-icon md-svg-src="{{!isFullscreen ? 'fullscreen' : 'fullscreen-exit'}}"></md-icon>
+                            </md-button>
+                        </span>
+                    </div>
+                </md-toolbar>
+                    
+                <md-content flex>                                                                                                                                                                    
+                    <md-progress-linear  ng-if="globalCalidad" style="position:absolute; top:-5px; left:0px;" class="md-accent"   md-mode="indeterminate"></md-progress-linear> 
+                    <md-content style="max-height:600px; overflow:auto;">           
+                        <div ng-repeat="(key, value) in dato" class="md-whiteframe-z2" ng-if="mostrarTop[key]">                           
+                            <md-data-table-toolbar >
+                                <h2 class="md-title">{{ key | translate }}</h2>                                
+                            </md-data-table-toolbar>
+                            <md-data-table-container>
+                                <table md-data-table md-progress="indicadores"> 
+                                    <thead md-order="query.order" md-trigger="onOrderChange">
+                                    <tr>
+                                        <th name="{{ 'CLUES' | translate}}"></th>
+                                        <th name="{{ 'NOMBRE' | translate}}"></th>
+                                        <th name="{{ 'PORCENTAJE' | translate}}"></th>
+                                    </tr>
+                                </thead>                                                   
+                                    <tbody>
+                                        <tr ng-repeat="item in value">                           
+                                            <td>{{ item.clues }}</td>   
+                                            <td>{{ item.nombre }}</td>                                                              
+                                            <td>{{ item.porcentaje }} %</td>                    
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </md-data-table-container> 
+                        </div>
+                    </md-content>
+                </md-content>
+                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="globalCalidad"  ng-include="'src/dashboard/views/dialog.html'" style="position: fixed;"></md-sidenav>
+            </md-content>
+            <!-- fin grafico -->   
+        </div> 
+
+    </md-content>
 </div>

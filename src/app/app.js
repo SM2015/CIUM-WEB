@@ -129,6 +129,8 @@
 		  .icon("expand-more", "bower_components/material-design-icons/navigation/svg/production/ic_expand_more_48px.svg", 48)
 		  .icon("expand-less", "bower_components/material-design-icons/navigation/svg/production/ic_expand_less_48px.svg", 48)
 		  .icon("close", "bower_components/material-design-icons/navigation/svg/production/ic_close_48px.svg", 48)
+		  .icon("fullscreen", "bower_components/material-design-icons/navigation/svg/production/ic_fullscreen_48px.svg", 48)
+		  .icon("fullscreen-exit", "bower_components/material-design-icons/navigation/svg/production/ic_fullscreen_exit_48px.svg", 48)
 		  .icon("more-vert", "bower_components/material-design-icons/navigation/svg/production/ic_more_vert_48px.svg", 48)
 		  
 		  // Image
@@ -185,34 +187,34 @@
 		
 		// Configuramos tema de material design
 		$mdThemingProvider.definePalette('amazingPalette', {
-			'50': 'd0f8ce',
+			'50': 'e4e4e4',
 			'100': 'a3e9a4',
 			'200': '72d572',
 			'300': '42bd41',
-			'400': 'ffffff',
+			'400': '037902',
 			'500': '259b24',
-			'600': '037902',
-			'700': '026801',
-			'800': 'ffffff',
-			'900': 'ffffff',
-			'A100': 'ffffff',
-			'A200': 'ffffff',
-			'A400': 'ffffff',
-			'A700': 'ffffff',
+			'600': 'E82128',
+			'700': 'AE2327',
+			'800': 'FFCB06',
+			'900': 'F49720',
+			'A100': '07A351',
+			'A200': '066634',
+			'A400': '46A8DC',
+			'A700': '005F97',
 			'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
 												// on this palette should be dark or light
 			'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
 			'200', '300', '400', 'A100'],
-			'contrastLightColors': undefined    // could also specify this if default was 'dark'
+			'contrastLightColors': 'light'    // could also specify this if default was 'dark'
 		});
 		
 		$mdThemingProvider.theme('default')
-	    .primaryPalette('amazingPalette',{'hue-1':'600','hue-2':'200','hue-3':'A100'})
-	    .warnPalette('red')
-	    .accentPalette('light-green');
+	    .primaryPalette('amazingPalette',{'hue-1':'400','hue-2':'200','hue-3':'100'})
+	    .warnPalette('amazingPalette',{'default':'600','hue-1':'700','hue-2':'A400','hue-3':'A700'})
+	    .accentPalette('amazingPalette',{'default':'800','hue-1':'900'});
 	  
 		$mdThemingProvider.theme('altTheme')
-		.primaryPalette('grey',{'default':'50'})
+		.primaryPalette('grey',{'default':'200'})
 		.warnPalette('pink')
 	    .accentPalette('orange');
 		
