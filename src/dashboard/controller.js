@@ -841,7 +841,8 @@
 			}
 			$scope.contador = 0;
 			$scope.intento = 0;
-			$scope.init();						
+			$scope.init();	
+			$mdSidenav('pie').close();					
 		};
 		$scope.contador = 0;
 		
@@ -1108,7 +1109,8 @@
 			}
 			$scope.contador = 0;
 			$scope.intento = 0;
-			$scope.init();							
+			$scope.init();	
+			$mdSidenav('alerta').close();						
 		};
 		$scope.contador = 0;
 		
@@ -1889,7 +1891,7 @@
 			$scope.contador = 0;
 			$scope.intento = 0;
 			$scope.init();
-										
+			$mdSidenav('gaugeRecurso').close();										
 		};
 		$scope.contador = 0;
 		
@@ -2117,7 +2119,8 @@
 			}
 			$scope.contador = 0;
 			$scope.intento = 0;
-			$scope.init();						
+			$scope.init();
+			$mdSidenav('gaugeCalidad').close();						
 		};
 		$scope.contador = 0;
 		

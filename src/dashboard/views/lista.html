@@ -5,6 +5,11 @@
         position: fixed;
         top: 0;
     }
+    .md-sidenav-right
+    {
+        position: fixed;
+        z-index: 9999999999;
+    }
 </style>
 
 <div layout="column" class="relative" layout-fill role="main">
@@ -51,7 +56,7 @@
                         <div  style="width:{{tamano}}px; height: auto;" class="gauge" ng-radial-gauge ranges="ranges" value="value" value-unit="unit" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit"></div>
                         <ul class="tc-chart-js-legend"><li ng-repeat="item in indicadores"><span style="background-color:{{item.color}}"></span>{{item.indicador}}</ul>                                
                     </md-content>
-                    <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="gaugeRecurso"  ng-include="'src/dashboard/views/dialog.html'" style="position: fixed;"></md-sidenav>
+                    <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="gaugeRecurso"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
             </md-content>
             <!-- fin grafico -->
 
@@ -80,7 +85,7 @@
                     <div style="width:{{tamano}}px; height: auto;" class="gauge" ng-radial-gauge ranges="ranges" value="value" value-unit="unit" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit"></div>
                     <ul class="tc-chart-js-legend"><li ng-repeat="item in indicadores"><span style="background-color:{{item.color}}"></span>{{item.indicador}}</ul>                                
                 </md-content>
-                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="gaugeCalidad"  ng-include="'src/dashboard/views/dialog.html'" style="position: fixed;"></md-sidenav>
+                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="gaugeCalidad"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
             </md-content>
             <!-- fin grafico -->
         </div> 
@@ -117,7 +122,7 @@
                         </div>                                        
                     </md-content>   
                 </div> 
-                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="recurso"  ng-include="'src/dashboard/views/dialog.html'" style="position: fixed;"></md-sidenav>                                        
+                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="recurso"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>                                        
             </md-content>
             <!-- fin grafico -->
             
@@ -153,7 +158,7 @@
                         </div>                                                 
                     </md-content>
                 </div>
-                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="calidad"  ng-include="'src/dashboard/views/dialog.html'" style="position: fixed;"></md-sidenav>
+                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="calidad"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
             </md-content>
             <!-- fin grafico -->  
         </div>
@@ -186,7 +191,7 @@
                         </div>             
                     </md-content>
                 </div>
-                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="pie"  ng-include="'src/dashboard/views/dialog.html'" style="position: fixed;"></md-sidenav>
+                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="pie"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
             </md-content>
             <!-- fin grafico -->
         
@@ -235,7 +240,7 @@
                         </tbody>
                         </table>
                     </md-data-table-container>
-                    <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="alerta"  ng-include="'src/dashboard/views/dialog.html'" style="position: fixed;"></md-sidenav>
+                    <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="alerta"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
                 </md-content>
                 
             </md-content>
@@ -265,9 +270,9 @@
                 </md-toolbar>
                     
                 <md-content flex>                                                                                                                                                                    
-                    <md-progress-linear  ng-if="globalRecurso" style="position:absolute; top:-5px; left:0px;" class="md-accent"   md-mode="indeterminate"></md-progress-linear> 
+                    <md-progress-linear  ng-if="globalRecurso" style="position:absolute; top:-5px; left:0px; z-index:99" class="md-accent"   md-mode="indeterminate"></md-progress-linear> 
                     
-                    <md-content style="max-height:600px; overflow:auto;">           
+                    <md-content style="{{isFullscreen ? '' : 'max-height:600px'}}; overflow:auto;">           
                         <div ng-repeat="(key, value) in dato" class="md-whiteframe-z2" ng-if="mostrarTop[key]">                           
                             <md-data-table-toolbar >
                                 <h2 class="md-title">{{ key | translate }}</h2>                                
@@ -293,7 +298,7 @@
                         </div>
                     </md-content>
                 </md-content>
-                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="globalRecurso"  ng-include="'src/dashboard/views/dialog.html'" style="position: fixed;"></md-sidenav>
+                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="globalRecurso"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
             </md-content>
             <!-- fin grafico -->   
             
@@ -318,8 +323,8 @@
                 </md-toolbar>
                     
                 <md-content flex>                                                                                                                                                                    
-                    <md-progress-linear  ng-if="globalCalidad" style="position:absolute; top:-5px; left:0px;" class="md-accent"   md-mode="indeterminate"></md-progress-linear> 
-                    <md-content style="max-height:600px; overflow:auto;">           
+                    <md-progress-linear  ng-if="globalCalidad" style="position:absolute; top:-5px; left:0px; z-index:99" class="md-accent"   md-mode="indeterminate"></md-progress-linear> 
+                    <md-content style="{{isFullscreen ? '' : 'max-height:600px'}}; overflow:auto;">           
                         <div ng-repeat="(key, value) in dato" class="md-whiteframe-z2" ng-if="mostrarTop[key]">                           
                             <md-data-table-toolbar >
                                 <h2 class="md-title">{{ key | translate }}</h2>                                
@@ -345,7 +350,7 @@
                         </div>
                     </md-content>
                 </md-content>
-                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="globalCalidad"  ng-include="'src/dashboard/views/dialog.html'" style="position: fixed;"></md-sidenav>
+                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="globalCalidad"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
             </md-content>
             <!-- fin grafico -->   
         </div> 
