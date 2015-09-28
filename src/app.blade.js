@@ -1,20 +1,92 @@
 /**
- * Directivas globales
+ * @ngdoc interface
+ * @name App.interface:Scaffolding
+ * @description
+ * A continuación se lista las carpetas y se explica el contenido de cada uno.
  * 
- * @package    CIUM 
- * @subpackage Directivas
- * @author     Eliecer Ramirez Esquinca
- * @created    2015-07-20
- */
+* <br>
+ * <h4>assets</h4>
+ * <p>cualquier recurso gráfico que se carga externamente</p>
+ * <table>
+ * 		<tr>
+ * 			<th>Nombre</th>
+ * 			<th>Descripción</th>
+ * 		</tr>
+ * 		<tr>
+ * 			<td>css</th>
+ * 			<td>Todos los estilos de app</th>
+ * 		</tr>
+ * 		<tr>
+ * 			<td>img</th>
+ * 			<td>Imagenes que se usen en el app</th>
+ * 		</tr>
+ * 		<tr>
+ * 			<td>js</th>
+ * 			<td>Javascript que se necesiten extras a los bower_componets</th>
+ * 		</tr>
+ * 		<tr>
+ * 			<td>svg</th>
+ * 			<td>Imagenes tipo svg</th>
+ * 		</tr>
+ * </table>
+ * 
+ * <h4>bower_componets</h4>
+ * <p>Vendor de terceros para agilizar la programación</p>
+ * <table>
+ * 		<tr>
+ * 			<th>Nombre</th>
+ * 			<th>Descripción</th>
+ * 		</tr>
+ * 		<tr>
+ * 			<td>*.*</th>
+ * 			<td>Aca se generan todos los modulos de terceros</th>
+ * 		</tr>
+ * </table>
+ * 
+ * <h4>src</h4>
+ * <p>Modelo del proyecto: contiene las vistas y controladores (js) angular del app</p>
+ * <table>
+ * 		<tr>
+ * 			<th>Nombre</th>
+ * 			<th>Descripción</th>
+ * 		</tr>
+ * 		<tr>
+ * 			<td>App</th>
+ * 			<td>Configuracion de la aplicación</th>
+ * 		</tr>
+ * 		<tr>
+ * 			<td>catalogos</th>
+ * 			<td>Contiene el controlador general para el manejo del CRDU y las carpetas contiene las vistas dentro de otra carpeta llamada views si el modulo necesita realizar una acción especifica y el controlador principal no lo proporciona se genera otro controlador dentro, como el caso de criterio e indicador</th>
+ * 		</tr>
+ * 		<tr>
+ * 			<td>dashboard</th>
+ * 			<td>Contiene un controlador y en su codigo se separa por multiples controladores que manejan un area del dashboard de cada grafico, la vista lista contiene todas las areas de grafico, dialog contiene las opciones de filtrado</th>
+ * 		</tr>
+ * 		<tr>
+ * 			<td>sistema</th>
+ * 			<td>Contiene las carpetas de cada modulo y en su interior de cada uno contiene un controlador para ccaiones especificas del modulo y en la carpeta views estan las vistas de cada modulo</th>
+ * 		</tr>
+ * 		<tr>
+ * 			<td>transaccion</th>
+ * 			<td>Contiene la parte mas importante del modulo que son las recoleccion de datos o evaluaciones. contiene 3 carpetas y dentro de cada uno se encuentra un controlador y sus vistas</th>
+ * 		</tr>
+ * </table>
+ */ 
+ 
 var app = angular.module('App');  
 
-	/**
-	 * Genera la url (modificar, nuevo, ver, listar) de las vistas.
-	 *
-	 * @param attr url-modulo
-	 * 
-	 * @return href
-	 */
+/**
+ * @ngdoc directive
+ * @name App.directive:urlModulo
+ * @description
+ * Genera la url (modificar, nuevo, ver, listar) de las vistas, sin necesidad de poner la ruta completa, solamente al metodo acceder.
+ * @example
+   <example module="urlModulo">
+     <file name="index.html">
+         <a url-modulo="modificar?id={{ dato.id }}">Modificar</a>
+     </file>
+   </example>
+ */ 	
 app.directive('urlModulo', function() 
 {	
 	return{
@@ -44,14 +116,18 @@ app.directive('urlModulo', function()
 		}
 	};
 });
-
-	/**
-	 * Despliega en pantalla un mensaje de error que se genere al extraer datos de la api.
-	 *
-	 * @param data = array del o los mensajes
-	 * 
-	 * @return templete view
-	 */
+/**
+ * @ngdoc directive
+ * @name App.directive:errorFlash
+ * @description
+ * Muestra en pantalla los mensajes que devuelve la api.
+ * @example
+ * flash('success', 'texto del mensaje'); o errorFlash.error(array('success','texto del mensaje'));		
+ * @param {string} tipo tipo(success,danger,warning,info)
+ * @param {string} mensaje mensaje 
+ * @param {object} object en caso de ser objeto  errorFlash.error(data)
+ * @returns {toast} con el mensaje y el tipo.
+ */  	 
 app.factory('errorFlash', function($http, flash) 
 { 
 	return {		 
@@ -76,13 +152,20 @@ app.factory('errorFlash', function($http, flash)
 	};
 });
 
-	/**
-	 * Genera un boton para imprimir determinada area en una página.
-	 *
-	 * @param attr class = area a imprimir
-	 * 
-	 * @return imprimir
-	 */
+/**
+ * @ngdoc directive
+ * @name App.directive:imprimirDiv
+ * @description
+ * Genera un boton para imprimir el contenido de un area determinada en la vista.
+ * @example
+   <example module="imprimirDiv">
+     <file name="index.html">
+	 	 <p>Imprimir el area que contenga la clase imprimir</p>
+         <a imprimir-div=".imprimir">Imprimir</a>
+		 <div class="imprimir">Este es el contenido a imprimir</div>
+     </file>
+   </example>
+ */  		 
 app.directive('imprimirDiv', function () 
 {
 	return {
@@ -155,6 +238,12 @@ app.directive('imprimirDiv', function ()
 	};
 });
 
+/**
+ * @ngdoc directive
+ * @name App.directive:focusMe
+ * @description
+ * Pone el foco en un elemento.
+ */  
 app.directive('focusMe', function($timeout, $parse) {
   return {
     link: function(scope, element, attrs) {
@@ -170,6 +259,12 @@ app.directive('focusMe', function($timeout, $parse) {
   };
 });
 
+/**
+ * @ngdoc filter
+ * @name App.filter:numberFixedLen
+ * @description
+ * Fomato a numeros con 2 decimales.
+ */  
 app.filter('numberFixedLen', function () {
     return function(a,b){
         return(1e4+a+"").slice(-b)

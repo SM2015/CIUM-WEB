@@ -1,3 +1,9 @@
+/**
+* @ngdoc object
+* @name Transaccion.CalidadCtrl
+* @description
+* Complemento del controlador CrudCtrl  para tareas especificas en EvaluacionCalidad
+*/
 (function(){
 	'use strict';
 	angular.module('CalidadModule')
@@ -133,8 +139,15 @@
 	}
 		
 	$scope.update=false;
-	
-	// obtener el leistado de clues que le corresponde al usuario
+/**
+* @ngdoc method
+* @name Transaccion.CalidadCtrl#getClues
+* @methodOf Transaccion.CalidadCtrl
+*
+* @description
+* Obtiene las clues que le corresponden al usuario
+*/		
+
 	$scope.getClues=function()
 	{
 		$scope.cargando = true;
@@ -161,7 +174,15 @@
 		});
 	};
 	
-	// rellenar la ficha con los datos de la clues seleccionada
+/**
+* @ngdoc method
+* @name Transaccion.CalidadCtrl#CluesChange
+* @methodOf Transaccion.CalidadCtrl
+*
+* @description
+* Carga los datos de la ficha para clues
+* @param {string} value codigo de la clues
+*/
 	$scope.CluesChange = function(value) 
 	{ 	
 		$scope.cargando = true;		
@@ -194,11 +215,26 @@
 			$scope.cargando = false;
 		}); 
 	}; 
-	// cerrar el dialog
+/**
+* @ngdoc method
+* @name Transaccion.CalidadCtrl#hide
+* @methodOf Transaccion.CalidadCtrl
+*
+* @description
+* Cerrar el dialogo de la ficha
+*/
 	$scope.hide = function() {
 		$mdDialog.hide();
 	};
-	// abre la ficha de  la clues en un dialog
+/**
+* @ngdoc method
+* @name Transaccion.CalidadCtrl#abrirFicha
+* @methodOf Transaccion.CalidadCtrl
+*
+* @description
+* abre la ficha de la clues en un dialog
+* @param {event} ev evento click
+*/	
 	$scope.abrirFicha = function(ev)
 	{		    
 	    $scope.editDialog = $mdDialog;
@@ -301,7 +337,14 @@
 		}
 		});
 	};
-
+/**
+* @ngdoc method
+* @name Transaccion.CalidadCtrl#acciones
+* @methodOf Transaccion.CalidadCtrl
+*
+* @description
+* Carga el catalogo de acciones 
+*/
 	$scope.acciones = function() 
 	{
 		$scope.acciones=[];
@@ -327,7 +370,14 @@
 			}
 		});
 	};
-
+/**
+* @ngdoc method
+* @name Transaccion.CalidadCtrl#accionesPlazo
+* @methodOf Transaccion.CalidadCtrl
+*
+* @description
+* Carga el catalogo de plazo acciones 
+*/
 	$scope.accionesPlazo = function() 
 	{
 		$scope.plazos=[];
@@ -350,6 +400,15 @@
 	$scope.incompleto = [];
 	// agregar columnas(expediente)
 	$scope.columnas = [];
+/**
+* @ngdoc method
+* @name Transaccion.CalidadCtrl#agregarColumna
+* @methodOf Transaccion.CalidadCtrl
+*
+* @description
+* Agrega otro expediente al indicador
+* @param {string} exp numero de expediente
+*/	
 	$scope.agregarColumna = function(exp)
 	{
 		var indi = $scope.indicador;
@@ -373,6 +432,14 @@
 	}
 	
 	$scope.criterios = []; $scope.modificado = false;
+/**
+* @ngdoc method
+* @name Transaccion.CalidadCtrl#verificarCambios
+* @methodOf Transaccion.CalidadCtrl
+*
+* @description
+* Comprueba que el indicador actual no tenga cambios en la evaluacion
+*/	
 	$scope.verificarCambios = function()
 	{
 		if($scope.modificado)
@@ -385,9 +452,17 @@
 		}		
 	}
 
-	// cargar los criterios que le correspondan por indicador y nivel de cone
+	
 	$scope.criterios = [];
 	$scope.informacion = [];
+/**
+* @ngdoc method
+* @name Transaccion.CalidadCtrl#cargarCriterios
+* @methodOf Transaccion.CalidadCtrl
+*
+* @description
+* cargar los criterios que le correspondan por indicador y nivel de cone
+*/	
 	$scope.cargarCriterios= function()
 	{
 		var cone=$scope.dato.idCone;
@@ -503,7 +578,15 @@
 		}
 	};
 	$scope.hallazgos = {};	
-	// cargar los criterios para la vista ver
+
+/**
+* @ngdoc method
+* @name Transaccion.CalidadCtrl#cargarCriteriosVer
+* @methodOf Transaccion.CalidadCtrl
+*
+* @description
+* cargar los criterios para la vista ver
+*/	
 	$scope.cargarCriteriosVer = function()
 	{			
 		var idev=$location.search().id;
@@ -551,7 +634,14 @@
 	};
 	
 	$scope.tieneExpediente=[];
-	// obtener las estadisticas de la evaluacion
+/**
+* @ngdoc method
+* @name Transaccion.CalidadCtrl#estadistica
+* @methodOf Transaccion.CalidadCtrl
+*
+* @description
+* obtener las estadisticas de la evaluacion
+*/		
 	$scope.estadistica = function()
 	{
 		$scope.cargando = true;
@@ -631,8 +721,14 @@
 	$scope.TH={};
 	$scope.AR={};
 	$scope.tieneHallazgo=false;
-	
-	// optener el promedio para la evaluacion
+/**
+* @ngdoc method
+* @name Transaccion.CalidadCtrl#obtenerPromedio
+* @methodOf Transaccion.CalidadCtrl
+*
+* @description
+* optener el promedio para la evaluacion
+*/	
 	$scope.obtenerPromedio = function()
 	{
 		var totalCriterio = 0;
@@ -681,6 +777,17 @@
 		else
 			$scope.dato.hallazgos={};
 	};
+/**
+* @ngdoc method
+* @name Transaccion.CalidadCtrl#validarNoRepetirExpediente
+* @methodOf Transaccion.CalidadCtrl
+*
+* @description
+* valida que no se repita un expediente
+* @param {string} valor valor a comprobar
+* @param {string} exp numero de expediente
+*/
+	
 	$scope.validarNoRepetirExpediente = function(valor,exp)
 	{		
 		angular.forEach($scope.dato.expediente, function(item, key) 
@@ -689,7 +796,19 @@
 				flash('warning', $translate.instant("REPITE_EXPEDIENTE") );
 		});
 	}
-	// evaluacion de criterio si/no
+/**
+* @ngdoc method
+* @name Transaccion.CalidadCtrl#aprobar
+* @methodOf Transaccion.CalidadCtrl
+*
+* @description
+* Evaluar los criterios si/no
+* @param {string} index identificador del criterio
+* @param {string} evaluacion id de la evaluación
+* @param {string} ap lugar de verificación
+* @param {string} exp numero de expediente
+* @param {string} id numero de columna
+*/
 	$scope.json = {};
 	$scope.tieneHallazgo=false;
 	$scope.aprobar = function(index,evaluacion,ap,exp,id)
@@ -817,7 +936,15 @@
 	$scope.valido=false;
 	
 
-	//cerrar
+/**
+* @ngdoc method
+* @name Transaccion.CalidadCtrl#cerrar
+* @methodOf Transaccion.CalidadCtrl
+*
+* @description
+* Cerrar evaluación
+* @param {string} id identificador de la evaluación
+*/
 	$scope.cerrar = function(id) 
 	{
 		if ($window.confirm($translate.instant('CONFIRM_CERRAR'))) {

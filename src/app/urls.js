@@ -1,14 +1,11 @@
 /**
- * Module App
- * 
- * @package    CIUM
- * @subpackage Controlador
- * @author     Hugo Gutierrez Corzo
- * @created    2015-07-20
- */
+ * @ngdoc interface
+ * @name App.interface:URLS
+ * @description
+ * constantes para las urls utilizadas en la aplicación.
+ */  
 (function(){
 	'use strict';
-	// constantes para las urls utilizadas en la aplicación
 	angular.module('App').constant('URLS', {
     	BASE: 'http://localhost/SSA_MATERIAL/APIRESTfull/public/',
     	BASE_API: 'http://localhost/SSA_MATERIAL/APIRESTfull/public/api/v1/',

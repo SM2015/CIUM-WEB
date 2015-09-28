@@ -1,11 +1,9 @@
 /**
- * Controlador CriterioCtrl
- * 
- * @package    CIUM 
- * @subpackage Controlador
- * @author     Eliecer Ramirez Esquinca
- * @created    2015-07-20
- */
+* @ngdoc object
+* @name Catalogos.CriterioCtrl
+* @description
+* Complemento del controlador CrudCtrl  para tareas especificas en criterios
+*/
 (function(){
 	'use strict';
 	angular.module('CriterioModule')
@@ -139,6 +137,15 @@
 	$scope.criterio = [];
 	$scope.criterio.indicador = {};
 	
+/**
+* @ngdoc method
+* @name Catalogos.CriterioCtrl#treeClick
+* @methodOf Catalogos.CriterioCtrl
+*
+* @description
+* Evento para expandir o colapsar el arbol de criterios por indicador
+* @param {property} a id del area donde se genero el evento click  
+*/	
 	$scope.treeClick =function(a)
 	{
 		var children = angular.element(document.getElementById(a)).parent('li.parent_li').find('ul').find('li');
@@ -154,6 +161,17 @@
 		}
 	};
 	$scope.che=[];
+/**
+* @ngdoc method
+* @name Catalogos.CriterioCtrl#treeClickCheck
+* @methodOf Catalogos.CriterioCtrl
+*
+* @description
+* Marca los checkbox al hacer click en cada uno y pinta el indicador al que pertenezca segun la valización
+* @param {property} a id del indicador 
+* @param {property} b bandera para determinar si tiene datos por defaul 
+* @param {property} c id de los hijos del indicador
+*/	
 	$scope.treeClickCheck =function(a,b,c)
 	{
 		var cone = null;
@@ -205,6 +223,16 @@
 			}
 		}
 	};
+/**
+* @ngdoc method
+* @name Catalogos.CriterioCtrl#opciones
+* @methodOf Catalogos.CriterioCtrl
+*
+* @description
+* Carga los datos como catalago de la url
+* @param {string} url url para hacer la petición 
+* @param {string} cat nombre del catalogo a crear
+*/	
 	
 	$scope.opciones = function(url,cat) 
 	{
@@ -225,6 +253,16 @@
 			$scope.cargando = false;
 		});
 	};
+/**
+* @ngdoc method
+* @name Catalogos.CriterioCtrl#seleccionado
+* @methodOf Catalogos.CriterioCtrl
+*
+* @description
+* Marca los indicadores que ya contienen datos
+* @param {object} data contiene el json con los datos
+*/
+	
 	$scope.seleccionado = function(data) 
 	{
 		$scope.criterio.indicador={}; var cone=[];
@@ -239,6 +277,15 @@
 			cone=[];
 		});			
 	}
+/**
+* @ngdoc method
+* @name Catalogos.CriterioCtrl#validarIndicador
+* @methodOf Catalogos.CriterioCtrl
+*
+* @description
+* Validar que en el indicador exista por lo menos un nivel de cone y el lugar de verificacion para poder ser insertado
+*/
+	
 	$scope.validarIndicador = function() 
 	{	
 		var bien=true; var cone=0;	
@@ -409,7 +456,15 @@
 		}
 	};
 	
-	
+/**
+* @ngdoc method
+* @name Catalogos.CriterioCtrl#getIndicadores
+* @methodOf Catalogos.CriterioCtrl
+*
+* @description
+* Formatea los datos del arbol para poder ser enviados a la api y esta pueda interpretarla
+* @param {object} valores contiene el json con los datos del arbol
+*/	
 	$scope.getIndicadores = function(valores)
 	{
 		var indicadores = []; var i = 0;

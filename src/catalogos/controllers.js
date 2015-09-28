@@ -1,4 +1,11 @@
 (function(){
+/**
+* @ngdoc object
+* @name Catalogos.CrudCtrl
+* @description
+* Controlador general que maneja el CRUD(crear,leer,actualizar,eliminar) de la pagina
+*/
+	
 	'use strict';
     angular.module('CrudModule')
     .controller('CrudCtrl',
@@ -42,15 +49,30 @@
 		limit: 25,
 		page: 1
 	};
-
-	// Evento para incializar el ordenamiento segun la columna clickeada
+/**
+* @ngdoc method
+* @name Catalogos.CrudCtrl#onOrderChange
+* @methodOf Catalogos.CrudCtrl
+*
+* @description
+* Evento para incializar el ordenamiento segun la columna clickeada
+* @param {string} order campo para el ordenamiento  
+*/
 	$scope.onOrderChange = function (order) {
 		$scope.query.order=order;
 		$scope.cargando = true;
 		$scope.init(); 
 	};
-
-	// Evento para el control del paginado.
+/**
+* @ngdoc method
+* @name Catalogos.CrudCtrl#onOrderChange
+* @methodOf Catalogos.CrudCtrl
+*
+* @description
+* Evento para el control del paginado.
+* @param {int} page pagina actual
+* @param {int} limit resultados por pagina 
+*/
 	$scope.onPaginationChange = function (page, limit) {
 		$scope.paginacion = 
 		{
@@ -99,8 +121,15 @@
 	    $scope.menuSelected = path;
 	   $location.path(path).search({id: null});
 	};
-
-	// evento para el boton nuevo, redirecciona a la vista nuevo
+/**
+* @ngdoc method
+* @name Catalogos.CrudCtrl#onOrderChange
+* @methodOf Catalogos.CrudCtrl
+*
+* @description
+* Evento para el boton nuevo, redirecciona a la vista nuevo
+*/
+	
 	$scope.nuevo = function()
 	{
 	    var uri=$scope.url.split('/');
@@ -112,23 +141,15 @@
 	$scope.showSearch = false;
 	$scope.listaTemp={};
 	$scope.moduloName=angular.uppercase($location.path().split('/')[1]);
-	$scope.mostrarSearch = function(t)
-	{
-		$scope.showSearch = ! $scope.showSearch;
-		if(t==0)
-		{
-			$scope.listaTemp = $scope.datos;		
-		}
-		else
-		{
-			$scope.buscar='';
-			$scope.datos = $scope.listaTemp;
-		}
-	}
-
-	$scope.showSearch = false;
-	$scope.listaTemp={};
-	$scope.moduloName=angular.uppercase($location.path().split('/')[1]);
+/**
+* @ngdoc method
+* @name Catalogos.CrudCtrl#mostrarSearch
+* @methodOf Catalogos.CrudCtrl
+*
+* @description
+* Oculta o muestra la barra de busqueda en las vistas tipo lista.
+* @param {int} t bandera para regresar los datos antes de la busqueda
+*/	
 	$scope.mostrarSearch = function(t)
 	{
 		$scope.showSearch = ! $scope.showSearch;
@@ -172,7 +193,16 @@
             $scope.btexportar=false;
           }); 
     }
-    // inicializa las rutas para crear los href correspondientes en la vista actual
+/**
+* @ngdoc method
+* @name Catalogos.CrudCtrl#index
+* @methodOf Catalogos.CrudCtrl
+*
+* @description
+* inicializa las rutas para crear los href correspondientes en la vista actual
+* @param {string} ruta ruta del módulo actual
+*/	
+
 	$scope.index = function(ruta) 
 	{
 	  $scope.ruta=ruta;  
@@ -181,8 +211,17 @@
 	  if(uri.search("nuevo")==-1)
 	  $scope.init();     
 	};
-	
-	// obtiene los datos necesarios para crear el grid (listado)
+
+/**
+* @ngdoc method
+* @name Catalogos.CrudCtrl#init
+* @methodOf Catalogos.CrudCtrl
+*
+* @description
+* obtiene los datos necesarios para crear el grid (listado) con ayuda del servicio CrudDataApi
+* @param {string} buscar contiene el texto a buscar en la base de datos
+* @param {string} columna contiene el nombre de la columna en donde hacer la busqueda 
+*/		
     $scope.init = function(buscar,columna) 
 	{
 		var url=$scope.ruta;
@@ -215,15 +254,32 @@
       		$scope.cargando = false;
         });
     };
-
-    // incia la busqueda con los parametros, columna = campo donde buscar, buscar = valor para la busqueda
+/**
+* @ngdoc method
+* @name Catalogos.CrudCtrl#buscarL
+* @methodOf Catalogos.CrudCtrl
+*
+* @description
+* incia la busqueda con los parametros, columna = campo donde buscar, buscar = valor para la busqueda
+* @param {string} buscar contiene el texto a buscar en la base de datos
+* @param {string} columna contiene el nombre de la columna en donde hacer la busqueda 
+*/	
 	$scope.buscarL = function(buscar,columna) 
 	{
 	    $scope.cargando = true;
 	  	$scope.init(buscar,columna);
 	};
-       
-    // Ver. Muestra los datos del elemento que se le pase como parametro
+
+/**
+* @ngdoc method
+* @name Catalogos.CrudCtrl#ver
+* @methodOf Catalogos.CrudCtrl
+*
+* @description
+* Muestra los datos del elemento que se le pase como parametro
+* @param {string} ruta contiene la ruta para hacer la petición a la api
+*/	       
+  
     $scope.ver = function(ruta) 
     {
 		$scope.ruta=ruta;		
@@ -251,8 +307,15 @@
 			}
 		);  	 
     };
-	
-    //Modificar. Actualiza el recurso con los datos que envia el usuario
+/**
+* @ngdoc method
+* @name Catalogos.CrudCtrl#modificar
+* @methodOf Catalogos.CrudCtrl
+*
+* @description
+* Actualiza el recurso con los datos que envia el usuario
+* @param {int} id contiene el identificador del elemento a modificar
+*/	   	
 	$scope.modificar = function(id) 
 	{    
 	  var url=$scope.ruta;
@@ -281,8 +344,18 @@
 		});    
 	  }
 	};
-	 
-	//Borrar. Elimina el recurso del parametro id
+
+/**
+* @ngdoc method
+* @name Catalogos.CrudCtrl#borrar
+* @methodOf Catalogos.CrudCtrl
+*
+* @description
+* Elimina el recurso especificado
+* @param {int} id contiene el identificador del elemento a eliminar
+* @param {int} $index contiene el identificador del elemento a quitar del moodelo en caso de que el evento se ejecute en un listado
+*/	 	 
+
 	$scope.borrar = function(id, $index) 
 	{    
 		var op=1;
@@ -323,7 +396,15 @@
 		}          
 	};
 
-    // Guardar
+/**
+* @ngdoc method
+* @name Catalogos.CrudCtrl#guardar
+* @methodOf Catalogos.CrudCtrl
+*
+* @description
+* Envia la petición para crear un nuevo registro con los datos especificados
+* @param {object} form para identificar el formulario que lanzo la petición para procesar los datos y limpiar el formulario una vez se reciba un mensaje de confirmacion de parte de la api
+*/	
 	$scope.guardar = function(form) 
 	{
 	  

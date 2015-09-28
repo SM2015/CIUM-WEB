@@ -1,3 +1,9 @@
+/**
+* @ngdoc object
+* @name Sistema.GrupoCtrl
+* @description
+* Complemento del controlador CrudCtrl  para tareas especificas en Grupo
+*/
 (function(){
 	'use strict';
 	angular.module('GrupoModule')
@@ -129,13 +135,28 @@
 			$scope.datos = $scope.listaTemp;
 		}
 	}
-
+/**
+* @ngdoc method
+* @name Sistema.GrupoCtrl#moduloAccion
+* @methodOf Sistema.GrupoCtrl
+*
+* @description
+* Obtiene los permisos que tiene por grupo
+*/
 		moduloAccion.modulos().success(function(data)
 		{
 			$scope.permissions=data.data;
 		});
 		$scope.dato={};
 		$scope.dato.permissions={};
+/**
+* @ngdoc method
+* @name Sistema.GrupoCtrl#grupoVer
+* @methodOf Sistema.GrupoCtrl
+*
+* @description
+* Obtiene los datos para crear la vista ver
+*/
 		
 		$scope.grupoVer = function()
 		{

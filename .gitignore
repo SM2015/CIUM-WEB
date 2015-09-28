@@ -1,3 +1,6 @@
 /bower_components
 /node_modules
+/docs
+/Gruntfile.js
+/package.json
 /src/app/urls.js

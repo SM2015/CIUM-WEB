@@ -1,11 +1,9 @@
 /**
- * Controlador IndicadorCtrl
- * 
- * @package    CIUM 
- * @subpackage Controlador
- * @author     Eliecer Ramirez Esquinca
- * @created    2015-07-20
- */
+* @ngdoc object
+* @name Catalogos.IndicadorCtrl
+* @description
+* Complemento del controlador CrudCtrl  para tareas especificas en Indicador
+*/
 (function(){
 	'use strict';
 	angular.module('IndicadorModule')
@@ -137,7 +135,14 @@
 			$scope.datos = $scope.listaTemp;
 		}
 	}
-
+/**
+* @ngdoc method
+* @name Catalogos.IndicadorCtrl#Alertas
+* @methodOf Catalogos.IndicadorCtrl
+*
+* @description
+* Obtiene las alertas del indicador
+*/	
 	$scope.Alertas = function() 
 	{
 		$scope.options=[];   
@@ -158,10 +163,32 @@
 		});		
 	};	
 	$scope.dato.indicador_alertas=[];
+
+/**
+* @ngdoc method
+* @name Catalogos.IndicadorCtrl#quitarAlerta
+* @methodOf Catalogos.IndicadorCtrl
+*
+* @description
+* Quitar una alerta de la lista 
+* @param {int} $index posicion del elemento en la lista a quitar 
+*/
+	
 	$scope.quitarAlerta = function($index) 
 	{
 		$scope.dato.indicador_alertas.splice($index, 1);		
 	}
+	
+/**
+* @ngdoc method
+* @name Catalogos.IndicadorCtrl#calcularMinimo
+* @methodOf Catalogos.IndicadorCtrl
+*
+* @description
+* Crea la posicion minima para la alerta
+* @param {int} t posicion del ultimo elemento en el listado para hacer el calculo siguiente
+*/
+	
 	$scope.calcularMinimo = function(t) 
 	{	
 		if(!angular.isUndefined($scope.dato.indicador_alertas[t+1]))
@@ -170,6 +197,15 @@
 			$scope.dato.indicador_alertas[t+1].maximo=parseInt($scope.dato.indicador_alertas[t+1].minimo)+10;
 		}
 	}
+	
+/**
+* @ngdoc method
+* @name Catalogos.IndicadorCtrl#agregarAlerta
+* @methodOf Catalogos.IndicadorCtrl
+*
+* @description
+* Agrega una linea mas al formulario de alertas
+*/	
 	$scope.agregarAlerta = function() 
 	{	
 		var t=$scope.dato.indicador_alertas.length;
@@ -183,11 +219,17 @@
 			$scope.dato.indicador_alertas.push({minimo:0,maximo:0,color:0});
 		
 	};
-	$scope.quitarAlerta = function(index) 
-	{
-		$scope.dato.indicador_alertas.splice(index, 1);
-	};
-		
+	
+/**
+* @ngdoc method
+* @name Catalogos.IndicadorCtrl#getIndexOf
+* @methodOf Catalogos.IndicadorCtrl
+*
+* @description
+* Valida si existe un elemento en una lista
+* @param {string} val valor a buscar
+* @param {int} index posicion del elemento 
+*/		
 	$scope.getIndexOf = function(val,index) 
 	{	
 		var l = $scope.alertas.length;

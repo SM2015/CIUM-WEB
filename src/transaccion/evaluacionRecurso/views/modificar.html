@@ -109,14 +109,14 @@
             </md-select>
             
 
-            <md-content class="equis">
+            <md-content class="equis" style="overflow:hidden">
                 <md-button class="md-icon-button  md-warn"  ng-click="borrarIndicador()" aria-label="{{ 'ELIMINAR' | translate }}" ng-if="criterios.aprobado.length>0 || criterios.noAprobado.length>0">
                 <md-icon md-svg-icon="delete"></md-icon>
                 <md-tooltip>
                         {{ 'ELIMINAR_IND' | translate }}
                       </md-tooltip>
               </md-button>
-                <md-menu flex="100" >
+                <md-menu flex="100">
                   <md-button aria-label="estadisticas" style="width:192px; " class="md-raised" ng-click="$mdOpenMenu();">
                     <md-chips>
                       <md-chip ng-if="completo>0" style="background : #090; color:white;">
@@ -185,7 +185,7 @@
         <md-list-item>
           <md-input-container flex >     
             <label>{{ 'HALLAZGO' | translate }}</label>
-            <textarea ng-model="dato.hallazgos.descripcion" name="hallazgo" columns="1" maxlength="500" ></textarea>      
+            <textarea ng-model="dato.hallazgos.descripcion" name="hallazgo" columns="1" maxlength="500" required></textarea>      
             <div ng-messages="forma.hallazgo.$error" >
               <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>                                    
             </div>
@@ -194,7 +194,7 @@
 
         <md-list-item >
           <md-input-container flex >     
-            <md-select  ng-model="dato.hallazgos.idAccion"  id="accion" placeholder="{{ 'ACCION' | translate }}" >
+            <md-select  ng-model="dato.hallazgos.idAccion"  id="accion" placeholder="{{ 'ACCION' | translate }}">
               <md-optgroup label="{{currentGroup == 'R' ? 'Resolutiva' : 'Seguimiento' }}" ng-repeat="currentGroup in groupList" >
                 <md-option ng-value="item.id" ng-repeat="item in acciones | filter: {tipo: currentGroup}" ng-click="verSeguimiento(item.tipo)">{{item.nombre}}</md-option>
               </md-optgroup>

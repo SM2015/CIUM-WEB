@@ -1,3 +1,9 @@
+/**
+* @ngdoc object
+* @name Sistema.UsuarioCtrl
+* @description
+* Complemento del controlador CrudCtrl  para tareas especificas en Usuario
+*/
 (function(){
 	'use strict';
 	angular.module('UsuarioModule')
@@ -142,6 +148,14 @@
 		}
 	}
 		//usuario
+/**
+* @ngdoc method
+* @name Sistema.UsuarioCtrl#getJurisdiccion
+* @methodOf Sistema.UsuarioCtrl
+*
+* @description
+* Obtiene la lista de jurisdicciones
+*/			
 		$scope.Jurisdiccion = {};
 		$scope.Clues = {};
 		$scope.getJurisdiccion=function()
@@ -168,11 +182,22 @@
 		};
 		
 		$scope.dato.jurisdiccion='';
+
+		
 		$scope.cargarClues=function(jurisdiccion)
 		{
 			$scope.dato.jurisdiccion = jurisdiccion;
 			$scope.getClues();
 		}
+
+/**
+* @ngdoc method
+* @name Sistema.UsuarioCtrl#getClues
+* @methodOf Sistema.UsuarioCtrl
+*
+* @description
+* Obtiene la lista de clues filtrado o no por jurisdiccion
+*/			
 		$scope.getClues=function()
 		{
 			var juris = $scope.dato.jurisdiccion;
@@ -200,6 +225,15 @@
 				errorFlash.error(data);
 			});				
 		};
+/**
+* @ngdoc method
+* @name Sistema.UsuarioCtrl#CluesChange
+* @methodOf Sistema.UsuarioCtrl
+*
+* @description
+* Carga los datos de la ficha para clues
+* @param {string} value codigo de la clues
+*/			
 		$scope.CluesChange = function(value) 
 		{ 		
 	  		$http.get(URLS.BASE_API+'Clues/'+value,{valor:''})
@@ -245,6 +279,16 @@
 		 * Search for repos... use $timeout to simulate
 		 * remote dataservice call.
 		 */
+
+/**
+* @ngdoc method
+* @name Sistema.UsuarioCtrl#querySearch
+* @methodOf Sistema.UsuarioCtrl
+*
+* @description
+* Carga los datos para el autocomplete
+* @param {string} query valor para hacer la busqueda
+*/			 
 		$scope.querySearch = function (query) {
 			var juris = $scope.dato.jurisdiccion;
 			return $http.get(URLS.BASE_API + 'Clues',{ params:{jurisdiccion: juris, termino: query}})
@@ -253,6 +297,16 @@
 	            return res.data.data;                            
 	        });
 		}
+		
+/**
+* @ngdoc method
+* @name Sistema.UsuarioCtrl#selectedItemChange
+* @methodOf Sistema.UsuarioCtrl
+*
+* @description
+* Evento para cuando se selecciona un elemento del autocomplete
+* @param {objet} item objeto del elemento
+*/			
 		$scope.selectedItemChange = function(item) {
 			if(!angular.isUndefined(item))
 			{
@@ -271,6 +325,17 @@
 			return (item.value.indexOf(lowercaseQuery) === 0);
 		  };
 		}
+
+/**
+* @ngdoc method
+* @name Sistema.UsuarioCtrl#cambiarTipo
+* @methodOf Sistema.UsuarioCtrl
+*
+* @description
+* Evento para cambiar el llenado del autocomplete por clues o por jurisdicción
+* @param {string} tipo valor
+*/	
+		
 		$scope.cambiarTipo = function(tipo)
 		{
 			if(tipo=="clues")
@@ -282,6 +347,15 @@
 		$scope.existeUM=[];
 		
 		$scope.dato.usuarioclues=[];
+/**
+* @ngdoc method
+* @name Sistema.UsuarioCtrl#CluesUsuario
+* @methodOf Sistema.UsuarioCtrl
+*
+* @description
+* Agrega un elemento a la lista si este no existe
+* @param {string} value valor
+*/		
 		$scope.CluesUsuario = function(value) 
 		{ 
 			if(value!=null)
@@ -331,27 +405,33 @@
 				});
 			}
 		}; 
+		
+/**
+* @ngdoc method
+* @name Sistema.UsuarioCtrl#CluesUsuarioBorrar
+* @methodOf Sistema.UsuarioCtrl
+*
+* @description
+* Quita un elemento a la lista si este existe
+* @param {int} $index posicion del elemento en la lista
+*/	
 		$scope.CluesUsuarioBorrar = function($index)
 		{
 			$scope.existeUM.splice($index, 1);
 			$scope.dato.clues[$index]=null;	
 			$scope.dato.usuarioclues.splice($index, 1);			
 		};
-		//
-		$scope.permisoGrupo = function() 
-		{	
-			$scope.permissions=[];
-			$scope.modulos=[];
-			$scope.grupos=[];
-			$scope.acciones=[];	
-			angular.forEach($scope.dato.grupos, function(id, key) 
-			{
-				sisGrupo.grupo(id,$scope).success(function(data)
-				{				
-				});				
-			});		
-		};
-		
+
+/**
+* @ngdoc method
+* @name Sistema.UsuarioCtrl#banear
+* @methodOf Sistema.UsuarioCtrl
+*
+* @description
+* Banea al usuario seleccionado
+* @param {int} id identificador del usuario
+* @param {int} $index posicion del elemento en la lista
+*/		
 		$scope.banear = function(id, $index) 
 		{
 			$http.put(URLS.BASE_API+'Usuario/' + id, {baneo:1})
@@ -396,7 +476,14 @@
 		};
 		//fin usuario 
 		
-		//permiso
+/**
+* @ngdoc method
+* @name Sistema.UsuarioCtrl#permisoGrupo
+* @methodOf Sistema.UsuarioCtrl
+*
+* @description
+* Optiene los permisos del grupo
+*/	
 		$scope.permisoGrupo = function() 
 		{
 			$scope.permissions=[];
@@ -423,6 +510,14 @@
 					
 			});		
 		};
+/**
+* @ngdoc method
+* @name Sistema.UsuarioCtrl#permisoEditGrupo
+* @methodOf Sistema.UsuarioCtrl
+*
+* @description
+* Muestra la lista de los permisos para el grupo en modo editar
+*/			
 		$scope.permisoEditGrupo = function() 
 		{			
 			$scope.permissions=[];
@@ -464,23 +559,59 @@
             }
 			});	
 		};
+/**
+* @ngdoc method
+* @name Sistema.UsuarioCtrl#permisoGrupoDelete
+* @methodOf Sistema.UsuarioCtrl
+*
+* @description
+* Limpia los checkbox para los permisos denegados
+*/		
 		$scope.permisoGrupoDelete = function() 
 		{	
 			$scope.dato.permissions={};
 		}
 		$scope.dato.usuariozona=[];
+		
+/**
+* @ngdoc method
+* @name Sistema.UsuarioCtrl#limpiarZona
+* @methodOf Sistema.UsuarioCtrl
+*
+* @description
+* Limpia los modelos  para la lista de las zonas
+*/			
 		$scope.limpiarZona = function()
 		{
 			$scope.dato.usuariozona=[];
 			$scope.existeUM=[];
 			$scope.clues=[];
 		}
+		
+/**
+* @ngdoc method
+* @name Sistema.UsuarioCtrl#equipoBorrar
+* @methodOf Sistema.UsuarioCtrl
+*
+* @description
+* Quita el equipo de la lista
+* @param {int} $index posicion del elemento en la lista
+*/		
 		$scope.equipoBorrar = function($index)
 		{
 			$scope.existeUM.splice($index, 1);
 			$scope.dato.clues[$index]=null;
 			$scope.dato.usuariozona.splice($index, 1);
 		}
+/**
+* @ngdoc method
+* @name Sistema.UsuarioCtrl#addJurisdiccion
+* @methodOf Sistema.UsuarioCtrl
+*
+* @description
+* Agrega una jurisdiccion a la lista
+* @param {int} id identificador de la jurisdiccion
+*/			
 		$scope.addJurisdiccion = function(id)
 		{
 			if($scope.existeUM.indexOf(id)<0 )
@@ -490,6 +621,17 @@
 			else
 				flash('warning', "Ooops! ya existe este elemento en la lista");
 		}
+
+/**
+* @ngdoc method
+* @name Sistema.UsuarioCtrl#addEquipo
+* @methodOf Sistema.UsuarioCtrl
+*
+* @description
+* Agrega un equipo a la lista
+* @param {int} id identificador del equipo
+*/
+		
 		$scope.addEquipo = function(id)
 		{
 			var url="Zona";
@@ -518,7 +660,15 @@
 				flash('warning', "Ooops! ya existe este elemento en la lista");
 			
 		}
-		//getEquipos
+/**
+* @ngdoc method
+* @name Sistema.UsuarioCtrl#getEquipos
+* @methodOf Sistema.UsuarioCtrl
+*
+* @description
+* Obtieene la lista de equipos de una jurisdicción
+* @param {int} juris identificador de la jurisdiccion
+*/
 		$scope.getEquipos = function(juris) 
 		{			
 			var url="Zona";

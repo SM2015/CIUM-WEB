@@ -264,10 +264,15 @@
 	"MENSAJE_DIALOG": "Now you can see the detailed evaluations CLUES , click on the chart",
 	"HALLAZGO_CALIDAD":"Finding Quality",
 	"HALLAZGO_RECURSO":"Finding Resource",
+	"PROBLEMA":"Known Issues",
+	"PROBLEMA_UM":"Medical units affected",
 
 	"TOP_MAS": "better",
 	"TOP_MENOS": "worst",
 	"AMBOS": "Both",
+	"AGRUPAR": "Group",
+	"DESAGRUPAR": "Ungroup",
+	"MOSTRAR": "Display",
 
 	"en": "English",
 	"es": "Español",

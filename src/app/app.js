@@ -1,11 +1,3 @@
-/**
- * Module App
- * 
- * @package    CIUM
- * @subpackage Module
- * @author     Hugo Gutierrez Corzo
- * @created    2015-07-20
- */
 (function(){
 	'use strict'
 	
@@ -40,7 +32,12 @@
 									'DashboardModule',
 									'DatoModule',
 									'HallazgoModule']);
-	   
+/**
+ * @ngdoc service
+ * @name App.service:config
+ * @description
+ * Contiene la configuración general del proyecto, precarga los iconos y el tema de material desing, ademas crea las rutas publicas.
+ */
 	app.config(['$mdThemingProvider','$mdIconProvider','$routeProvider','$httpProvider','$translateProvider',function($mdThemingProvider,$mdIconProvider,$routeProvider,$httpProvider,$translateProvider){
 		// Configuramos iconos
 		$mdIconProvider
@@ -94,6 +91,8 @@
 		  .icon("perm-data-setting", "bower_components/material-design-icons/action/svg/production/ic_perm_data_setting_24px.svg", 48)
 		  .icon("build", "bower_components/material-design-icons/action/svg/production/ic_build_24px.svg", 48)
 		  .icon("settings", "bower_components/material-design-icons/action/svg/production/ic_settings_24px.svg", 48)
+		  .icon("trending-up", "bower_components/material-design-icons/action/svg/production/ic_trending_up_24px.svg", 48)
+		  .icon("trending-down", "bower_components/material-design-icons/action/svg/production/ic_trending_down_24px.svg", 48)
 		  
 		  // Content
 		  .icon("save", "bower_components/material-design-icons/content/svg/production/ic_save_48px.svg", 48)
@@ -127,6 +126,8 @@
 		  .icon("chevron-right", "bower_components/material-design-icons/navigation/svg/production/ic_chevron_right_48px.svg", 48)
 		  .icon("chevron-left", "bower_components/material-design-icons/navigation/svg/production/ic_chevron_left_48px.svg", 48)
 		  .icon("expand-more", "bower_components/material-design-icons/navigation/svg/production/ic_expand_more_48px.svg", 48)
+		  .icon("unfold-less", "bower_components/material-design-icons/navigation/svg/production/ic_unfold_less_48px.svg", 48)
+		  .icon("unfold-more", "bower_components/material-design-icons/navigation/svg/production/ic_unfold_more_48px.svg", 48)
 		  .icon("expand-less", "bower_components/material-design-icons/navigation/svg/production/ic_expand_less_48px.svg", 48)
 		  .icon("close", "bower_components/material-design-icons/navigation/svg/production/ic_close_48px.svg", 48)
 		  .icon("fullscreen", "bower_components/material-design-icons/navigation/svg/production/ic_fullscreen_48px.svg", 48)
@@ -210,12 +211,12 @@
 		
 		$mdThemingProvider.theme('default')
 	    .primaryPalette('amazingPalette',{'hue-1':'400','hue-2':'200','hue-3':'100'})
-	    .warnPalette('amazingPalette',{'default':'600','hue-1':'700','hue-2':'A400','hue-3':'A700'})
+	    .warnPalette('red')
 	    .accentPalette('amazingPalette',{'default':'800','hue-1':'900'});
 	  
 		$mdThemingProvider.theme('altTheme')
 		.primaryPalette('grey',{'default':'200'})
-		.warnPalette('pink')
+		.warnPalette('red')
 	    .accentPalette('orange');
 		
 		// Configuramos las rutas
@@ -277,7 +278,6 @@
 	}]);
 	
 	app.run(['$rootScope','$location','$localStorage','$injector','authService','Menu',function($rootScope,$location, $localStorage,$injector, authService,Menu){
-
 			
 			$rootScope.$on('event:auth-loginRequired', function() {
 				

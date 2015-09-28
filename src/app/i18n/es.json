@@ -264,10 +264,15 @@
 	"MENSAJE_DIALOG": "Ahora puede ver el detalle de las evaluaciones de la CLUES, haga click en el gráfico",
 	"HALLAZGO_CALIDAD":"Hallazgo calidad",
 	"HALLAZGO_RECURSO":"Hallazgo recurso",
+	"PROBLEMA":"Problemas detectados",
+	"PROBLEMA_UM":"Unidades médicas afectadas",
 
 	"TOP_MAS": "Mejores",
 	"TOP_MENOS": "Peores",
 	"AMBOS": "Ambos",
+	"AGRUPAR": "Agrupar",
+	"DESAGRUPAR": "Desagrupar",
+	"MOSTRAR": "Mostrar",
 
 	"en": "English",
 	"es": "Español",

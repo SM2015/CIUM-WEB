@@ -281,7 +281,7 @@
           <md-list-item>              
             <md-input-container flex >     
               <label>{{ 'HALLAZGO' | translate }}</label>
-              <textarea ng-model="dato.hallazgos.descripcion" name="hallazgo" columns="1" maxlength="500" ></textarea>      
+              <textarea ng-model="dato.hallazgos.descripcion" name="hallazgo" columns="1" maxlength="500" required></textarea>      
               <div ng-messages="forma.hallazgo.$error" >
                 <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>                                    
               </div>
@@ -289,7 +289,7 @@
           </md-list-item>
           <md-list-item >
             <md-input-container flex >     
-              <md-select  ng-model="dato.hallazgos.idAccion"  id="accion" placeholder="{{ 'ACCION' | translate }}" >
+              <md-select  ng-model="dato.hallazgos.idAccion"  id="accion" placeholder="{{ 'ACCION' | translate }}">
                 <md-optgroup label="{{currentGroup == 'R' ? 'Resolutiva' : 'Seguimiento' }}" ng-repeat="currentGroup in groupList" >
                  <md-option ng-value="item.id" ng-repeat="item in acciones | filter: {tipo: currentGroup}" ng-click="verSeguimiento(item.tipo)">{{item.nombre}}</md-option>
                 </md-optgroup>

@@ -1,3 +1,9 @@
+/**
+* @ngdoc object
+* @name Transaccion.RecursoCtrl
+* @description
+* Complemento del controlador CrudCtrl  para tareas especificas en EvaluacionRecurso
+*/
 (function(){
 	'use strict';
 	angular.module('RecursoModule')
@@ -132,7 +138,14 @@
 		
 	$scope.update=false;
 	
-	// obtener el listado de clues que le correspondan al usuario
+/**
+* @ngdoc method
+* @name Transaccion.RecursoCtrl#getClues
+* @methodOf Transaccion.RecursoCtrl
+*
+* @description
+* Obtiene las clues que le corresponden al usuario
+*/	
 	$scope.getClues=function()
 	{
 		$scope.cargando = true;
@@ -159,8 +172,15 @@
 				$scope.cargando = false;
 		});
 	};
-	
-	// crear la ficha de la clues seleccionada
+/**
+* @ngdoc method
+* @name Transaccion.RecursoCtrl#CluesChange
+* @methodOf Transaccion.RecursoCtrl
+*
+* @description
+* Carga los datos de la ficha para clues
+* @param {string} value codigo de la clues
+*/	
 	$scope.CluesChange = function(value) 
 	{ 	
 		$scope.cargando = true;		
@@ -200,12 +220,26 @@
 			$scope.cargando = false;
 		}); 
 	}; 
-	// cerrar el dialog
+/**
+* @ngdoc method
+* @name Transaccion.RecursoCtrl#hide
+* @methodOf Transaccion.RecursoCtrl
+*
+* @description
+* Cerrar el dialogo de la ficha
+*/
 	$scope.hide = function() {
 		$mdDialog.hide();
 	};
-	
-	// abre la ficha de  la clues en un dialog
+/**
+* @ngdoc method
+* @name Transaccion.RecursoCtrl#abrirFicha
+* @methodOf Transaccion.RecursoCtrl
+*
+* @description
+* abre la ficha de la clues en un dialog
+* @param {event} ev evento click
+*/	
 	$scope.abrirFicha = function(ev)
 	{	 
 	    $scope.editDialog = $mdDialog;
@@ -298,7 +332,14 @@
 		}
 		});
 	};
-
+/**
+* @ngdoc method
+* @name Transaccion.RecursoCtrl#acciones
+* @methodOf Transaccion.RecursoCtrl
+*
+* @description
+* Carga el catalogo de acciones 
+*/
 	$scope.acciones = function() 
 	{
 		$scope.acciones=[];
@@ -324,7 +365,14 @@
 			}
 		});
 	};
-
+/**
+* @ngdoc method
+* @name Transaccion.RecursoCtrl#accionesPlazo
+* @methodOf Transaccion.RecursoCtrl
+*
+* @description
+* Carga el catalogo de plazo acciones 
+*/
 	$scope.accionesPlazo = function() 
 	{
 		$scope.plazos=[];
@@ -343,7 +391,14 @@
 			}
 		});
 	};
-	
+/**
+* @ngdoc method
+* @name Transaccion.RecursoCtrl#verificarCambios
+* @methodOf Transaccion.RecursoCtrl
+*
+* @description
+* Comprueba que el indicador actual no tenga cambios en la evaluacion
+*/		
 	
 	$scope.criterios = []; $scope.modificado = false;
 	$scope.verificarCambios = function()
@@ -357,7 +412,14 @@
             event.stopPropagation();
 		}
 	}
-	// cargar los criterios que le correspondan al indicador por el tipo de cone
+/**
+* @ngdoc method
+* @name Transaccion.RecursoCtrl#cargarCriterios
+* @methodOf Transaccion.RecursoCtrl
+*
+* @description
+* cargar los criterios que le correspondan por indicador y nivel de cone
+*/	
 	$scope.cargarCriterios = function()
 	{
 		var cone=$scope.dato.idCone;
@@ -424,7 +486,14 @@
 		}		
 	};
 	$scope.hallazgos={};
-	// cargar los criterios de la evaluacion para la vista ver
+/**
+* @ngdoc method
+* @name Transaccion.RecursoCtrl#cargarCriteriosVer
+* @methodOf Transaccion.RecursoCtrl
+*
+* @description
+* cargar los criterios para la vista ver
+*/
 	$scope.cargarCriteriosVer = function()
 	{			
 		var idev=$location.search().id;
@@ -453,7 +522,15 @@
 		});		
 	};
 
-	// crear el estadistico de la evaluacion
+	$scope.tieneExpediente=[];
+/**
+* @ngdoc method
+* @name Transaccion.RecursoCtrl#estadistica
+* @methodOf Transaccion.RecursoCtrl
+*
+* @description
+* obtener las estadisticas de la evaluacion
+*/	
 	$scope.informacion = [];
 	$scope.estadistica = function()
 	{
@@ -498,7 +575,17 @@
 			});    			
 	};
 	
-	// evaluacion de criterio si/no
+/**
+* @ngdoc method
+* @name Transaccion.RecursoCtrl#aprobar
+* @methodOf Transaccion.RecursoCtrl
+*
+* @description
+* Evaluar los criterios si/no
+* @param {string} index identificador del criterio
+* @param {string} evaluacion id de la evaluación
+* @param {string} ap lugar de verificación
+*/
 	$scope.json = {};
 	$scope.tieneHallazgo=false;
 	$scope.aprobar = function(index,evaluacion,ap)
@@ -598,7 +685,16 @@
 	};
    
 	
-	//cerrar
+
+/**
+* @ngdoc method
+* @name Transaccion.RecursoCtrl#cerrar
+* @methodOf Transaccion.RecursoCtrl
+*
+* @description
+* Cerrar evaluación
+* @param {string} id identificador de la evaluación
+*/
 	$scope.cerrar = function(id) 
 	{
 		if ($window.confirm($translate.instant('CONFIRM_CERRAR'))) {

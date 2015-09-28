@@ -1,10 +1,8 @@
 /**
- * Module App
- * 
- * @package    CIUM
- * @subpackage Controlador
- * @author     Hugo Gutierrez Corzo
- * @created    2015-07-20
+ * @ngdoc interface
+ * @name App.interface:MENU
+ * @description
+ * Contiene la configuración del menu del proyecto para usuarios logueados.
  */
 (function(){
 	'use strict';	 
@@ -127,7 +125,12 @@ icono: 'event-note'
     ]
   },
 ]);
-// opciones del menu publico
+/**
+ * @ngdoc interface
+ * @name App.interface:MENU_PUBLICO
+ * @description
+ * Contiene la configuración del menu del proyecto para la presentacion del módulo.
+ */
 	angular.module('App').constant('MENU_PUBLICO',[
 { 
     icono:'exit-to-app' , 

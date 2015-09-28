@@ -58,14 +58,14 @@
 </md-button>
 
 
-<md-button hide-sm class="md-icon-button" aria-label="{{ 'CAMBIAR_IDIOMA' | translate }}" ng-click="mostrarIdiomas($event)">
+<md-button hide-sm hide-md class="md-icon-button" aria-label="{{ 'CAMBIAR_IDIOMA' | translate }}" ng-click="mostrarIdiomas($event)">
   <md-icon md-svg-icon="language"></md-icon>
         <md-tooltip>
           {{ 'CAMBIAR_IDIOMA' | translate }}
         </md-tooltip>
 </md-button>
       
-<md-button hide-sm ng-click="logout()"  aria-label="{{ 'CERRAR_SESION' | translate }}">
+<md-button hide-sm hide-md ng-click="logout()"  aria-label="{{ 'CERRAR_SESION' | translate }}">
   <md-icon md-svg-icon="exit-to-app"></md-icon>
   {{ 'CERRAR_SESION' | translate }}
 </md-button>

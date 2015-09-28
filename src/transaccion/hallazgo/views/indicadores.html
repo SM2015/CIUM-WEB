@@ -51,43 +51,26 @@
 
 		</div>
 	</md-toolbar>
-	<md-content class="imprimir">
-	
-
-    <md-content  layout="column"  layour-align="center center"  >
-		<md-list layout-margin layout-align="center center" >
-            <md-content layout="column" >  
-                    
-                    <section ng-repeat="(key, value) in dato | groupBy :  'categoria'" ng-if="key != 'undefined' ">						
-                        <md-subheader class="md-primary" >
-                            {{ key | translate }}                              
-                        </md-subheader>
-                        <md-list>	
-                                                        
-                            <md-list-item ng-repeat="c in value" class="md-2-line" ng-click="secondClick(c.codigo)">	
-                                <span class="img-circle" style="background:{{c.color}}; position: relative; float: left; width: 1.7em; height: 1.7em; margin: 0; margin-right: 1.3em; padding: 0; display: block;">
-                                    
-                                </span>	                                                                                      
-                                <div class="md-list-item-text">
-                                    
-                                    <h3>												
-                                        {{c.codigo}}                                        										
-                                    </h3>
-                                    
-                                    <p>                                        
-                                        <small> {{ c.indicador }} </small>
-                                    </p>
-                                    
-                                </div>
-                                                            
-                                <md-divider></md-divider>
-                            </md-list-item>													
-                        </md-list>
-                        
-                    </section>
-                </md-content>
-		</md-list>
-	</md-content>
-   
-    </md-content>
+	<md-content class="imprimir" layout="column"  layour-align="center center"  >
+        <section ng-repeat="(key, value) in dato | groupBy :  'categoria'" ng-if="key != 'undefined' ">						
+            <md-subheader class="md-primary" >
+                {{ key | translate }}                              
+            </md-subheader>
+            <md-list>	
+                                            
+                <md-list-item ng-repeat="c in value" class="md-2-line" ng-click="secondClick(c.codigo)" style="border-bottom: 1px solid #ddd">	
+                    <span class="img-circle" style="background:{{c.color}}; position: relative; float: left; width: 1.7em; height: 1.7em; margin: 0; margin-right: 1.3em; padding: 0; display: block;"></span>	                                                                                      
+                    <div class="md-list-item-text">                        
+                        <h3>												
+                            {{c.codigo}}                                        										
+                        </h3>                        
+                        <p>                                        
+                            <small> {{ c.indicador }} </small>
+                        </p>                        
+                    </div>                       
+                </md-list-item>													
+            </md-list>
+            
+        </section>
+	</md-content>   
 </div>				

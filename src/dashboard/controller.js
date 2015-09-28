@@ -1,3 +1,9 @@
+/**
+* @ngdoc object
+* @name Dashboard.DashboardCtrl
+* @description
+* Manejo de los eventos del gráfico en el dashboard
+*/
 (function(){
 	'use strict';
 	angular.module('DashboardModule')
@@ -9,68 +15,12 @@
 	$scope.menuSelected = "/"+$location.path().split('/')[1];
 	// carga el menu correspondiente para el usuario
 	$scope.menu = Menu.getMenu();
-	$scope.fecha_actual = new Date();
-
-	// inicia la inimación de cargando
-	$scope.cargando = true;
 
 	// inicializa el modulo ruta y url se le asigna el valor de la página actual
 	$scope.ruta="";
     $scope.url=$location.url();
 
-    // cambia los textos del paginado de cada grid
-    $scope.paginationLabel = {
-      text: $translate.instant('ROWSPERPAGE'),
-      of: $translate.instant('DE')
-    };
-	   
-    // Inicializa el campo para busquedas disponibles para cada grid
-    $scope.BuscarPor=
-    [
-		{id:"nombre", nombre:$translate.instant('NOMBRE')},
-		{id:'creadoAl', nombre:$translate.instant('CREADO')},
-		{id:'modificadoAl', nombre:$translate.instant('MODIFICADO')}
-	];
-	   
-	// inicia configuración para los data table (grid)
-    $scope.selected = [];
 
-    // incializa el modelo para el filtro, ordenamiento y paginación
-	$scope.query = {
-		filter: '',
-		order: 'id',
-		limit: 25,
-		page: 1
-	};
-
-	// Evento para incializar el ordenamiento segun la columna clickeada
-	$scope.onOrderChange = function (order) {
-		$scope.query.order=order;
-		$scope.cargando = true;
-		$scope.init(); 
-	};
-
-	// Evento para el control del paginado.
-	$scope.onPaginationChange = function (page, limit) {
-		$scope.paginacion = 
-		{
-			pag: (page-1)*limit,
-			lim: limit,
-			paginas:0
-		};
-		$scope.cargando = true;
-		$scope.init();
-	};
-
-    //fin data
-    $scope.paginacion = 
-    {
-        pag: 1,
-        lim: 25,
-        paginas:0
-    };
-	$scope.datos = [];
-		
 	// muestra el menu para aquellos dispositivos que por su tamaño es oculto
 	$scope.toggleMenu  = function  () {
 	    $mdSidenav('left').toggle();
@@ -97,33 +47,7 @@
 	$scope.ir = function(path){
 	    $scope.menuSelected = path;
 	   $location.path(path).search({id: null});
-	};
-
-	// evento para el boton nuevo, redirecciona a la vista nuevo
-	$scope.nuevo = function()
-	{
-	    var uri=$scope.url.split('/');
-
-	    uri="/"+uri[1]+"/nuevo";
-	    $location.path(uri).search({id: null});
-	}
-
-	$scope.showSearch = false;
-	$scope.listaTemp={};
-	$scope.moduloName=angular.uppercase($location.path().split('/')[1]);
-	$scope.mostrarSearch = function(t)
-	{
-		$scope.showSearch = ! $scope.showSearch;
-		if(t==0)
-		{
-			$scope.listaTemp = $scope.datos;		
-		}
-		else
-		{
-			$scope.buscar='';
-			$scope.datos = $scope.listaTemp;
-		}
-	}					
+	};		
 		
 	}])
 	
@@ -138,7 +62,16 @@
 		$scope.chart;
 		$scope.verRecurso="";
 		$scope.dimension = [];
-		
+/**
+* @ngdoc method
+* @name Dashboard.DashboardCtrl#toggle
+* @methodOf Dashboard.DashboardCtrl
+*
+* @description
+* Agrega un dato a un modelo tipo array
+* @param {string} item valor a insertar
+* @param {model} list modelo 
+*/			
 		$scope.tempIndicador = [];
 		$scope.toggle = function (item, list) {
 			var idx = list.indexOf(item);
@@ -149,11 +82,27 @@
 				list.push(item);
 			}
 		};
-		//lenar los check box tipo array
+/**
+* @ngdoc method
+* @name Dashboard.DashboardCtrl#exists
+* @methodOf Dashboard.DashboardCtrl
+*
+* @description
+* Comrpueba que el item no exista en el modelo
+* @param {string} item valor a insertar
+* @param {model} list modelo 
+*/	
 		$scope.exists = function (item, list) {
 			return list.indexOf(item) > -1;
 		};
-		
+/**
+* @ngdoc method
+* @name Dashboard.DashboardCtrl#cambiarVerTodoIndicador
+* @methodOf Dashboard.DashboardCtrl
+*
+* @description
+* Mostrar u ocultar la lista de indicadores agrupado por categoria
+*/			
 		$scope.cambiarVerTodoIndicador = function ()
 		{
 			if($scope.filtro.verTodosIndicadores)
@@ -163,12 +112,27 @@
 				$scope.tempIndicador = [];
 			}
 		}
+/**
+* @ngdoc method
+* @name Dashboard.DashboardCtrl#cambiarVerTodoUM
+* @methodOf Dashboard.DashboardCtrl
+*
+* @description
+* Mostrar u ocultar las opciones de filtrado por parametros
+*/			
 		$scope.cambiarVerTodoUM = function ()
 		{
 			if($scope.filtro.verTodosUM)
 				$scope.filtro.um = [];
 		}
-		
+/**
+* @ngdoc method
+* @name Dashboard.DashboardCtrl#cambiarVerTodoUM
+* @methodOf Dashboard.DashboardCtrl
+*
+* @description
+* Mostrar u ocultar las opciones de filtrado por clues
+*/			
 		$scope.cambiarVerTodoClues = function ()
 		{			
 			$scope.filtro.clues = [];			
@@ -202,7 +166,16 @@
 		$scope.filtros = {};
     	$scope.filtros.activo = false;
 		$scope.verInfo = false;
-		//aplicar los filtros al area del grafico
+/**
+* @ngdoc method
+* @name Dashboard.DashboardCtrl#aplicarFiltro
+* @methodOf Dashboard.DashboardCtrl
+*
+* @description
+* Accion para procesar el filtro en la base de datos
+* @param {bool} avanzado compprueba si el filtro es avanzado o de la lista de indicadores activos
+* @param {string} item compsolo tiene un datorueba si indicadores es un array o  
+*/			
 		$scope.aplicarFiltro = function(avanzado,item)
 		{
 			$scope.filtros.activo=true;
@@ -275,7 +248,15 @@
 				}
 			}	 
 		}
-		//quitar los filtros seleccionados del dialog
+/**
+* @ngdoc method
+* @name Dashboard.DashboardCtrl#quitarFiltro
+* @methodOf Dashboard.DashboardCtrl
+*
+* @description
+* Accion para quitar el filtro en la base de datos
+* @param {bool} avanzado compprueba si el filtro es avanzado o de la lista de indicadores activos 
+*/
 		$scope.quitarFiltro = function(avanzado)
 		{
 			$scope.filtro.indicador = [];
@@ -291,11 +272,19 @@
 			$mdSidenav('recurso').close();
 		};
 		
-		// cerrar el dialog
+
 		$scope.hide = function() {
 			$mdDialog.hide();
 		};
-		//cambiar a pantalla completa
+/**
+* @ngdoc method
+* @name Dashboard.DashboardCtrl#quitarFiltro
+* @methodOf Dashboard.DashboardCtrl
+*
+* @description
+* Accion para poner en modo fullscreen el área del gráfico
+* @param {string} e área para hacer el fullscreen
+*/
 		$scope.isFullscreen = false;	
 		$scope.tieneTamano = false;
 		$scope.toggleFullScreen = function(e) 
@@ -306,7 +295,16 @@
 			{	
 				$scope.tamano = $scope.tamano == 0 ? angular.element(document.getElementById("chart")).attr("width") : $scope.tamano;				
 			} 						 		 
-		}		
+		}	
+/**
+* @ngdoc method
+* @name Dashboard.DashboardCtrl#buildToggler
+* @methodOf Dashboard.DashboardCtrl
+*
+* @description
+* Crea un sidenav con las opciones de filtrado
+* @param {string} navID identificador del sidenav
+*/					
 		$scope.cargarFiltro = 0;				
 		$scope.toggleRightOpciones = function(navID) {		
 			$mdSidenav(navID)
@@ -325,6 +323,14 @@
 				}
 			});					
 		};
+/**
+* @ngdoc method
+* @name Dashboard.DashboardCtrl#cambiarAnio
+* @methodOf Dashboard.DashboardCtrl
+*
+* @description
+* Evento change para el filtro año
+*/			
 		$scope.contAnio = 0;
 		$scope.cambiarAnio = function()
 		{
@@ -339,6 +345,14 @@
 				$scope.getDimension('cone',6);
 			}
 		}
+/**
+* @ngdoc method
+* @name Dashboard.DashboardCtrl#cambiarBimestre
+* @methodOf Dashboard.DashboardCtrl
+*
+* @description
+* Evento change para el filtro bimestre
+*/			
 		$scope.cambiarBimestre = function()
 		{
 			$scope.getDimension("codigo,indicador,color, '"+$scope.filtro.tipo+"' as categoriaEvaluacion",2);	
@@ -357,7 +371,16 @@
 				$scope.tieneTamano = false;
 			}
    		});
-   
+/**
+* @ngdoc method
+* @name Dashboard.DashboardCtrl#getDimension
+* @methodOf Dashboard.DashboardCtrl
+*
+* @description
+* Cargar las opciones de filtrado por nivel
+* @param {string} nivel nivel a extraer de la base de datos
+* @param {int} c posicion para almacenar la información en el modelo datos
+*/	   
 		$scope.intentoOpcion = 0;
 		$scope.getDimension = function(nivel,c)
 		{
@@ -374,8 +397,14 @@
 				$scope.opcion = false;
 			});
 		};				
-					
-		// obtiene los datos necesarios para crear el grid (listado)
+/**
+* @ngdoc method
+* @name Dashboard.DashboardCtrl#getDimension
+* @methodOf Dashboard.DashboardCtrl
+*
+* @description
+* obtiene los datos necesarios para crear el gráfico
+*/						
 		$scope.intento = 0;
 		$scope.init = function() 
 		{
@@ -1872,6 +1901,7 @@
 		$scope.filtros = {};
     	$scope.filtros.activo = false;
 		$scope.verInfo = false;
+		$scope.indicadores = [];
 		//aplicar los filtros al area del grafico
 		$scope.aplicarFiltro = function(avanzado,item)
 		{
@@ -1969,12 +1999,12 @@
 			$scope.getDimension('cone',6);
 		}
 		$scope.$watch(function(){
-       		return document.getElementById("gaugeRecurso").offsetHeight;
+       		return document.getElementById("gaugeRecursos").offsetWidth;
 		}, 
 		function(value) {
-			$scope.tamano = value - 50;
+			$scope.tamano = (value/1.7) - ($scope.indicadores.length*20);
    		});
-   	    $scope.tamano = document.getElementById("gaugeRecurso").offsetHeight-50;
+   	    
    
 		$scope.intentoOpcion = 0;
 		$scope.getDimension = function(nivel,c)
@@ -2017,6 +2047,8 @@
 	
 					$scope.dato = data.data;
 					$scope.gaugeRecurso=false;
+					
+					$scope.tamano = (document.getElementById("gaugeRecursos").offsetWidth/1.7) - ($scope.indicadores.length*20);
 				}
 				else
 				{
@@ -2101,6 +2133,7 @@
 		$scope.filtros = {};
     	$scope.filtros.activo = false;
 		$scope.verInfo = false;
+		$scope.indicadores = [];
 		//aplicar los filtros al area del grafico
 		$scope.aplicarFiltro = function(avanzado,item)
 		{
@@ -2198,12 +2231,12 @@
 			$scope.getDimension('cone',6);
 		}
 		$scope.$watch(function(){
-       		return document.getElementById("gaugeCalidad").offsetHeight;
+       		return document.getElementById("gaugeCalidad").offsetWidth;
 		}, 
 		function(value) {
-			$scope.tamano = value - 50;
-   		});
-   	    $scope.tamano = document.getElementById("gaugeCalidad").offsetHeight-50;
+			$scope.tamano = (value/1.7) - ($scope.indicadores.length*20); 
+   		});   	    
+		   
 		$scope.intentoOpcion = 0;
 		$scope.getDimension = function(nivel,c)
 		{
@@ -2246,6 +2279,8 @@
 	
 					$scope.dato = data.data;
 					$scope.gaugeCalidad=false;
+					
+					$scope.tamano = (document.getElementById("gaugeCalidad").offsetWidth/1.7) - ($scope.indicadores.length*20);
 				}
 				else
 				{

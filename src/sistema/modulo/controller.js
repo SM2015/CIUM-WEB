@@ -1,3 +1,9 @@
+/**
+* @ngdoc object
+* @name Sistema.ModuloCtrl
+* @description
+* Complemento del controlador CrudCtrl  para tareas especificas en Modulo
+*/
 (function(){
 	'use strict';
 	angular.module('ModuloModule')
@@ -153,7 +159,15 @@
 	}
 
 		$scope.showModal = false;
-		
+/**
+* @ngdoc method
+* @name Sistema.ModuloCtrl#opciones
+* @methodOf Sistema.ModuloCtrl
+*
+* @description
+* Obtiene los datos para el catalogo padre
+* @param {string} url donde extraer los datos
+*/		
 		$scope.opciones = function(url) 
 		{
 			$scope.options=[];

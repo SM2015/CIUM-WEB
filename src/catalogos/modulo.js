@@ -1,5 +1,10 @@
 (function(){
-	
+/**
+ * @ngdoc interface
+ * @name Catalogos.interface:CrudModule
+ * @description
+ * Contiene la configuración de las rutas para los catalogos.
+ */	
 	var crudModule = angular.module('CrudModule', ['ngMaterial','ngRoute','ngStorage','ngCookies','ngMessages','pascalprecht.translate','http-auth-interceptor']);
 
 	crudModule.config(['$mdThemingProvider','$mdIconProvider','$routeProvider','$httpProvider','$translateProvider','$mdThemingProvider',function($mdThemingProvider,$mdIconProvider,$routeProvider,$httpProvider,$translateProvider, $mdThemingProvider){

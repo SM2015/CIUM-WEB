@@ -1,12 +1,9 @@
-
-/**
- * Controller  App
- * 
- * @package    CIUM
- * @subpackage Controlador
- * @author     Hugo Gutierrez Corzo
- * @created    2015-07-20
- */
+  /**
+  * @ngdoc object
+  * @name App.SigninCtrl
+  * @description
+  * Encargado del acceso al sistema.
+  */
  (function(){
 	'use strict';
     angular.module('App')
@@ -14,25 +11,28 @@
      
 $scope.cargando = false;
 
-  /**
-   * Si se pudo obtener el token redireccionar al dashboard.
-   *
-   * @param res
-   * @return redirect
-   */
+    /**
+     * @ngdoc method
+     * @name App.SigninCtrl#successAuth
+     * @methodOf App.SigninCtrl
+     *
+     * @description
+     * Metodo para redireccionar al dashboard     
+     */
 function successAuth(res) {
     $scope.cargando = false;
     $rootScope.errorSignin = null;
     $location.path("dashboard");
 }
 
-  /**
-   * obtener el token de acceso.
-   *
-   * @param post 
-   * Response si la operacion es exitosa devolver un array con el listado de clues
-   * @return 
-   */
+    /**
+     * @ngdoc method
+     * @name App.SigninCtrl#signin
+     * @methodOf App.SigninCtrl
+     *
+     * @description
+     * Obtiene el token para hacer peticiones a la api     
+     */
 $scope.signin = function () {
   var email=$scope.email;
   $localStorage.cium.user_email=email;
@@ -46,13 +46,14 @@ $scope.signin = function () {
     });
 };
 
-  /**
-   * Cerra la sessión.
-   *
-   * @param session 
-   * Response si la operacion es exitosa devolver un array con el listado de clues
-   * @return array
-   */
+    /**
+     * @ngdoc method
+     * @name App.SigninCtrl#logout
+     * @methodOf App.SigninCtrl
+     *
+     * @description
+     * Cierra la session y elimina el local storage     
+     */
 $scope.logout = function () {
     $scope.cargando = false;
     Auth.logout(function () {
@@ -70,24 +71,28 @@ $scope.urlObtenerOAuth= URLS.OAUTH_CLIENTE + "/#/signin";
 
 $scope.menuSelected = '';
 
-   /**
-   * Redirect a la página.
-   *
-   * @param paht 
-   * @return redirect
-   */
+    /**
+     * @ngdoc method
+     * @name App.SigninCtrl#ir
+     * @methodOf App.SigninCtrl
+     *
+     * @description
+     * Redirecciona a la pagina solicitada     
+     */
 $scope.ir = function(path){
 	        $scope.menuSelected = path;
 	       $location.path(path).search({id: null});
 	    };
 
 $scope.menuPublico = MENU_PUBLICO;
-  /**
-   * Muestra el templete para la selección de idioma.
-   *
-   * @param event 
-   * @return views
-   */
+    /**
+     * @ngdoc method
+     * @name App.SigninCtrl#mostrarIdiomas
+     * @methodOf App.SigninCtrl
+     *
+     * @description
+     * Muestra la seleccion del idioma     
+     */
 $scope.mostrarIdiomas = function($event){    
     $mdBottomSheet.show({
 templateUrl: 'src/app/views/idiomas.html',
@@ -95,15 +100,20 @@ controller: 'ListaIdiomasCtrl',
 targetEvent: $event
     });
 };
-  /**
-   * Muestra el menu lateral si la apliación se abre en un dispositivo.
-   *
-   * @return event
-   */
+  
+    /**
+     * @ngdoc method
+     * @name App.SigninCtrl#toggleMenu
+     * @methodOf App.SigninCtrl
+     *
+     * @description
+     * Muestra el menu lateral si la apliación se abre en un dispositivo     
+     */
 $scope.toggleMenu  = function  () {    
     $mdSidenav('left-publico').toggle();
 };
   }])
+  
   .controller('InicioCtrl', ['$rootScope', '$scope', '$location', '$localStorage','$mdBottomSheet','$translate','$mdSidenav','Auth','MENU_PUBLICO','URLS', function ($rootScope, $scope, $location, $localStorage, $mdBottomSheet, $translate, $mdSidenav, Auth,MENU_PUBLICO,URLS) {
 
 $scope.menuSelected = '';
@@ -164,44 +174,4 @@ $scope.items = [
     $mdBottomSheet.hide(clickedItem);
   };
   }])
-  .controller('DashboardCtrl', ['$rootScope', '$scope', 'Data', '$mdSidenav','$location','$mdBottomSheet','Auth','Menu', function($rootScope, $scope, Data,$mdSidenav,$location,$mdBottomSheet,Auth, Menu){
-
- $scope.menuSelected = "/"+$location.path().split('/')[1];
-$scope.menu = Menu.getMenu();
-
-Data.getApiData(function (res) {
-    //$scope.api = res.data;
-}, function () {
-    //$scope.error = 'Failed to fetch restricted API content.';
-});
-
-$scope.toggleMenu  = function  () {
-    $mdSidenav('left').toggle();
-};
-
-$scope.mostrarIdiomas = function($event){    
-    
-    $mdBottomSheet.show({
-templateUrl: 'src/app/views/idiomas.html',
-controller: 'ListaIdiomasCtrl',
-targetEvent: $event
-    });
-};
-
-$scope.logout = function () {
-   Auth.logout(function () {
- $location.path("signin");
-   });
-};
-
-$scope.ir = function(path){
-	        $scope.menuSelected = path;
-	       $location.path(path).search({id: null});
-	    };
-    		
-    				
-    	}])
-  .controller('UsuariosCtrl', ['$scope', function($scope){
-    		console.log('usuarios');
-    	}]);
 })();

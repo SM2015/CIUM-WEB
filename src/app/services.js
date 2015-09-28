@@ -1,37 +1,65 @@
-/**
- * Service App
- * 
- * @package    CIUM
- * @subpackage Controlador
- * @author     Hugo Gutierrez Corzo
- * @created    2015-07-20
- */
+
 
 (function(){
 	'use strict';
-   /**
-   * Service que obtiene el token valido.
-   *
-   * @param data
-   * 
-   * @return objeto request
-   */	
+
+/**
+ * @ngdoc service
+ * @name App.AuthService
+ * @description
+ * Proporciona los metodos para la autenticacion y permisos.
+ */  
+ 
+ /**
+* @ngdoc method
+* @name App.AuthService#modificar
+* @methodOf App.AuthService
+*
+* @description
+* Reliza el post de los parametros que contiene las credenciales del usuario
+* @param {objet} data object con las credenciales del usuario
+*/ 
+
+/**
+* @ngdoc method
+* @name App.AuthService#validar
+* @methodOf App.AuthService
+*
+* @description
+* Comprueba que la cuenta del usuario este activa
+*/	
+
+/**
+* @ngdoc method
+* @name App.AuthService#getPermisos
+* @methodOf App.AuthService
+*
+* @description
+* obtener los permisos que tiene el usuario para contruir el menu
+*/
+
+/**
+* @ngdoc method
+* @name App.AuthService#getPerfil
+* @methodOf App.AuthService
+*
+* @description
+* obtener los datos del perfil del usuario
+*/
 	angular.module('App')
 		.service('AuthService',['$http','URLS','$localStorage',function($http, URLS, $localStorage){
 			return {
-				// contiene las credenciales del usuario
+
+
 				autenticar: function(data) {					
 				    return $http.post(URLS.BASE + 'signin', data, { ignoreAuthModule: true });
-				},
-				// validar que la cuenta este activa
+				},				
 				validar: function() {
 					return $http.post(URLS.BASE_API + 'validacion-cuenta');
-				},
-				// obtener los permisos que tiene el usuario para contruir el menu
+				},			
 				getPermisos: function() {
 					return $http.post(URLS.BASE_API + 'permisos-autorizados',{user_email: $localStorage.cium.user_email});
-				},
-				// obtener los datos del perfil del usuario
+				},				
 				getPerfil: function()
 				{
 					return $http.get(URLS.OAUTH_SERVER+'/v1/perfil');
@@ -39,10 +67,50 @@
 			}
 		}]);
 	
+/**
+ * @ngdoc service
+ * @name App.Auth
+ * @description
+ * Proporciona los metodos para la autenticacion y permisos, estos pueden ser invocados desde el controlador.
+ */  
+ 
+/**
+* @ngdoc method
+* @name App.Auth#signin
+* @methodOf App.Auth
+*
+* @description
+* Prepara el mecanismo de autentificación
+* @param {objet} data object con las credenciales del usuario
+* @param {function} successCallback funcion a ejecutar si la respuesta es correcta
+* @param {function} errorCallback funcion a ejecutar si se obtiene un error
+*/	
+ 
+/**
+* @ngdoc method
+* @name App.Auth#refreshToken
+* @methodOf App.Auth
+*
+* @description
+* Prepara el mecanismo para solicitar un nuevo token
+* @param {function} success funcion a ejecutar si la respuesta es correcta
+*/
 
+/**
+* @ngdoc method
+* @name App.Auth#logout
+* @methodOf App.Auth
+*
+* @description
+* Eliminar todo lo que tenga en session y localstorage para cerrar la sesión
+* @param {objet} data object con las credenciales del usuario
+* @param {function} success funcion a ejecutar si la respuesta es correcta
+* @param {function} error funcion a ejecutar si se obtiene un error
+*/	 
 	angular.module('App')
 		.factory('Auth', ['$rootScope', '$http', '$localStorage', 'AuthService', 'URLS','Menu', function ($rootScope, $http, $localStorage, AuthService, URLS, Menu) {
 			return {
+			
 				signin: function (data, successCallback, errorCallback) {
 					
 					var obtenerToken = function(data)
@@ -112,7 +180,7 @@
 					.then(perfil)					
 					.then(successCallback)
 					.catch(error);
-				},
+				},				
 				refreshToken: function (data, success, error) {
 					
 					$http.post(URLS.BASE + 'refresh-token', data).success(success).error(error)
@@ -139,6 +207,12 @@
 	 };
 	   }
 	   ]);
+/**
+ * @ngdoc service
+ * @name App.Menu
+ * @description
+ * Crea el menu lateral izquierda según permisos.
+ */  	   
 	angular.module('App')
 		.factory('Menu',['$localStorage','MENU',function($localStorage, MENU){
 			var menuAutorizado = $localStorage.cium.menu || [ '' ];

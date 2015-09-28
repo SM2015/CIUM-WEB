@@ -1,9 +1,15 @@
+/**
+* @ngdoc object
+* @name Transaccion.HallazgoCtrl
+* @description
+* Complemento del controlador CrudCtrl  para tareas especificas en Hallazgo
+*/
 (function(){
 	'use strict';
 	angular.module('HallazgoModule')
 	.controller('HallazgoCtrl',
-	       ['$rootScope', '$scope', '$translate', '$mdSidenav', '$localStorage', '$mdUtil', '$log', '$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash',   'CrudDataApi', 'URLS', 
-	function($rootScope,   $scope,   $translate,   $mdSidenav,   $localStorage,   $mdUtil,   $log,   $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,    CrudDataApi, URLS){
+	       ['$rootScope', '$scope', '$translate','$mdDialog', '$mdSidenav', '$localStorage', '$mdUtil', '$log', '$location','$mdBottomSheet','Auth','Menu', '$http', '$window', '$timeout', '$route', 'flash', 'errorFlash',   'CrudDataApi', 'URLS', 
+	function($rootScope,   $scope,   $translate,  $mdDialog,   $mdSidenav,   $localStorage,   $mdUtil,   $log,   $location,  $mdBottomSheet,  Auth,  Menu,   $http,   $window,   $timeout,   $route,   flash,   errorFlash,    CrudDataApi, URLS){
 		
 	// cambia de color el menu seleccionado
 	$scope.menuSelected = "/"+$location.path().split('/')[1];
@@ -124,23 +130,134 @@
 			$scope.datos = $scope.listaTemp;
 		}
 	}
-		
+	
+	var d = new Date();
 	$scope.filtro = {};
 	$scope.filtro.historial = false;
 	$scope.filtro.indicador = [];
+	$scope.filtro.visualizar = 'tiempo';
+	$scope.filtro.anio = d.getFullYear();
+	$scope.filtro.um = {};
+	$scope.filtro.um.tipo='municipio';		
+	$scope.filtro.clues = [];
+	$scope.mostrarCategoria=[];
+	$scope.filtro.verTodosIndicadores = true;
+	$scope.filtro.verTodosUM = true;
+	$scope.filtro.verTodosClues = true;
+	$scope.chipIndicador = [];
+	$scope.filtros = {};
+	$scope.filtros.activo = false;
+	$scope.verInfo = false;
+	
+	$scope.cargarUM = true;
+	$scope.cargarP = true;
+	
 	$scope.toggleRight = buildToggler('filtro');
 	$scope.toggleRightIndicadores = buildToggler('indicadores');
-	$scope.filtros = {};
-    $scope.filtros.activo = false;
+/**
+* @ngdoc method
+* @name Transaccion.HallazgoCtrl#buildToggler
+* @methodOf Transaccion.HallazgoCtrl
+*
+* @description
+* Crea un sidenav con las opciones de filtrado
+* @param {string} navID identificador del sidenav
+*/		
+	$scope.cargarFiltro = 0;
     function buildToggler(navID) {
       var debounceFn =  $mdUtil.debounce(function(){
             $mdSidenav(navID)
               .toggle()
               .then(function () {
+				  if($scope.cargarFiltro < 1)
+					{
+						$scope.getDimension('anio',0);
+						$scope.getDimension('month',1);	
+						$scope.getDimension("codigo,indicador,color, 'Recurso' as categoriaEvaluacion",2);	
+						$scope.getDimension('jurisdiccion',3);
+						$scope.getDimension('municipio',4);
+						$scope.getDimension('zona',5);	
+						$scope.getDimension('cone',6);
+						$scope.cargarFiltro++;
+					}
               });
           },200);
       return debounceFn;
     };
+/**
+* @ngdoc method
+* @name Transaccion.HallazgoCtrl#cambiarAnio
+* @methodOf Transaccion.HallazgoCtrl
+*
+* @description
+* Evento change para el filtro año
+*/		
+	$scope.contAnio = 0;
+	$scope.cambiarAnio = function()
+	{
+		$scope.contAnio++;
+		if($scope.contAnio>1)
+		{
+			$scope.getDimension('month',1);	
+			$scope.getDimension("codigo,indicador,color, '"+$scope.filtro.tipo+"' as categoriaEvaluacion",2);	
+			$scope.getDimension('jurisdiccion',3);
+			$scope.getDimension('municipio',4);
+			$scope.getDimension('zona',5);	
+			$scope.getDimension('cone',6);
+		}
+	}
+/**
+* @ngdoc method
+* @name Transaccion.HallazgoCtrl#cambiarBimestre
+* @methodOf Transaccion.HallazgoCtrl
+*
+* @description
+* Evento change para el filtro bimestre
+*/	
+	$scope.cambiarBimestre = function()
+	{
+		$scope.getDimension("codigo,indicador,color, '"+$scope.filtro.tipo+"' as categoriaEvaluacion",2);	
+		$scope.getDimension('jurisdiccion',3);
+		$scope.getDimension('municipio',4);
+		$scope.getDimension('zona',5);	
+		$scope.getDimension('cone',6);
+	}
+/**
+* @ngdoc method
+* @name Transaccion.HallazgoCtrl#getDimension
+* @methodOf Transaccion.HallazgoCtrl
+*
+* @description
+* Cargar las opciones de filtrado por nivel
+* @param {string} nivel nivel a extraer de la base de datos
+* @param {int} c posicion para almacenar la información en el modelo datos
+*/		
+	$scope.intentoOpcion = 0;
+	$scope.getDimension = function(nivel,c)
+	{
+		$scope.opcion = true;
+		CrudDataApi.lista('hallazgoDimension?filtro='+JSON.stringify($scope.filtro)+'&nivel='+nivel, function (data) {    		  	  
+			$scope.datos[c] = data.data; 
+			$scope.opcion = false;				
+		},function (e) {
+			if($scope.intentoOpcion<1)
+			{
+				$scope.getDimension(nivel,c);
+				$scope.intentoOpcion++;
+			}
+			$scope.opcion = false;
+		});
+	};	
+/**
+* @ngdoc method
+* @name Transaccion.HallazgoCtrl#toggle
+* @methodOf Transaccion.HallazgoCtrl
+*
+* @description
+* Agrega un dato a un modelo tipo array
+* @param {string} item valor a insertar
+* @param {model} list modelo 
+*/			
 	$scope.tempIndicador = [];
 	$scope.toggle = function (item, list) {
 		var idx = list.indexOf(item.codigo);
@@ -152,10 +269,27 @@
 			$scope.chipIndicador[item.codigo] = item;
 		}
 	};
+/**
+* @ngdoc method
+* @name Transaccion.HallazgoCtrl#exists
+* @methodOf Transaccion.HallazgoCtrl
+*
+* @description
+* Comrpueba que el item no exista en el modelo
+* @param {string} item valor a insertar
+* @param {model} list modelo 
+*/	
 	$scope.exists = function (item, list) {
 		return list.indexOf(item) > -1;
 	};
-	
+/**
+* @ngdoc method
+* @name Transaccion.HallazgoCtrl#cambiarVerTodoIndicador
+* @methodOf Transaccion.HallazgoCtrl
+*
+* @description
+* Mostrar u ocultar la lista de indicadores agrupado por categoria
+*/		
 	$scope.cambiarVerTodoIndicador = function ()
 	{
 		if($scope.filtro.verTodosIndicadores)
@@ -165,16 +299,29 @@
 			$scope.tempIndicador = [];
 		}
 	}
+/**
+* @ngdoc method
+* @name Transaccion.HallazgoCtrl#cambiarVerTodoUM
+* @methodOf Transaccion.HallazgoCtrl
+*
+* @description
+* Mostrar u ocultar las opciones de filtrado por parametros
+*/	
 	$scope.cambiarVerTodoUM = function ()
 	{
 		if($scope.filtro.verTodosUM)
 			$scope.filtro.um = [];
 	}
-	$scope.filtro.um = {};
-	$scope.mostrarCategoria=[];
-	$scope.filtro.verTodosIndicadores = true;
-	$scope.filtro.verTodosUM = true;
-	$scope.chipIndicador = [];
+/**
+* @ngdoc method
+* @name Transaccion.HallazgoCtrl#aplicarFiltro
+* @methodOf Transaccion.HallazgoCtrl
+*
+* @description
+* Accion para procesar el filtro en la base de datos
+* @param {bool} avanzado compprueba si el filtro es avanzado o de la lista de indicadores activos
+* @param {string} item compsolo tiene un datorueba si indicadores es un array o  
+*/		
 	$scope.aplicarFiltro = function(avanzado,item)
 	{
 		$scope.filtros.activo=true;
@@ -188,10 +335,20 @@
 				$scope.filtro.indicador.push(item.codigo);
 				$scope.chipIndicador[item.codigo] = item;
 			}			
-			$mdSidenav('indicadores').close();
+			$mdSidenav('filtro').close();
 		}		
 		$scope.init();
+		$scope.getCriterios(); 
 	};
+/**
+* @ngdoc method
+* @name Transaccion.HallazgoCtrl#quitarFiltro
+* @methodOf Transaccion.HallazgoCtrl
+*
+* @description
+* Accion para quitar el filtro en la base de datos
+* @param {bool} avanzado compprueba si el filtro es avanzado o de la lista de indicadores activos 
+*/	
 	$scope.quitarFiltro = function(avanzado)
 	{
 		$scope.filtro.indicador = [];
@@ -200,19 +357,41 @@
 		$scope.filtro.verTodosUM = true;
 		$scope.filtros.activo=false;
 		$scope.init();
+		$scope.getCriterios(); 
 	};
+/**
+* @ngdoc method
+* @name Transaccion.HallazgoCtrl#history
+* @methodOf Transaccion.HallazgoCtrl
+*
+* @description
+* Accion para extraer los datos por filtro actual o por historico
+*/	
 	$scope.history = function()
 	{
 		$scope.init();
+		$scope.getCriterios(); 
 	}
-	
+/**
+* @ngdoc method
+* @name Transaccion.HallazgoCtrl#firstClick
+* @methodOf Transaccion.HallazgoCtrl
+*
+* @description
+* Accion para el click del listado de unidades medicas que correspondan al fiiltro
+* @param {int} id identificador del objeto click
+* @param {int} ev identificador del origen del click
+*/		
 	$scope.firstClick = function(id,ev)
 	{
 		id = angular.isUndefined(id) ? $scope.filtro.umActiva : id;
-		$localStorage.cium.filtro.umActiva = id;
+		
+		$scope.filtro.umActiva = id;
 		if($scope.filtro.indicador.length>1||$scope.filtro.verTodosIndicadores)
 		{
-			$localStorage.cium.filtro.nivel = 1;
+			$scope.filtro.nivel = 1;
+			$localStorage.cium.filtro = $scope.filtro;
+			
 			$location.path("/hallazgo/indicadores").search({id: id});
 		}
 		else
@@ -220,26 +399,60 @@
 			if(ev)
 				$location.path("/hallazgo").search({id: null});
 			else{
-				$localStorage.cium.filtro.nivel = 2;
-				$localStorage.cium.filtro.tipo = null;
+				$scope.filtro.nivel = 2;
+				$scope.filtro.tipo = $scope.tipo;
+				$localStorage.cium.filtro = $scope.filtro;				
 				$location.path("/hallazgo/evaluaciones").search({id: $scope.filtro.indicador[0]});
 			}
 		}
 	};
+/**
+* @ngdoc method
+* @name Transaccion.HallazgoCtrl#secondClick
+* @methodOf Transaccion.HallazgoCtrl
+*
+* @description
+* Accion para el click del listado de indicadores que correspondan al primer click
+* @param {int} id identificador del objeto click
+*/	
 	$scope.secondClick = function(id)
 	{
-		$localStorage.cium.filtro.nivel = 2;
-		$localStorage.cium.filtro.tipo = null;		
+		$scope.filtro.nivel = 2;
+		$scope.filtro.tipo = $scope.tipo;
+		$localStorage.cium.filtro = $scope.filtro;		
 		$location.path("/hallazgo/evaluaciones").search({id: id});
 	}
-	$scope.verEvaluacion = function(id,tipo)
-	{
-		$localStorage.cium.filtro.nivel = 3;
-		$localStorage.cium.filtro.tipo = tipo;
-		$localStorage.cium.filtro.indicadorActivo = $location.search().id;
-		$location.path("/hallazgo/ver").search({id: id,});
+/**
+* @ngdoc method
+* @name Transaccion.HallazgoCtrl#verEvaluacion
+* @methodOf Transaccion.HallazgoCtrl
+*
+* @description
+* Accion para el click del listado de evaluaciones que correspondan al segundo click
+* @param {int} id identificador del objeto click
+* @param {string} tipo tipo de categoria Recurso o Calidad
+* @param {string} indicador codigo del indicador
+*/		
+	$scope.verEvaluacion = function(id,tipo,indicador)
+	{		
+		$scope.filtro.nivel = 3;
+		$scope.filtro.tipo = tipo;
+		if(angular.isUndefined(indicador))
+			indicador = $location.search().id;
+		
+		$scope.filtro.indicadorActivo = indicador;
+		
+		$localStorage.cium.filtro = $scope.filtro;
+		$location.path("/hallazgo/ver").search({id: id});
 	}
-	
+/**
+* @ngdoc method
+* @name Transaccion.HallazgoCtrl#verEvaluacionCompleta
+* @methodOf Transaccion.HallazgoCtrl
+*
+* @description
+* Accion para ver la evaluación completa 
+*/	
 	$scope.verEvaluacionCompleta = function()
 	{
 		var id = $location.search().id;
@@ -251,12 +464,109 @@
 	// inicializa las rutas para crear los href correspondientes en la vista actual
 	$scope.index = function(ruta) 
 	{
-	  $scope.ruta=ruta;  
-	  var uri=$scope.url;
-
-	  if(uri.search("nuevo")==-1)
-	  $scope.init();     
+		$scope.ruta=ruta;  
+		var uri=$scope.url;
+	
+		if(uri.search("nuevo")==-1)
+		$scope.init();     
 	};
+	$scope.tamano = $window.innerHeight-50;
+	$scope.$watch(function(){
+		return $window.innerHeight;
+	}, 
+	function(value) {
+		$scope.tamano = value-50; 
+	});
+	$scope.hide = function() {
+		$mdDialog.hide();
+	};
+/**
+* @ngdoc method
+* @name Transaccion.HallazgoCtrl#getCluesCriterios
+* @methodOf Transaccion.HallazgoCtrl
+*
+* @description
+* obtiene la lista de clues que pertenescan al criterio
+* @param {int} ev id de la evaluacion
+* @param {string} criterio id criterio
+* @param {string} indicador id del indicador
+* @param {string} codigo codigo del indicador
+* @param {string} tipo tipo de categoria Recurso o Calidad
+*/	
+	$scope.getCluesCriterios = function(ev,criterio,indicador,codigo,tipo)
+	{
+		$scope.filtro.criterio = {};
+		$scope.filtro.indicadorActivo = codigo;
+		$scope.filtro.indicador.push(codigo);
+		$scope.filtro.tipo = tipo;
+		$scope.filtro.criterio.criterio = criterio;
+		$scope.filtro.criterio.indicador = indicador;
+		$localStorage.cium.filtro = $scope.filtro;
+      	CrudDataApi.lista("showCriterios?filtro="+JSON.stringify($scope.filtro), function (data) {
+        if(data.status  == '407')
+        	$window.location="acceso";
+
+      		if(data.status==200)
+      		{												
+    			$scope.dato=data.data;				
+				$scope.eIndicador=[];
+				$scope.eIndicador.push(data.data[0]);	
+				$scope.filtro.nivel = 3;
+				$scope.editDialog = $mdDialog;
+				$scope.editDialog.show({
+						targetEvent: ev,				
+						scope: $scope.$new(),
+						templateUrl: 'src/transaccion/hallazgo/views/clues.html',
+						clickOutsideToClose: true			        			        	  
+				});							
+      		}
+      		else
+			{
+				$scope.cargarUM=false;
+				errorFlash.error(data);
+			}
+      		$scope.cargarUM = false;
+        },function (e) {
+      		errorFlash.error(e);
+      		$scope.cargarUM = false;
+        });		
+	}
+/**
+* @ngdoc method
+* @name Transaccion.HallazgoCtrl#getCriterios
+* @methodOf Transaccion.HallazgoCtrl
+*
+* @description
+* obtiene los datos criterios malos
+*/			
+    $scope.getCriterios = function() 
+	{			
+		$scope.cargando=true;
+		$scope.cargarP=true;
+		
+      	CrudDataApi.lista("indexCriterios?filtro="+JSON.stringify($scope.filtro), function (data) {
+        if(data.status  == '407')
+        	$window.location="acceso";
+
+      		if(data.status==200)
+      		{												
+    			$scope.criterios = data.data;
+				$scope.totalCriterios = data.total;			
+      		}
+      		else
+			{				
+				errorFlash.error(data);
+			}
+			$scope.cargando=false;
+			$scope.cargarP=false;
+        },function (e) {
+      		errorFlash.error(e);
+      		$scope.cargando=false;
+			$scope.cargarP=false;
+        });
+    };
+	if(angular.isUndefined($location.search().id))
+		$scope.getCriterios();
 	
 	// obtiene los datos necesarios para crear el grid (listado)
     $scope.init = function(buscar,columna) 
@@ -270,47 +580,33 @@
 	
 		if(!angular.isUndefined(buscar))
 			limite=limite+"&columna="+columna+"&valor="+buscar+"&buscar=true";
+			
 		$scope.cargando=true;
+		$scope.cargarUM=true;
+		
 		$localStorage.cium.filtro = $scope.filtro;
       	CrudDataApi.lista(url+'?pagina=' + pagina + '&limite=' + limite+"&order="+order+"&filtro="+JSON.stringify($scope.filtro), function (data) {
         if(data.status  == '407')
         	$window.location="acceso";
 
       		if(data.status==200)
-      		{				
-				$scope.jurisdicciones = [];
-				$scope.municipios = [];
-				$scope.localidades = [];
-				$scope.cones = [];
+      		{												
+    			$scope.data = data.data;
 				
-    			$scope.datos = data.data;
-				angular.forEach(data.filtroUM , function(val, key) {
-					if($scope.jurisdicciones.indexOf(val.jurisdiccion)==-1)
-						$scope.jurisdicciones.push(val.jurisdiccion);
-					
-					if($scope.municipios.indexOf(val.municipio)==-1)
-						$scope.municipios.push(val.municipio);
-					
-					if($scope.localidades.indexOf(val.localidad)==-1)
-						$scope.localidades.push(val.localidad);
-					
-					if($scope.cones.indexOf(val.cone)==-1)
-						$scope.cones.push(val.cone);
-				});
 				$scope.datos.indicadores = data.indicadores;
 				$scope.total = data.totalIndicador;
     			$scope.paginacion.paginas = data.total;
-				$scope.cargando=false;
+				$scope.cargarUM=false;				
       		}
       		else
 			{
-				$scope.cargando=false;
+				$scope.cargarUM=false;
 				errorFlash.error(data);
 			}
-      		$scope.cargando = false;
+      		$scope.cargarUM = false;
         },function (e) {
       		errorFlash.error(e);
-      		$scope.cargando = false;
+      		$scope.cargarUM = false;
         });
     };
 	
@@ -329,7 +625,8 @@
 		var id=$location.search().id;
 		$scope.cargando=true;
 		$scope.filtro = $localStorage.cium.filtro;
-		CrudDataApi.ver(url, id+"?filtro="+JSON.stringify($scope.filtro), function (data) {
+		
+		CrudDataApi.ver(url, id+"?filtro="+JSON.stringify($localStorage.cium.filtro), function (data) {
 			if(data.status  == '407')
 				$window.location="acceso";
 
