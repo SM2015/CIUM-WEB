@@ -113,7 +113,7 @@
                       </md-select>
 
                     </span>
-                	  <md-button class="md-icon-button  md-warn equis"  ng-click="borrarIndicador()" aria-label="{{ 'ELIMINAR' | translate }}" ng-if="criterios.aprobado.length>0 || criterios.noAprobado.length>0">
+                	  <md-button class="md-icon-button  md-warn equis"  ng-click="borrarIndicador()" aria-label="{{ 'ELIMINAR' | translate }}" ng-if="TieneDatosIndicador">
                             <md-icon md-svg-icon="delete"></md-icon>
                             <md-tooltip>
                                     {{ 'ELIMINAR_IND' | translate }}

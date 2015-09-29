@@ -539,7 +539,7 @@
 * @description
 * obtiene los datos criterios malos
 */			
-    $scope.getCriterios = function() 
+    $scope.getCriterios = function()  
 	{			
 		$scope.cargando=true;
 		$scope.cargarP=true;
@@ -550,7 +550,15 @@
 
       		if(data.status==200)
       		{												
-    			$scope.criterios = data.data;
+    			$scope.criterios = {};
+				angular.forEach(data.data , function(val, key) 
+				{
+					$scope.criterios[key] = [];
+					angular.forEach(val , function(v, k) 
+					{
+						$scope.criterios[key].push(v);
+					});
+				});console.log($scope.criterios);
 				$scope.totalCriterios = data.total;			
       		}
       		else
@@ -601,12 +609,14 @@
       		else
 			{
 				$scope.cargarUM=false;
+				$scope.cargando = false;
 				errorFlash.error(data);
 			}
       		$scope.cargarUM = false;
         },function (e) {
       		errorFlash.error(e);
       		$scope.cargarUM = false;
+			$scope.cargando = false;
         });
     };
 	

@@ -463,6 +463,7 @@
 * @description
 * cargar los criterios que le correspondan por indicador y nivel de cone
 */	
+	$scope.TieneDatosIndicador = false;
 	$scope.cargarCriterios= function()
 	{
 		var cone=$scope.dato.idCone;
@@ -524,6 +525,7 @@
 					$scope.criterios = data.criterios;
 					angular.forEach(data.data , function(val, key) 
 					{
+						
 						var exp = val.expediente;
 						if(exp==0)
 						{ 
@@ -545,7 +547,12 @@
 						$scope.dato.cumple[exp] = val.cumple;
 						$scope.dato.promedio[exp] = val.promedio;
 
-						$scope.dato.aprobado[exp] = val.aprobado;									
+						$scope.dato.aprobado[exp] = val.aprobado;	
+						
+						if(!angular.isUndefined(val.aprobado))
+							$scope.TieneDatosIndicador = true;
+						else								
+							$scope.TieneDatosIndicador = false;
 									    
 					});	
 					$scope.obtenerPromedio();				    																			   
@@ -1111,18 +1118,19 @@
 				
 				if(data.status==200)
 				{
-				  flash('success', data.messages);
-				  if($scope.dato.cerrado==1)
-				  {
-				  	var uri=$scope.url.split('/');	
-					uri="/"+uri[1]+"/ver";
-					$location.path(uri).search({id: data.data.id});	
-				  }
-				  if(f==1)
-				  	$scope.nombre=$scope.dato.nombre;
-				  $scope.clues=data.data.clues;
-				  $scope.modificado=false;
-				  $mdDialog.hide();
+					$scope.TieneDatosIndicador = true;
+					flash('success', data.messages);
+					if($scope.dato.cerrado==1)
+					{
+						var uri=$scope.url.split('/');	
+						uri="/"+uri[1]+"/ver";
+						$location.path(uri).search({id: data.data.id});	
+					}
+					if(f==1)
+						$scope.nombre=$scope.dato.nombre;
+					$scope.clues=data.data.clues;
+					$scope.modificado=false;
+					$mdDialog.hide();
 				}
 				else
 				{

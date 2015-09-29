@@ -97,14 +97,13 @@
 																
 					</div>
 				</md-toolbar>
-								
 				<md-content flex ng-repeat="(k, v) in criterios" ng-if="k == tipo" style="min-height:500px;max-height:{{tamano-150}}px;" >
 					
 					<section ng-repeat="(key, value) in v | groupBy :  agrupadoPor " ng-if="key != 'undefined' && agrupado" > 
 						<md-subheader class="md-primary"><span class="img-circle" style="background: {{ value[0].color }}; display:block; height:1em; width:1em;float:left; margin-right:.5em"></span>  {{key}} {{value[0].indicador}}</md-subheader>
 						<md-list>																							
 							<md-list-item ng-repeat="c in value | filter:buscarBis | orderBy:ordenText " style="border-bottom: 1px solid #ddd" class="md-2-line" ng-click="getCluesCriterios(event,c.idCriterio,c.idIndicador,c.codigo,k)">
-								<div class="md-list-item-text">																	
+								<div class="md-list-item-text">																
 									<p>{{ c.criterio }} </p>
 									<p><strong><md-icon md-svg-icon="mood-bad" style="width:1.2em"></md-icon> {{c.total}} UM {{c.exp ? c.exp+' EXP' : ''}}</strong></p>											
 								</div>							
@@ -112,17 +111,18 @@
 							</md-list-item>   
 						</md-list>      
 					</section>
+					<section ng-if="!agrupado">
+						<md-list>							
+							<md-list-item ng-repeat="c in v | filter:buscarBis | orderBy:ordenText " style="border-bottom: 1px solid #ddd" class="md-2-line" ng-click="getCluesCriterios(event,c.idCriterio,c.idIndicador,c.codigo,k)">
+								<div class="md-list-item-text">																
+									<p>{{ c.criterio }} </p>
+									<p><strong><md-icon md-svg-icon="mood-bad" style="width:1.2em"></md-icon> {{c.total}} UM {{c.exp ? c.exp+' EXP' : ''}} </strong></p>											
+								</div>							
+								<md-divider></md-divider>						
+							</md-list-item>     
+						</md-list>   
+					</section>
 					
-					<md-list ng-if="!agrupado">							
-						<md-list-item ng-repeat="c in v | filter:buscarBis | orderBy:ordenText " style="border-bottom: 1px solid #ddd" class="md-2-line" ng-click="getCluesCriterios(event,c.idCriterio,c.idIndicador,c.codigo,k)">
-							<div class="md-list-item-text">																	
-								<p>{{ c.criterio }} </p>
-								<p><strong><md-icon md-svg-icon="mood-bad" style="width:1.2em"></md-icon> {{c.total}} UM {{c.exp ? c.exp+' EXP' : ''}} </strong></p>											
-							</div>							
-							<md-divider></md-divider>						
-						</md-list-item>     
-					</md-list>   
-						
 				</md-content>
 				  
 			</md-tab>
