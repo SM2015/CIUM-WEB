@@ -113,7 +113,10 @@
 	    uri="/"+uri[1]+"/nuevo";
 	    $location.path(uri).search({id: null});
 	}
-
+	$scope.abrirSelect = function()
+	{
+		angular.element(document.getElementById("principal")).attr("class","sin-scroll");
+	}
 	$scope.showSearch = false;
 	$scope.listaTemp = {};
 	$scope.moduloName = angular.uppercase($location.path().split('/')[1]);
@@ -322,9 +325,11 @@
 * @param {bool} avanzado compprueba si el filtro es avanzado o de la lista de indicadores activos
 * @param {string} item compsolo tiene un datorueba si indicadores es un array o  
 */		
-	$scope.aplicarFiltro = function(avanzado,item)
+	$scope.tipo = 'CALIDAD';
+	$scope.aplicarFiltro = function(avanzado,item,key)
 	{
 		$scope.filtros.activo=true;
+		$scope.tipo = key;
 		$scope.filtro.indicador = $scope.tempIndicador;
 		if(!avanzado)
 		{
@@ -558,7 +563,7 @@
 					{
 						$scope.criterios[key].push(v);
 					});
-				});console.log($scope.criterios);
+				});
 				$scope.totalCriterios = data.total;			
       		}
       		else

@@ -93,6 +93,7 @@
 		  .icon("settings", "bower_components/material-design-icons/action/svg/production/ic_settings_24px.svg", 48)
 		  .icon("trending-up", "bower_components/material-design-icons/action/svg/production/ic_trending_up_24px.svg", 48)
 		  .icon("trending-down", "bower_components/material-design-icons/action/svg/production/ic_trending_down_24px.svg", 48)
+		  .icon("assignment", "bower_components/material-design-icons/action/svg/production/ic_assignment_24px.svg", 48)
 		  
 		  // Content
 		  .icon("save", "bower_components/material-design-icons/content/svg/production/ic_save_48px.svg", 48)
@@ -181,6 +182,7 @@
 
 		  //device
 		  .icon("storage", "bower_components/material-design-icons/device/svg/production/ic_storage_24px.svg", 24)
+		  .icon("signal-wifi-statusbar-connected-no-internet-2", "bower_components/material-design-icons/device/svg/production/ic_signal_wifi_statusbar_connected_no_internet_2_26x24px.svg", 24)
 
 		  //hardware
 		  .icon("tablet-mac", "bower_components/material-design-icons/hardware/svg/production/ic_tablet_mac_24px.svg", 24)
@@ -247,24 +249,26 @@
 		$httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {
 			if(angular.isUndefined($localStorage.cium))
 			$localStorage.cium = {};
+			
 		   return {
-		 'request': function (config) {
-		     config.headers = config.headers || {};
-		     if ($localStorage.cium.access_token) {					   
-		   		config.headers = {
-		   				Authorization: 'Bearer ' + $localStorage.cium.access_token,
-		   				"X-Usuario": $localStorage.cium.user_email
-		   			};
-		     }
-		     return config;
-		 },
-		 'responseError': function (response) {				 
-		     if (response.status === 401 || response.status === 403) {
-		   $location.path('signin');
-		     }
-		     return $q.reject(response);
-		 }
+					'request': function (config) {
+						config.headers = config.headers || {};
+						if ($localStorage.cium.access_token) {					   
+							config.headers = {
+									Authorization: 'Bearer ' + $localStorage.cium.access_token,
+									"X-Usuario": $localStorage.cium.user_email
+								};
+						}
+						return config;
+					},
+					'responseError': function (response) {				 
+					if (response.status === 401 || response.status === 403) {
+						$location.path('signin');
+					}
+					return $q.reject(response);
+				}
 		   };
+		   
 		}]);
 		
 		$translateProvider.useStaticFilesLoader({
@@ -277,8 +281,18 @@
 		$translateProvider.useSanitizeValueStrategy('escaped');		
 	}]);
 	
-	app.run(['$rootScope','$location','$localStorage','$injector','authService','Menu',function($rootScope,$location, $localStorage,$injector, authService,Menu){
-			
+	app.run(['$rootScope','$window','$location','$localStorage','$injector','authService','Menu',function($rootScope, $window, $location, $localStorage,$injector, authService,Menu){
+			$rootScope.online = navigator.onLine;
+			$window.addEventListener("offline", function () {
+				$rootScope.$apply(function() {
+				$rootScope.online = false;					
+				});
+			}, false);
+			$window.addEventListener("online", function () {
+				$rootScope.$apply(function() {
+				$rootScope.online = true;
+				});
+			}, false);
 			$rootScope.$on('event:auth-loginRequired', function() {
 				
 				if($localStorage.cium.access_token){

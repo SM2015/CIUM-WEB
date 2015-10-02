@@ -453,3 +453,7 @@ body {
   padding:0;
   height:100%;
 }
+.sin-scroll
+{
+  overflow-y:hidden !important; overflow:hidden !important
+}

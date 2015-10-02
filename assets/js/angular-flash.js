@@ -91,7 +91,7 @@
 }));
 
 angular.module('flash').controller('ToastCtrl', function($scope, $mdToast) {
-  $scope.closeToast = function() {console.log($mdToast);
+  $scope.closeToast = function() {
 	  $mdToast.hide();
   };
 });

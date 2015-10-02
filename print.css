@@ -62,7 +62,7 @@
     {
       border-collapse: collapse !important; 
       page-break-after: auto; 
-      font-size: 8pt !important;
+      font-size: 6pt !important;
     }
     table.Tabla tr, table.Tabla td
     {
@@ -71,22 +71,20 @@
     }
     table.Tabla tr
     {
-      height: 20px;
     }
     table.Tabla td, table.Tabla th
     {
       border: 1px #999 solid !important;
-      padding: 0.5rem;
       color: #000 !important;
     }
     table.Tabla caption
     {
       font-weight: bold;
       background: #ddd;
-      padding: .5em;
+      padding: .4em;
       border: 1px #999 solid !important;
       border-bottom: none !important;
-      font-size: 8pt !important;
+      font-size: 6pt !important;
     }
 
     .h3-caption
@@ -94,9 +92,9 @@
       font-weight: bold;
       background: #666;
       color: #fff;
-      padding: .5em;
+      padding: .4em;
       border: 1px #999 solid !important;
-      font-size: 8pt !important;
+      font-size: 6pt !important;
     }
     .equis
     {

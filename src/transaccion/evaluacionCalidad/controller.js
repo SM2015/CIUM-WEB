@@ -119,7 +119,14 @@
 	    uri="/"+uri[1]+"/nuevo";
 	    $location.path(uri).search({id: null});
 	}
-	$scope.tamanoHeight = $window.innerHeight-355;
+	$scope.tamanoHeight = $window.innerHeight-310;
+	
+	$scope.$watch(function(){
+		return window.innerWidth;
+	}, function(value) {
+		$scope.tamanoHeight = $window.innerHeight-310;
+	});
+  
 	$scope.showSearch = false;
 	$scope.imprimirDetalle = true;
 	$scope.listaTemp={};
@@ -246,6 +253,19 @@
 		        clickOutsideToClose: true			        			        	  
 	    });	    	   
 	};
+	
+	
+	$scope.abrirEvaluacionFicha = function(ev)
+	{	 
+	    $scope.editDialog = $mdDialog;
+	    $scope.editDialog.show({
+	    		targetEvent: ev,
+	    		
+	    		scope: $scope.$new(),
+		        templateUrl: 'src/transaccion/evaluacionCalidad/views/evaluacionFicha.html',
+		        clickOutsideToClose: true			        			        	  
+	    });	    	   
+	};
 	//autocomplete
 	
 
@@ -330,6 +350,7 @@
 			if(data.status==200)
 			{
 				$scope.options=data.data;
+				$scope.indicadoresActuales();
 			}
 			else
 		{
@@ -409,6 +430,7 @@
 * Agrega otro expediente al indicador
 * @param {string} exp numero de expediente
 */	
+	$scope.selectedIndex = 0;
 	$scope.agregarColumna = function(exp)
 	{
 		var indi = $scope.indicador;
@@ -421,14 +443,22 @@
 				$scope.incompleto[indi] = [];
 
 			$scope.completo[indi][$scope.columnas.length+1]=0;
-			$scope.incompleto[indi][$scope.columnas.length+1]=0;
-			exp=null;	
+			$scope.incompleto[indi][$scope.columnas.length+1]=0;	
 		}
 		if($scope.columnas.length<20)
 		{
 			$scope.columnas.push({id:$scope.columnas.length+1,exp:exp});
 			$scope.dato.totalExpediente=$scope.columnas.length;			
 		}
+		if(angular.isUndefined($scope.dato.expediente))
+			$scope.dato.expediente = [];
+		$scope.dato.expediente.push(exp);
+		
+		setTimeout(function()
+		{
+			$scope.selectedIndex = $scope.columnas.length-1;
+		},80);
+		
 	}
 	
 	$scope.criterios = []; $scope.modificado = false;
@@ -452,7 +482,57 @@
 		}		
 	}
 
+//generar impreso
+	$scope.tieneExpediente=[];
+	$scope.abrirIndicadores = function(e)
+	{
+		angular.element(document.getElementById("principal")).attr("class","sin-scroll");
+	}
 	
+	$scope.tempIndicador = [];
+	$scope.toggle = function (item, list) {
+		var idx = list.indexOf(item.id);
+		if (idx > -1) 
+			list.splice(idx, 1);
+		else 
+		{
+			list.push(item.id);
+		}
+	};	
+	$scope.exists = function (item, list) {
+		return list.indexOf(item) > -1;
+	};
+	$scope.generarImpreso = function()
+	{
+		$localStorage.cium.calidad = {};
+		$localStorage.cium.calidad.imprimir = {};
+		$localStorage.cium.calidad.imprimir.um = $scope.dato;
+		$localStorage.cium.calidad.imprimir.indicadores = $scope.tempIndicador;
+		$location.path("evaluacion-calidad/evaluacionImpresa");
+	}
+	$scope.vistaImpreso = function()
+	{
+		$scope.dato = $localStorage.cium.calidad.imprimir.um;
+		$scope.indicadores = [];
+		var cone = $scope.dato.idCone;
+		$scope.expedientes = [];
+		for(var i = 0; i < $scope.dato.expediente; i++)
+			$scope.expedientes.push(i);
+		$scope.expedientes 
+		angular.forEach($localStorage.cium.calidad.imprimir.indicadores , function(val, key) 
+		{
+			CrudDataApi.lista('CriterioEvaluacionCalidadImprimir/' + cone + '/' + val, function (data) {	
+				if(data.status==200)
+				{
+					$scope.indicadores.push(data.data);	
+				}
+			},function (e) {
+				errorFlash.error(e);				
+			});			
+		});
+		$scope.cargando = false;
+	}
+// fin generar impreso	
 	$scope.criterios = [];
 	$scope.informacion = [];
 /**
@@ -464,19 +544,20 @@
 * cargar los criterios que le correspondan por indicador y nivel de cone
 */	
 	$scope.TieneDatosIndicador = false;
-	$scope.cargarCriterios= function()
+	$scope.cargarCriterios= function(id,codigo,nombre,$index)
 	{
 		var cone=$scope.dato.idCone;
 		var indi=$scope.dato.idIndicador;
 		var idev=$scope.dato.id;
 		var op=0;
+		
 		$scope.verificarCambios();
 		$scope.dato.tempExpediente = $scope.dato.expediente;
 		if(!angular.isUndefined(cone)&&cone!=""&&!angular.isUndefined(indi)&&indi!="" && !$scope.modificado)
 		{
 			$scope.cargando = true;
 			$scope.criterios = {};
-
+			$scope.dato.expediente = [];
 			$scope.estadistica();
 			$http.get(URLS.BASE_API+'CriterioEvaluacionCalidad/'+cone+'/'+indi+'/'+idev)
 			.success(function(data, status, headers, config) 
@@ -485,12 +566,21 @@
 					$window.location="acceso";
 				
 				if(data.status==200)
-				{
-					if(data.tiene==1)
-					{
-						$scope.dato.totalExpediente=0;
-						$scope.columnas = [];
-					}								
+				{					
+					if(!angular.isUndefined(nombre))
+					{						
+						$scope.information[codigo]=
+						{			      
+							"id": id,
+							"codigo": codigo,
+							"nombre": nombre,
+							"completo": false
+						};									
+						$scope.options.splice($index, 1);
+					}		
+					$scope.dato.totalExpediente=0;
+					$scope.columnas = [];
+												
 					$scope.dato.totalCriterio = {};
 					
 					$scope.dato.cumple = {};
@@ -527,23 +617,13 @@
 					{
 						
 						var exp = val.expediente;
-						if(exp==0)
-						{ 
-							exp=1; var c=0;
-							angular.forEach($scope.dato.tempExpediente , function(valor, clave) 
-							{
-								if(c==0)
-									val.expediente=valor;								
-								c++;
-							});
-							
-						}
+						
 						if($scope.dato.totalExpediente<total)
 							$scope.agregarColumna(exp);
 						
 						if(angular.isUndefined($scope.dato.expediente))
 							$scope.dato.expediente=[];
-						$scope.dato.expediente[exp] = val.expediente;
+						
 						$scope.dato.cumple[exp] = val.cumple;
 						$scope.dato.promedio[exp] = val.promedio;
 
@@ -560,7 +640,7 @@
 				else					
 				{
 					$scope.dato.totalCriterio = {};
-					$scope.dato.expediente = {};
+					$scope.dato.expediente = [];
 					$scope.dato.cumple = {};
 					$scope.dato.promedio = {};
 
@@ -648,7 +728,9 @@
 *
 * @description
 * obtener las estadisticas de la evaluacion
-*/		
+*/	
+	$scope.totalDeTotal = [];
+		
 	$scope.estadistica = function()
 	{
 		$scope.cargando = true;
@@ -680,14 +762,23 @@
 						$scope.misIndicadores.push(v.id);
 					})
 				})	
+				
 				angular.forEach($scope.informacion , function(val, key) 
 				{					
 					var exp=key;
 					angular.forEach($scope.misIndicadores , function(vl, ky) 
 					{
-						var co = 0; var inc = 0; 
+						var co = 0; var inc = 0;
+						if(angular.isUndefined($scope.totalDeTotal[$scope.dato.idIndicador]))
+							$scope.totalDeTotal[$scope.dato.idIndicador] = []; 
 						angular.forEach(val , function(v, k) 
-						{ 
+						{ 	
+							if(v.id == $scope.dato.idIndicador)
+							{				
+								$scope.totalDeTotal[$scope.dato.idIndicador][exp] = [];
+								$scope.totalDeTotal[$scope.dato.idIndicador][exp]["de"] =  v[v.codigo];
+								$scope.totalDeTotal[$scope.dato.idIndicador][exp]["total"] = v.total;
+							}
 							if(v[v.codigo] == v.total)
 							{
 								tco = tco + 1;
@@ -708,7 +799,8 @@
 				if(tinc == 0 && tco > 0)
 					$scope.terminado=true;
 				else
-					$scope.terminado=false;				
+					$scope.terminado=false;	
+								
 			}
 			else
 			{
@@ -723,6 +815,28 @@
 		});
 	};
 	
+	$scope.indicadoresActuales = function()
+	{
+		var idev = $scope.dato.id;
+		if(angular.isUndefined(idev) || idev == "" )
+			idev = $location.search().id;
+		$http.get(URLS.BASE_API+'CriterioEvaluacionCalidadIndicador/'+idev)
+		.success(function(data, status, headers, config) 
+		{
+			$scope.information = data.data;
+			
+			angular.forEach($scope.information , function(val, key) 
+			{
+				angular.forEach($scope.options , function(v, k) 
+				{
+					if(val.codigo == v.codigo)
+					{
+						$scope.options.splice(k, 1);
+					}
+				});					
+			});
+		});
+	}
 	
 	$scope.json = {};
 	$scope.TH={};
@@ -753,11 +867,11 @@
 				{
 					try
 					{
-						if($scope.dato.aprobado[exp][value.idCriterio] == 1)
+						if($scope.dato.aprobado[val][value.idCriterio] == 1)
 							aprobado++;
-						if($scope.dato.aprobado[exp][value.idCriterio] == 0)
+						if($scope.dato.aprobado[val][value.idCriterio] == 0)
 							noaprobado++;
-						if($scope.dato.aprobado[exp][value.idCriterio] == 2)
+						if($scope.dato.aprobado[val][value.idCriterio] == 2)
 							noaplica++;
 					}
 					catch(e){}
@@ -767,14 +881,14 @@
 
 
 			total = aprobado + noaplica;
-			$scope.dato.totalCriterio[exp]=totalCriterio;
+			$scope.dato.totalCriterio[val]=totalCriterio;
 			if(total == totalCriterio)
-				$scope.dato.cumple[exp] = 1;
+				$scope.dato.cumple[val] = 1;
 			else
-				$scope.dato.cumple[exp] = 0;
+				$scope.dato.cumple[val] = 0;
 			
-			$scope.dato.promedio[exp] = (total/totalCriterio)*100;
-			promedioGeneral = promedioGeneral + $scope.dato.promedio[exp];			
+			$scope.dato.promedio[val] = (total/totalCriterio)*100;
+			promedioGeneral = promedioGeneral + $scope.dato.promedio[val];			
 			totalCriterio = 0; total = 0; aprobado = 0; noaplica = 0; noaprobado = 0;
 		});	
 
@@ -794,14 +908,27 @@
 * @param {string} valor valor a comprobar
 * @param {string} exp numero de expediente
 */
-	
-	$scope.validarNoRepetirExpediente = function(valor,exp)
-	{		
+	$scope.expedienteValido = true;	
+	$scope.dato.expediente = [];
+	$scope.validarNoRepetirExpediente = function(valor)
+	{	
+		var repite=0; 
 		angular.forEach($scope.dato.expediente, function(item, key) 
 		{
-			if(item==valor&&key!=exp)
-				flash('warning', $translate.instant("REPITE_EXPEDIENTE") );
+			if(item==valor)
+			{
+				repite++;				
+			}
 		});
+		if(repite>0)
+			flash('warning', $translate.instant("REPITE_EXPEDIENTE") );
+		if(repite==0)
+		{
+			$scope.expedienteValido = false;	
+			$scope.numExpediente = '';
+			$scope.exp=valor;		
+			$scope.agregarColumna(valor);
+		}	
 	}
 /**
 * @ngdoc method
@@ -818,9 +945,9 @@
 */
 	$scope.json = {};
 	$scope.tieneHallazgo=false;
-	$scope.aprobar = function(index,evaluacion,ap,exp,id)
+	$scope.aprobar = function(index,evaluacion,ap,col,exp,id)
 	{
-		if(!angular.isUndefined($scope.dato.expediente[exp]))
+		if(!angular.isUndefined($scope.dato.expediente[col]))
 		{	
 			$scope.obtenerPromedio();
 			if(exp==null)exp=id; 
@@ -896,6 +1023,8 @@
 					$scope.misIndicadores.push(v.id);
 				})
 			}); 
+			if(angular.isUndefined($scope.totalDeTotal[$scope.dato.idIndicador]))
+				$scope.totalDeTotal[$scope.dato.idIndicador] = [];
 			angular.forEach($scope.informacion , function(val, key) 
 			{					
 				var exp=key;
@@ -904,6 +1033,9 @@
 					var co = 0; var inc = 0; 
 					angular.forEach(val , function(v, k) 
 					{ 
+						$scope.totalDeTotal[$scope.dato.idIndicador][exp] = [];
+						$scope.totalDeTotal[$scope.dato.idIndicador][exp]["de"] =  v[v.codigo];
+						$scope.totalDeTotal[$scope.dato.idIndicador][exp]["total"] = v.total;
 						if(v[v.codigo] == v.total)
 						{
 							tco = tco + 1;
@@ -1013,7 +1145,7 @@
 		if(!angular.isUndefined(buscar))
 			limite=limite+"&columna="+columna+"&valor="+buscar+"&buscar=true";
 
-
+		$scope.cargando = true;
       	CrudDataApi.lista(url+'?pagina=' + pagina + '&limite=' + limite+"&order="+order, function (data) {
         if(data.status  == '407')
         	$window.location="acceso";
@@ -1047,7 +1179,7 @@
 		$scope.ruta=ruta;		
 		var url=$scope.ruta;		
 		var id=$location.search().id;
-		
+		$scope.cargando = true;
 		CrudDataApi.ver(url, id, function (data) {
 			if(data.status  == '407')
 				$window.location="acceso";
@@ -1071,7 +1203,7 @@
 		);  		
 	};
 	
-	//Modificar. Actualiza el recurso con los datos que envia el usuario
+	//Modificar. Actualiza el calidad con los datos que envia el usuario
 	$scope.modificar = function(id,f) 
 	{    
 		var url = $scope.ruta;
@@ -1079,24 +1211,27 @@
 		if(f==1)$scope.clues = $scope.dato.clues;
 		angular.forEach($scope.dato.aprobado , function(val, key) 
 		{
-			if(!angular.isUndefined($scope.dato.expediente[key]))
+			angular.forEach($scope.dato.expediente , function(v, k) 
 			{
-				i++;
-				registros.push(
-								{
-									idIndicador:$scope.dato.idIndicador, 
-									expediente:$scope.dato.expediente[key], 
-									columna: i, 
-									cumple: $scope.dato.cumple[key], 
-									promedio: $scope.dato.promedio[key], 
-									totalCriterio: $scope.dato.totalCriterio[key]
-								});
-				registros[i-1].criterios=[];
-				angular.forEach(val , function(v, k) 
+				if(v == key)
 				{
-					registros[i-1].criterios.push({idCriterio:k,idIndicador:$scope.dato.idIndicador,aprobado:v});
-				});
-			}
+					i++;
+					registros.push(
+									{
+										idIndicador:$scope.dato.idIndicador, 
+										expediente:v, 
+										columna: i, 
+										cumple: $scope.dato.cumple[key], 
+										promedio: $scope.dato.promedio[key], 
+										totalCriterio: $scope.dato.totalCriterio[key]
+									});
+					registros[i-1].criterios=[];
+					angular.forEach(val , function(v, k) 
+					{
+						registros[i-1].criterios.push({idCriterio:k,idIndicador:$scope.dato.idIndicador,aprobado:v});
+					});
+				}
+			});
 		});
 		json.evaluaciones=[];
 		json.evaluaciones[0] = {id:$scope.dato.id,clues:$scope.clues, fechaEvaluacion:$scope.dato.fechaEvaluacion,cerrado:$scope.dato.cerrado};
@@ -1152,6 +1287,7 @@
 		var json=$scope.dato;
 		if(json)
 		{
+			$scope.cargando = true;
 			CrudDataApi.crear(url, json, function (data) {
 				if(data.status  == '407')
 					$window.location="acceso";
@@ -1180,7 +1316,7 @@
 		}    
 	};
 
-	//Borrar. Elimina el recurso del parametro id
+	//Borrar. Elimina el calidad del parametro id
 	$scope.borrar = function(id, $index) 
 	{    
 		var op=1;
@@ -1221,7 +1357,7 @@
 		}          
 	};
 
-	//Borrar. Elimina el recurso del parametro id
+	//Borrar. Elimina el calidad del parametro id
 	$scope.borrarIndicador = function() 
 	{ 
 		var ind = $scope.dato.idIndicador;
@@ -1255,7 +1391,7 @@
 			); 
 		}          
 	};
-	//Borrar. Elimina el recurso del parametro id
+	//Borrar. Elimina el calidad del parametro id
 	$scope.borrarExpediente = function(exp,col) 
 	{ 
 		var ind = $scope.dato.idIndicador;
@@ -1263,8 +1399,9 @@
 		if(angular.isUndefined($scope.tieneExpediente[exp]))
 		{
 			$scope.columnas.splice(col,1);	
+			$scope.dato.expediente.splice(col,1);	
 			delete $scope.completo[exp];	
-			delete $scope.incompleto[exp];
+			delete $scope.incompleto[exp];			
 		}
 		else if ($window.confirm($translate.instant('CONFIRM_DELETE'))) {   
 			var url=$scope.ruta;
@@ -1295,6 +1432,6 @@
 				}
 			); 
 		}          
-	};
+	};	
 	}])
 })();

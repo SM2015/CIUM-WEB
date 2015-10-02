@@ -1,3 +1,4 @@
+<md-toast class="md-bottom md-left" ng-if="!online" ng-include="'src/app/views/sin_conexion.html'"></md-toast>
 <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
 <div layout="column" class="relative" layout-fill role="main" flex ng-init="index('EvaluacionRecurso')">
 	
@@ -28,6 +29,18 @@
 				          {{ 'NUEVO' | translate }}
 				        </md-tooltip>
 				</md-button>
+				
+				<md-button hide-md hide-sm hide-lg aria-label="{{ 'NUEVO' | translate }}" ng-click="abrirEvaluacionFicha($event);">
+				    <md-icon md-svg-icon="assignment"></md-icon>
+				    	{{ 'EVALUACION_IMPRESA' | translate }}
+					</md-button>
+				<md-button class="md-icon-button"  hide show-sm show-md show-lg ng-click="abrirEvaluacionFicha($event);" aria-label="{{ 'NUEVO' | translate }}">
+				  <md-icon md-svg-icon="assignment"></md-icon>
+				  	<md-tooltip>
+						{{ 'EVALUACION_IMPRESA' | translate }}
+					</md-tooltip>
+				</md-button>
+				
 				<span ng-include="'src/app/views/menu-opciones.html'"></span>
 			</div>
 	</md-toolbar>

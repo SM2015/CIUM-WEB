@@ -9,5 +9,6 @@
 		.when('/evaluacion-recurso/nuevo', {templateUrl: 'src/transaccion/evaluacionRecurso/views/nuevo.html',	controller: 'RecursoCtrl'})
 		.when('/evaluacion-recurso/modificar', {templateUrl: 'src/transaccion/evaluacionRecurso/views/modificar.html',	controller: 'RecursoCtrl'})
 		.when('/evaluacion-recurso/ver', {templateUrl: 'src/transaccion/evaluacionRecurso/views/ver.html',	controller: 'RecursoCtrl'})
+		.when('/evaluacion-recurso/evaluacionImpresa', {templateUrl: 'src/transaccion/evaluacionRecurso/views/evaluacionImpresa.html',	controller: 'RecursoCtrl'})
 	}]);
 })();

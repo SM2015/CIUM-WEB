@@ -1,4 +1,5 @@
-<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" ng-include="'src/app/views/menu.html'"></md-sidenav>
+<md-toast class="md-bottom md-left" ng-if="!online" ng-include="'src/app/views/sin_conexion.html'"></md-toast>
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
 <style>
     .md-sidenav-backdrop
     {
@@ -13,6 +14,7 @@
     .md-select-menu-container
     {
         z-index: 99999999999;
+        position: absolute;
     }
 </style>
 

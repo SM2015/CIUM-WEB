@@ -135,13 +135,8 @@ app.factory('errorFlash', function($http, flash)
 		{ 
 			var datos=[];
 			if(angular.isObject(data))
-			{
-				var i=0;var message="";
-				angular.forEach(data, function(id, key) 
-				{
-					message+=" "+id;				
-				});
-				datos.push({ level: 'info', text: message, x: 'right', y: 'top', t: '3000'});
+			{				
+				datos.push({ level: 'info', text: data[1], x: 'right', y: 'top', t: '3000'});
 			}
 			else
 			{			

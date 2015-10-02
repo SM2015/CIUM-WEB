@@ -119,6 +119,11 @@
 	    $location.path(uri).search({id: null});
 	}
 	$scope.tamanoHeight = $window.innerHeight-230;
+	$scope.$watch(function(){
+		return window.innerWidth;
+	}, function(value) {
+		$scope.tamanoHeight = $window.innerHeight-230;
+	});
 	$scope.showSearch = false;
 	$scope.listaTemp={};
 	$scope.moduloName=angular.uppercase($location.path().split('/')[1]);
@@ -251,6 +256,18 @@
 		        clickOutsideToClose: true			        			        	  
 	    });	    	   
 	};
+	
+	$scope.abrirEvaluacionFicha = function(ev)
+	{	 
+	    $scope.editDialog = $mdDialog;
+	    $scope.editDialog.show({
+	    		targetEvent: ev,
+	    		
+	    		scope: $scope.$new(),
+		        templateUrl: 'src/transaccion/evaluacionRecurso/views/evaluacionFicha.html',
+		        clickOutsideToClose: true			        			        	  
+	    });	    	   
+	};
 	//autocomplete 	
 
 	// ******************************
@@ -325,6 +342,7 @@
 			if(data.status==200)
 			{
 				$scope.options=data.data;
+				$scope.estadistica();
 			}
 			else
 		{
@@ -420,7 +438,7 @@
 * @description
 * cargar los criterios que le correspondan por indicador y nivel de cone
 */	
-	$scope.cargarCriterios = function()
+	$scope.cargarCriterios = function(id,codigo,nombre,$index)
 	{
 		var cone=$scope.dato.idCone;
 		var indi=$scope.dato.idIndicador;
@@ -438,7 +456,23 @@
 					$window.location="acceso";
 				var op=0;
 				if(data.status==200)
-				{						
+				{	
+					if(!angular.isUndefined(nombre))
+					{						
+						$scope.informacion.push(
+						{			      
+							"id": id,
+							"codigo": codigo,
+							"nombre": nombre,
+							"total": data.total-3
+						});
+						$scope.informacion[$scope.informacion.length-1][codigo] = 0;
+						$scope.totalDeTotal[id] = [];
+						$scope.totalDeTotal[id]["de"] =  0;
+						$scope.totalDeTotal[id]["total"] =data.total-3;
+						
+						$scope.options.splice($index, 1);
+					}				
 					$scope.criterios = {};				
 					$scope.criterios = data.data;
 					$scope.dato.aprobado = {};
@@ -521,8 +555,53 @@
 			errorFlash.error(data);
 		});		
 	};
-
+//generar impreso
 	$scope.tieneExpediente=[];
+	$scope.abrirIndicadores = function(e)
+	{
+		angular.element(document.getElementById("principal")).attr("class","sin-scroll");
+	}
+	
+	$scope.tempIndicador = [];
+	$scope.toggle = function (item, list) {
+		var idx = list.indexOf(item.id);
+		if (idx > -1) 
+			list.splice(idx, 1);
+		else 
+		{
+			list.push(item.id);
+		}
+	};	
+	$scope.exists = function (item, list) {
+		return list.indexOf(item) > -1;
+	};
+	$scope.generarImpreso = function()
+	{
+		$localStorage.cium.recurso = {};
+		$localStorage.cium.recurso.imprimir = {};
+		$localStorage.cium.recurso.imprimir.um = $scope.dato;
+		$localStorage.cium.recurso.imprimir.indicadores = $scope.tempIndicador;
+		$location.path("evaluacion-recurso/evaluacionImpresa");
+	}
+	$scope.vistaImpreso = function()
+	{
+		$scope.dato = $localStorage.cium.recurso.imprimir.um;
+		$scope.indicadores = [];
+		var cone = $scope.dato.idCone;
+		angular.forEach($localStorage.cium.recurso.imprimir.indicadores , function(val, key) 
+		{
+			CrudDataApi.lista('CriterioEvaluacionRecursoImprimir/' + cone + '/' + val, function (data) {	
+				if(data.status==200)
+				{
+					$scope.indicadores.push(data.data);	
+				}
+			},function (e) {
+				errorFlash.error(e);				
+			});			
+		});
+		$scope.cargando = false;
+	}
+// fin generar impreso
 /**
 * @ngdoc method
 * @name Transaccion.RecursoCtrl#estadistica
@@ -532,6 +611,7 @@
 * obtener las estadisticas de la evaluacion
 */	
 	$scope.informacion = [];
+	$scope.totalDeTotal = [];
 	$scope.estadistica = function()
 	{
 		$scope.cargando = true;
@@ -546,12 +626,27 @@
 			{
 				$scope.modificado = false;
 				$scope.informacion = data.data;
-
+					
+				angular.forEach($scope.informacion , function(val, key) 
+				{
+					angular.forEach($scope.options , function(v, k) 
+					{
+						if(val.codigo == v.codigo)
+						{
+							$scope.options.splice(k, 1);
+						}
+					});					
+				});
+				
 				$scope.completo = 0;
 				$scope.incompleto = 0;
 				var co = 0; var inc = 0;
+				
 				angular.forEach(data.data , function(val, key) 
 				{
+					$scope.totalDeTotal[val.id] = [];
+					$scope.totalDeTotal[val.id]["de"] =  val[val.codigo];
+					$scope.totalDeTotal[val.id]["total"] = val.total;
 					if(val[val.codigo] == val.total)
 						co = co + 1;
 					else
@@ -562,7 +657,7 @@
 				if(inc == 0 && co > 0)
 					$scope.terminado=true;
 				else
-					$scope.terminado=false;		
+					$scope.terminado=false;
 			}
 			else
 			{
@@ -662,6 +757,10 @@
 		var co = 0; var inc = 0;
 		angular.forEach($scope.informacion , function(val, key) 
 		{
+			if(angular.isUndefined($scope.totalDeTotal[val.id]))
+				$scope.totalDeTotal[val.id] = [];
+			$scope.totalDeTotal[val.id]["de"] =  val[val.codigo];
+			$scope.totalDeTotal[val.id]["total"] = val.total;
 			if(val[val.codigo] == val.total)
 				co = co + 1;
 			else
@@ -790,7 +889,7 @@
 		$scope.ruta=ruta;		
 		var url=$scope.ruta;		
 		var id=$location.search().id;
-
+		$scope.cargando = true;
 		CrudDataApi.ver(url, id, function (data) {
 			if(data.status  == '407')
 				$window.location="acceso";

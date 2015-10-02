@@ -1,3 +1,4 @@
+<md-toast class="md-bottom md-left" ng-if="!online" ng-include="'src/app/views/sin_conexion.html'"></md-toast>
 <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
 <div layout="column" class="relative" layout-fill role="main" flex ng-init="listar=true;index('Hallazgo')">
 	
@@ -76,7 +77,7 @@
 							<input ng-model="buscarBis" placeholder="{{ 'FILTRAR' | translate}}">
 						</md-input-container>
 									
-						<md-select ng-model="tipo" ng-init="tipo='CALIDAD'" >                                         
+						<md-select ng-model="tipo" ng-click="abrirSelect()">                                         
 							<md-option value="RECURSO" >{{ 'RECURSO' | translate}}</md-option>
 							<md-option value="CALIDAD" >{{ 'CALIDAD' | translate}}</md-option>                                  
 						</md-select> 
@@ -144,7 +145,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr md-auto-select ng-repeat="dato in data" ng-click="firstClick(dato.clues)" style="cursor:pointer">																
+								<tr md-auto-select ng-repeat="dato in data" ng-click="abrirSelect();firstClick(dato.clues)" style="cursor:pointer">																
 									<td>{{ dato.clues | uppercase }}</td>
 									<td>{{ dato.nombre | uppercase }}</td>
 									<td hide-sm>{{ dato.jurisdiccion | uppercase }}</td>
@@ -189,7 +190,7 @@
 			<md-tab label="{{ 'PERIODO' | translate }}" layout="column">			
 				<div layout="row" layout-align="center center" layout-margin>                                       
 					<div flex  >        
-						<md-select placeholder="{{ 'ANIO' | translate }}" ng-model="filtro.anio" ng-change="cambiarAnio()">						
+						<md-select placeholder="{{ 'ANIO' | translate }}" ng-model="filtro.anio" ng-click="abrirSelect()" ng-change="cambiarAnio()">						
 							<md-option ng-repeat="item in datos[0]" value="{{item.anio}}">{{item.anio}}</md-option>  
 						</md-select> 
 					</div>     	               
@@ -203,7 +204,7 @@
 				</div >
 				<div layout="row" layout-align="center center" layout-margin>                                       
 					<div flex  >      
-						<md-select placeholder="{{ 'BIMESTRE' | translate }}" ng-model="filtro.bimestre" ng-change="cambiarBimestre()">						
+						<md-select placeholder="{{ 'BIMESTRE' | translate }}" ng-model="filtro.bimestre" ng-click="abrirSelect()" ng-change="cambiarBimestre()">						
 							<md-option ng-repeat="item in datos[1]" value="{{item.id}}">{{item.nombre}}</md-option>                                           
 						</md-select>
 					</div>
@@ -278,7 +279,7 @@
 					
 					<div layout="row" layout-align="center center" layout-margin>
 						<div flex>
-							<md-select multiple="true" ng-model="filtro.um.cone" placeholder="{{ 'CONE' | translate }}" ng-disabled="filtro.verTodosUM">							
+							<md-select multiple="true" ng-model="filtro.um.cone" placeholder="{{ 'CONE' | translate }}" ng-click="abrirSelect()" ng-disabled="filtro.verTodosUM">							
 								<md-option ng-repeat="item in datos[6]" value="{{item.cone}}">{{item.cone}}</md-option>
 							</md-select>
 						</div>
@@ -292,7 +293,7 @@
 					
 					<div layout="row" layout-align="center center" layout-margin>
 						<div flex>
-							<md-select multiple="true" ng-model="filtro.um.jurisdiccion"  placeholder="{{ 'JURISDICCION' | translate }}" ng-disabled="filtro.verTodosUM" ng-change="getDimension('municipio',4);getDimension('zona',5)">							
+							<md-select multiple="true" ng-model="filtro.um.jurisdiccion"  placeholder="{{ 'JURISDICCION' | translate }}" ng-disabled="filtro.verTodosUM" ng-click="abrirSelect()" ng-change="getDimension('municipio',4);getDimension('zona',5)">							
 								<md-option ng-repeat="item in datos[3]" value="{{item.jurisdiccion}}" ng-if="datos[3]">{{item.jurisdiccion}}</md-option>
 							</md-select>
 						</div>
@@ -312,7 +313,7 @@
 					
 					<div layout="row" layout-align="center center" layout-margin ng-if="filtro.um.tipo=='municipio'">
 						<div flex>
-							<md-select multiple="true" ng-model="filtro.um.municipio" placeholder="{{ 'MUNICIPIO' | translate }}" ng-disabled="filtro.verTodosUM" >				
+							<md-select multiple="true" ng-model="filtro.um.municipio" placeholder="{{ 'MUNICIPIO' | translate }}" ng-disabled="filtro.verTodosUM" ng-click="abrirSelect()">				
 								<md-option ng-repeat="item in datos[4]" value="{{item.municipio}}">{{item.municipio}}</md-option>
 							</md-select>
 						</div>
@@ -324,9 +325,9 @@
 						</md-button>
 					</div>
 					
-					<div layout="row" layout-align="center center" layout-margin ng-if="filtro.um.tipo=='zona'">
+					<div layout="row" layout-align="center center" layout-margin ng-if="filtro.um.tipo=='zona'" >
 						<div flex>
-							<md-select multiple="true" ng-model="filtro.um.zona" placeholder="{{ 'ZONA' | translate }}" ng-disabled="filtro.verTodosUM">						
+							<md-select multiple="true" ng-model="filtro.um.zona" placeholder="{{ 'ZONA' | translate }}" ng-disabled="filtro.verTodosUM" ng-click="abrirSelect()">						
 								<md-option ng-repeat="item in datos[5]" value="{{item.zona}}">{{item.zona}}</md-option>
 							</md-select>
 						</div>
@@ -359,7 +360,7 @@
 			</md-subheader>
 			<md-list>	
 											
-				<md-list-item ng-repeat="c in value" class="md-2-line" ng-click="aplicarFiltro(false,c)">																					
+				<md-list-item ng-repeat="c in value" class="md-2-line" ng-click="aplicarFiltro(false,c,key);">																					
 					<div class="md-list-item-text">
 						
 						<h3>												

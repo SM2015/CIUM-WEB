@@ -325,19 +325,19 @@
 	  {
 	  	$scope.cargando = true;
 		CrudDataApi.editar(url, id, json, function (data) {
-	  if(data.status  == '407')
-		$window.location="acceso";
-	  
-	  if(data.status==200)
-	  {
-		  
-		  flash('success', data.messages);
-	  }
-	  else
-	  {
-		  errorFlash.error(data);              
-	  }
-	  $scope.cargando = false;
+		if(data.status  == '407')
+			$window.location="acceso";
+		
+		if(data.status==200)
+		{
+			
+			flash('success', data.messages);
+		}
+		else
+		{
+			errorFlash.error(data);              
+		}
+		$scope.cargando = false;
 	  },function (e) {
 		errorFlash.error(e);
 		$scope.cargando = false;

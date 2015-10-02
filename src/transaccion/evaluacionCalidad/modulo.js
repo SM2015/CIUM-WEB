@@ -9,5 +9,6 @@
 		.when('/evaluacion-calidad/nuevo', {templateUrl: 'src/transaccion/evaluacionCalidad/views/nuevo.html',	controller: 'CalidadCtrl'})
 		.when('/evaluacion-calidad/modificar', {templateUrl: 'src/transaccion/evaluacionCalidad/views/modificar.html',	controller: 'CalidadCtrl'})
 		.when('/evaluacion-calidad/ver', {templateUrl: 'src/transaccion/evaluacionCalidad/views/ver.html',	controller: 'CalidadCtrl'})
+		.when('/evaluacion-calidad/evaluacionImpresa', {templateUrl: 'src/transaccion/evaluacionCalidad/views/evaluacionImpresa.html',	controller: 'CalidadCtrl'})
 	}]);
 })();

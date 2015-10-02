@@ -62,6 +62,11 @@
 		$scope.chart;
 		$scope.verRecurso="";
 		$scope.dimension = [];
+		$scope.despegarInfo = true;
+		$scope.abrirSelect = function()
+		{
+			angular.element(document.getElementById("principal")).attr("class","sin-scroll");
+		}
 /**
 * @ngdoc method
 * @name Dashboard.DashboardCtrl#toggle
@@ -482,6 +487,11 @@
 		$scope.chart;
 		$scope.verCalidad="";
 		$scope.dimension = [];
+		$scope.despegarInfo = true;
+		$scope.abrirSelect = function()
+		{
+			angular.element(document.getElementById("principal")).attr("class","sin-scroll");
+		}
 		
 		$scope.tempIndicador = [];
 		$scope.toggle = function (item, list) {
@@ -799,6 +809,11 @@
 		$scope.verPie="";
 		$scope.dimension = [];
 		
+		$scope.abrirSelect = function()
+		{
+			angular.element(document.getElementById("principal")).attr("class","sin-scroll");
+		}
+		
 		$scope.tempIndicador = [];
 		$scope.toggle = function (item, list) {
 			var idx = list.indexOf(item);
@@ -1067,6 +1082,11 @@
 		$scope.verAlerta="";
 		$scope.dimension = [];
 		
+		$scope.abrirSelect = function()
+		{
+			angular.element(document.getElementById("principal")).attr("class","sin-scroll");
+		}
+		
 		$scope.tempIndicador = [];
 		$scope.toggle = function (item, list) {
 			var idx = list.indexOf(item);
@@ -1300,6 +1320,11 @@
 		$scope.chart;
 		$scope.verGlobalRecurso="";
 		$scope.dimension = [];
+		
+		$scope.abrirSelect = function()
+		{
+			angular.element(document.getElementById("principal")).attr("class","sin-scroll");
+		}
 		
 		$scope.tempIndicador = [];
 		$scope.toggle = function (item, list) {
@@ -1575,6 +1600,11 @@
 		$scope.verGlobalCalidad="";
 		$scope.dimension = [];
 		
+		$scope.abrirSelect = function()
+		{
+			angular.element(document.getElementById("principal")).attr("class","sin-scroll");
+		}
+		
 		$scope.tempIndicador = [];
 		$scope.toggle = function (item, list) {
 			var idx = list.indexOf(item);
@@ -1848,6 +1878,11 @@
 		$scope.verGaugeRecurso="";
 		$scope.dimension = [];
 		
+		$scope.abrirSelect = function()
+		{
+			angular.element(document.getElementById("principal")).attr("class","sin-scroll");
+		}
+		
 		$scope.tempIndicador = [];
 		$scope.toggle = function (item, list) {
 			var idx = list.indexOf(item);
@@ -2079,6 +2114,11 @@
 		$scope.chart;
 		$scope.verGaugeCalidad="";
 		$scope.dimension = [];
+		
+		$scope.abrirSelect = function()
+		{
+			angular.element(document.getElementById("principal")).attr("class","sin-scroll");
+		}
 		
 		$scope.tempIndicador = [];
 		$scope.toggle = function (item, list) {
