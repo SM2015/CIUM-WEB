@@ -63,6 +63,8 @@
 		$scope.verRecurso="";
 		$scope.dimension = [];
 		$scope.despegarInfo = true;
+		$scope.datosOk = true;
+		$scope.datosOk = true;
 		$scope.abrirSelect = function()
 		{
 			angular.element(document.getElementById("principal")).attr("class","sin-scroll");
@@ -419,8 +421,7 @@
 			CrudDataApi.lista(url+"?filtro="+JSON.stringify($scope.filtro), function (data) {
 			if(data.status  == '407')
 				$window.location="acceso";
-	
-				if(data.status==200)
+				if(!angular.isUndefined(data.data.datasets))
 				{									
 					$scope.data  = data.data; 					
 					$scope.total = data.total;
@@ -428,8 +429,8 @@
 				}
 				else
 				{
+					$scope.datosOk = false;
 					$scope.recurso=false;
-					errorFlash.error(data);
 				}
 				$scope.recurso = false;
 			},function (e) {
@@ -442,6 +443,13 @@
 			});
 		};
 		$scope.init();
+		
+		$scope.quitarAlert = function()
+		{
+			$scope.quitar = !$scope.quitar; 
+			$scope.options.barShowStroke = $scope.quitar;
+			$scope.chart.refresh();
+		}
 		$scope.options =  {
 	
 			// Sets the chart to be responsive
@@ -488,6 +496,7 @@
 		$scope.verCalidad="";
 		$scope.dimension = [];
 		$scope.despegarInfo = true;
+		$scope.datosOk = true;
 		$scope.abrirSelect = function()
 		{
 			angular.element(document.getElementById("principal")).attr("class","sin-scroll");
@@ -740,7 +749,7 @@
 			if(data.status  == '407')
 				$window.location="acceso";
 	
-				if(data.status==200)
+				if(!angular.isUndefined(data.data.datasets))
 				{									
 					$scope.data  = data.data; 					
 					$scope.total = data.total;
@@ -749,7 +758,7 @@
 				else
 				{
 					$scope.calidad=false;
-					errorFlash.error(data);
+					$scope.datosOk = false;
 				}
 				$scope.calidad = false;
 			},function (e) {
@@ -808,7 +817,7 @@
 		$scope.chart;
 		$scope.verPie="";
 		$scope.dimension = [];
-		
+		$scope.datosOk = true;
 		$scope.abrirSelect = function()
 		{
 			angular.element(document.getElementById("principal")).attr("class","sin-scroll");
@@ -1081,7 +1090,7 @@
 		$scope.chart;
 		$scope.verAlerta="";
 		$scope.dimension = [];
-		
+		$scope.datosOk = true;
 		$scope.abrirSelect = function()
 		{
 			angular.element(document.getElementById("principal")).attr("class","sin-scroll");
@@ -1292,7 +1301,7 @@
 				else
 				{
 					$scope.alerta=false;
-					errorFlash.error(data);
+					$scope.datosOk = false;
 				}
 				$scope.alerta = false;
 			},function (e) {
@@ -1320,7 +1329,7 @@
 		$scope.chart;
 		$scope.verGlobalRecurso="";
 		$scope.dimension = [];
-		
+		$scope.datosOk = true;
 		$scope.abrirSelect = function()
 		{
 			angular.element(document.getElementById("principal")).attr("class","sin-scroll");
@@ -1562,7 +1571,7 @@
 			if(data.status  == '407')
 				$window.location="acceso";
 	
-				if(data.status==200)
+				if(data.data.TOP_MAS.length>0)
 				{	
 					$scope.indicadores  = data.indicadores;								
 					$scope.dato  = data.data; 					
@@ -1572,7 +1581,7 @@
 				else
 				{
 					$scope.globalRecurso=false;
-					errorFlash.error(data);
+					$scope.datosOk=false;
 				}
 				$scope.globalRecurso = false;
 			},function (e) {
@@ -1599,7 +1608,7 @@
 		$scope.chart;
 		$scope.verGlobalCalidad="";
 		$scope.dimension = [];
-		
+		$scope.datosOk = true;
 		$scope.abrirSelect = function()
 		{
 			angular.element(document.getElementById("principal")).attr("class","sin-scroll");
@@ -1841,7 +1850,7 @@
 			if(data.status  == '407')
 				$window.location="acceso";
 	
-				if(data.status==200)
+				if(data.data.TOP_MAS.length>0)
 				{	
 					$scope.indicadores  = data.indicadores;								
 					$scope.dato  = data.data; 					
@@ -1851,7 +1860,7 @@
 				else
 				{
 					$scope.globalCalidad=false;
-					errorFlash.error(data);
+					$scope.datosOk=false;
 				}
 				$scope.globalCalidad = false;
 			},function (e) {
@@ -1877,7 +1886,7 @@
 		$scope.chart;
 		$scope.verGaugeRecurso="";
 		$scope.dimension = [];
-		
+		$scope.datosOk = true;
 		$scope.abrirSelect = function()
 		{
 			angular.element(document.getElementById("principal")).attr("class","sin-scroll");
@@ -2114,7 +2123,7 @@
 		$scope.chart;
 		$scope.verGaugeCalidad="";
 		$scope.dimension = [];
-		
+		$scope.datosOk = true;
 		$scope.abrirSelect = function()
 		{
 			angular.element(document.getElementById("principal")).attr("class","sin-scroll");

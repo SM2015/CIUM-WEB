@@ -157,6 +157,7 @@
 		  
 		  // Alert
 		  .icon("error", "bower_components/material-design-icons/alert/svg/production/ic_error_48px.svg", 48)
+		  .icon("error-outline", "bower_components/material-design-icons/alert/svg/production/ic_error_outline_48px.svg", 48)
 		  .icon("warning", "bower_components/material-design-icons/alert/svg/production/ic_warning_48px.svg", 48)
 		  .icon("add-alert", "bower_components/material-design-icons/alert/svg/production/ic_add_alert_48px.svg", 48)
 		  
@@ -285,7 +286,7 @@
 			$rootScope.online = navigator.onLine;
 			$window.addEventListener("offline", function () {
 				$rootScope.$apply(function() {
-				$rootScope.online = false;					
+				$rootScope.online = false;	console.log(":(");								
 				});
 			}, false);
 			$window.addEventListener("online", function () {

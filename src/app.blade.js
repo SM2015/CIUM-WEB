@@ -128,19 +128,23 @@ app.directive('urlModulo', function()
  * @param {object} object en caso de ser objeto  errorFlash.error(data)
  * @returns {toast} con el mensaje y el tipo.
  */  	 
-app.factory('errorFlash', function($http, flash) 
+app.factory('errorFlash', function($http, flash, $rootScope ) 
 { 
 	return {		 
 		error: function(data) 
 		{ 
 			var datos=[];
 			if(angular.isObject(data))
-			{				
-				datos.push({ level: 'info', text: data[1], x: 'right', y: 'top', t: '3000'});
+			{	
+				if(!angular.isObject(data[1]))			
+					datos.push({ level: 'info', text: data[1], x: 'right', y: 'top', t: '3000'});
 			}
 			else
-			{			
-				datos.push({ level: 'danger', text: ':( "Ooops! Ocurrio un error (500) ', x: 'right', y: 'top', t: '3000'});
+			{	
+				if($rootScope.online)		
+					datos.push({ level: 'danger', text: ':( "Ooops! Ocurrio un error (500) ', x: 'right', y: 'top', t: '3000'});
+				else
+					datos.push({ level: 'warning', text: ':( "Ooops! No hay Internet', x: 'right', y: 'top', t: '3000'});
 			}
 			flash(datos);
 		}

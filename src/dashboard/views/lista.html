@@ -1,4 +1,4 @@
-<md-toast class="md-bottom md-left" ng-if="!online" ng-include="'src/app/views/sin_conexion.html'"></md-toast>
+<md-toast class="md-bottom md-left" ng-show="!online" ng-include="'src/app/views/sin_conexion.html'"></md-toast>
 <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')"   ng-include="'src/app/views/menu.html'"></md-sidenav>
 <style>
     .md-sidenav-backdrop
@@ -8,13 +8,11 @@
     }
     .md-sidenav-right
     {
-        position: fixed;
-        z-index: 9999999999;
+        position: fixed;        
     }
     .md-select-menu-container
     {
-        z-index: 99999999999;
-        position: absolute;
+        z-index: 9999999999;
     }
 </style>
 
@@ -37,7 +35,7 @@
     <md-content flex >
 		<div layout="column" layout-gt-lg="row"  layout-margin>
             <!-- inicio grafico seguimiento-->
-            <md-content class="md-whiteframe-z2" flex fullscreen="isFullscreen" ng-controller="gaugeRecursoController" id="gaugeRecursos">
+            <md-content class="md-whiteframe-z2" flex fullscreen="isFullscreen"  ng-controller="gaugeRecursoController" id="gaugeRecursos">
                 
                     <md-toolbar class="md-theme-light" md-theme="altTheme">
                         <div class="md-toolbar-tools">
@@ -58,16 +56,21 @@
                     </md-toolbar>
                     
                     <md-content flex>                                                                                                                                                                    
-                        <md-progress-linear  ng-if="gaugeRecurso" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear>                                 
-                        <div  style="width:{{tamano}}px; height: auto;" class="gauge" ng-radial-gauge ranges="ranges" value="value" value-unit="unit" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit"></div>
-                        <ul class="tc-chart-js-legend"><li ng-repeat="item in indicadores"><span style="background-color:{{item.color}}"></span>{{item.indicador}}</ul>                                
+                        <md-progress-linear  ng-if="gaugeRecurso" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear>
+                        <div ng-if="datosOk" >                                
+                            <div  style="width:{{tamano}}px; height: auto;" class="gauge" ng-radial-gauge ranges="ranges" value="value" value-unit="unit" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit"></div>
+                            <ul class="tc-chart-js-legend"><li ng-repeat="item in indicadores"><span style="background-color:{{item.color}}"></span>{{item.indicador}}</li></ul>
+                        </div>
+                        <div ng-if="!datosOk" layout="row" layout-align="center center">
+                            <h3>{{ 'NO_HAY_DATOS' | translate}}</h3>
+                        </div>                                  
                     </md-content>
                     <md-sidenav layout="column" layout-fill class="md-sidenav-right md-whiteframe-z2" md-component-id="gaugeRecurso"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
             </md-content>
             <!-- fin grafico -->
 
             <!-- inicio grafico gauge-->
-            <md-content class="md-whiteframe-z2" flex fullscreen="isFullscreen" ng-controller="gaugeCalidadController" id="gaugeCalidad">                
+            <md-content class="md-whiteframe-z2" flex fullscreen="isFullscreen"  ng-controller="gaugeCalidadController" id="gaugeCalidad">                
                 <md-toolbar class="md-theme-light" md-theme="altTheme">
                     <div class="md-toolbar-tools">
                         <h2>
@@ -87,9 +90,14 @@
                 </md-toolbar>
                 
                 <md-content flex >                                                                                                                                                                    
-                    <md-progress-linear  ng-if="gaugeCalidad" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear>                                 
-                    <div style="width:{{tamano}}px; height: auto;" class="gauge" ng-radial-gauge ranges="ranges" value="value" value-unit="unit" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit"></div>
-                    <ul class="tc-chart-js-legend"><li ng-repeat="item in indicadores"><span style="background-color:{{item.color}}"></span>{{item.indicador}}</ul>                                
+                    <md-progress-linear  ng-if="gaugeCalidad" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear>    
+                    <div ng-if="datosOk">                             
+                        <div style="width:{{tamano}}px; height: auto;" class="gauge" ng-radial-gauge ranges="ranges" value="value" value-unit="unit" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit"></div>
+                        <ul class="tc-chart-js-legend"><li ng-repeat="item in indicadores"><span style="background-color:{{item.color}}"></span>{{item.indicador}}</li></ul>       
+                    </div>  
+                    <div ng-if="!datosOk" layout="row" layout-align="center center">
+                        <h3>{{ 'NO_HAY_DATOS' | translate}}</h3>
+                    </div>                         
                 </md-content>
                 <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="gaugeCalidad"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
             </md-content>
@@ -98,7 +106,7 @@
         <div layout-margin layout="column" flex layout-gt-lg="row">
             <!-- inicio grafico Recurso-->           
             <md-content  class="md-whiteframe-z2" flex="49" ng-controller="recursoController" id="recurso">
-                <div layout-fill fullscreen="isFullscreen">
+                <div layout-fill fullscreen="isFullscreen" >
                     <md-toolbar class="md-theme-light" md-theme="altTheme">
                         <div class="md-toolbar-tools"> 
                             <h2>
@@ -108,6 +116,10 @@
                             <span>
                                 <md-button class="md-icon-button" aria-label="info" ng-click="showAlert($event)" ng-if="verInfo" >
                                 <md-icon md-svg-src="info"></md-icon>
+                                </md-button>
+                                
+                                <md-button class="md-icon-button" aria-label="quitar" ng-click="quitarAlert()" >
+                                <md-icon md-svg-src="{{ quitar ? 'error' : 'error-outline'}}"></md-icon>
                                 </md-button>
                                 
                                 <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleRightOpciones('recurso');">
@@ -123,18 +135,22 @@
                                 
                     <md-content layout-padding>                                                                                             
                         <md-progress-linear  ng-if="recurso" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear> 
-                        <div style="width:{{ isFullscreen ? '100%' : tamano > 0 ? tamano+'px' : ''}}" >                           
+                        <div style="width:{{ isFullscreen ? '100%' : tamano > 0 ? tamano+'px' : ''}}" ng-if="datosOk">                           
                             <canvas  tc-chartjs-bar chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart" id="chart"></canvas>
-                        </div>                                        
+                        </div>    
+                        <div ng-if="!datosOk" layout="row" layout-align="center center">
+                            <h3>{{ 'NO_HAY_DATOS' | translate}}</h3>
+                        </div>                                    
                     </md-content>   
+                    <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="recurso"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>  
                 </div> 
-                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="recurso"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>                                        
+                                                      
             </md-content>
             <!-- fin grafico -->
             
             <!-- inicio grafico calidad -->
             <md-content class="md-whiteframe-z2" flex ng-controller="calidadController" id="calidad">  
-                <div layout-fill fullscreen="isFullscreen">                             
+                <div layout-fill fullscreen="isFullscreen" >                             
                     <md-toolbar class="md-theme-light" md-theme="altTheme">
                         <div class="md-toolbar-tools">
                             <h2 >
@@ -159,12 +175,16 @@
                     
                     <md-content layout-padding>                                                                                                
                         <md-progress-linear  ng-if="calidad" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear> 
-                        <div style="width:{{ isFullscreen ? '100%' : tamano > 0 ? tamano+'px' : ''}}">                                    
+                        <div style="width:{{ isFullscreen ? '100%' : tamano > 0 ? tamano+'px' : ''}}" ng-if="datosOk">                                    
                             <canvas  tc-chartjs-bar chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart"></canvas>
-                        </div>                                                 
+                        </div> 
+                        <div ng-if="!datosOk" layout="row" layout-align="center center">
+                            <h3>{{ 'NO_HAY_DATOS' | translate}}</h3>
+                        </div>                                                  
                     </md-content>
+                    <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="calidad"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
                 </div>
-                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="calidad"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
+                
             </md-content>
             <!-- fin grafico -->  
         </div>
@@ -192,12 +212,16 @@
                     </md-toolbar>                
                     <md-content layout-padding>                                                                                                                                                                    
                         <md-progress-linear  ng-if="pie" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear> 
-                        <div style="width:{{ isFullscreen ? '100%' : tamano > 0 ? tamano+'px' : ''}}"> 
+                        <div style="width:{{ isFullscreen ? '100%' : tamano > 0 ? tamano+'px' : ''}}" ng-if="datosOk"> 
                             <canvas tc-chartjs-pie width="400" chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart"></canvas>
+                        </div>  
+                        <div ng-if="!datosOk" layout="row" layout-align="center center">
+                            <h3>{{ 'NO_HAY_DATOS' | translate}}</h3>
                         </div>             
                     </md-content>
+                    <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="pie"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
                 </div>
-                <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="pie"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
+                
             </md-content>
             <!-- fin grafico -->
         
@@ -224,7 +248,7 @@
                 
                 <md-content flex>                                                                                                                                                                   
                     <md-progress-linear  ng-if="alerta" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear> 	
-                    <md-data-table-container>
+                    <md-data-table-container ng-if="datosOk">
                         <table md-data-table md-progress="datos">
                             <thead md-order="query.order" md-trigger="onOrderChange">
                                 <tr>
@@ -248,6 +272,9 @@
                         </tbody>
                         </table>
                     </md-data-table-container>
+                    <div ng-if="!datosOk" layout="row" layout-align="center center">
+                            <h3>{{ 'NO_HAY_DATOS' | translate}}</h3>
+                        </div>  
                     <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="alerta"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
                 </md-content>
                 
@@ -281,7 +308,7 @@
                     <md-progress-linear  ng-if="globalRecurso" style="position:absolute; top:-5px; left:0px; z-index:99" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear> 
                     
                     <md-content style="{{isFullscreen ? '' : 'max-height:600px'}}; overflow:auto;">           
-                        <div ng-repeat="(key, value) in dato" class="md-whiteframe-z2" ng-if="mostrarTop[key]">                           
+                        <div ng-repeat="(key, value) in dato" class="md-whiteframe-z2" ng-if="mostrarTop[key] && datosOk">                           
                             <md-data-table-toolbar >
                                 <h2 class="md-title">{{ key | translate }}</h2>                                
                             </md-data-table-toolbar>
@@ -304,6 +331,9 @@
                                 </table>
                             </md-data-table-container> 
                         </div>
+                        <div ng-if="!datosOk" layout="row" layout-align="center center">
+                            <h3>{{ 'NO_HAY_DATOS' | translate}}</h3>
+                        </div>  
                     </md-content>
                 </md-content>
                 <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="globalRecurso"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
@@ -333,7 +363,7 @@
                 <md-content flex>                                                                                                                                                                    
                     <md-progress-linear  ng-if="globalCalidad" style="position:absolute; top:-5px; left:0px; z-index:99" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear> 
                     <md-content style="{{isFullscreen ? '' : 'max-height:600px'}}; overflow:auto;">           
-                        <div ng-repeat="(key, value) in dato" class="md-whiteframe-z2" ng-if="mostrarTop[key]">                           
+                        <div ng-repeat="(key, value) in dato" class="md-whiteframe-z2" ng-if="mostrarTop[key] && datosOk">                           
                             <md-data-table-toolbar >
                                 <h2 class="md-title">{{ key | translate }}</h2>                                
                             </md-data-table-toolbar>
@@ -356,6 +386,9 @@
                                 </table>
                             </md-data-table-container> 
                         </div>
+                        <div ng-if="!datosOk" layout="row" layout-align="center center">
+                            <h3>{{ 'NO_HAY_DATOS' | translate}}</h3>
+                        </div>  
                     </md-content>
                 </md-content>
                 <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="globalCalidad"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
