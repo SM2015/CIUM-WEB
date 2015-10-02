@@ -545,6 +545,7 @@
 * cargar los criterios que le correspondan por indicador y nivel de cone
 */	
 	$scope.TieneDatosIndicador = false;
+	$scope.information = {};
 	$scope.cargarCriterios= function(id,codigo,nombre,$index)
 	{
 		var cone=$scope.dato.idCone;
@@ -569,7 +570,9 @@
 				if(data.status==200)
 				{					
 					if(!angular.isUndefined(nombre))
-					{						
+					{	
+						if(angular.isUndefined($scope.information))
+							$scope.information = {};					
 						$scope.information[codigo]=
 						{			      
 							"id": id,
