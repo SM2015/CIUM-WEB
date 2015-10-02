@@ -331,7 +331,7 @@
 	};
 	$scope.format='yyyy-MM-dd';
 
-	$scope.opciones = function(url) 
+	$scope.opciones = function(url, hacer) 
 	{
 		$scope.options=[];
 		listaOpcion.options(url).success(function(data)
@@ -342,7 +342,8 @@
 			if(data.status==200)
 			{
 				$scope.options=data.data;
-				$scope.estadistica();
+				if(angular.isUndefined(hacer))
+					$scope.estadistica();
 			}
 			else
 		{
