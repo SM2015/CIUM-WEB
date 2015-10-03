@@ -162,6 +162,10 @@
                                 <md-icon md-svg-src="info"></md-icon>
                                 </md-button>
                                 
+                                <md-button class="md-icon-button" aria-label="quitar" ng-click="quitarAlert()" >
+                                <md-icon md-svg-src="{{ quitar ? 'error' : 'error-outline'}}"></md-icon>
+                                </md-button>
+                                
                                 <md-button class="md-icon-button" aria-label="Opciones"  ng-click="toggleRightOpciones('calidad');">
                                 <md-icon md-svg-src="perm-data-setting"></md-icon>
                                 </md-button>                                                                

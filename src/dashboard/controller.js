@@ -447,8 +447,14 @@
 		$scope.quitarAlert = function()
 		{
 			$scope.quitar = !$scope.quitar; 
-			$scope.options.barShowStroke = $scope.quitar;
-			$scope.chart.refresh();
+			$scope.options.barShowStroke = !$scope.quitar;
+			var temp = $scope.data;
+			$scope.data = null;
+			setTimeout(function()
+			{
+				$scope.data = temp;
+			},10);
+			
 		}
 		$scope.options =  {
 	
@@ -771,6 +777,18 @@
 			});
 		};
 		$scope.init();
+		$scope.quitarAlert = function()
+		{
+			$scope.quitar = !$scope.quitar; 
+			$scope.options.barShowStroke = !$scope.quitar;
+			var temp = $scope.data;
+			$scope.data = null;
+			setTimeout(function()
+			{
+				$scope.data = temp;
+			},10);
+			
+		}
 		$scope.options =  {
 	
 			// Sets the chart to be responsive
