@@ -219,7 +219,7 @@
 			var menu = ['']
 			function updateMenu(){
 				
-				menu = MENU;
+				menu = JSON.parse(JSON.stringify(MENU));
 				// Recorremos todo el menu y quitamos los elementos a los que no se tenga autorizacion
 				for(var i in menu){
 					for(var j = 0; j < menu[i].lista.length; j++){

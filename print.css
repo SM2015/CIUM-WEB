@@ -2,8 +2,7 @@
 	html
     {
 	  -webkit-print-color-adjust:exact;
-	  -webkit-filter:opacity(1);
-      font-size: 8pt !important;
+      font-size: 10pt !important;
 	}
     body
     {
@@ -110,7 +109,7 @@
     @top-center {        
         vertical-align: bottom; border-bottom: 0.5pt solid }
     @bottom-right {
-        content: "Page " counter(page) " of " counter(pages) }
+        content: "Pagina " counter(page) " de " counter(pages) }
     @left-top {
         background: #005a9c; color: #fff; text-align: right;
         transform-origin: 100% 0; transform: rotate(-90deg) }
