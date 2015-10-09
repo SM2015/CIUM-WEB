@@ -389,9 +389,14 @@
 * @param {int} c posicion para almacenar la información en el modelo datos
 */	   
 		$scope.intentoOpcion = 0;
+		$scope.selectedIndex = 0;
 		$scope.getDimension = function(nivel,c)
 		{
 			$scope.opcion = true;
+			if(c==7)
+			{
+				$scope.selectedIndex = 3;
+			}
 	  		CrudDataApi.lista('recursoDimension?filtro='+JSON.stringify($scope.filtro)+'&nivel='+nivel, function (data) {    		  	  
 				$scope.datos[c] = data.data; 
 				$scope.opcion = false;				
@@ -443,7 +448,7 @@
 			});
 		};
 		$scope.init();
-		
+		$scope.quitar = true;
 		$scope.quitarAlert = function()
 		{
 			$scope.quitar = !$scope.quitar; 
@@ -474,7 +479,7 @@
 			scaleGridLineWidth : 1,
 			
 			//Boolean - If there is a stroke on each bar
-			barShowStroke : true,
+			barShowStroke : false,
 			
 			//Number - Pixel width of the bar stroke
 			barStrokeWidth : 5,
@@ -728,9 +733,14 @@
    		});
    
 		$scope.intentoOpcion = 0;
+		$scope.selectedIndex = 0;
 		$scope.getDimension = function(nivel,c)
 		{
 			$scope.opcion = true;
+			if(c==7)
+			{
+				$scope.selectedIndex = 3;
+			}
 	  		CrudDataApi.lista('calidadDimension?filtro='+JSON.stringify($scope.filtro)+'&nivel='+nivel, function (data) {    		  	  
 				$scope.datos[c] = data.data; 
 				$scope.opcion = false;				
@@ -777,6 +787,7 @@
 			});
 		};
 		$scope.init();
+		$scope.quitar = true;
 		$scope.quitarAlert = function()
 		{
 			$scope.quitar = !$scope.quitar; 
@@ -807,7 +818,7 @@
 			scaleGridLineWidth : 1,
 			
 			//Boolean - If there is a stroke on each bar
-			barShowStroke : true,
+			barShowStroke : false,
 			
 			//Number - Pixel width of the bar stroke
 			barStrokeWidth : 5,
@@ -1563,11 +1574,12 @@
 		$scope.getDimension = function(nivel,c)
 		{
 			$scope.opcion = true;
-			var	url="recursoDimension";
-			
+			var	url="recursoDimension";										
+				
 			CrudDataApi.lista(url+'?filtro='+JSON.stringify($scope.filtro)+'&nivel='+nivel, function (data) { 				  
 				$scope.datos[c] = data.data; 
-				$scope.opcion = false;				
+				$scope.opcion = false;
+						
 			},function (e) {
 				if($scope.intentoOpcion<1)
 				{
@@ -1846,7 +1858,8 @@
 			
 			CrudDataApi.lista(url+'?filtro='+JSON.stringify($scope.filtro)+'&nivel='+nivel, function (data) { 				  
 				$scope.datos[c] = data.data; 
-				$scope.opcion = false;				
+				$scope.opcion = false;	
+							
 			},function (e) {
 				if($scope.intentoOpcion<1)
 				{

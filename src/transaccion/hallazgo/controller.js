@@ -329,6 +329,8 @@
 	$scope.aplicarFiltro = function(avanzado,item,key)
 	{
 		$scope.filtros.activo=true;
+		if(key == "" || angular.isUndefined(key))
+			key = 'CALIDAD';
 		$scope.tipo = key;
 		$scope.filtro.indicador = $scope.tempIndicador;
 		if(!avanzado)
@@ -507,6 +509,7 @@
 		$scope.filtro.criterio.criterio = criterio;
 		$scope.filtro.criterio.indicador = indicador;
 		$localStorage.cium.filtro = $scope.filtro;
+		$scope.cargarP=true;
       	CrudDataApi.lista("showCriterios?filtro="+JSON.stringify($scope.filtro), function (data) {
         if(data.status  == '407')
         	$window.location="acceso";
@@ -526,14 +529,16 @@
 				});							
       		}
       		else
-			{
+			{				
 				$scope.cargarUM=false;
 				errorFlash.error(data);
 			}
       		$scope.cargarUM = false;
+			$scope.cargarP=false;
         },function (e) {
       		errorFlash.error(e);
       		$scope.cargarUM = false;
+			$scope.cargarP=false;
         });		
 	}
 /**
