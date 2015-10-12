@@ -195,16 +195,16 @@
         
         <div layout="column" layout-gt-lg="row"  layout-margin>
             <!-- inicio grafico reporte x equipo pie-->
-            <md-content class="md-whiteframe-z2" flex ng-controller="pieController"> 
+            <md-content class="md-whiteframe-z2" flex ng-controller="pieRecursoController"> 
                 <div layout-fill fullscreen="isFullscreen">               
                     <md-toolbar class="md-theme-light" md-theme="altTheme">
                         <div class="md-toolbar-tools">
                             <h2>
-                                <span flex>{{ 'REPORTE_X_EQUIPO' | translate}} ({{filtro.tipo}})</span>                                 
+                                <span flex>{{ 'REPORTE_X_EQUIPO' | translate}} {{ 'RECURSO' | translate}} </span>                                 
                             </h2> 
                             <span flex></span>
                             <span>
-                                    <md-button class="md-icon-button" aria-label="Opciones"  ng-click="toggleRightOpciones('pie');" id="pie">
+                                    <md-button class="md-icon-button" aria-label="Opciones"  ng-click="toggleRightOpciones('pieRecurso');" id="pieRecurso">
                                         <md-icon md-svg-src="perm-data-setting"></md-icon>
                                     </md-button>                                                                        
                                     
@@ -215,7 +215,7 @@
                         </div>
                     </md-toolbar>                
                     <md-content layout-padding>                                                                                                                                                                    
-                        <md-progress-linear  ng-if="pie" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear> 
+                        <md-progress-linear  ng-if="pieRecurso" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear> 
                         <div style="width:{{ isFullscreen ? '100%' : tamano > 0 ? tamano+'px' : ''}}" ng-show="datosOk"> 
                             <canvas tc-chartjs-pie width="400" chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart" id="chartChart"></canvas>
                         </div>  
@@ -223,23 +223,63 @@
                             <h3>{{ 'NO_HAY_DATOS' | translate}}</h3>
                         </div>             
                     </md-content>
-                    <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="pie"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
+                    <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="pieRecurso"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
+                </div>
+                
+            </md-content>
+            <!-- fin grafico -->
+            
+             <!-- inicio grafico reporte x equipo pie-->
+            <md-content class="md-whiteframe-z2" flex ng-controller="pieCalidadController"> 
+                <div layout-fill fullscreen="isFullscreen">               
+                    <md-toolbar class="md-theme-light" md-theme="altTheme">
+                        <div class="md-toolbar-tools">
+                            <h2>
+                                <span flex>{{ 'REPORTE_X_EQUIPO' | translate}} {{ 'CALIDAD' | translate}}</span>                                 
+                            </h2> 
+                            <span flex></span>
+                            <span>
+                                    <md-button class="md-icon-button" aria-label="Opciones"  ng-click="toggleRightOpciones('pieCalidad');" id="pieCalidad">
+                                        <md-icon md-svg-src="perm-data-setting"></md-icon>
+                                    </md-button>                                                                        
+                                    
+                                    <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-equipo')" id="max-equipo">
+                                        <md-icon md-svg-src="{{!isFullscreen ? 'fullscreen' : 'fullscreen-exit'}}"></md-icon>
+                                    </md-button>
+                                </span>
+                        </div>
+                    </md-toolbar>                
+                    <md-content layout-padding>                                                                                                                                                                    
+                        <md-progress-linear  ng-if="pieCalidad" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear> 
+                        <div style="width:{{ isFullscreen ? '100%' : tamano > 0 ? tamano+'px' : ''}}" ng-show="datosOk"> 
+                            <canvas tc-chartjs-pie width="400" chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart" id="chartChart"></canvas>
+                        </div>  
+                        <div ng-show="!datosOk" layout="row" layout-align="center center">
+                            <h3>{{ 'NO_HAY_DATOS' | translate}}</h3>
+                        </div>             
+                    </md-content>
+                    <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="pieCalidad"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
                 </div>
                 
             </md-content>
             <!-- fin grafico -->
         
          	
+            
+        </div>
+        
+        <div layout="column" layout-gt-lg="row"  layout-margin>
+            
             <!-- inicio grafico alertas-->
-            <md-content class="md-whiteframe-z2" flex fullscreen="isFullscreen" ng-controller="alertaController" id="alerta">                
+            <md-content class="md-whiteframe-z2" flex fullscreen="isFullscreen" ng-controller="alertaRecursoController" id="alertaRecurso">                
                 <md-toolbar class="md-theme-light" md-theme="altTheme">
                     <div class="md-toolbar-tools">
                         <h2>
-                            <span flex>{{ 'INDICADOR_ALERTA' | translate}} ({{filtro.tipo}})</span>                                 
+                            <span flex>{{ 'INDICADOR_ALERTA' | translate}} {{ 'RECURSO' | translate}}</span>                                 
                         </h2> 
                         <span flex></span>
                         <span>
-                                <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleRightOpciones('alerta');">
+                                <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleRightOpciones('alertaRecurso');">
                                 <md-icon md-svg-src="perm-data-setting"></md-icon>
                             </md-button>                                                                
                             
@@ -251,7 +291,7 @@
                 </md-toolbar>
                 
                 <md-content flex>                                                                                                                                                                   
-                    <md-progress-linear  ng-if="alerta" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear> 	
+                    <md-progress-linear  ng-if="alertaRecurso" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear> 	
                     <md-data-table-container ng-show="datosOk">
                         <table md-data-table md-progress="datos">
                             <thead md-order="query.order" md-trigger="onOrderChange">
@@ -279,7 +319,62 @@
                     <div ng-show="!datosOk" layout="row" layout-align="center center">
                             <h3>{{ 'NO_HAY_DATOS' | translate}}</h3>
                         </div>  
-                    <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="alerta"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
+                    <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="alertaRecurso"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
+                </md-content>
+                
+            </md-content>
+            <!-- fin grafico -->
+            
+            <!-- inicio grafico alertas-->
+            <md-content class="md-whiteframe-z2" flex fullscreen="isFullscreen" ng-controller="alertaCalidadController" id="alertaCalidad">                
+                <md-toolbar class="md-theme-light" md-theme="altTheme">
+                    <div class="md-toolbar-tools">
+                        <h2>
+                            <span flex>{{ 'INDICADOR_ALERTA' | translate}} {{ 'CALIDAD' | translate}}</span>                                 
+                        </h2> 
+                        <span flex></span>
+                        <span>
+                                <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleRightOpciones('alertaCalidad');">
+                                <md-icon md-svg-src="perm-data-setting"></md-icon>
+                            </md-button>                                                                
+                            
+                            <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-alerta')" id="max-alerta">
+                                <md-icon md-svg-src="{{!isFullscreen ? 'fullscreen' : 'fullscreen-exit'}}"></md-icon>
+                            </md-button>
+                        </span>
+                    </div>
+                </md-toolbar>
+                
+                <md-content flex>                                                                                                                                                                   
+                    <md-progress-linear  ng-if="alertaCalidad" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear> 	
+                    <md-data-table-container ng-show="datosOk">
+                        <table md-data-table md-progress="datos">
+                            <thead md-order="query.order" md-trigger="onOrderChange">
+                                <tr>
+                                    <th name="{{ 'CODIGO' | translate }}"></th>
+                                    <th name="{{ 'INDICADOR' | translate }}"></th>
+                                    <th name="{{ 'PORCENTAJE' | translate }}"></th>
+                                </tr>
+                            </thead>
+                        <tbody>                                            
+                            <tr ng-repeat="value in dato">
+                                <td>{{ value.codigo }}</td>							
+                                <td>{{ value.nombre }}</td>
+                                <td>
+                                    <div class="progress" >
+                                    <div class="progress-bar progress-bar-striped active progress-bar-default" role="progressbar"
+                                    aria-valuenow="{{ value.porcentaje }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ value.porcentaje }}%; background:{{ value.color }}">
+                                        {{ value.porcentaje }}%
+                                    </div></div>
+                                </td>		             
+                            </tr>
+                        </tbody>
+                        </table>
+                    </md-data-table-container>
+                    <div ng-show="!datosOk" layout="row" layout-align="center center">
+                            <h3>{{ 'NO_HAY_DATOS' | translate}}</h3>
+                        </div>  
+                    <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="alertaCalidad"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
                 </md-content>
                 
             </md-content>

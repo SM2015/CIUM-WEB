@@ -971,7 +971,7 @@
 		if(!angular.isUndefined($scope.dato.expediente[col]))
 		{	
 			$scope.obtenerPromedio();
-			if(exp==null)exp=id; 
+			if(exp==null) exp=id; 
 			$scope.modificado = true;	
 			angular.forEach($scope.dato.aprobado, function(item, key) 
 			{
