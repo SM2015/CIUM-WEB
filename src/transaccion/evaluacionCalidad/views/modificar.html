@@ -102,7 +102,7 @@
                   </md-menu-content>
                 </md-menu>
             </div>
-              {{modificado}}
+              
               <md-select flex placeholder="{{ information ? 'INDICADOR_SEL' : 'NO_INDICADOR_SEL' | translate }}" ng-model="dato.idIndicador"  id="indicador">  
                                     
                       <md-option ng-repeat="i in information" value="{{i.id}}" ng-click="dato.idIndicador=i.id; cargarCriterios();">
