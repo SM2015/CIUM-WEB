@@ -208,6 +208,7 @@
 				$scope.showAlert();
 			} 							
 		};
+		
 		$scope.contador = 0;
 		$scope.chartClick  = function (event) 
 		{
@@ -300,7 +301,7 @@
 			$scope.tieneTamano = !$scope.tieneTamano;
 			if($scope.tieneTamano)
 			{	
-				$scope.tamano = $scope.tamano == 0 ? angular.element(document.getElementById("chart")).attr("width") : $scope.tamano;				
+				$scope.tamano = $scope.tamano == 0 ? angular.element(document.getElementById("chartChart")).attr("width") : $scope.tamano;				
 			} 						 		 
 		}	
 /**
@@ -389,7 +390,7 @@
 * @param {int} c posicion para almacenar la información en el modelo datos
 */	   
 		$scope.intentoOpcion = 0;
-		$scope.selectedIndex = 0;
+		$scope.selectedIndex = 2;
 		$scope.getDimension = function(nivel,c)
 		{
 			$scope.opcion = true;
@@ -678,7 +679,7 @@
 			$scope.tieneTamano = !$scope.tieneTamano;
 			if($scope.tieneTamano)
 			{	
-				$scope.tamano = $scope.tamano == 0 ? angular.element(document.getElementById("chart")).attr("width") : $scope.tamano;				
+				$scope.tamano = $scope.tamano == 0 ? angular.element(document.getElementById("chartChart")).attr("width") : $scope.tamano;				
 			} 						 		 
 		}		
 		$scope.cargarFiltro = 0;				
@@ -733,7 +734,7 @@
    		});
    
 		$scope.intentoOpcion = 0;
-		$scope.selectedIndex = 0;
+		$scope.selectedIndex = 2;
 		$scope.getDimension = function(nivel,c)
 		{
 			$scope.opcion = true;
@@ -957,7 +958,7 @@
 			$scope.tieneTamano = !$scope.tieneTamano;
 			if($scope.tieneTamano)
 			{	
-				$scope.tamano = $scope.tamano == 0 ? angular.element(document.getElementById("chart")).attr("width") : $scope.tamano;				
+				$scope.tamano = $scope.tamano == 0 ? angular.element(document.getElementById("chartChart")).attr("width") : $scope.tamano;				
 			} 						 		 
 		}		
 		$scope.cargarFiltro = 0;				
@@ -1230,7 +1231,7 @@
 			$scope.tieneTamano = !$scope.tieneTamano;
 			if($scope.tieneTamano)
 			{	
-				$scope.tamano = $scope.tamano == 0 ? angular.element(document.getElementById("chart")).attr("width") : $scope.tamano;				
+				$scope.tamano = $scope.tamano == 0 ? angular.element(document.getElementById("chartChart")).attr("width") : $scope.tamano;				
 			} 						 		 
 		}		
 		$scope.cargarFiltro = 0;				
@@ -1437,7 +1438,7 @@
 		
 		$scope.valorMostrarTop = 1;
 		$scope.cambiarVistaTop = function(valor)
-		{console.log($scope.valorMostrarTop);
+		{
 			if(valor==1)
 			{
 				$scope.mostrarTop["TOP_MAS"] = true;
@@ -1511,7 +1512,7 @@
 			$scope.tieneTamano = !$scope.tieneTamano;
 			if($scope.tieneTamano)
 			{	
-				$scope.tamano = $scope.tamano == 0 ? angular.element(document.getElementById("chart")).attr("width") : $scope.tamano;				
+				$scope.tamano = $scope.tamano == 0 ? angular.element(document.getElementById("chartChart")).attr("width") : $scope.tamano;				
 			} 						 		 
 		}		
 		$scope.cargarFiltro = 0;				
@@ -1717,7 +1718,7 @@
 		
 		$scope.valorMostrarTop = 1;
 		$scope.cambiarVistaTop = function(valor)
-		{console.log($scope.valorMostrarTop);
+		{
 			if(valor==1)
 			{
 				$scope.mostrarTop["TOP_MAS"] = true;
@@ -1791,7 +1792,7 @@
 			$scope.tieneTamano = !$scope.tieneTamano;
 			if($scope.tieneTamano)
 			{	
-				$scope.tamano = $scope.tamano == 0 ? angular.element(document.getElementById("chart")).attr("width") : $scope.tamano;				
+				$scope.tamano = $scope.tamano == 0 ? angular.element(document.getElementById("chartChart")).attr("width") : $scope.tamano;				
 			} 						 		 
 		}		
 		$scope.cargarFiltro = 0;				
@@ -2029,7 +2030,7 @@
 			$scope.tieneTamano = !$scope.tieneTamano;
 			if($scope.tieneTamano)
 			{	
-				$scope.tamano = $scope.tamano == 0 ? angular.element(document.getElementById("chart")).attr("width") : $scope.tamano;				
+				$scope.tamano = $scope.tamano == 0 ? angular.element(document.getElementById("chartChart")).attr("width") : $scope.tamano;				
 			} 						 		 
 		}		
 		$scope.cargarFiltro = 0;				
@@ -2266,7 +2267,7 @@
 			$scope.tieneTamano = !$scope.tieneTamano;
 			if($scope.tieneTamano)
 			{	
-				$scope.tamano = $scope.tamano == 0 ? angular.element(document.getElementById("chart")).attr("width") : $scope.tamano;				
+				$scope.tamano = $scope.tamano == 0 ? angular.element(document.getElementById("chartChart")).attr("width") : $scope.tamano;				
 			} 						 		 
 		}		
 		$scope.cargarFiltro = 0;				

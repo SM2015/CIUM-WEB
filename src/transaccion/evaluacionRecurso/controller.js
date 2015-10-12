@@ -660,13 +660,10 @@
 				else
 					$scope.terminado=false;
 			}
-			else
-			{
-				errorFlash.error(data);
-			}
+			
 				$scope.cargando = false;
 			},function (e) {
-				errorFlash.error(e);
+				
 				$scope.cargando = false;
 			});    			
 	};

@@ -15,12 +15,12 @@
         <md-list-item ng-repeat="c in dato" class="md-2-line" ng-click="verEvaluacion(c.idEvaluacion,c.categoria,c.codigo)" style="border-bottom: 1px solid #ddd">	                                 	                        
             <div class="md-list-item-text">                                    
                 <h3>												
-                    {{c.fechaEvaluacion}}                                        										
+                    {{ c.clues }}                                       										
                 </h3>                                    
                 <p>
-                    {{c.categoria}} # {{c.idEvaluacion}} 
+                    {{c.fechaEvaluacion}} 
                     <br>   
-                    <small> {{ c.clues }} {{c.nombre}} ({{c.jurisdiccion}}) </small>
+                    <small>{{c.nombre}} ({{c.jurisdiccion}}) </small>
                 </p>                                    
             </div>                          
         </md-list-item>												

@@ -143,8 +143,8 @@
 
 	"RU_RECURSO":"Resource",
 	"RU_CALIDAD":"Quality",
-	"INDICADOR_ALERTA":"Warning Indicators",
-	"REPORTE_X_EQUIPO":"Report group visits",
+	"INDICADOR_ALERTA":"Indicators",
+	"REPORTE_X_EQUIPO":"Visits",
 	"REPORTE_SEGUIMIENTO":"Total data collected by team",
 	"SEGUIMIENTO_HALLAZGO":"Follow finding",
 	"ANIO":"Year",

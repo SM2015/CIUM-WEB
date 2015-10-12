@@ -818,28 +818,45 @@
 			errorFlash.error(data);
 		});
 	};
-	
+	$scope.cragraActualesError = 0;
 	$scope.indicadoresActuales = function()
 	{
 		var idev = $scope.dato.id;
 		if(angular.isUndefined(idev) || idev == "" )
 			idev = $location.search().id;
-		$http.get(URLS.BASE_API+'CriterioEvaluacionCalidadIndicador/'+idev)
-		.success(function(data, status, headers, config) 
-		{
-			$scope.information = data.data;
-			
-			angular.forEach($scope.information , function(val, key) 
-			{
-				angular.forEach($scope.options , function(v, k) 
+		$scope.cargando = true;
+		
+		CrudDataApi.lista('CriterioEvaluacionCalidadIndicador/'+idev, function (data) {
+			if(data.status  == '407')
+				$window.location="acceso";
+	
+				if(data.status==200)
 				{
-					if(val.codigo == v.codigo)
+					$scope.information = data.data;
+			
+					angular.forEach($scope.information , function(val, key) 
 					{
-						$scope.options.splice(k, 1);
-					}
-				});					
-			});
-		});
+						angular.forEach($scope.options , function(v, k) 
+						{
+							if(val.codigo == v.codigo)
+							{
+								$scope.options.splice(k, 1);
+							}
+						});					
+					});
+				}
+				
+				$scope.cargando = false;
+			},function (e) {
+				if($scope.cragraActualesError<1)
+				{
+					$scope.cragraActualesError++;
+					$scope.indicadoresActuales();
+				}
+				
+				$scope.cargando = false;
+        });
+		
 	}
 	
 	$scope.json = {};
@@ -1404,8 +1421,10 @@
 		{
 			$scope.columnas.splice(col,1);	
 			$scope.dato.expediente.splice(col,1);	
+			$scope.dato.totalExpediente--;
 			delete $scope.completo[exp];	
-			delete $scope.incompleto[exp];			
+			delete $scope.incompleto[exp];
+			$scope.obtenerPromedio();			
 		}
 		else if ($window.confirm($translate.instant('CONFIRM_DELETE'))) {   
 			var url=$scope.ruta;
@@ -1423,7 +1442,9 @@
 
 					$scope.columnas.splice(col,1);	
 					delete $scope.completo[exp];	
-					delete $scope.incompleto[exp];						
+					delete $scope.incompleto[exp];
+					$scope.dato.totalExpediente--;	
+					$scope.obtenerPromedio();						
 				}
 				else
 				{

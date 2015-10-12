@@ -143,8 +143,8 @@
 
 	"RU_RECURSO":"Recursos",
 	"RU_CALIDAD":"Calidad",
-	"INDICADOR_ALERTA":"Indicadores en alerta",
-	"REPORTE_X_EQUIPO":"Visitas / Grupo",
+	"INDICADOR_ALERTA":"Indicadores",
+	"REPORTE_X_EQUIPO":"Visitas",
 	"REPORTE_SEGUIMIENTO":"Total de datos recolectados por equipo",
 	"SEGUIMIENTO_HALLAZGO":"Seguimiento hallazgo",
 	"ANIO":"Año",

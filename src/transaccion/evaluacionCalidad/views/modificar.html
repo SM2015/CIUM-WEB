@@ -138,7 +138,7 @@
           <md-tab ng-repeat="a in columnas"  label="{{dato.expediente[$index]}}" ng-init="col=$index;exp = dato.expediente[$index] != null ? dato.expediente[$index] : a.id" layout="column" flex layout-fill>
               
             
-            <md-content style="height: {{tamanoHeight}}px;" flex ng-init="incompleto[dato.idIndicador][exp]=incompleto[dato.idIndicador][exp]==null ? 0 : incompleto[dato.idIndicador][exp]">
+            <md-content style="max-height: {{tamanoHeight}}px;" flex ng-init="incompleto[dato.idIndicador][exp]=incompleto[dato.idIndicador][exp]==null ? 0 : incompleto[dato.idIndicador][exp]">
                 <input ng-model="dato.columna[a.id]" ng-init="dato.columna[a.id]=a.id" aria-label="columna" type="hidden">   
                 <input ng-model="dato.expediente[$index]"  type="hidden"/>  
                 <section ng-repeat="(key, value) in criterios | groupBy :  'lugarVerificacion'" ng-if="key != 'undefined' "  style="margin-bottom:1em;border: 1px solid #eee"> 

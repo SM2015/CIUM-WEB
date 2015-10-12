@@ -215,7 +215,7 @@
 		$mdThemingProvider.theme('default')
 	    .primaryPalette('amazingPalette',{'hue-1':'400','hue-2':'200','hue-3':'100'})
 	    .warnPalette('red')
-	    .accentPalette('amazingPalette',{'default':'800','hue-1':'900'});
+	    .accentPalette('amazingPalette',{'default':'800','hue-1':'900','hue-2':'A700'});
 	  
 		$mdThemingProvider.theme('altTheme')
 		.primaryPalette('grey',{'default':'200'})

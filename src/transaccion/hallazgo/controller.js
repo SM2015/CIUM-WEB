@@ -366,6 +366,13 @@
 		$scope.init();
 		$scope.getCriterios(); 
 	};
+	$scope.historyBack = function()
+	{
+		$scope.filtro.nivel = 2;
+		$scope.filtro.tipo = $scope.tipo;
+		$localStorage.cium.filtro = $scope.filtro;
+		window.history.back();
+	}
 /**
 * @ngdoc method
 * @name Transaccion.HallazgoCtrl#history

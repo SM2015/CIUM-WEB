@@ -244,7 +244,9 @@
 				
 			if(data.status==200)
 			{
-				$scope.options[cat]=data.data;			
+				$scope.options[cat]=data.data;	
+				if(cat=="lugares")
+					$scope.ver('Criterio');		
 			}
 			else
 		{
@@ -266,6 +268,7 @@
 	$scope.seleccionado = function(data) 
 	{
 		$scope.criterio.indicador={}; var cone=[];
+		
 		angular.forEach(data, function(value, key) {					
 			angular.forEach(value.cones, function(c, k) {
 				cone.push(value.id+','+c.id);		

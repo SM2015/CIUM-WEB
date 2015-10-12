@@ -136,8 +136,13 @@ app.factory('errorFlash', function($http, flash, $rootScope )
 			var datos=[];
 			if(angular.isObject(data))
 			{	
-				if(!angular.isObject(data[1]))			
-					datos.push({ level: 'info', text: data[1], x: 'right', y: 'top', t: '3000'});
+				if(!angular.isObject(data[1]))	
+				{
+					if(angular.isUndefined(data.messages))				
+						datos.push({ level: 'info', text: data[1], x: 'right', y: 'top', t: '3000'});
+					else	
+						datos.push({ level: 'info', text: data.messages, x: 'right', y: 'top', t: '3000'});
+				}
 			}
 			else
 			{	

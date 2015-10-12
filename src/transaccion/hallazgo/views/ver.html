@@ -13,13 +13,13 @@
 			</h2>
 			<span flex></span>		
       
-<a ng-click="secondClick(dato.indicador.codigo)">
+<a ng-click="historyBack()">
   <md-button hide-md hide-sm hide-lg aria-label="{{ 'REGRESAR' | translate }}" >
     <md-icon md-svg-icon="arrow-back"></md-icon>
     {{ 'REGRESAR' | translate }}
   </md-button>
 
-  <md-button class="md-icon-button"  hide show-sm show-md show-lg  aria-label="{{ 'REGRESAR' | translate }}" >
+  <md-button ng-click="historyBack()" class="md-icon-button"  hide show-sm show-md show-lg  aria-label="{{ 'REGRESAR' | translate }}" >
     <md-icon md-svg-icon="arrow-back"></md-icon>
     <md-tooltip>
           {{ 'REGRESAR' | translate }}
