@@ -109,7 +109,11 @@
 	    $scope.menuSelected = path;
 	   $location.path(path).search({id: null});
 	};
-
+	
+	$scope.opcionEvaluacion = function(ir,id)
+	{		
+		$location.path($location.path()+"/"+ir).search({id: id});
+	}	
 	// evento para el boton nuevo, redirecciona a la vista nuevo
 	$scope.nuevo = function()
 	{
