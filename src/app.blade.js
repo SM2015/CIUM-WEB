@@ -275,3 +275,41 @@ app.filter('numberFixedLen', function () {
     }
 });
 
+app.filter('numeroBimestre', function () {
+    return function(a){
+		if(a == 1 || a == 2)
+			a = "1 and 2";
+		if(a == 3 || a == 4)
+			a = "3 and 4";
+		if(a == 5 || a == 6)
+			a = "5 and 6";
+		if(a == 7 || a == 8)
+			a = "7 and 8";
+		if(a == 9 || a == 10)
+			a = "9 and 10";
+		if(a == 11 || a == 12)
+			a = "11 and 12";
+        return(a)
+    }
+});
+
+
+app.filter('nombreBimestre', function () {
+    return function(val){
+		var bi = ""
+		if(val == "1 and 2")
+			bi = "Enero - Febrero";
+		if(val == "3 and 4")
+			bi = "Marzo - Abril";
+		if(val == "5 and 6")
+			bi = "Mayo - Junio";
+		if(val == "7 and 8")
+			bi = "Julio - Agosto";
+		if(val == "9 and 10")
+			bi = "Septiembre - Octubre";
+		if(val == "11 and 12")
+			bi = "Noviembre - Diciembre";
+	
+        return(bi)
+    }
+});

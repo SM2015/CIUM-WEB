@@ -120,8 +120,8 @@
 .gauge
 {
   
-  width: 250px;
-  height: 250px;
+  width: 350px;
+  height: 350px;
   text-align: center;
   margin: 0 auto 30px auto;
 }
@@ -456,4 +456,8 @@ body {
 .sin-scroll
 {
   overflow-y:hidden !important; overflow:hidden !important
+}
+.mtt-graduationValueText
+{
+  font-size: 17px !important;
 }

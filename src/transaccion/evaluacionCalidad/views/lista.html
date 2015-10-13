@@ -83,7 +83,7 @@
 				 <td>{{ dato.clues | uppercase }}: {{ dato.cluess.nombre | uppercase }} ({{ dato.cluess.jurisdiccion | uppercase }})</td>
 				 <td hide-sm>{{ dato.usuarios.nombres+' '+dato.usuarios.apellidoPaterno+' '+dato.usuarios.apellidoMaterno | uppercase }}</td>
 				 <td>{{ dato.fechaEvaluacion }}</td>
-				 <td><md-icon md-svg-src="{{ dato.cerrado ? 'check' : 'mode-edit'}}" class="md-primary" title="{{ dato.cerrado ? 'Si' : 'No' }}"></md-icon></td>
+				 <td><md-icon md-svg-src="{{ dato.cerrado ? 'check' : 'mode-edit'}}" class="{{ dato.cerrado ? 'md-primary' : 'md-accent'}}" title="{{ dato.cerrado ? 'Si' : 'No' }}"></md-icon></td>
 				 <td>
 						<md-button ng-if="!dato.cerrado && permisoEliminar" ng-click="borrar(dato.id, $index)" class="md-icon-button md-warn" aria-label="Eliminar">
 							<md-icon md-svg-src="delete" ></md-icon>

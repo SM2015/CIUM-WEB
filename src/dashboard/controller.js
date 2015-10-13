@@ -836,7 +836,7 @@
 	})
 	
 	
-	.controller('pieRecursoController', function($scope, $http, $window, $location, $timeout, $route,  flash, errorFlash, URLS, $mdDialog, $mdUtil, $mdSidenav, $translate,CrudDataApi ) {
+	.controller('pieRecursoController', function($scope, $http, $window, $location, $timeout, $route,  flash, errorFlash, URLS, $mdDialog, $mdUtil, $mdSidenav, $translate,CrudDataApi, $filter ) {
 		
 		$scope.pieRecurso = true;
 	
@@ -895,6 +895,7 @@
 		$scope.filtro.tipo = "Recurso";
 		$scope.filtro.visualizar = 'tiempo';
 		$scope.filtro.anio = d.getFullYear();
+		$scope.filtro.bimestre = $filter('numeroBimestre')(d.getMonth());		
 		$scope.filtro.um = {};
 		$scope.filtro.um.tipo='municipio';		
 		$scope.filtro.clues = [];
@@ -1108,7 +1109,7 @@
 		};
 	})
 	
-	.controller('pieCalidadController', function($scope, $http, $window, $location, $timeout, $route,  flash, errorFlash, URLS, $mdDialog, $mdUtil, $mdSidenav, $translate,CrudDataApi ) {
+	.controller('pieCalidadController', function($scope, $http, $window, $location, $timeout, $route,  flash, errorFlash, URLS, $mdDialog, $mdUtil, $mdSidenav, $translate,CrudDataApi, $filter ) {
 		
 		$scope.pieCalidad = true;
 	
@@ -1167,6 +1168,7 @@
 		$scope.filtro.tipo = "Calidad";
 		$scope.filtro.visualizar = 'tiempo';
 		$scope.filtro.anio = d.getFullYear();
+		$scope.filtro.bimestre =  $filter('numeroBimestre')(d.getMonth());	
 		$scope.filtro.um = {};
 		$scope.filtro.um.tipo='municipio';		
 		$scope.filtro.clues = [];
@@ -1506,8 +1508,7 @@
 			} 						 		 
 		}		
 		$scope.cargarFiltro = 0;				
-		$scope.toggleRightOpciones = function(navID) {
-			$scope.catVisible = true;		
+		$scope.toggleRightOpciones = function(navID) {					
 			$mdSidenav(navID)
 			.toggle()
 			.then(function () {
@@ -1743,8 +1744,7 @@
 			} 						 		 
 		}		
 		$scope.cargarFiltro = 0;				
-		$scope.toggleRightOpciones = function(navID) {
-			$scope.catVisible = true;		
+		$scope.toggleRightOpciones = function(navID) {				
 			$mdSidenav(navID)
 			.toggle()
 			.then(function () {
@@ -1942,7 +1942,7 @@
     	$scope.filtros.activo = false;
 		$scope.verInfo = false;
 		
-		$scope.valorMostrarTop = 1;
+		$scope.valorMostrarTop = 0;
 		$scope.cambiarVistaTop = function(valor)
 		{
 			if(valor==1)
@@ -2222,7 +2222,7 @@
     	$scope.filtros.activo = false;
 		$scope.verInfo = false;
 		
-		$scope.valorMostrarTop = 1;
+		$scope.valorMostrarTop = 0;
 		$scope.cambiarVistaTop = function(valor)
 		{
 			if(valor==1)

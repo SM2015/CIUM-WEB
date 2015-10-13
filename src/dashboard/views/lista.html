@@ -40,7 +40,7 @@
                     <md-toolbar class="md-theme-light" md-theme="altTheme">
                         <div class="md-toolbar-tools">
                             <h2>
-                                <span flex>{{ 'HALLAZGO_RECURSO' | translate}}</span>                                 
+                                <span flex>{{ 'RECURSO' | translate}}</span>                                 
                             </h2> 
                             <span flex></span>
                             <span>
@@ -59,6 +59,9 @@
                         <md-progress-linear  ng-if="gaugeRecurso" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear>
                         <div ng-show="datosOk" >                                
                             <div  style="width:{{tamano}}px; height: auto;" class="gauge" ng-radial-gauge ranges="ranges" value="value" value-unit="unit" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit"></div>
+                            <div ng-show="datosOk" style="font-size:.8em" align="center">
+                                {{ "NUM_UM" | translate}}
+                            </div>
                             <ul class="tc-chart-js-legend"><li ng-repeat="item in indicadores"><span style="background-color:{{item.color}}"></span>{{item.indicador}}</li></ul>
                         </div>
                         <div ng-show="!datosOk" layout="row" layout-align="center center">
@@ -74,7 +77,7 @@
                 <md-toolbar class="md-theme-light" md-theme="altTheme">
                     <div class="md-toolbar-tools">
                         <h2>
-                            <span flex>{{ 'HALLAZGO_CALIDAD' | translate}}</span>                                 
+                            <span flex>{{ 'CALIDAD' | translate}}</span>                                 
                         </h2> 
                         <span flex></span>
                         <span>
@@ -93,6 +96,9 @@
                     <md-progress-linear  ng-if="gaugeCalidad" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear>    
                     <div ng-show="datosOk">                             
                         <div style="width:{{tamano}}px; height: auto;" class="gauge" ng-radial-gauge ranges="ranges" value="value" value-unit="unit" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit"></div>
+                        <div ng-show="datosOk" style="font-size:.8em" align="center">
+                            {{ "NUM_UM" | translate}}
+                        </div>
                         <ul class="tc-chart-js-legend"><li ng-repeat="item in indicadores"><span style="background-color:{{item.color}}"></span>{{item.indicador}}</li></ul>       
                     </div>  
                     <div ng-show="!datosOk" layout="row" layout-align="center center">
@@ -216,8 +222,11 @@
                     </md-toolbar>                
                     <md-content layout-padding>                                                                                                                                                                    
                         <md-progress-linear  ng-if="pieRecurso" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear> 
+                        <div style="font-size:.8em">
+                            {{ "ANIO" | translate}} : {{filtro.anio}} {{"BIMESTRE" | translate}} : {{filtro.bimestre | nombreBimestre}}
+                        </div>
                         <div style="width:{{ isFullscreen ? '100%' : tamano > 0 ? tamano+'px' : ''}}" ng-show="datosOk"> 
-                            <canvas tc-chartjs-pie width="400" chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart" id="chartChart"></canvas>
+                            <canvas tc-chartjs-pie width="400" chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart" id="chartChart"></canvas>                            
                         </div>  
                         <div ng-show="!datosOk" layout="row" layout-align="center center">
                             <h3>{{ 'NO_HAY_DATOS' | translate}}</h3>
@@ -250,7 +259,10 @@
                         </div>
                     </md-toolbar>                
                     <md-content layout-padding>                                                                                                                                                                    
-                        <md-progress-linear  ng-if="pieCalidad" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear> 
+                        <md-progress-linear  ng-if="pieCalidad" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear>
+                        <div style="font-size:.8em">
+                            {{ "ANIO" | translate}} : {{filtro.anio}} {{"BIMESTRE" | translate}} : {{filtro.bimestre | nombreBimestre}} 
+                        </div> 
                         <div style="width:{{ isFullscreen ? '100%' : tamano > 0 ? tamano+'px' : ''}}" ng-show="datosOk"> 
                             <canvas tc-chartjs-pie width="400" chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart" id="chartChart"></canvas>
                         </div>  
@@ -426,7 +438,7 @@
                                             <td>{{$index+1}}</td>                         
                                             <td>{{ item.clues }}</td>   
                                             <td>{{ item.nombre }}</td>                                                              
-                                            <td>{{ item.porcentaje }} %</td>                    
+                                            <td>{{ item.porcentaje  | number:2}} %</td>                    
                                         </tr>
                                     </tbody>
                                 </table>
@@ -483,7 +495,7 @@
                                             <td>{{$index+1}}</td>                         
                                             <td>{{ item.clues }}</td>   
                                             <td>{{ item.nombre }}</td>                                                              
-                                            <td>{{ item.porcentaje }} %</td>                    
+                                            <td>{{ item.porcentaje  | number:2}} %</td>                    
                                         </tr>
                                     </tbody>
                                 </table>
