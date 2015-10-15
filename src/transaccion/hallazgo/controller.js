@@ -511,7 +511,6 @@
 	{
 		$scope.filtro.criterio = {};
 		$scope.filtro.indicadorActivo = codigo;
-		$scope.filtro.indicador.push(codigo);
 		$scope.filtro.tipo = tipo;
 		$scope.filtro.criterio.criterio = criterio;
 		$scope.filtro.criterio.indicador = indicador;

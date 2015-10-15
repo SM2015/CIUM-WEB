@@ -222,9 +222,10 @@
                     </md-toolbar>                
                     <md-content layout-padding>                                                                                                                                                                    
                         <md-progress-linear  ng-if="pieRecurso" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear> 
-                        <div style="font-size:.8em">
+                        <div style="font-size:.8em" align="center">
                             {{ "ANIO" | translate}} : {{filtro.anio}} {{"BIMESTRE" | translate}} : {{filtro.bimestre | nombreBimestre}}
                         </div>
+                        <br>
                         <div style="width:{{ isFullscreen ? '100%' : tamano > 0 ? tamano+'px' : ''}}" ng-show="datosOk"> 
                             <canvas tc-chartjs-pie width="400" chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart" id="chartChart"></canvas>                            
                         </div>  
@@ -260,9 +261,10 @@
                     </md-toolbar>                
                     <md-content layout-padding>                                                                                                                                                                    
                         <md-progress-linear  ng-if="pieCalidad" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear>
-                        <div style="font-size:.8em">
+                        <div style="font-size:.8em" align="center">
                             {{ "ANIO" | translate}} : {{filtro.anio}} {{"BIMESTRE" | translate}} : {{filtro.bimestre | nombreBimestre}} 
                         </div> 
+                        <br>
                         <div style="width:{{ isFullscreen ? '100%' : tamano > 0 ? tamano+'px' : ''}}" ng-show="datosOk"> 
                             <canvas tc-chartjs-pie width="400" chart-options="options" chart-data="data" auto-legend ng-click="chartClick($event)" chart="chart" id="chartChart"></canvas>
                         </div>  

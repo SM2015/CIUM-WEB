@@ -245,6 +245,10 @@
 			templateUrl: 'src/app/views/acerca-de.html',
 			controller: 'DashboardCtrl',
 		})
+		.when('/manual-usuario',{
+			templateUrl: 'src/app/views/manual-usuario.html',
+			controller: 'DashboardCtrl',
+		})
 		.otherwise({ redirectTo: '/dashboard' });
 		
 		$httpProvider.interceptors.push(['$q', '$location', '$localStorage', function ($q, $location, $localStorage) {

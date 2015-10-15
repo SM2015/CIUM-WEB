@@ -953,6 +953,7 @@
 			$scope.numExpediente = '';
 			$scope.exp=valor;		
 			$scope.agregarColumna(valor);
+			$scope.dato.numExpediente = "";
 		}	
 	}
 /**

@@ -47,7 +47,14 @@
 	$scope.ir = function(path){
 	    $scope.menuSelected = path;
 	   $location.path(path).search({id: null});
-	};		
+	};	
+	$scope.tamano =  $window.innerHeight-70;
+	$scope.$watch(function(){
+       		return $window.innerHeight;
+		}, 
+		function(value) {		
+			$scope.tamano = value-70;
+   		});	
 		
 	}])
 	
