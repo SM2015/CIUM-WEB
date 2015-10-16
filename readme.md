@@ -11,7 +11,7 @@ de los indicadores de calidad y recursos.
 </p>
 ## Official Documentation
 
- > - [Manual de usuario](assets/manual-usuario.pdf)
+ > - [Manual de usuario](assets/cium/Contents) [pdf](assets/manual-usuario.pdf)
 
 ## Tecnología
 
