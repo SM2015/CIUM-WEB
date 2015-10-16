@@ -8,7 +8,7 @@ En este apartado se encuentra las parte transaccional de la aplicación es decir
 Las evaluaciónes de recurso y calidad tiene un listado con el formato y las opciones siguientes:
 </p>
 
-![](evaluacion_lista.png)
+![](images/evaluacion_lista.png)
 
 > ** Listado **
 
@@ -20,7 +20,7 @@ Las evaluaciónes de recurso y calidad tiene un listado con el formato y las opc
 > - 6.- Datos
 > - 7.- Paginación y limites por página
 
-![](evaluacion_lista_buscar.png)
+![](images/evaluacion_lista_buscar.png)
 
 > ** Listado buscar **
 
@@ -39,7 +39,7 @@ Recursos es la evaluación que en las unidades médicas se encarga de monitoriar
 
 A) En el listado de recurso
 
-![](recurso_nuevo_1.png)
+![](images/recurso_nuevo_1.png)
 
 > ** Nuevo **
 
@@ -48,7 +48,7 @@ A) En el listado de recurso
 
 B) Abre un pantalla para crear la ficha técnica
 
-![](recurso_nuevo_2.png)
+![](images/recurso_nuevo_2.png)
 
 > ** Ficha **
 
@@ -56,7 +56,7 @@ B) Abre un pantalla para crear la ficha técnica
 > - 2.- Regresar al listado
 > - 3.- Botón para crear la ficha este se habilita al seleccionar una unidad médica
 
-![](recurso_nuevo_3.png)
+![](images/recurso_nuevo_3.png)
 
 > ** Seleccionar Unidad **
 
@@ -74,7 +74,7 @@ Para crear la evaluación hacer click en el botón que se habilito (CREAR) y se 
 
 A) Pantalla de evaluación
 
-![](recurso_nuevo_4.png)
+![](images/recurso_nuevo_4.png)
 
 > ** Pantalla inicial **
 
@@ -88,13 +88,13 @@ A) Pantalla de evaluación
 Si nos equivocamos al seleccionar la unidad podemos cambiarla en la opcion ficha técnica
 </p>
 
-![](recurso_nuevo_5.png)
+![](images/recurso_nuevo_5.png)
 
 > ** Fichar Ver/Editar **
 
 > - 1.- Si se quiere cambiar la unidad médica click en editar
 
-![](recurso_nuevo_6.png)
+![](images/recurso_nuevo_6.png)
 
 > ** Ficha Editar **
 
@@ -104,7 +104,7 @@ Si nos equivocamos al seleccionar la unidad podemos cambiarla en la opcion ficha
 
 B) Agregar un indicador
 
-![](recurso_nuevo_7.png)
+![](images/recurso_nuevo_7.png)
 
 > ** Menú indicador **
 
@@ -114,14 +114,14 @@ B) Agregar un indicador
 > - 4.- Aceptar el cambio y cargar otros datos 
 > - 5.- Cancelar el cambio
 
-![](recurso_nuevo_8.png)
+![](images/recurso_nuevo_8.png)
 
 > - 6.- Indicador actual evaluando
 > - 7.- Lista de indicadores que tienen información en la evaluación, si es rojo quiere decir que aun no esta completo si es ver esta completo
 
 C) Criterios
 
-![](recurso_nuevo_9.png)
+![](images/recurso_nuevo_9.png)
 
 > ** Menú indicador **
 
@@ -133,7 +133,7 @@ C) Criterios
 > - 6.- Acciones para resolver el hallazgo
 > - 7.- Boton guardar se habilita una vez completado los criterios y el hallazgo si existe
 
-![](recurso_nuevo_10.png)
+![](images/recurso_nuevo_10.png)
 
 > - 8.- Cuando todos los indicadores estan completa su evaluación el botón cerra aparece
 > - 9.- Si hacemos click en el botn cerrar el sistema pide confirmación y aparecer un mensaje
@@ -141,7 +141,7 @@ C) Criterios
 
 D) Resultado de la evaluación
 
-![](recurso_nuevo_11.png)
+![](images/recurso_nuevo_11.png)
 
 > - 1.- Regresar al listado
 > - 2.- Fecha de creación de la evaluación
@@ -152,7 +152,7 @@ D) Resultado de la evaluación
 > - 7.- Generar/Imprimir evaluación
 
 > - 8.- Por ultimo la firma del responsable de la unidad. Si la evaluación fue realizada con la APP MOVIL aparacera la firma digital
-![](recurso_nuevo_12.png)
+![](images/recurso_nuevo_12.png)
 
 ## Calidad
 
@@ -165,7 +165,7 @@ Calidad es la evaluación que en las unidades médicas se encarga de monitoriar 
 
 A) En el listado de calidad
 
-![](calidad_nuevo_1.png)
+![](images/calidad_nuevo_1.png)
 
 > ** Nuevo **
 
@@ -174,7 +174,7 @@ A) En el listado de calidad
 
 B) Abre un pantalla para crear la ficha técnica
 
-![](calidad_nuevo_2.png)
+![](images/calidad_nuevo_2.png)
 
 > ** Ficha **
 
@@ -182,7 +182,7 @@ B) Abre un pantalla para crear la ficha técnica
 > - 2.- Regresar al listado
 > - 3.- Botón para crear la ficha este se habilita al seleccionar una unidad médica
 
-![](calidad_nuevo_3.png)
+![](images/calidad_nuevo_3.png)
 
 > ** Seleccionar Unidad **
 
@@ -200,7 +200,7 @@ Para crear la evaluación hacer click en el botón que se habilito (CREAR) y se 
 
 A) Pantalla de evaluación
 
-![](calidad_nuevo_4.png)
+![](images/calidad_nuevo_4.png)
 
 > ** Pantalla inicial **
 
@@ -214,13 +214,13 @@ A) Pantalla de evaluación
 Si nos equivocamos al seleccionar la unidad podemos cambiarla en la opcion ficha técnica
 </p>
 
-![](calidad_nuevo_5.png)
+![](images/calidad_nuevo_5.png)
 
 > ** Fichar Ver/Editar **
 
 > - 1.- Si se quiere cambiar la unidad médica click en editar
 
-![](calidad_nuevo_6.png)
+![](images/calidad_nuevo_6.png)
 
 > ** Ficha Editar **
 
@@ -230,7 +230,7 @@ Si nos equivocamos al seleccionar la unidad podemos cambiarla en la opcion ficha
 
 B) Agregar un indicador
 
-![](calidad_nuevo_7.png)
+![](images/calidad_nuevo_7.png)
 
 > ** Menú indicador **
 
@@ -240,14 +240,14 @@ B) Agregar un indicador
 > - 4.- Aceptar el cambio y cargar otros datos 
 > - 5.- Cancelar el cambio
 
-![](calidad_nuevo_8.png)
+![](images/calidad_nuevo_8.png)
 
 > - 6.- Indicador actual evaluando
 > - 7.- Lista de indicadores que tienen información en la evaluación, si es rojo quiere decir que aun no esta completo si es ver esta completo
 
 C) Criterios
 
-![](calidad_nuevo_9.png)
+![](images/calidad_nuevo_9.png)
 
 > ** Menú indicador **
 
@@ -269,7 +269,7 @@ C) Criterios
 
 D) Resultado de la evaluación
 
-![](calidad_nuevo_11.png)
+![](images/calidad_nuevo_11.png)
 
 > - 1.- Regresar al listado
 > - 2.- Fecha de creación de la evaluación
@@ -282,7 +282,7 @@ D) Resultado de la evaluación
 > - 9.- Generar/Imprimir evaluación
 
 > - 10.- Por ultimo la firma del responsable de la unidad. Si la evaluación fue realizada con la APP MOVIL aparacera la firma digital
-![](calidad_nuevo_12.png)
+![](images/calidad_nuevo_12.png)
 
 ## Hallazgo
 
@@ -295,7 +295,7 @@ Hallazgos módulo que muestra de entrada los problemas principales actuales o hi
 
 > ** Criterios **
 
-![](hallazgo_criterio_1.png)
+![](images/hallazgo_criterio_1.png)
 
 > - 1.- Acceder a los hallazgos
 > - 2.- Tabs categoria mostrar criterio y unidades médicas
@@ -311,7 +311,7 @@ Hallazgos módulo que muestra de entrada los problemas principales actuales o hi
 
 > ** Buscar **
 
-![](hallazgo_criterio_2.png)
+![](images/hallazgo_criterio_2.png)
 
 > - 1.- Campo de busqueda
 > - 2.- Regresar el menú
@@ -319,14 +319,14 @@ Hallazgos módulo que muestra de entrada los problemas principales actuales o hi
 
 > ** Unidades Médicas **
 
-![](hallazgo_criterio_3.png)
+![](images/hallazgo_criterio_3.png)
 
 > - 1.- Lista de unidades afectadas
 > - 2.- Paginación y limites por página
 
 ### Lista de indicadores con detalle
 
-![](hallazgo_criterio_4.png)
+![](images/hallazgo_criterio_4.png)
 
 > - 1.- Lista de indicadores por los que se esta filtrando
 > - 2.- Lista de indicadores con problema
@@ -340,11 +340,11 @@ Las opciones de filtrado toma en cuenta si el historial esta activado, y filtra 
 
 > ** Historial habilitado **
 
-![](hallazgo_criterio_5.png)
+![](images/hallazgo_criterio_5.png)
 
 > ** Opciones **
 
-![](hallazgo_criterio_6.png)
+![](images/hallazgo_criterio_6.png)
 
 > - 1.- Toolbar con los botones
 > - 2.- Pestañas separadoras de opciones
@@ -377,14 +377,14 @@ Al Hacer click sobre el criterio para el tab PROBLEMAS DETECTADOS o en la unidad
 
 > ** Criterios **
 
-![](hallazgo_criterio_7.png)
+![](images/hallazgo_criterio_7.png)
 
 > - 1.- Al hacer click en un criterio se habre una ventana con la lista de evaluaciones
 > - 2.- Lista de evaluaciones con detalle. Si el historial esta deshabilitado muestra solo la ultima evalación si no muestra todas las evaluaciones
 
 > ** Unidades médicas **
 
-![](hallazgo_criterio_8.png)
+![](images/hallazgo_criterio_8.png)
 
 > - 1.- Al hacer click en una unidad se habre una lista de los indicadores afectados, si en el filtro se habilito solo un indicador se pasa directo a la lista de evaluaciones
 > - 2.- Al hacer click en un inidcador se habre una lista de las evaluaciones
@@ -392,7 +392,7 @@ Al Hacer click sobre el criterio para el tab PROBLEMAS DETECTADOS o en la unidad
 
 Para los dos criterio o unidades médicas llegamos a la vista detalle.
 
-![](hallazgo_criterio_9.png)
+![](images/hallazgo_criterio_9.png)
 
 > - 1.- Detalle del o los indicadores unicamente los que tienen detalle
 > - 2.- Abrir la evaluación completa y mostrar todos los indicadores que se evaluo
@@ -410,7 +410,7 @@ En este apartado se encuentra todos los reportes gráficos que se generan con la
 Gráficos tipo gauge que mustran la cantidad de unidades médicas que tiene en su ultima evaluación algun detalle. La aguja muestra el nivel de detalle entre mas cerca este a 0 mejor.
 </p>
 
-![](gauge.png)
+![](images/gauge.png)
 
 > ** Gauge **
 
@@ -422,7 +422,7 @@ Gráficos tipo gauge que mustran la cantidad de unidades médicas que tiene en s
 > - 6.- Poner en modo pantalla completa el gráfico
 > - 7.- Menú de filtrado 
 
-![](gauge_menu.png)
+![](images/gauge_menu.png)
 
 > ** Gauge Menú **
 
@@ -456,7 +456,7 @@ Gráficos tipo gauge que mustran la cantidad de unidades médicas que tiene en s
 Gráficos de barra que mustran la información en porcentaje por unidad de su ultima evaluación.
 </p>
 
-![](barra.png)
+![](images/barra.png)
 
 > ** Barra **
 
@@ -470,7 +470,7 @@ Gráficos de barra que mustran la información en porcentaje por unidad de su ul
 > - 8.- Poner en modo pantalla completa el gráfico
 > - 9.- Menú de filtrado 
 
-![](barra_menu.png)
+![](images/barra_menu.png)
 
 > ** Barra Menú **
 
@@ -509,7 +509,7 @@ Gráficos de barra que mustran la información en porcentaje por unidad de su ul
 Gráficos de pastel que muestra en 2 colores la cantidad de visitas que se hacen a las unidades médicas.
 </p>
 
-![](pie.png)
+![](images/pie.png)
 
 > ** Pie **
 
@@ -521,7 +521,7 @@ Gráficos de pastel que muestra en 2 colores la cantidad de visitas que se hacen
 > - 6.- Poner en modo pantalla completa el gráfico
 > - 7.- Menú de filtrado 
 
-![](gauge_menu.png)
+![](images/gauge_menu.png)
 
 > ** Pie Menú **
 
@@ -555,7 +555,7 @@ Gráficos de pastel que muestra en 2 colores la cantidad de visitas que se hacen
 Lista que muestra el porcentaje de la evaluación y el color que toma de las alertas con respecto al porcentaje.
 </p>
 
-![](alertas.png)
+![](images/alertas.png)
 
 > ** Indicador **
 
@@ -566,7 +566,7 @@ Lista que muestra el porcentaje de la evaluación y el color que toma de las ale
 > - 5.- Opciones de filtrado, se deplega un menu en el lado derecho de la pantall
 > - 6.- Poner en modo pantalla completa el gráfico
 
-![](gauge_menu.png)
+![](images/gauge_menu.png)
 
 > ** Indicador Menú **
 
@@ -600,7 +600,7 @@ Lista que muestra el porcentaje de la evaluación y el color que toma de las ale
 Lista el top de las mejores y peores unidades médicas según la ultima evaluación.
 </p>
 
-![](top.png)
+![](images/top.png)
 
 > ** Indicador **
 
@@ -612,7 +612,7 @@ Lista el top de las mejores y peores unidades médicas según la ultima evaluaci
 > - 7.- Opciones de filtrado, se deplega un menu en el lado derecho de la pantall
 > - 8.- Poner en modo pantalla completa el gráfico
 
-![](top_menu.png)
+![](images/top_menu.png)
 
 > ** Top Menú **
 

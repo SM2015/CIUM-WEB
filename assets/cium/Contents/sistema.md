@@ -8,7 +8,7 @@ Todos los modulos tiene un listado con las opciones como se describen.
 <br>
 </p>
 
-![](sistema_lista.png)
+![](images/images/sistema_lista.png)
 
 > ** Listado **
 
@@ -18,7 +18,7 @@ Todos los modulos tiene un listado con las opciones como se describen.
 > - 4.- Despegar el campo de busqueda
 > - 5.- Agregar un registro nuevo
 
-![](sistema_lista_buscar.png)
+![](images/images/sistema_lista_buscar.png)
 
 > ** Listado buscar **
 
@@ -32,7 +32,7 @@ Todos los modulos tiene un listado con las opciones como se describen.
 Grupo creacion y administracion de los gurpos y configuracion de las acceso a modulos por accion. 
 </p>
 
-![](grupo.png)
+![](images/images/grupo.png)
 
 > ** Crear / Editar **
 
@@ -51,7 +51,7 @@ Grupo creacion y administracion de los gurpos y configuracion de las acceso a mo
 Modulo administra los modulos y controladores de laravel para crear las acciones por modulo, se usa para generar los permisos por grupo. 
 </p>
 
-![](modulo.png)
+![](images/images/modulo.png)
 
 > ** Crear / Editar **
 
@@ -76,8 +76,8 @@ Modulo administra los modulos y controladores de laravel para crear las acciones
 Usuario administra los usuarios que provienen de SALUD-ID (OAUTH2.0) para que puedan tener acceso al sistema. 
 </p>
 
-![](usuario1.png)
-![](usuario2.png)
+![](images/images/usuario1.png)
+![](images/images/usuario2.png)
 
 > ** Crear / Editar **
 
