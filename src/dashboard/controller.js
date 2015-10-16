@@ -52,7 +52,7 @@
 	$scope.$watch(function(){
        		return $window.innerHeight;
 		}, 
-		function(value) {		
+		function(value) {	
 			$scope.tamano = value-70;
    		});	
 		
@@ -376,6 +376,7 @@
 			$scope.getDimension('zona',5);	
 			$scope.getDimension('cone',6);
 		}
+		
 		$scope.$watch(function(){
        		return $window.innerWidth;
 		}, 
@@ -384,6 +385,22 @@
 			{
 				$scope.tamano = 0;
 				$scope.tieneTamano = false;
+			}
+			if(($window.outerWidth - value) >= 0)
+			{
+				var tama = (value - ($window.outerWidth - value))/2.8;
+				
+				if(value>1200)					
+					angular.element(document.getElementById("recurso")).attr("style","width:"+tama+"px");
+				else	
+					angular.element(document.getElementById("recurso")).attr("style","");
+				
+				var temp = $scope.data;
+				$scope.data = null;
+				setTimeout(function()
+				{
+					$scope.data = temp;
+				},20);							
 			}
    		});
 /**
@@ -508,7 +525,7 @@
 		$scope.calidad = true;
 	
 		$scope.datos={};
-	
+		
 		$scope.showModal = false;
 		$scope.showModalCriterio = false;
 		$scope.chart;
@@ -729,14 +746,32 @@
 			$scope.getDimension('zona',5);	
 			$scope.getDimension('cone',6);
 		}
+
 		$scope.$watch(function(){
        		return $window.innerWidth;
 		}, 
 		function(value) {
+			
 			if(!$scope.isFullscreen)
 			{
 				$scope.tamano = 0;
 				$scope.tieneTamano = false;
+			}
+			if(($window.outerWidth - value) >= 0)
+			{
+				var tama = (value - ($window.outerWidth - value))/2.8;	
+				
+				if(value>1200)			
+					angular.element(document.getElementById("calidad")).attr("style","width:"+tama+"px");
+				else	
+					angular.element(document.getElementById("calidad")).attr("style","");
+					
+				var temp = $scope.data;
+				$scope.data = null;
+				setTimeout(function()
+				{
+					$scope.data = temp;
+				},20);	
 			}
    		});
    
@@ -1013,6 +1048,7 @@
 		{
 			$scope.getDimension("codigo,indicador,color, '"+$scope.filtro.tipo+"' as categoriaEvaluacion",2);
 		}
+		
 		$scope.$watch(function(){
        		return $window.innerWidth;
 		}, 
@@ -1021,6 +1057,15 @@
 			{
 				$scope.tamano = 0;
 				$scope.tieneTamano = false;
+			}
+			if(($window.outerWidth - value) >= 0)
+			{
+				var tama = (value - ($window.outerWidth - value))/2.8;	
+				
+				if(value>1200)			
+					angular.element(document.getElementById("pieRecurso")).attr("style","width:"+tama+"px");
+				else	
+					angular.element(document.getElementById("pieRecurso")).attr("style","");
 			}
    		});
    
@@ -1286,6 +1331,7 @@
 		{
 			$scope.getDimension("codigo,indicador,color, '"+$scope.filtro.tipo+"' as categoriaEvaluacion",2);
 		}
+		
 		$scope.$watch(function(){
        		return $window.innerWidth;
 		}, 
@@ -1294,6 +1340,15 @@
 			{
 				$scope.tamano = 0;
 				$scope.tieneTamano = false;
+			}
+			if(($window.outerWidth - value) >= 0)
+			{
+				var tama = (value - ($window.outerWidth - value))/2.8;	
+				
+				if(value>1200)			
+					angular.element(document.getElementById("pieCalidad")).attr("style","width:"+tama+"px");
+				else	
+					angular.element(document.getElementById("pieCalidad")).attr("style","");
 			}
    		});
    
@@ -1557,6 +1612,7 @@
 		$scope.cambiarCategoria = function()
 		{
 			$scope.getDimension("codigo,indicador,color, '"+$scope.filtro.tipo+"' as categoriaEvaluacion",2);
+		
 		}
 		$scope.$watch(function(){
        		return $window.innerWidth;
@@ -1566,6 +1622,15 @@
 			{
 				$scope.tamano = 0;
 				$scope.tieneTamano = false;
+			}
+			if(($window.outerWidth - value) >= 0)
+			{
+				var tama = (value - ($window.outerWidth - value))/2.8;	
+				
+				if(value>1200)			
+					angular.element(document.getElementById("alertaRecurso")).attr("style","width:"+tama+"px");
+				else	
+					angular.element(document.getElementById("alertaRecurso")).attr("style","");
 			}
    		});
    
@@ -1794,6 +1859,7 @@
 		{
 			$scope.getDimension("codigo,indicador,color, '"+$scope.filtro.tipo+"' as categoriaEvaluacion",2);
 		}
+		
 		$scope.$watch(function(){
        		return $window.innerWidth;
 		}, 
@@ -1802,6 +1868,15 @@
 			{
 				$scope.tamano = 0;
 				$scope.tieneTamano = false;
+			}
+			if(($window.outerWidth - value) >= 0)
+			{
+				var tama = (value - ($window.outerWidth - value))/2.8;	
+				
+				if(value>1200)			
+					angular.element(document.getElementById("alertaCalidad")).attr("style","width:"+tama+"px");
+				else	
+					angular.element(document.getElementById("alertaCalidad")).attr("style","");
 			}
    		});
    
@@ -2073,6 +2148,7 @@
 		{
 			$scope.getDimension("codigo,indicador,color, '"+$scope.filtro.tipo+"' as categoriaEvaluacion",2);
 		}
+		
 		$scope.$watch(function(){
        		return $window.innerWidth;
 		}, 
@@ -2081,6 +2157,15 @@
 			{
 				$scope.tamano = 0;
 				$scope.tieneTamano = false;
+			}
+			if(($window.outerWidth - value) >= 0)
+			{
+				var tama = (value - ($window.outerWidth - value))/2.8;	
+				
+				if(value>1200)			
+					angular.element(document.getElementById("globalRecurso")).attr("style","width:"+tama+"px");
+				else	
+					angular.element(document.getElementById("globalRecurso")).attr("style","");
 			}
    		});
    
@@ -2353,6 +2438,7 @@
 		{
 			$scope.getDimension("codigo,indicador,color, '"+$scope.filtro.tipo+"' as categoriaEvaluacion",2);
 		}
+		
 		$scope.$watch(function(){
        		return $window.innerWidth;
 		}, 
@@ -2361,6 +2447,15 @@
 			{
 				$scope.tamano = 0;
 				$scope.tieneTamano = false;
+			}
+			if(($window.outerWidth - value) >= 0)
+			{
+				var tama = (value - ($window.outerWidth - value))/2.8;	
+				
+				if(value>1200)			
+					angular.element(document.getElementById("globalCalidad")).attr("style","width:"+tama+"px");
+				else	
+					angular.element(document.getElementById("globalCalidad")).attr("style","");
 			}
    		});
    
@@ -2587,10 +2682,20 @@
 			$scope.getDimension('zona',5);	
 			$scope.getDimension('cone',6);
 		}
+		
 		$scope.$watch(function(){
        		return document.getElementById("gaugeRecursos").offsetWidth;
 		}, 
 		function(value) {
+			if(($window.outerWidth - value) >= 0)
+			{
+				var tama = (value - ($window.outerWidth - value))/2.8;	
+				
+				if(value>1200)			
+					angular.element(document.getElementById("gaugeRecursos")).attr("style","width:"+tama+"px");
+				else	
+					angular.element(document.getElementById("gaugeRecursos")).attr("style","");
+			}
 			$scope.tamano = (value/1.7) - ($scope.indicadores.length*20);
    		});
    	    
@@ -2824,10 +2929,20 @@
 			$scope.getDimension('zona',5);	
 			$scope.getDimension('cone',6);
 		}
+		
 		$scope.$watch(function(){
        		return document.getElementById("gaugeCalidad").offsetWidth;
 		}, 
 		function(value) {
+			if(($window.outerWidth - value) >= 0)
+			{
+				var tama = (value - ($window.outerWidth - value))/2.8;	
+				
+				if(value>1200)			
+					angular.element(document.getElementById("gaugeCalidad")).attr("style","width:"+tama+"px");
+				else	
+					angular.element(document.getElementById("gaugeCalidad")).attr("style","");
+			}
 			$scope.tamano = (value/1.7) - ($scope.indicadores.length*20); 
    		});   	    
 		   
@@ -3007,7 +3122,7 @@
 					angular.forEach(val.columnas , function(v, k) 
 					{
 						$scope.columnas[v.expediente] = v.expediente;
-						$scope.indicadorColumna[val.codigo][c]=v;
+						$scope.indicadorColumna[val.codigo][v.expediente]=v;
 						c++;
 					});
 					

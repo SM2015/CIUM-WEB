@@ -32,8 +32,9 @@
 		</div>
 	</md-toolbar>
 	
+    
     <md-content flex >
-		<div layout="column" layout-gt-lg="row"  layout-margin>
+        <div layout="column" layout-gt-lg="row"  layout-margin>
             <!-- inicio grafico seguimiento-->
             <md-content class="md-whiteframe-z2" flex fullscreen="isFullscreen"  ng-controller="gaugeRecursoController" id="gaugeRecursos">
                 
@@ -109,9 +110,12 @@
             </md-content>
             <!-- fin grafico -->
         </div> 
+        
+        <!-- inicio -->
+        
         <div layout-margin layout="column" flex layout-gt-lg="row">
             <!-- inicio grafico Recurso-->           
-            <md-content  class="md-whiteframe-z2" flex="49" ng-controller="recursoController" id="recurso">
+            <md-content  class="md-whiteframe-z2" flex="49" ng-controller="recursoController" id="recurso" >
                 <div layout-fill fullscreen="isFullscreen" >
                     <md-toolbar class="md-theme-light" md-theme="altTheme">
                         <div class="md-toolbar-tools"> 
@@ -155,7 +159,7 @@
             <!-- fin grafico -->
             
             <!-- inicio grafico calidad -->
-            <md-content class="md-whiteframe-z2" flex ng-controller="calidadController" id="calidad">  
+            <md-content class="md-whiteframe-z2" flex ng-controller="calidadController" id="calidad" >  
                 <div layout-fill fullscreen="isFullscreen" >                             
                     <md-toolbar class="md-theme-light" md-theme="altTheme">
                         <div class="md-toolbar-tools">
@@ -199,9 +203,11 @@
             <!-- fin grafico -->  
         </div>
         
+        <!-- inicio -->
+        
         <div layout="column" layout-gt-lg="row"  layout-margin>
             <!-- inicio grafico reporte x equipo pie-->
-            <md-content class="md-whiteframe-z2" flex ng-controller="pieRecursoController"> 
+            <md-content class="md-whiteframe-z2" flex ng-controller="pieRecursoController" id="pieRecurso"> 
                 <div layout-fill fullscreen="isFullscreen">               
                     <md-toolbar class="md-theme-light" md-theme="altTheme">
                         <div class="md-toolbar-tools">
@@ -240,7 +246,7 @@
             <!-- fin grafico -->
             
              <!-- inicio grafico reporte x equipo pie-->
-            <md-content class="md-whiteframe-z2" flex ng-controller="pieCalidadController"> 
+            <md-content class="md-whiteframe-z2" flex ng-controller="pieCalidadController" id="pieCalidad"> 
                 <div layout-fill fullscreen="isFullscreen">               
                     <md-toolbar class="md-theme-light" md-theme="altTheme">
                         <div class="md-toolbar-tools">
@@ -512,6 +518,6 @@
             </md-content>
             <!-- fin grafico -->   
         </div> 
-
-    </md-content>
+        
+    </md-content>	
 </div>

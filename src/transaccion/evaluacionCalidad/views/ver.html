@@ -209,8 +209,8 @@
           <tbody>                                                     
             <tr>   
                <th align="right" > {{ 'PORCENTAJE' | translate }}</th>     
-              <td width="1%" align="center" ng-repeat="a in indi.columnas"  style="background-color:{{ indicadorColumna[indi.codigo][$index].color }};color:white; border: 1px #fff; font-size:.7em !important" ng-init="totalCriterio == indicadorColumna[indi.codigo][$index].total ? aprobado++ : noaprobado++">
-                {{ (indicadorColumna[indi.codigo][$index].total/criterios[indi.codigo].length)*100 | number:0 }}%
+              <td width="1%" align="center" ng-repeat="a in indi.columnas"  style="background-color:{{ indicadorColumna[indi.codigo][a.expediente].color }};color:white; border: 1px #fff; font-size:.7em !important" ng-init="totalCriterio == indicadorColumna[indi.codigo][a.expediente].total ? aprobado++ : noaprobado++">
+                {{ (indicadorColumna[indi.codigo][a.expediente].total/criterios[indi.codigo].length)*100 | number:0 }}% 
               </td>                                   
             </tr>
           </tbody>

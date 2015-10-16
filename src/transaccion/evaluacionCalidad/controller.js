@@ -709,7 +709,7 @@
 					angular.forEach(val.columnas , function(v, k) 
 					{
 						$scope.columnas[v.expediente] = v.expediente;
-						$scope.indicadorColumna[val.codigo][c]=v;
+						$scope.indicadorColumna[val.codigo][v.expediente]=v;
 						c++;
 					});
 					

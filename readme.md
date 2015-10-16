@@ -11,13 +11,13 @@ de los indicadores de calidad y recursos.
 </p>
 ## Official Documentation
 
-en construccion
+ > - [Manual de usuario](assets/manual-usuario.pdf)
 
 ## Tecnología
 
 * [Angularjs]('https://angularjs.org/')
 * [Material Design]('https://www.google.com/design/spec/material-design/introduction.html')
-* OAuth 2.0 [Salud ID]('http://sistemas.salud.chiapas.gob.mx/salud-id')
+* [OAuth 2.0]('http://oauth.net/2/') [Salud ID]('http://sistemas.salud.chiapas.gob.mx/salud-id')
 
 
 ## Instalación
