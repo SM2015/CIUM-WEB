@@ -1505,7 +1505,7 @@
 		$scope.filtro.anio = d.getFullYear();
 		$scope.filtro.um = {};
 		$scope.filtro.um.tipo='municipio';		
-		$scope.filtro.clues = [];
+		$scope.filtro.clues = [];		
 		$scope.mostrarCategoria=[];
 		$scope.filtro.verTodosIndicadores = true;
 		$scope.filtro.verTodosUM = true;
@@ -1514,6 +1514,13 @@
 		$scope.filtros = {};
     	$scope.filtros.activo = false;
 		$scope.verInfo = false;
+		$scope.filtro.estricto = false;
+		
+		$scope.modoEstricto = function()
+		{
+			$scope.filtro.estricto = !$scope.filtro.estricto;
+			$scope.init();
+		}
 		//aplicar los filtros al area del grafico
 		$scope.aplicarFiltro = function(avanzado,item)
 		{
@@ -1660,6 +1667,8 @@
 		$scope.init = function() 
 		{
 			var url='alertaDash';
+			if($scope.filtro.estricto)
+				url="alertaEstricto";
 				
 			$scope.alertaRecurso=true;
 			CrudDataApi.lista(url+"?filtro="+JSON.stringify($scope.filtro), function (data) {
@@ -1760,6 +1769,12 @@
 		$scope.filtros = {};
     	$scope.filtros.activo = false;
 		$scope.verInfo = false;
+		$scope.filtro.estricto = false;
+		$scope.modoEstricto = function()
+		{
+			$scope.filtro.estricto = !$scope.filtro.estricto;
+			$scope.init();
+		}
 		//aplicar los filtros al area del grafico
 		$scope.aplicarFiltro = function(avanzado,item)
 		{
@@ -1906,6 +1921,8 @@
 		$scope.init = function() 
 		{
 			var url='alertaDash';
+			if($scope.filtro.estricto)
+				url="alertaEstricto";
 				
 			$scope.alertaCalidad=true;
 			CrudDataApi.lista(url+"?filtro="+JSON.stringify($scope.filtro), function (data) {
@@ -2696,7 +2713,7 @@
 				else	
 					angular.element(document.getElementById("gaugeRecursos")).attr("style","");
 			}
-			$scope.tamano = (value/1.7) - ($scope.indicadores.length*20);
+			$scope.tamano = (value/1.7);
    		});
    	    
    
@@ -2742,7 +2759,7 @@
 					$scope.dato = data.data;
 					$scope.gaugeRecurso=false;
 					
-					$scope.tamano = (document.getElementById("gaugeRecursos").offsetWidth/1.7) - ($scope.indicadores.length*20);
+					$scope.tamano = (document.getElementById("gaugeRecursos").offsetWidth/1.7);
 				}
 				else
 				{
@@ -2943,7 +2960,7 @@
 				else	
 					angular.element(document.getElementById("gaugeCalidad")).attr("style","");
 			}
-			$scope.tamano = (value/1.7) - ($scope.indicadores.length*20); 
+			$scope.tamano = (value/1.7); 
    		});   	    
 		   
 		$scope.intentoOpcion = 0;
@@ -2989,7 +3006,7 @@
 					$scope.dato = data.data;
 					$scope.gaugeCalidad=false;
 					
-					$scope.tamano = (document.getElementById("gaugeCalidad").offsetWidth/1.7) - ($scope.indicadores.length*20);
+					$scope.tamano = (document.getElementById("gaugeCalidad").offsetWidth/1.7);
 				}
 				else
 				{

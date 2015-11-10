@@ -5,13 +5,13 @@
 		<span flex></span>
 		<md-button class="md-icon-button" ng-click="aplicarFiltro(true,null)">
 			<md-icon md-svg-icon="check" ></md-icon>
-			<md-tooltip>
+			<md-tooltip hide-sm>
 				{{ 'APLICAR_FILTRO' | translate }}
 			</md-tooltip>
 		</md-button>
 		<md-button class="md-icon-button" ng-if="filtros.activo" ng-click="quitarFiltro()">
 			<md-icon md-svg-icon="cancel" ></md-icon>
-			<md-tooltip>
+			<md-tooltip hide-sm>
 				{{ 'QUITAR_FILTRO' | translate }}
 			</md-tooltip>
 		</md-button>
@@ -50,7 +50,7 @@
 				
 				<md-button class="md-icon-button" ng-click="filtro.anio=[]" style="display:inline-block">
 					<md-icon md-svg-icon="cancel" ></md-icon>
-					<md-tooltip>
+					<md-tooltip hide-sm>
 						{{ 'QUITAR_FILTRO' | translate }}
 					</md-tooltip>
 				</md-button> 
@@ -63,7 +63,7 @@
 				</div>
 				<md-button class="md-icon-button" ng-click="filtro.bimestre=[]">
 					<md-icon md-svg-icon="cancel" ></md-icon>
-					<md-tooltip>
+					<md-tooltip hide-sm>
 						{{ 'QUITAR_FILTRO' | translate }}
 					</md-tooltip>
 				</md-button>      
@@ -144,7 +144,7 @@
 					</div>
 					<md-button class="md-icon-button" ng-click="filtro.um.cone=[]">
 						<md-icon md-svg-icon="cancel" ></md-icon>
-						<md-tooltip>
+						<md-tooltip hide-sm>
 							{{ 'QUITAR_FILTRO' | translate }}
 						</md-tooltip>
 					</md-button>
@@ -158,7 +158,7 @@
 					</div>
 					<md-button class="md-icon-button" ng-click="filtro.um.jurisdiccion=[]">
 						<md-icon md-svg-icon="cancel" ></md-icon>
-						<md-tooltip>
+						<md-tooltip hide-sm>
 							{{ 'QUITAR_FILTRO' | translate }}
 						</md-tooltip>
 					</md-button>					
@@ -178,7 +178,7 @@
 					</div>
 					<md-button class="md-icon-button" ng-click="filtro.um.municipio=[]">
 						<md-icon md-svg-icon="cancel" ></md-icon>
-						<md-tooltip>
+						<md-tooltip hide-sm>
 							{{ 'QUITAR_FILTRO' | translate }}
 						</md-tooltip>
 					</md-button>
@@ -192,7 +192,7 @@
 					</div>
 					<md-button class="md-icon-button" ng-click="filtro.um.zona=[]">
 						<md-icon md-svg-icon="cancel" ></md-icon>
-						<md-tooltip>
+						<md-tooltip hide-sm>
 							{{ 'QUITAR_FILTRO' | translate }}
 						</md-tooltip>
 					</md-button>
@@ -217,7 +217,7 @@
 				{{ 'CLUES' | translate }}  
 				<md-button class="md-icon-button" ng-click="cambiarVerTodoClues()">
 					<md-icon md-svg-icon="cancel" ></md-icon>
-					<md-tooltip>
+					<md-tooltip hide-sm>
 						{{ 'VER_TODO' | translate }}
 					</md-tooltip>
 				</md-button>                             

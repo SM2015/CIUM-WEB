@@ -22,7 +22,7 @@
         
           <md-button class="md-icon-button"  hide show-sm show-md show-lg  aria-label="{{ 'REGRESAR' | translate }}" ng-if="url.split('/').length>2">
             <md-icon md-svg-icon="arrow-back"></md-icon>
-            <md-tooltip>
+            <md-tooltip hide-sm>
               {{ 'REGRESAR' | translate }}
             </md-tooltip>
           </md-button> 
@@ -35,14 +35,14 @@
         </md-button>
         <md-button class="md-icon-button"  hide show-sm show-md show-lg imprimir-div=".imprimir" aria-label="{{ 'PDF' | translate }}" >
           <md-icon md-svg-icon="print"></md-icon>
-          <md-tooltip>
+          <md-tooltip hide-sm>
                   {{ 'PDF' | translate }}
                 </md-tooltip>
         </md-button>
         
         <md-button hide-sm class="md-icon-button" aria-label="{{ 'CAMBIAR_IDIOMA' | translate }}" ng-click="mostrarIdiomas($event)">
         <md-icon md-svg-icon="language"></md-icon>
-              <md-tooltip>
+              <md-tooltip hide-sm>
                 {{ 'CAMBIAR_IDIOMA' | translate }}
               </md-tooltip>
       </md-button>

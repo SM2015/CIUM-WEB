@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="App">
+<html lang="es" ng-app="App">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="charset" content="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="viewport" content="width=devicewidth, minimal-ui, initial-scale=1, maximum-scale=1, user-escalable = no">
+	
 	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+	<link rel="apple-touch-icon" href="assets/img/icono-cium-blue.png">
+	
+	<meta name="mobile-web-app-capable" content="yes">
+	<link rel="shortcut icon" sizes="196x196" href="assets/img/icono-cium-blue.png">
+
 	<link rel="shortcut icon" href="assets/img/favicon-cium.ico" />
 	<title>{{ 'APP_NOMBRE' | translate }}</title>
 	<link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css"/>
@@ -15,9 +22,9 @@
 	<!-- color picker -->
 	<link rel="stylesheet" href="assets/css/color-picker.css"/>
 
-	<link rel="stylesheet" href="login.css">
-	<link rel="stylesheet" href="app.css">
-	<link rel="stylesheet" href="treeview.css" media="screen"  charset="utf-8">
+	<link rel="stylesheet" href="assets/css/login.css">
+	<link rel="stylesheet" href="assets/css/app.css">
+	<link rel="stylesheet" href="assets/css/treeview.css" media="screen"  charset="utf-8">
 	<meta name="viewport" content="initial-scale=1" />
 		
 </head>
@@ -73,7 +80,7 @@
 	<script src="src/app/controllers.js"></script>
 	<!-- Controller CIUM -->
 
-	<script src="src/app.blade.js"></script>
+	<script src="src/app/directives.js"></script>
 
   	<script src="src/dashboard/modulo.js"></script>
 	<script src="src/dashboard/services.js"></script>

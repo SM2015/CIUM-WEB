@@ -22,7 +22,7 @@
         
           <md-button class="md-icon-button"  hide show-sm show-md show-lg  aria-label="{{ 'REGRESAR' | translate }}" ng-if="url.split('/').length>2">
             <md-icon md-svg-icon="arrow-back"></md-icon>
-            <md-tooltip>
+            <md-tooltip hide-sm>
               {{ 'REGRESAR' | translate }}
             </md-tooltip>
           </md-button> 
@@ -35,7 +35,7 @@
 </md-button>
 <md-button class="md-icon-button"  ng-show="terminado" hide show-sm show-md show-lg show-sm ng-click="cerrar(dato.id)" ng-disabled="forma.$invalid" aria-label="{{ 'CERRAR_EV' | translate }}">
   <md-icon md-svg-icon="check"></md-icon>
-  <md-tooltip>
+  <md-tooltip hide-sm>
       {{ 'CERRAR_EV' | translate }}
     </md-tooltip>
 </md-button>
@@ -46,7 +46,7 @@
 </md-button>
 <md-button class="md-icon-button"  hide show-sm show-md show-lg show-sm ng-click="modificar(dato.id)" aria-label="{{ 'GUARDAR' | translate }}" ng-disabled="forma.$invalid" ng-if="dato.idIndicador">
   <md-icon md-svg-icon="save"></md-icon>
-  <md-tooltip>
+  <md-tooltip hide-sm>
       {{ 'GUARDAR' | translate }}
     </md-tooltip>
 </md-button>
@@ -58,14 +58,14 @@
 </md-button>
 <md-button class="md-icon-button"  hide show-sm show-md show-lg show-sm ng-click="abrirFicha($event);" aria-label="{{ 'FICHA' | translate }}" >
   <md-icon md-svg-icon="info"></md-icon>
-  <md-tooltip>
+  <md-tooltip hide-sm>
       {{ 'FICHA' | translate }}
     </md-tooltip>
 </md-button>
 
 <md-button hide-sm class="md-icon-button" aria-label="{{ 'CAMBIAR_IDIOMA' | translate }}" ng-click="mostrarIdiomas($event)">
   <md-icon md-svg-icon="language"></md-icon>
-        <md-tooltip>
+        <md-tooltip hide-sm>
           {{ 'CAMBIAR_IDIOMA' | translate }}
         </md-tooltip>
 </md-button>
@@ -91,7 +91,7 @@
               <md-menu>
                 <md-button class="md-icon-button md-primary" aria-label="{{ 'INDICADOR_SEL' | translate }}" ng-click="$mdOpenMenu();abrirIndicadores();">
                   <md-icon md-svg-icon="menu"></md-icon>
-                  <md-tooltip>
+                  <md-tooltip hide-sm>
                     {{ 'INDICADOR_SEL' | translate }}
                   </md-tooltip>
                  </md-button>
@@ -117,7 +117,7 @@
             <div>
               <md-button class="md-icon-button  md-warn"  ng-click="borrarIndicador()" aria-label="{{ 'ELIMINAR' | translate }}" ng-if="criterios.aprobado.length>0 || criterios.noAprobado.length>0">
                 <md-icon md-svg-icon="delete"></md-icon>
-                <md-tooltip>
+                <md-tooltip hide-sm>
                         {{ 'ELIMINAR_IND' | translate }}
                       </md-tooltip>
               </md-button>                                               

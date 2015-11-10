@@ -10,16 +10,12 @@
     {
         position: fixed;        
     }
-    .md-select-menu-container
-    {
-        z-index: 9999999999;
-    }
 </style>
 
 <div layout="column" class="relative" layout-fill role="main">
 	
 	<md-progress-linear  ng-if="cargando" class="md-warn" style="position:fixed; top:-5px; left:0px; z-index:999"  md-mode="indeterminate"></md-progress-linear>
-	<md-toolbar >
+	<md-toolbar style="z-index: 59;">
 		<div class="md-toolbar-tools">    
 			<md-button hide-gt-md class="md-icon-button " ng-click="toggleMenu()" aria-label="Menu">
 		  <md-icon md-svg-icon="menu" ></md-icon>
@@ -36,8 +32,8 @@
     <md-content flex >
         <div layout="column" layout-gt-lg="row"  layout-margin>
             <!-- inicio grafico seguimiento-->
-            <md-content class="md-whiteframe-z2" flex fullscreen="isFullscreen"  ng-controller="gaugeRecursoController" id="gaugeRecursos">
-                
+            <div class="md-whiteframe-z2" flex ng-controller="gaugeRecursoController" id="gaugeRecursos">
+                <div layout-fill fullscreen="isFullscreen" >
                     <md-toolbar class="md-theme-light" md-theme="altTheme">
                         <div class="md-toolbar-tools">
                             <h2>
@@ -47,10 +43,16 @@
                             <span>
                                 <md-button class="md-icon-button" aria-label="Opciones"  ng-click="toggleRightOpciones('gaugeRecurso');" id="gauge">
                                     <md-icon md-svg-src="perm-data-setting"></md-icon>
+                                    <md-tooltip hide-sm>
+                                        {{ 'OPCIONES' | translate }}
+                                    </md-tooltip>
                                 </md-button>                                                               
                                 
-                                <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-gauge')" id="max-gaugeRecurso">
+                                <md-button class="md-icon-button" aria-label="Máximizar" hide-sm ng-click="toggleFullScreen('max-gauge')" id="max-gaugeRecurso">
                                     <md-icon md-svg-src="{{!isFullscreen ? 'fullscreen' : 'fullscreen-exit'}}"></md-icon>
+                                    <md-tooltip hide-sm>
+                                        {{ 'FULLSCREEN' | translate }}
+                                    </md-tooltip>
                                 </md-button>
                             </span>
                         </div>
@@ -59,7 +61,7 @@
                     <md-content flex>                                                                                                                                                                    
                         <md-progress-linear  ng-if="gaugeRecurso" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear>
                         <div ng-show="datosOk" >                                
-                            <div  style="width:{{tamano}}px; height: auto;" class="gauge" ng-radial-gauge ranges="ranges" value="value" value-unit="unit" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit"></div>
+                            <div  style="width:{{ isFullscreen ? '60%' : tamano > 0 ? tamano+'px' : ''}}; height: auto;" class="gauge" ng-radial-gauge ranges="ranges" value="value" value-unit="unit" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit"></div>
                             <div ng-show="datosOk" style="font-size:.8em" align="center">
                                 {{ "NUM_UM" | translate}}
                             </div>
@@ -70,11 +72,13 @@
                         </div>                                  
                     </md-content>
                     <md-sidenav layout="column" layout-fill class="md-sidenav-right md-whiteframe-z2" md-component-id="gaugeRecurso"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
-            </md-content>
+                </div>                    
+            </div>
             <!-- fin grafico -->
 
             <!-- inicio grafico gauge-->
-            <md-content class="md-whiteframe-z2" flex fullscreen="isFullscreen"  ng-controller="gaugeCalidadController" id="gaugeCalidad">                
+            <div class="md-whiteframe-z2" flex ng-controller="gaugeCalidadController" id="gaugeCalidad">   
+                <div layout-fill fullscreen="isFullscreen" >             
                 <md-toolbar class="md-theme-light" md-theme="altTheme">
                     <div class="md-toolbar-tools">
                         <h2>
@@ -84,10 +88,16 @@
                         <span>
                             <md-button class="md-icon-button" aria-label="Opciones"  ng-click="toggleRightOpciones('gaugeCalidad');">
                                 <md-icon md-svg-src="perm-data-setting"></md-icon>
+                                <md-tooltip hide-sm>
+                                    {{ 'OPCIONES' | translate }}
+                                </md-tooltip>
                             </md-button>                                                                
                             
-                            <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-gauge')" id="max-gaugeCalidad">
+                            <md-button class="md-icon-button" aria-label="Máximizar" hide-sm ng-click="toggleFullScreen('max-gauge')" id="max-gaugeCalidad">
                                 <md-icon md-svg-src="{{!isFullscreen ? 'fullscreen' : 'fullscreen-exit'}}"></md-icon>
+                                <md-tooltip hide-sm>
+                                    {{ 'FULLSCREEN' | translate }}
+                                </md-tooltip>
                             </md-button>
                         </span>
                     </div>
@@ -96,7 +106,7 @@
                 <md-content flex >                                                                                                                                                                    
                     <md-progress-linear  ng-if="gaugeCalidad" style="position:absolute; top:-5px; left:0px;" class="md-accent"  md-theme="altTheme"  md-mode="indeterminate"></md-progress-linear>    
                     <div ng-show="datosOk">                             
-                        <div style="width:{{tamano}}px; height: auto;" class="gauge" ng-radial-gauge ranges="ranges" value="value" value-unit="unit" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit"></div>
+                        <div style="width:{{ isFullscreen ? '60%' : tamano > 0 ? tamano+'px' : ''}}; height: auto;" class="gauge" ng-radial-gauge ranges="ranges" value="value" value-unit="unit" precision="precision" lower-limit="lowerLimit" upper-limit="upperLimit"></div>
                         <div ng-show="datosOk" style="font-size:.8em" align="center">
                             {{ "NUM_UM" | translate}}
                         </div>
@@ -107,7 +117,8 @@
                     </div>                         
                 </md-content>
                 <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="gaugeCalidad"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
-            </md-content>
+                </div>
+            </div>
             <!-- fin grafico -->
         </div> 
         
@@ -115,7 +126,7 @@
         
         <div layout-margin layout="column" flex layout-gt-lg="row">
             <!-- inicio grafico Recurso-->           
-            <md-content  class="md-whiteframe-z2" flex="49" ng-controller="recursoController" id="recurso" >
+            <div  class="md-whiteframe-z2" flex="49" ng-controller="recursoController" id="recurso" >
                 <div layout-fill fullscreen="isFullscreen" >
                     <md-toolbar class="md-theme-light" md-theme="altTheme">
                         <div class="md-toolbar-tools"> 
@@ -126,18 +137,30 @@
                             <span>
                                 <md-button class="md-icon-button" aria-label="info" ng-click="showAlert($event)" ng-if="verInfo" >
                                 <md-icon md-svg-src="info"></md-icon>
+                                <md-tooltip hide-sm>
+                                    Info
+                                </md-tooltip>
                                 </md-button>
                                 
                                 <md-button class="md-icon-button" aria-label="quitar" ng-click="quitarAlert()" >
                                 <md-icon md-svg-src="{{ quitar ? 'error' : 'error-outline'}}"></md-icon>
+                                <md-tooltip hide-sm>
+                                    {{ !quitar ? 'QUITARALERTA' : 'PONERALERTA' | translate }}
+                                </md-tooltip>
                                 </md-button>
                                 
                                 <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleRightOpciones('recurso');">
                                 <md-icon md-svg-src="perm-data-setting"></md-icon>
+                                    <md-tooltip hide-sm>
+                                        {{ 'OPCIONES' | translate }}
+                                    </md-tooltip>
                                 </md-button>                                                                
                                 
-                                <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-Recurso')" id="max-Recurso">
+                                <md-button class="md-icon-button" aria-label="Máximizar" hide-sm ng-click="toggleFullScreen('max-Recurso')" id="max-Recurso">
                                 <md-icon md-svg-src="{{!isFullscreen ? 'fullscreen' : 'fullscreen-exit'}}"></md-icon>
+                                    <md-tooltip hide-sm>
+                                        {{ 'FULLSCREEN' | translate }}
+                                    </md-tooltip>
                                 </md-button>
                             </span>
                         </div>
@@ -155,11 +178,11 @@
                     <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="recurso"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>  
                 </div> 
                                                       
-            </md-content>
+            </div>
             <!-- fin grafico -->
             
             <!-- inicio grafico calidad -->
-            <md-content class="md-whiteframe-z2" flex ng-controller="calidadController" id="calidad" >  
+            <div class="md-whiteframe-z2" flex ng-controller="calidadController" id="calidad" >  
                 <div layout-fill fullscreen="isFullscreen" >                             
                     <md-toolbar class="md-theme-light" md-theme="altTheme">
                         <div class="md-toolbar-tools">
@@ -170,18 +193,30 @@
                             <span>
                                 <md-button class="md-icon-button" aria-label="info" ng-click="showAlert($event)" ng-if="verInfo" >
                                 <md-icon md-svg-src="info"></md-icon>
+                                <md-tooltip hide-sm>
+                                    Info
+                                </md-tooltip>
                                 </md-button>
                                 
                                 <md-button class="md-icon-button" aria-label="quitar" ng-click="quitarAlert()" >
                                 <md-icon md-svg-src="{{ quitar ? 'error' : 'error-outline'}}"></md-icon>
+                                <md-tooltip hide-sm>
+                                    {{ !quitar ? 'QUITARALERTA' : 'PONERALERTA' | translate }}
+                                </md-tooltip>
                                 </md-button>
                                 
                                 <md-button class="md-icon-button" aria-label="Opciones"  ng-click="toggleRightOpciones('calidad');">
                                 <md-icon md-svg-src="perm-data-setting"></md-icon>
+                                    <md-tooltip hide-sm>
+                                        {{ 'OPCIONES' | translate }}
+                                    </md-tooltip>
                                 </md-button>                                                                
                                 
-                                <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-calidad')" id="max-calidad">
+                                <md-button class="md-icon-button" aria-label="Máximizar" hide-sm ng-click="toggleFullScreen('max-calidad')" id="max-calidad">
                                 <md-icon md-svg-src="{{!isFullscreen ? 'fullscreen' : 'fullscreen-exit'}}"></md-icon>
+                                    <md-tooltip hide-sm>
+                                        {{ 'FULLSCREEN' | translate }}
+                                    </md-tooltip>
                                 </md-button>                                                                
                             </span>
                         </div>
@@ -199,7 +234,7 @@
                     <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="calidad"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
                 </div>
                 
-            </md-content>
+            </div>
             <!-- fin grafico -->  
         </div>
         
@@ -207,7 +242,7 @@
         
         <div layout="column" layout-gt-lg="row"  layout-margin>
             <!-- inicio grafico reporte x equipo pie-->
-            <md-content class="md-whiteframe-z2" flex ng-controller="pieRecursoController" id="pieRecurso"> 
+            <div class="md-whiteframe-z2" flex ng-controller="pieRecursoController" id="pieRecurso"> 
                 <div layout-fill fullscreen="isFullscreen">               
                     <md-toolbar class="md-theme-light" md-theme="altTheme">
                         <div class="md-toolbar-tools">
@@ -218,10 +253,16 @@
                             <span>
                                     <md-button class="md-icon-button" aria-label="Opciones"  ng-click="toggleRightOpciones('pieRecurso');" id="pieRecurso">
                                         <md-icon md-svg-src="perm-data-setting"></md-icon>
+                                        <md-tooltip hide-sm>
+                                            {{ 'OPCIONES' | translate }}
+                                        </md-tooltip>
                                     </md-button>                                                                        
                                     
-                                    <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-equipo')" id="max-equipo">
+                                    <md-button class="md-icon-button" aria-label="Máximizar" hide-sm ng-click="toggleFullScreen('max-equipo')" id="max-equipo">
                                         <md-icon md-svg-src="{{!isFullscreen ? 'fullscreen' : 'fullscreen-exit'}}"></md-icon>
+                                        <md-tooltip hide-sm>
+                                            {{ 'FULLSCREEN' | translate }}
+                                        </md-tooltip>
                                     </md-button>
                                 </span>
                         </div>
@@ -242,11 +283,11 @@
                     <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="pieRecurso"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
                 </div>
                 
-            </md-content>
+            </div>
             <!-- fin grafico -->
             
              <!-- inicio grafico reporte x equipo pie-->
-            <md-content class="md-whiteframe-z2" flex ng-controller="pieCalidadController" id="pieCalidad"> 
+            <div class="md-whiteframe-z2" flex ng-controller="pieCalidadController" id="pieCalidad"> 
                 <div layout-fill fullscreen="isFullscreen">               
                     <md-toolbar class="md-theme-light" md-theme="altTheme">
                         <div class="md-toolbar-tools">
@@ -257,10 +298,16 @@
                             <span>
                                     <md-button class="md-icon-button" aria-label="Opciones"  ng-click="toggleRightOpciones('pieCalidad');" id="pieCalidad">
                                         <md-icon md-svg-src="perm-data-setting"></md-icon>
+                                        <md-tooltip hide-sm>
+                                            {{ 'OPCIONES' | translate }}
+                                        </md-tooltip>
                                     </md-button>                                                                        
                                     
-                                    <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-equipo')" id="max-equipo">
+                                    <md-button class="md-icon-button" aria-label="Máximizar" hide-sm ng-click="toggleFullScreen('max-equipo')" id="max-equipo">
                                         <md-icon md-svg-src="{{!isFullscreen ? 'fullscreen' : 'fullscreen-exit'}}"></md-icon>
+                                        <md-tooltip hide-sm>
+                                            {{ 'FULLSCREEN' | translate }}
+                                        </md-tooltip>
                                     </md-button>
                                 </span>
                         </div>
@@ -281,7 +328,7 @@
                     <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="pieCalidad"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
                 </div>
                 
-            </md-content>
+            </div>
             <!-- fin grafico -->
         
          	
@@ -291,7 +338,8 @@
         <div layout="column" layout-gt-lg="row"  layout-margin>
             
             <!-- inicio grafico alertas-->
-            <md-content class="md-whiteframe-z2" flex fullscreen="isFullscreen" ng-controller="alertaRecursoController" id="alertaRecurso">                
+            <div class="md-whiteframe-z2" flex  ng-controller="alertaRecursoController" id="alertaRecurso">   
+                <div layout-fill fullscreen="isFullscreen" >             
                 <md-toolbar class="md-theme-light" md-theme="altTheme">
                     <div class="md-toolbar-tools">
                         <h2>
@@ -299,12 +347,25 @@
                         </h2> 
                         <span flex></span>
                         <span>
-                                <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleRightOpciones('alertaRecurso');">
+                            <md-button class="md-icon-button" aria-label="estricto" ng-click="modoEstricto();">
+                                <md-icon md-svg-src="{{!filtro.estricto ? 'assignment-late' : 'assignment'}}"></md-icon>
+                                <md-tooltip hide-sm>
+                                    {{ !filtro.estricto ? 'MODOESTRICTO' : 'MODOALERTA' | translate }}
+                                </md-tooltip>
+                            </md-button> 
+                            
+                            <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleRightOpciones('alertaRecurso');">
                                 <md-icon md-svg-src="perm-data-setting"></md-icon>
+                                <md-tooltip hide-sm>
+                                    {{ 'OPCIONES' | translate }}
+                                </md-tooltip>
                             </md-button>                                                                
                             
-                            <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-alerta')" id="max-alerta">
+                            <md-button class="md-icon-button" aria-label="Máximizar" hide-sm ng-click="toggleFullScreen('max-alerta')" id="max-alerta">
                                 <md-icon md-svg-src="{{!isFullscreen ? 'fullscreen' : 'fullscreen-exit'}}"></md-icon>
+                                <md-tooltip hide-sm>
+                                    {{ 'FULLSCREEN' | translate }}
+                                </md-tooltip>
                             </md-button>
                         </span>
                     </div>
@@ -316,9 +377,9 @@
                         <table md-data-table md-progress="datos">
                             <thead md-order="query.order" md-trigger="onOrderChange">
                                 <tr>
-                                    <th name="{{ 'CODIGO' | translate }}"></th>
+                                    <th width="1%" name="{{ 'CODIGO' | translate }}"></th>
                                     <th name="{{ 'INDICADOR' | translate }}"></th>
-                                    <th name="{{ 'PORCENTAJE' | translate }}"></th>
+                                    <th name="{{ filtro.estricto ? 'CUMPLE' : 'PORCENTAJE' | translate }}"></th>
                                 </tr>
                             </thead>
                         <tbody>                                            
@@ -326,27 +387,43 @@
                                 <td>{{ value.codigo }}</td>							
                                 <td>{{ value.nombre }}</td>
                                 <td>
-                                    <div class="progress" >
-                                    <div class="progress-bar progress-bar-striped active progress-bar-default" role="progressbar"
-                                    aria-valuenow="{{ value.porcentaje }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ value.porcentaje }}%; background:{{ value.color }}">
-                                        {{ value.porcentaje }}%
-                                    </div></div>
+                                    <div class="progress" ng-if="!filtro.estricto">
+                                        <div class="progress-bar progress-bar-striped active progress-bar-default" role="progressbar"
+                                        aria-valuenow="{{ value.porcentaje }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ value.porcentaje }}%; background:{{ value.color }}">
+                                            {{ value.porcentaje }}%
+                                        </div>
+                                    </div>
+                                    
+                                    <div ng-if="filtro.estricto">
+                                        {{ value.cumple }} / {{ value.cumple + value.noCumple }}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped active progress-bar-default" role="progressbar"
+                                            aria-valuenow="{{ value.porcentaje }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ value.porcentaje }}%; background:{{ value.color }}">
+                                                {{ value.porcentaje }}%
+                                            </div>
+                                        </div>                                        
+                                    </div>
                                 </td>		             
                             </tr>
                         </tbody>
                         </table>
                     </md-data-table-container>
-                    <div ng-show="!datosOk" layout="row" layout-align="center center">
-                            <h3>{{ 'NO_HAY_DATOS' | translate}}</h3>
-                        </div>  
+                    <div ng-if="filtro.estricto" ng-show="datosOk" style="font-size:.8em" align="center" class="ng-binding" aria-hidden="false" layout-margin layout-padding>
+                        {{ 'MODO_ESTRICTO' | translate}}
+                    </div>
+                            
+                    <div  ng-show="!datosOk" layout="row" layout-align="center center">
+                        <h3>{{ 'NO_HAY_DATOS' | translate}}</h3>
+                    </div>  
                     <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="alertaRecurso"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
                 </md-content>
-                
-            </md-content>
+                </div>
+            </div>
             <!-- fin grafico -->
             
             <!-- inicio grafico alertas-->
-            <md-content class="md-whiteframe-z2" flex fullscreen="isFullscreen" ng-controller="alertaCalidadController" id="alertaCalidad">                
+            <div class="md-whiteframe-z2" flex ng-controller="alertaCalidadController" id="alertaCalidad"> 
+                <div layout-fill fullscreen="isFullscreen" >               
                 <md-toolbar class="md-theme-light" md-theme="altTheme">
                     <div class="md-toolbar-tools">
                         <h2>
@@ -354,12 +431,25 @@
                         </h2> 
                         <span flex></span>
                         <span>
-                                <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleRightOpciones('alertaCalidad');">
+                            <md-button class="md-icon-button" aria-label="estricto" ng-click="modoEstricto();">
+                                <md-icon md-svg-src="{{!filtro.estricto ? 'assignment-late' : 'assignment'}}"></md-icon>
+                                <md-tooltip hide-sm>
+                                    {{ !filtro.estricto ? 'MODOESTRICTO' : 'MODOALERTA' | translate }}
+                                </md-tooltip>
+                            </md-button>
+                            
+                            <md-button class="md-icon-button" aria-label="Opciones" ng-click="toggleRightOpciones('alertaCalidad');">
                                 <md-icon md-svg-src="perm-data-setting"></md-icon>
+                                <md-tooltip hide-sm>
+                                    {{ 'OPCIONES' | translate }}
+                                </md-tooltip>
                             </md-button>                                                                
                             
-                            <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-alerta')" id="max-alerta">
+                            <md-button class="md-icon-button" aria-label="Máximizar" hide-sm ng-click="toggleFullScreen('max-alerta')" id="max-alerta">
                                 <md-icon md-svg-src="{{!isFullscreen ? 'fullscreen' : 'fullscreen-exit'}}"></md-icon>
+                                <md-tooltip hide-sm>
+                                    {{ 'FULLSCREEN' | translate }}
+                                </md-tooltip>
                             </md-button>
                         </span>
                     </div>
@@ -371,9 +461,9 @@
                         <table md-data-table md-progress="datos">
                             <thead md-order="query.order" md-trigger="onOrderChange">
                                 <tr>
-                                    <th name="{{ 'CODIGO' | translate }}"></th>
+                                    <th width="1%" name="{{ 'CODIGO' | translate }}"></th>
                                     <th name="{{ 'INDICADOR' | translate }}"></th>
-                                    <th name="{{ 'PORCENTAJE' | translate }}"></th>
+                                    <th name="{{ filtro.estricto ? 'CUMPLE' : 'PORCENTAJE' | translate }}"></th>
                                 </tr>
                             </thead>
                         <tbody>                                            
@@ -381,30 +471,45 @@
                                 <td>{{ value.codigo }}</td>							
                                 <td>{{ value.nombre }}</td>
                                 <td>
-                                    <div class="progress" >
-                                    <div class="progress-bar progress-bar-striped active progress-bar-default" role="progressbar"
-                                    aria-valuenow="{{ value.porcentaje }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ value.porcentaje }}%; background:{{ value.color }}">
-                                        {{ value.porcentaje }}%
-                                    </div></div>
+                                    <div class="progress" ng-if="!filtro.estricto">
+                                        <div class="progress-bar progress-bar-striped active progress-bar-default" role="progressbar"
+                                        aria-valuenow="{{ value.porcentaje }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ value.porcentaje }}%; background:{{ value.color }}">
+                                            {{ value.porcentaje }}%
+                                        </div>
+                                    </div>
+                                    
+                                    <div ng-if="filtro.estricto">
+                                        {{ value.cumple }} / {{ value.cumple + value.noCumple }}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped active progress-bar-default" role="progressbar"
+                                            aria-valuenow="{{ value.porcentaje }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ value.porcentaje }}%; background:{{ value.color }}">
+                                                {{ value.porcentaje }}%
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>		             
                             </tr>
                         </tbody>
                         </table>
                     </md-data-table-container>
+                    <div ng-if="filtro.estricto" ng-show="datosOk" style="font-size:.8em" align="center" class="ng-binding" aria-hidden="false" layout-margin layout-padding>
+                        {{ 'MODO_ESTRICTO' | translate}}
+                    </div>
                     <div ng-show="!datosOk" layout="row" layout-align="center center">
-                            <h3>{{ 'NO_HAY_DATOS' | translate}}</h3>
-                        </div>  
+                        <h3>{{ 'NO_HAY_DATOS' | translate}}</h3>
+                    </div>  
                     <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="alertaCalidad"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
                 </md-content>
-                
-            </md-content>
+                </div>
+            </div>
             <!-- fin grafico -->
         </div>
                 
             
         <div layout="column" layout-gt-lg="row"  layout-margin>               
             <!-- inicio grafico reporte global-->
-            <md-content class="md-whiteframe-z2" flex fullscreen="isFullscreen" ng-controller="globalRecursoController" id="globalRecurso">                
+            <div class="md-whiteframe-z2" flex ng-controller="globalRecursoController" id="globalRecurso"> 
+                <div layout-fill fullscreen="isFullscreen" >               
                 <md-toolbar class="md-theme-light" md-theme="altTheme">
                     <div class="md-toolbar-tools">
                         <h2>
@@ -414,10 +519,16 @@
                         <span>
                             <md-button class="md-icon-button" aria-label="Opciones"  ng-click="toggleRightOpciones('globalRecurso');">
                                 <md-icon md-svg-src="perm-data-setting"></md-icon>
+                                <md-tooltip hide-sm>
+                                    {{ 'OPCIONES' | translate }}
+                                </md-tooltip>
                             </md-button>                                                               
                             
-                            <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-globalRecurso')" id="max-globalRecurso">
+                            <md-button class="md-icon-button" aria-label="Máximizar" hide-sm ng-click="toggleFullScreen('max-globalRecurso')" id="max-globalRecurso">
                                 <md-icon md-svg-src="{{!isFullscreen ? 'fullscreen' : 'fullscreen-exit'}}"></md-icon>
+                                <md-tooltip hide-sm>
+                                    {{ 'FULLSCREEN' | translate }}
+                                </md-tooltip>
                             </md-button>
                         </span>
                     </div>
@@ -458,11 +569,13 @@
                     </md-content>
                 </md-content>
                 <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="globalRecurso"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
-            </md-content>
+                </div>
+            </div>
             <!-- fin grafico -->   
             
             <!-- inicio grafico reporte global calidad-->
-            <md-content class="md-whiteframe-z2" flex fullscreen="isFullscreen" ng-controller="globalCalidadController" id="globalCalidad">                
+            <div class="md-whiteframe-z2" flex  ng-controller="globalCalidadController" id="globalCalidad">   
+                <div layout-fill fullscreen="isFullscreen" >             
                 <md-toolbar class="md-theme-light" md-theme="altTheme">
                     <div class="md-toolbar-tools">
                         <h2>
@@ -472,10 +585,16 @@
                         <span>
                             <md-button class="md-icon-button" aria-label="Opciones"  ng-click="toggleRightOpciones('globalCalidad');">
                                 <md-icon md-svg-src="perm-data-setting"></md-icon>
+                                <md-tooltip hide-sm>
+                                    {{ 'OPCIONES' | translate }}
+                                </md-tooltip>
                             </md-button>                                                               
                             
-                            <md-button class="md-icon-button" aria-label="Máximizar" ng-click="toggleFullScreen('max-globalCalidad')" id="max-globalCalidad">
+                            <md-button class="md-icon-button" aria-label="Máximizar" hide-sm ng-click="toggleFullScreen('max-globalCalidad')" id="max-globalCalidad">
                                 <md-icon md-svg-src="{{!isFullscreen ? 'fullscreen' : 'fullscreen-exit'}}"></md-icon>
+                                <md-tooltip hide-sm>
+                                    {{ 'FULLSCREEN' | translate }}
+                                </md-tooltip>
                             </md-button>
                         </span>
                     </div>
@@ -515,7 +634,8 @@
                     </md-content>
                 </md-content>
                 <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="globalCalidad"  ng-include="'src/dashboard/views/dialog.html'" ></md-sidenav>
-            </md-content>
+                </div>
+            </div>
             <!-- fin grafico -->   
         </div> 
         

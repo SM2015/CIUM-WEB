@@ -14,7 +14,7 @@
 				<span flex></span>
 				<md-button class="md-icon-button" ng-click="mostrarSearch(0)" aria-label="{{ 'BUSCAR' | translate }}">
 				    <md-icon md-svg-icon="search"></md-icon>
-                    <md-tooltip>
+                    <md-tooltip hide-sm>
 			          {{ 'BUSCAR'| translate }}
 			        </md-tooltip>
 				</md-button>
@@ -25,7 +25,7 @@
 				</md-button>
 				<md-button class="md-icon-button"  hide show-sm show-md show-lg ng-click="nuevo()" aria-label="{{ 'NUEVO' | translate }}">
 				  <md-icon md-svg-icon="add"></md-icon>
-				  <md-tooltip>
+				  <md-tooltip hide-sm>
 				          {{ 'NUEVO' | translate }}
 				        </md-tooltip>
 				</md-button>
@@ -79,21 +79,21 @@
 						
 						<a url-modulo="ver?id={{ dato.id }}"><md-button class="md-icon-button md-primary" aria-label="Ver" ng-if="permisoVer">
 							<md-icon md-svg-src="remove-red-eye"></md-icon>
-							<md-tooltip>
+							<md-tooltip hide-sm>
 							{{ 'VER' | translate }}
 							</md-tooltip>
 						</md-button></a>
 
 						<a url-modulo="modificar?id={{ dato.id }}"><md-button ng-if="!dato.cerrado && permisoModificar"  class="md-icon-button md-primary" aria-label="Editar">
 							<md-icon md-svg-src="mode-edit" ></md-icon>
-							<md-tooltip>
+							<md-tooltip hide-sm>
 							{{ 'EDITAR' | translate }}
 							</md-tooltip>
 						</md-button></a>
 
 						<md-button ng-if="!dato.cerrado && permisoEliminar" ng-click="borrar(dato.id, $index)" class="md-icon-button md-warn" aria-label="Eliminar">
 							<md-icon md-svg-src="delete" ></md-icon>
-							<md-tooltip>
+							<md-tooltip hide-sm>
 							{{ 'ELIMINAR' | translate }}
 							</md-tooltip>
 						</md-button>

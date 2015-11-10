@@ -282,7 +282,13 @@
 	"CUANTOS_NUMERO_EXP":"How many records will be reviewed ?",
 	"NO_HAY_DATOS":"No results",
 	"NUM_UM": "Number of units mediclas with issues",
-
+	"MODO_ESTRICTO": "The measurement is enabled in strict mode ( all or nothing )",
+	"FULLSCREEN": "Fullscreen",
+	"MODOESTRICTO" : "Strict mode",
+	"MODOALERTA" : "Alert mode",
+	"QUITARALERTA": "Remove alert",
+	"PONERALERTA": "Put alert",
+	
 	"en": "English",
 	"es": "Español",
 	"es-MX": "Spanish Mexico",

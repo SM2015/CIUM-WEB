@@ -282,6 +282,12 @@
 	"CUANTOS_NUMERO_EXP":"¿Cuantos expedientes va a revisar?",
 	"NO_HAY_DATOS":"No hay resultados",
 	"NUM_UM": "Número de unidades médicas con hallazgos",
+	"MODO_ESTRICTO": "La medición esta habilitada en modo estricto (todo o nada)",
+	"FULLSCREEN": "Pantalla completa",
+	"MODOESTRICTO": "Modo estricto",
+	"MODOALERTA": "Modo alerta",
+	"QUITARALERTA": "Quitar alerta",
+	"PONERALERTA": "Poner alerta",
 
 	"en": "English",
 	"es": "Español",

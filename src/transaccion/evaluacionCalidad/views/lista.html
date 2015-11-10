@@ -15,7 +15,7 @@
 				<span flex></span>
 				<md-button class="md-icon-button" ng-click="mostrarSearch(0)" aria-label="{{ 'BUSCAR' | translate }}">
 				    <md-icon md-svg-icon="search"></md-icon>
-                    <md-tooltip>
+                    <md-tooltip hide-sm>
 			          {{ 'BUSCAR'| translate }}
 			        </md-tooltip>
 				</md-button>
@@ -26,7 +26,7 @@
 				</md-button>
 				<md-button class="md-icon-button"  hide show-sm show-md show-lg ng-click="nuevo()" aria-label="{{ 'NUEVO' | translate }}">
 				  <md-icon md-svg-icon="add"></md-icon>
-				  <md-tooltip>
+				  <md-tooltip hide-sm>
 				          {{ 'NUEVO' | translate }}
 				        </md-tooltip>
 				</md-button>
@@ -37,7 +37,7 @@
 					</md-button>
 				<md-button class="md-icon-button"  hide show-sm show-md show-lg ng-click="abrirEvaluacionFicha($event);" aria-label="{{ 'NUEVO' | translate }}">
 				  <md-icon md-svg-icon="assignment"></md-icon>
-				  	<md-tooltip>
+				  	<md-tooltip hide-sm>
 						{{ 'EVALUACION_IMPRESA' | translate }}
 					</md-tooltip>
 				</md-button>
@@ -71,6 +71,7 @@
       <tr>
 		 <th hide-sm name="ID" order-by="EvaluacionCalidad.id"></th>
 		    <th name="CLUES" order-by="clues"></th>
+			<th hide-sm name="{{ 'JURISDICCION' | translate }}" order-by="clues"></th>
 			<th hide-sm name="{{ 'USUARIO' | translate }}" order-by="idUsuario"></th>
 			<th name="{{ 'FECHA_EVALUACION' | translate }}" order-by="fechaEvaluacion"></th>
 			<th name="{{ 'TERMINADO' | translate }}" order-by="cerrado"></th>
@@ -80,14 +81,15 @@
     <tbody>
       <tr md-auto-select ng-repeat="dato in datos" ng-click="opcionEvaluacion(dato.cerrado ? 'ver' : 'modificar',dato.id)" style="cursor:pointer">
 				 <td hide-sm>{{ dato.id  }}</td>
-				 <td>{{ dato.clues | uppercase }}: {{ dato.cluess.nombre | uppercase }} ({{ dato.cluess.jurisdiccion | uppercase }})</td>
+				 <td>{{ dato.clues | uppercase }}: {{ dato.cluess.nombre | uppercase }} </td>
+				 <td hide-sm>{{ dato.cluess.jurisdiccion | uppercase }}</td>
 				 <td hide-sm>{{ dato.usuarios.nombres+' '+dato.usuarios.apellidoPaterno+' '+dato.usuarios.apellidoMaterno | uppercase }}</td>
 				 <td>{{ dato.fechaEvaluacion }}</td>
 				 <td><md-icon md-svg-src="{{ dato.cerrado ? 'check' : 'mode-edit'}}" class="{{ dato.cerrado ? 'md-primary' : 'md-accent'}}" title="{{ dato.cerrado ? 'Si' : 'No' }}"></md-icon></td>
 				 <td>
 						<md-button ng-if="!dato.cerrado && permisoEliminar" ng-click="borrar(dato.id, $index)" class="md-icon-button md-warn" aria-label="Eliminar">
 							<md-icon md-svg-src="delete" ></md-icon>
-							<md-tooltip>
+							<md-tooltip hide-sm>
 							{{ 'ELIMINAR' | translate }}
 							</md-tooltip>
 						</md-button>

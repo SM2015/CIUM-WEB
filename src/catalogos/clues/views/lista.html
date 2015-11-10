@@ -14,7 +14,7 @@
 				<span flex></span>
 				<md-button class="md-icon-button" ng-click="mostrarSearch(0)" aria-label="{{ 'BUSCAR' | translate }}">
 				    <md-icon md-svg-icon="search"></md-icon>
-                    <md-tooltip>
+                    <md-tooltip hide-sm>
 			          {{ 'BUSCAR'| translate }}
 			        </md-tooltip>
 				</md-button>
@@ -76,7 +76,7 @@
 						
 						<a url-modulo="ver?id={{ dato.clues }}"><md-button class="md-icon-button md-primary" aria-label="Ver">
 							<md-icon md-svg-src="remove-red-eye"></md-icon> 
-                            <md-tooltip>
+                            <md-tooltip hide-sm>
                             {{ 'VER' | translate }}
                           </md-tooltip>
 						</md-button></a>

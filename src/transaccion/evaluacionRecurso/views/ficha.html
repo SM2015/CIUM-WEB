@@ -12,7 +12,7 @@
     </md-button>
     <md-button class="md-icon-button"  ng-show="!update" hide show-sm show-md show-lg show-sm ng-click="update=true" aria-label="{{ 'CAMBIAR_UM' | translate }}" >
       <md-icon md-svg-icon="mode-edit"></md-icon>
-      <md-tooltip>
+      <md-tooltip hide-sm>
           {{ 'CAMBIAR_UM' | translate }}
         </md-tooltip>
     </md-button>
@@ -23,7 +23,7 @@
     </md-button>
     <md-button class="md-icon-button"  ng-show="update" hide show-sm show-md show-lg show-sm ng-click="modificar(id,1);" ng-disabled="forma.$invalid" aria-label="{{ 'GUARDAR' | translate }}" >
       <md-icon md-svg-icon="save"></md-icon>
-      <md-tooltip>
+      <md-tooltip hide-sm>
           {{ 'GUARDAR' | translate }}
         </md-tooltip>
     </md-button>
@@ -35,7 +35,7 @@
   </md-toolbar>
   <md-dialog-content style="min-width: 500px;">
   
-		<md-list layout-margin layout-align="center center" ng-if="!update">
+		<divlayout-align="center center" ng-if="!update">
 
             <md-content class="md-padding">
               <md-list-item layout-wrap >
@@ -48,9 +48,9 @@
               	
               </md-list-item>
             </md-content>
-    </md-list>
+    </div>
     
-    <md-list layout-margin layout-align="center center" ng-if="update" flex>  
+    <div layout-align="center center" ng-if="update" flex>  
    <div layout="row" flex>
         <div layout="column" flex id="content">
             <md-content layout="column" flex class="md-padding">
@@ -117,7 +117,7 @@
                   </md-content>
                 </div>
               </div>            
-        </md-list>
+        </div>
 
           <md-content layout="column"  layour-align="center center" >
 					  <md-list layout-margin  layout-align="center center" >

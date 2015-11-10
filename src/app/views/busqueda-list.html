@@ -4,14 +4,14 @@
 	<div flex="100">
 		<md-button flex-sm="50" ng-disabled="btexportar" class="md-raised md-primary" ng-click="exportar()" style="float:right">
 			<md-icon md-svg-src="picture-as-pdf"></md-icon>
-			<md-tooltip>
+			<md-tooltip hide-sm>
 				{{ 'PDF' | translate }}
 			</md-tooltip>
 		</md-button>
 		
 		<md-button flex-sm="50" ng-disabled="btexcel" class="md-raised md-primary" ng-click="excel()" style="float:right">
 			<md-icon md-svg-src="explicit"></md-icon>
-			<md-tooltip>
+			<md-tooltip hide-sm>
 				{{ 'EXCEL' | translate }}
 			</md-tooltip>
 		</md-button>
@@ -37,7 +37,7 @@
 		  </md-select>
 		  	<md-button class="md-raised" ng-click="buscarL(buscar,columna)" style="float:left; margin-top:16px">
 				<md-icon md-svg-src="search"></md-icon>
-				<md-tooltip>
+				<md-tooltip hide-sm>
 					{{ 'BUSCAR' | translate }}
 				</md-tooltip>
 			</md-button>			

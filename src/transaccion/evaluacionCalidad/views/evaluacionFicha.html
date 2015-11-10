@@ -1,22 +1,23 @@
 <md-dialog aria-label="FICHA">
+  <form role="form" name="forma" >
   <md-toolbar >
     <div class="md-toolbar-tools ">
       <h2>{{ 'CALIDAD' | translate }} </h2>
       <span flex></span>      
     
-    <md-button aria-label="{{ 'GENERAR' | translate }}" ng-click="generarImpreso();" ng-disabled="forma.$invalid">
-        <md-icon md-svg-icon="check"></md-icon>
-        {{ 'GENERAR' | translate }}
-    </md-button>
-
-    <md-button class="md-icon-button" ng-click="hide()">
-        <md-icon md-svg-src="close" aria-label="Close dialog"></md-icon>
+      <md-button aria-label="{{ 'GENERAR' | translate }}" ng-click="generarImpreso();" ng-disabled="forma.$invalid">
+          <md-icon md-svg-icon="check"></md-icon>
+          {{ 'GENERAR' | translate }}
+      </md-button>
+  
+      <md-button class="md-icon-button" ng-click="hide()">
+          <md-icon md-svg-src="close" aria-label="Close dialog"></md-icon>
       </md-button>
     </div>
   </md-toolbar>
-  <md-dialog-content style="min-width: 500px;"  layout-margin layout-align="center center"  flex>  
-
-    <md-content layout="column" flex layout-padding >    
+  <md-dialog-content> 
+    <div> 
+      
       <md-autocomplete 
         md-selected-item="selectedItem"
         md-search-text-change="searchTextChange(searchText)"
@@ -33,39 +34,38 @@
         md-menu-class="autocomplete-custom-template">
         
           <md-item-template >
-            <span class="item-title">
-              <md-icon md-svg-icon="business"></md-icon>
+            <span class="item-title" style="font-size:.8em">            
               <span> {{item.nombre}} </span>
-              <md-icon md-svg-icon="star"></md-icon>
-              <span> <strong style="font-size:.8em;">{{item.clues}}</strong> </span>
+              
             </span>
-            <span class="item-metadata" style="font-size:.8em">
-              <span class="item-metastat" >
-                <strong>{{ 'JURISDICCION' | translate }}: </strong> {{item.jurisdiccion}}
-              </span>
-              <span class="item-metastat">
-                <strong>{{ 'MUNICIPIO' | translate }}: </strong>{{item.municipio}} 
-              </span>
-              <span class="item-metastat">
-                <strong>{{ 'LOCALIDAD' | translate }}: </strong> {{item.localidad}}
-              </span>
-            </span>
-            <span class="item-metadata" style="font-size:.6em">
-              <md-icon md-svg-icon="place"></md-icon>
-              <span class="item-metastat">
-                {{item.domicilio}} 
-              </span>
-            </span>
+            
             <span class="item-metadata" style="font-size:.7em">
-              <md-icon md-svg-icon="style"></md-icon>
-              <span class="item-metastat">
-                <strong>{{item.tipoUnidad}}</strong> 
+              
+              <span class="item-metastat"> 
+                <md-icon style="width:2em;" md-svg-icon="star"></md-icon>
+                <strong >{{item.clues}}</strong> 
               </span>
-              <span class="item-metastat">
-                <md-icon md-svg-icon="airline-seat-flat"></md-icon>
-                <strong>{{item.tipologia}}</strong> 
+              
+              <span class="item-metastat"> 
+                <md-icon style="width:2em;" md-svg-icon="airline-seat-flat"></md-icon>
+                <strong hide-sm>Nivel CONE: </strong> {{item.cone}}
               </span>
             </span>
+            
+            
+            <span class="item-metadata" style="font-size:.6em" >
+              <span class="item-metastat" >
+                <strong>{{ 'JS' | translate }}: </strong> {{item.claveJurisdiccion  }}
+              </span><br hide-gt-sm>
+              <span class="item-metastat">
+                <strong>{{ 'MUN' | translate }}: </strong>{{item.municipio  }} 
+              </span> <br hide-gt-sm>
+              <span class="item-metastat">
+                <strong>{{ 'LOC' | translate }}: </strong>{{item.localidad  }} 
+              </span>
+              
+            </span>
+            
             </md-item-template>                                 
           <md-not-found>
             No hay resultados para  "{{searchText}}".
@@ -74,11 +74,7 @@
             <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>
             <div ng-message="minlength">{{ 'CAMPO_MIN_L' | translate }} 3</div>                               
         </div>
-      </md-autocomplete> 
-    </md-content>
-                
-
-    <form role="form" name="forma" layout="column"  layour-align="center center" >
+      </md-autocomplete>                
       
       <input type="hidden" ng-model="dato.id" />
       <input type="hidden" aria-label="idCone" ng-model="dato.idCone" name="idCone" required>
@@ -86,7 +82,7 @@
         <label>{{ 'CUANTOS_NUMERO_EXP' | translate}}</label>
         <input ng-model="dato.expediente" type="number" max="5" min="1" ng-init="dato.expediente=5">
       </md-input-container>
-    </form>
+      
 		
     <section ng-init="opciones('Indicador?categoria=Calidad',false)">						
 			<md-subheader class="md-primary" >
@@ -112,6 +108,7 @@
 			</md-list>
 			
 		</section>
-		
+    </div>
 </md-dialog-content>
+</form>
 </md-dialog>    

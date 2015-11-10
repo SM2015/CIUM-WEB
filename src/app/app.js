@@ -94,6 +94,7 @@
 		  .icon("trending-up", "bower_components/material-design-icons/action/svg/production/ic_trending_up_24px.svg", 48)
 		  .icon("trending-down", "bower_components/material-design-icons/action/svg/production/ic_trending_down_24px.svg", 48)
 		  .icon("assignment", "bower_components/material-design-icons/action/svg/production/ic_assignment_24px.svg", 48)
+		  .icon("assignment-late", "bower_components/material-design-icons/action/svg/production/ic_assignment_late_24px.svg", 48)
 		  
 		  // Content
 		  .icon("save", "bower_components/material-design-icons/content/svg/production/ic_save_48px.svg", 48)

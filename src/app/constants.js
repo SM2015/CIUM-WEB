@@ -76,6 +76,12 @@ icono: 'event-note'
   icono: "supervisor-accoun"
 },
 {
+  titulo: "NUEVO",
+  key: "ZonaController.index",
+  path: "/nuevo",
+  icono: "supervisor-accoun"
+},
+{
   titulo: "CRITERIO",
   key: "CriterioController.index",
   path: "/criterio",

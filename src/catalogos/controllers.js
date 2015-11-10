@@ -279,7 +279,10 @@
 * Muestra los datos del elemento que se le pase como parametro
 * @param {string} ruta contiene la ruta para hacer la petición a la api
 */	       
-  
+    $scope.ficha = function(ruta) 
+    {
+		alert(ruta);
+	}
     $scope.ver = function(ruta) 
     {
 		$scope.ruta=ruta;		

@@ -1,5 +1,5 @@
 <md-dialog aria-label="FICHA">
-<form role="form" name="forma" style="min-width: 500px;">
+<form role="form" name="forma">
   <md-toolbar >
     <div class="md-toolbar-tools ">
       <h2>{{ 'CALIDAD' | translate }} </h2>
@@ -12,7 +12,7 @@
     </md-button>
     <md-button class="md-icon-button"  ng-show="!update" hide show-sm show-md show-lg show-sm ng-click="update=true" aria-label="{{ 'CAMBIAR_UM' | translate }}" >
       <md-icon md-svg-icon="mode-edit"></md-icon>
-      <md-tooltip>
+      <md-tooltip hide-sm>
           {{ 'CAMBIAR_UM' | translate }}
         </md-tooltip>
     </md-button>
@@ -23,7 +23,7 @@
     </md-button>
     <md-button class="md-icon-button"  ng-show="update" hide show-sm show-md show-lg show-sm ng-click="modificar(id,1)" ng-disabled="forma.$invalid" aria-label="{{ 'GUARDAR' | translate }}" >
       <md-icon md-svg-icon="save"></md-icon>
-      <md-tooltip>
+      <md-tooltip hide-sm>
           {{ 'GUARDAR' | translate }}
         </md-tooltip>
     </md-button>
@@ -33,9 +33,9 @@
       </md-button>
     </div>
   </md-toolbar>
-  <md-dialog-content style="min-width: 500px;">
+  <md-dialog-content >
   
-    <md-list layout-margin layout-align="center center" ng-if="!update">
+    <div layout-align="center center" ng-if="!update">
 
             <md-content class="md-padding">
               <md-list-item layout-wrap >
@@ -48,10 +48,11 @@
                 
               </md-list-item>
             </md-content>
-    </md-list>
+    </div>
     
-    <md-list-item  ng-if="update" >                 
-                        <div flex="100">
+    <div  ng-if="update" >                 
+      <div layout="column" ng-cloak>
+        <md-content layout-padding layout="column">  
                                 <md-autocomplete 
                                   md-selected-item="selectedItem"
                                   md-search-text-change="searchTextChange(searchText)"
@@ -109,10 +110,10 @@
                                       <div ng-message="required">{{ 'CAMPO_REQUERIDO' | translate }}</div>
                                       <div ng-message="min-length">{{ 'CAMPO_MIN_L' | translate }} 3</div>                               
                                   </div>
-                                </md-autocomplete> 
-                            
-                  </div>
-        </md-list-item>
+                                </md-autocomplete>
+            </md-content>
+          </div>                             
+        </div>
 
           <md-content layout="column"  layour-align="center center" >
             <md-list layout-margin  layout-align="center center" >

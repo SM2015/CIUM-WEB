@@ -14,21 +14,21 @@
 				<span flex></span>
 				<md-button class="md-icon-button" ng-click="mostrarSearch(0)" aria-label="{{ 'BUSCAR' | translate }}">
 				   <md-icon md-svg-icon="search"></md-icon>
-                        <md-tooltip>
+                        <md-tooltip hide-sm>
 				          {{ 'BUSCAR'| translate }}
 				        </md-tooltip>
 				</md-button>				
 				
 				<md-button class="md-icon-button" ng-click="toggleRight()" aria-label="{{ 'FILTRAR' | translate }}">
 				   <md-icon md-svg-icon="perm-data-setting"></md-icon>
-                        <md-tooltip>
+                        <md-tooltip hide-sm>
 				          {{ 'FILTRAR'| translate }}
 				        </md-tooltip>
 				</md-button>
 				
 				<md-button class="md-fab md-warn md-mini" ng-click="toggleRightIndicadores()" aria-label="{{ 'INDICADOR_ALERTA' | translate }}" ng-if="!filtro.historial">
 					{{total}}			  
-                    <md-tooltip>{{ 'INDICADOR_ALERTA'| translate }}</md-tooltip>
+                    <md-tooltip hide-sm>{{ 'INDICADOR_ALERTA'| translate }}</md-tooltip>
 				</md-button>
 				<md-switch ng-model="filtro.historial" aria-label="historial" class="md-primary md-hue-2" ng-change="history()">
 					<md-icon md-svg-icon="{{filtro.historial ? 'history' : 'flash-on'}}"  ng-class="!filtro.historial ? 'md-primary md-hue-3' : ''"></md-icon>
@@ -82,16 +82,16 @@
 							<md-option value="CALIDAD" >{{ 'CALIDAD' | translate}}</md-option>                                  
 						</md-select> 
 												
-						<md-button class="md-icon-button" aria-label="{{ 'ORDEN' | translate }}" ng-click="ordenCriterio=!ordenCriterio; ordenText = ordenCriterio ? 'total' : '-total'; ">
+						<md-button class="md-icon-button" aria-label="{{ 'ORDEN' | translate }}" ng-init="ordenText=['-total','-exp']" ng-click="ordenCriterio=!ordenCriterio; ordenText = ordenCriterio ? ['total','exp'] : ['-total','-exp']; ">
 							<md-icon md-svg-icon="{{ ordenCriterio ? 'trending-up' : 'trending-down' }}"></md-icon>
-							<md-tooltip>
+							<md-tooltip hide-sm>
 								{{ ordenCriterio ? 'Asc' : 'Desc'  }}							
 							</md-tooltip>
 						</md-button>	
 						
 						<md-button class="md-icon-button" aria-label="{{ 'AGRUPAR' | translate }}" ng-click="agrupado=!agrupado; agrupadoPor = agrupado ? 'codigo' : ''; ">
 							<md-icon md-svg-icon="{{ agrupado ? 'unfold-less' : 'unfold-more' }}"></md-icon>
-							<md-tooltip>
+							<md-tooltip hide-sm>
 								{{ !agrupado ? 'AGRUPAR' : 'DESAGRUPAR' | translate }}							
 							</md-tooltip>
 						</md-button>										
@@ -171,13 +171,13 @@
 			<span flex></span>
 			<md-button class="md-icon-button" ng-click="aplicarFiltro(true,null)">
 				<md-icon md-svg-icon="check" ></md-icon>
-				<md-tooltip>
+				<md-tooltip hide-sm>
 					{{ 'APLICAR_FILTRO' | translate }}
 				</md-tooltip>
 			</md-button>
 			<md-button class="md-icon-button" ng-if="filtros.activo" ng-click="quitarFiltro()">
 				<md-icon md-svg-icon="cancel" ></md-icon>
-				<md-tooltip>
+				<md-tooltip hide-sm>
 					{{ 'QUITAR_FILTRO' | translate }}
 				</md-tooltip>
 			</md-button>
@@ -197,7 +197,7 @@
 					
 					<md-button class="md-icon-button" ng-click="filtro.anio=[]" style="display:inline-block">
 						<md-icon md-svg-icon="cancel" ></md-icon>
-						<md-tooltip>
+						<md-tooltip hide-sm>
 							{{ 'QUITAR_FILTRO' | translate }}
 						</md-tooltip>
 					</md-button> 
@@ -210,7 +210,7 @@
 					</div>
 					<md-button class="md-icon-button" ng-click="filtro.bimestre=[]">
 						<md-icon md-svg-icon="cancel" ></md-icon>
-						<md-tooltip>
+						<md-tooltip hide-sm>
 							{{ 'QUITAR_FILTRO' | translate }}
 						</md-tooltip>
 					</md-button>      
@@ -285,7 +285,7 @@
 						</div>
 						<md-button class="md-icon-button" ng-click="filtro.um.cone=[]">
 							<md-icon md-svg-icon="cancel" ></md-icon>
-							<md-tooltip>
+							<md-tooltip hide-sm>
 								{{ 'QUITAR_FILTRO' | translate }}
 							</md-tooltip>
 						</md-button>
@@ -299,7 +299,7 @@
 						</div>
 						<md-button class="md-icon-button" ng-click="filtro.um.jurisdiccion=[]">
 							<md-icon md-svg-icon="cancel" ></md-icon>
-							<md-tooltip>
+							<md-tooltip hide-sm>
 								{{ 'QUITAR_FILTRO' | translate }}
 							</md-tooltip>
 						</md-button>					
@@ -319,7 +319,7 @@
 						</div>
 						<md-button class="md-icon-button" ng-click="filtro.um.municipio=[]">
 							<md-icon md-svg-icon="cancel" ></md-icon>
-							<md-tooltip>
+							<md-tooltip hide-sm>
 								{{ 'QUITAR_FILTRO' | translate }}
 							</md-tooltip>
 						</md-button>
@@ -333,7 +333,7 @@
 						</div>
 						<md-button class="md-icon-button" ng-click="filtro.um.zona=[]">
 							<md-icon md-svg-icon="cancel" ></md-icon>
-							<md-tooltip>
+							<md-tooltip hide-sm>
 								{{ 'QUITAR_FILTRO' | translate }}
 							</md-tooltip>
 						</md-button>
@@ -352,35 +352,31 @@
 			
 		  </div>
       </md-toolbar>
-	  <md-content layout="column">  
-						
+	  <md-content layout="column">  							
 		<section ng-repeat="(key, value) in datos.indicadores | groupBy :  'categoria'" ng-if="key != 'undefined' ">						
 			<md-subheader class="md-primary" >
 				{{ key | translate }}                              
 			</md-subheader>
-			<md-list>	
-											
-				<md-list-item ng-repeat="c in value" class="md-2-line" ng-click="aplicarFiltro(false,c,key);">																					
-					<div class="md-list-item-text">
-						
+			<md-list>												
+				<md-list-item ng-repeat="c in value" class="md-2-line" ng-click="aplicarFiltro(false,c,key);">	
+																									
+					<div class="md-list-item-text">						
 						<h3>												
 							{{c.codigo}}
 							<span class="img-circle" style="background:{{c.color}}; position: relative; float: left; width: 0.7em; height: 0.7em; margin: 0; margin-right: 0.3em; padding: 0; display: block;">
 								
 							</span>											
-						</h3>
-						
+						</h3>						
 						<p>
 							<md-icon md-svg-icon="mood-bad" style="width:1.2em"></md-icon> {{c.total}} UM {{c.total>1 ? '\'s' : ''}}
 							<br>
 							<small> {{ c.indicador }} </small>
-						</p>
-						
+						</p>						
 					</div>												
 					<md-divider></md-divider>
 				</md-list-item>													
-			</md-list>
-			
+			</md-list>			
 		</section>
+						
 	</md-content>
     </md-sidenav>

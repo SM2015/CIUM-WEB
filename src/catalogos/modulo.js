@@ -20,6 +20,12 @@
 		.when('/alerta/modificar', {templateUrl: 'src/catalogos/alerta/views/modificar.html',	controller: 'CrudCtrl'})
 		.when('/alerta/ver', {templateUrl: 'src/catalogos/alerta/views/ver.html',	controller: 'CrudCtrl'})
 		
+		
+		.when('/nuevo', { templateUrl: 'src/catalogos/nuevo/views/lista.html',	controller: 'CrudCtrl'})
+		.when('/nuevo/nuevo', {templateUrl: 'src/catalogos/nuevo/views/nuevo.html',	controller: 'CrudCtrl'})
+		.when('/nuevo/modificar', {templateUrl: 'src/catalogos/nuevo/views/modificar.html',	controller: 'CrudCtrl'})
+		.when('/nuevo/ver', {templateUrl: 'src/catalogos/nuevo/views/ver.html',	controller: 'CrudCtrl'})
+		
 		.when('/clues', { templateUrl: 'src/catalogos/clues/views/lista.html',	controller: 'CrudCtrl'})
 		.when('/clues/ver', {templateUrl: 'src/catalogos/clues/views/ver.html',	controller: 'CrudCtrl'})
 		
@@ -27,6 +33,7 @@
 		.when('/cone/nuevo', {templateUrl: 'src/catalogos/cone/views/nuevo.html',	controller: 'UsuarioCtrl'})
 		.when('/cone/modificar', {templateUrl: 'src/catalogos/cone/views/modificar.html',	controller: 'UsuarioCtrl'})
 		.when('/cone/ver', {templateUrl: 'src/catalogos/cone/views/ver.html',	controller: 'UsuarioCtrl'})
+		.when('/cone/ficha', {templateUrl: 'src/catalogos/cone/views/ficha.html',	controller: 'CrudCtrl'})
 
 		.when('/zona', { templateUrl: 'src/catalogos/zona/views/lista.html',	controller: 'CrudCtrl'})
 		.when('/zona/nuevo', {templateUrl: 'src/catalogos/zona/views/nuevo.html',	controller: 'UsuarioCtrl'})
@@ -41,7 +48,6 @@
 		.when('/plazo-accion', { templateUrl: 'src/catalogos/plazoAccion/views/lista.html',	controller: 'CrudCtrl'})
 		.when('/plazo-accion/nuevo', {templateUrl: 'src/catalogos/plazoAccion/views/nuevo.html',	controller: 'CrudCtrl'})
 		.when('/plazo-accion/modificar', {templateUrl: 'src/catalogos/plazoAccion/views/modificar.html',	controller: 'CrudCtrl'})
-		.when('/plazo-accion/ver', {templateUrl: 'src/catalogos/plazoAccion/views/ver.html',	controller: 'CrudCtrl'})	
-
+		.when('/plazo-accion/ver', {templateUrl: 'src/catalogos/plazoAccion/views/ver.html',	controller: 'CrudCtrl'})
 	}]);
 })();
